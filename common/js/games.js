@@ -20,9 +20,6 @@ $(document).ready(function() {
         'game_koala_seasons',
         'game_light_my_ritual',
         'game_wave_collector',
-        'user_raymario',    
-        'user_crazyball',
-        'user_tictactoe',
         'user_super_red_rope',
         'user_taptojamp',    
         'user_funwithsat'];
@@ -44,9 +41,6 @@ $(document).ready(function() {
         'Koala Seasons',
         'LIGHT MY RITUAL',
         'Wave Collector',
-        'RayMario (Victor Fisac)',    
-        'CrazyBall (Victor Fisac)',
-        'Tic-Tac-Toe (LelixSuper)',
         'Super Red Rope Puzzles (Kurnic)',
         'TapToJAmp (MarcMDE)',    
         'FunWithSATCollisions (MarcMDE)'];
@@ -63,9 +57,6 @@ $(document).ready(function() {
         {
             switch (exampleName[i])
             {
-                case 'user_raymario': linkTag = '<a target="_blank" href="https://github.com/victorfisac/RayMario" title="' + exampleDesc[i] + '">'; break;
-                case 'user_crazyball': linkTag = '<a target="_blank" href="https://github.com/victorfisac/CrazyBall" title="' + exampleDesc[i] + '">'; break;
-                case 'user_tictactoe': linkTag = '<a target="_blank" href="https://github.com/LelixSuper/TicTacToe" title="' + exampleDesc[i] + '">'; break;
                 case 'user_super_red_rope': linkTag = '<a target="_blank" href="https://kurnic.itch.io/super-red-rope-puzzles" title="' + exampleDesc[i] + '">'; break;
                 case 'user_taptojamp': linkTag = '<a target="_blank" href="http://marcmde.github.io/TapToJAmp_v2_0/" title="' + exampleDesc[i] + '">'; break;
                 case 'user_funwithsat': linkTag = '<a target="_blank" href="http://marcmde.github.io/FunWithSATCollisions_v_1_0_Browser/" title="' + exampleDesc[i] + '">'; break;
