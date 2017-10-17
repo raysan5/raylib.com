@@ -13,7 +13,8 @@
     Color *GetImageData(Image image);                                                                   // Get pixel data from image as a Color struct array
     Image GetTextureData(Texture2D texture);                                                            // Get pixel data from GPU texture and return an Image
     void UpdateTexture(Texture2D texture, void *pixels);                                                // Update GPU texture with new data
-    
+    void SaveImageAs(const char *fileName, Image image);                                                // Save image to a PNG file
+   
     // Image manipulation functions
     void ImageToPOT(Image *image, Color fillColor);                                                     // Convert image to POT (power-of-two)
     void ImageFormat(Image *image, int newFormat);                                                      // Convert image data to desired format
@@ -36,7 +37,16 @@
     void ImageColorGrayscale(Image *image);                                                             // Modify bimage color: grayscale
     void ImageColorContrast(Image *image, float contrast);                                              // Modify image color: contrast (-100 to 100)
     void ImageColorBrightness(Image *image, int brightness);                                            // Modify image color: brightness (-255 to 255)
-    
+
+    // Image generation functions
+    Image GenImageGradientV(int width, int height, Color top, Color bottom);                            // Generate image: vertical gradient
+    Image GenImageGradientH(int width, int height, Color left, Color right);                            // Generate image: horizontal gradient
+    Image GenImageGradientRadial(int width, int height, float density, Color inner, Color outer);       // Generate image: radial gradient
+    Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);     // Generate image: checked
+    Image GenImageWhiteNoise(int width, int height, float factor);                                      // Generate image: white noise
+    Image GenImagePerlinNoise(int width, int height, float scale);                                      // Generate image: perlin noise
+    Image GenImageCellular(int width, int height, int tileSize);                                        // Generate image: cellular algorithm. Bigger tileSize means bigger cells
+
     // Texture2D configuration functions
     void GenTextureMipmaps(Texture2D *texture);                                                         // Generate GPU mipmaps for a texture
     void SetTextureFilter(Texture2D texture, int filterMode);                                           // Set texture scaling filter mode

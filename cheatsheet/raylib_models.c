@@ -21,19 +21,29 @@
     void DrawGizmo(Vector3 position);                                                                   // Draw simple gizmo
 
     // Model loading/unloading functions
-    Mesh LoadMesh(const char *fileName);                                                                // Load mesh from file
-    Mesh LoadMeshEx(int numVertex, float *vData, float *vtData, float *vnData, Color *cData);           // Load mesh from vertex data
-    Model LoadModel(const char *fileName);                                                              // Load model from file
-    Model LoadModelFromMesh(Mesh data, bool dynamic);                                                   // Load model from mesh data
-    Model LoadHeightmap(Image heightmap, Vector3 size);                                                 // Load heightmap model from image data
-    Model LoadCubicmap(Image cubicmap);                                                                 // Load cubes-based map model from image data
-    void UnloadMesh(Mesh *mesh);                                                                        // Unload mesh from memory (RAM and/or VRAM)
+    Model LoadModel(const char *fileName);                                                              // Load model from files (mesh and material)
+    Model LoadModelFromMesh(Mesh mesh);                                                                 // Load model from generated mesh
     void UnloadModel(Model model);                                                                      // Unload model from memory (RAM and/or VRAM)
 
+    // Mesh loading/unloading functions
+    Mesh LoadMesh(const char *fileName);                                                                // Load mesh from file
+    void UnloadMesh(Mesh *mesh);                                                                        // Unload mesh from memory (RAM and/or VRAM)
+
+    // Mesh generation functions
+    Mesh GenMeshPlane(float width, float length, int resX, int resZ);                                   // Generate plane mesh (with subdivisions)
+    Mesh GenMeshCube(float width, float height, float length);                                          // Generate cuboid mesh
+    Mesh GenMeshSphere(float radius, int rings, int slices);                                            // Generate sphere mesh (standard sphere)
+    Mesh GenMeshHemiSphere(float radius, int rings, int slices);                                        // Generate half-sphere mesh (no bottom cap)
+    Mesh GenMeshCylinder(float radius, float height, int slices);                                       // Generate cylinder mesh
+    Mesh GenMeshTorus(float radius, float size, int radSeg, int sides);                                 // Generate torus mesh
+    Mesh GenMeshKnot(float radius, float size, int radSeg, int sides);                                  // Generate trefoil knot mesh
+    Mesh GenMeshHeightmap(Image heightmap, Vector3 size);                                               // Generate heightmap mesh from image data
+    Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize);                                             // Generate cubes-based map mesh from image data
+
     // Material loading/unloading functions
-    Material LoadMaterial(const char *fileName);                                                        // Load material data (from file)
-    Material LoadDefaultMaterial(void);                                                                 // Load default material (uses default models shader)
-    void UnloadMaterial(Material material);                                                             // Unload material textures from VRAM
+    Material LoadMaterial(const char *fileName);                                                        // Load material from file
+    Material LoadMaterialDefault(void);                                                                 // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
+    void UnloadMaterial(Material material);                                                             // Unload material from GPU memory (VRAM)
 
     // Model drawing functions
     void DrawModel(Model model, Vector3 position, float scale, Color tint);                             // Draw a model (with texture if set)

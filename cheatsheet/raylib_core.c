@@ -6,6 +6,7 @@
     bool IsWindowMinimized(void);                                           // Check if window has been minimized (or lost focus)
     void ToggleFullscreen(void);                                            // Toggle fullscreen mode (only PLATFORM_DESKTOP)
     void SetWindowIcon(Image image);                                        // Set icon for window (only PLATFORM_DESKTOP)
+    void SetWindowTitle(const char *title);                                 // Set title for window (only PLATFORM_DESKTOP)
     void SetWindowPosition(int x, int y);                                   // Set window position on screen (only PLATFORM_DESKTOP)
     void SetWindowMonitor(int monitor);                                     // Set monitor for the current window (fullscreen mode)
     void SetWindowMinSize(int width, int height);                           // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
@@ -45,9 +46,14 @@
     Color GetColor(int hexValue);                                           // Returns a Color struct from hexadecimal value
     Color Fade(Color color, float alpha);                                   // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
     float *ColorToFloat(Color color);                                       // Converts Color to float array and normalizes
-    float *VectorToFloat(Vector3 vec);                                      // Converts Vector3 to float array
-    float *MatrixToFloat(Matrix mat);                                       // Converts Matrix to float array
 
+    // Math useful functions (available from raymath.h)
+    float *VectorToFloat(Vector3 vec);                                      // Returns Vector3 as float array
+    float *MatrixToFloat(Matrix mat);                                       // Returns Matrix as float array
+    Vector3 Vector3Zero(void);                                              // Vector with components value 0.0f
+    Vector3 Vector3One(void);                                               // Vector with components value 1.0f
+    Matrix MatrixIdentity(void);                                            // Returns identity matrix
+    
     // Misc. functions
     void ShowLogo(void);                                                    // Activate raylib logo at startup (can be done with flags)
     void SetConfigFlags(char flags);                                        // Setup window configuration flags (view FLAGS)
@@ -57,6 +63,7 @@
 
     // Files management functions
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension
+    const char *GetExtension(const char *fileName);                         // Get file extension
     const char *GetDirectoryPath(const char *fileName);                     // Get directory for a given fileName (with path)
     const char *GetWorkingDirectory(void);                                  // Get current working directory
     bool ChangeDirectory(const char *dir);                                  // Change working directory, returns true if success

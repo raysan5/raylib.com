@@ -10,14 +10,15 @@
     struct Texture2D;       // Texture2D type (multiple internal formats supported)
                             // NOTE: Data stored in GPU memory (VRAM)
     struct RenderTexture2D; // RenderTexture2D type, for texture rendering
+    struct CharInfo;        // SpriteFont character info
     struct SpriteFont;      // SpriteFont type, includes texture and chars data
     
     struct Camera;          // Camera type, defines 3d camera position/orientation
     struct Camera2D;        // Camera2D type, defines a 2d camera
     struct Mesh;            // Vertex data definning a mesh
     struct Shader;          // Shader type (generic shader)
+    struct MaterialMap;     // Material texture map
     struct Material;        // Material type
-    struct Light;           // Light type, defines light properties
     struct Model;           // Basic 3d Model type
     struct Ray;             // Ray type (useful for raycast)
     struct RayHitInfo;      // Raycast hit information

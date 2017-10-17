@@ -22,7 +22,8 @@
     void EndBlendMode(void);                                                                            // End blending mode (reset to default: alpha blending)
         
     // VR control functions
-    void InitVrSimulator(int vrDevice);                                                                 // Init VR simulator for selected device
+    VrDeviceInfo GetVrDeviceInfo(int vrDeviceType);                                                     // Get VR device information for some standard devices
+    void InitVrSimulator(VrDeviceInfo info);                                                            // Init VR simulator for selected device parameters
     void CloseVrSimulator(void);                                                                        // Close VR simulator for current device
     bool IsVrSimulatorReady(void);                                                                      // Detect if VR simulator is ready
     void UpdateVrTracking(Camera *camera);                                                              // Update VR tracking (position and orientation) and camera

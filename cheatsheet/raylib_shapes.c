@@ -13,9 +13,12 @@
     void DrawRectangle(int posX, int posY, int width, int height, Color color);                         // Draw a color-filled rectangle
     void DrawRectangleRec(Rectangle rec, Color color);                                                  // Draw a color-filled rectangle
     void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                  // Draw a color-filled rectangle with pro parameters
-    void DrawRectangleGradient(int posX, int posY, int width, int height, Color color1, Color color2);  // Draw a gradient-filled rectangle
+    void DrawRectangleGradientV(int posX, int posY, int width, int height, Color color1, Color color2); // Draw a vertical-gradient-filled rectangle
+    void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2); // Draw a horizontal-gradient-filled rectangle
+    void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, Color col4);        // Draw a gradient-filled rectangle with custom vertex colors
     void DrawRectangleV(Vector2 position, Vector2 size, Color color);                                   // Draw a color-filled rectangle (Vector version)
     void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                    // Draw rectangle outline
+    void DrawRectangleT(int posX, int posY, int width, int height, Color color);                        // Draw rectangle using text character
     void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                 // Draw a color-filled triangle
     void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                            // Draw triangle outline
     void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
