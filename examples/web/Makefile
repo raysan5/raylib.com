@@ -26,7 +26,7 @@
 # Define required raylib variables
 # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
 PLATFORM ?= PLATFORM_DESKTOP
-RAYLIB_PATH ?= ../..
+RAYLIB_PATH ?= C:/GitHub/raylib
 PROJECT_NAME ?= raylib_example
 
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -137,7 +137,7 @@ endif
 #  -fgnu89-inline       declaring inline functions support (GCC optimized)
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
-CFLAGS += -O1 -s -Wall -std=c99 -D_DEFAULT_SOURCE -fgnu89-inline -Wno-missing-braces
+CFLAGS += -O1 -Wall -std=c99 -D_DEFAULT_SOURCE -fgnu89-inline -Wno-missing-braces
 
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
@@ -160,7 +160,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
-    CFLAGS += -s USE_GLFW=3 -s ASSERTIONS=1 --profiling -s TOTAL_MEMORY=16777216 --preload-file resources
+    CFLAGS += -s USE_GLFW=3 -s ASSERTIONS=1 --profiling
 endif
 
 # Define include paths for required headers
@@ -471,7 +471,7 @@ text/text_sprite_fonts: text/text_sprite_fonts.c
 
 # compile [text] example - bmfonts and ttf loading
 text/text_bmfont_ttf: text/text_bmfont_ttf.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file text/resources/bmfont.fnt@resources/bmfont.fnt \
     --preload-file text/resources/bmfont.png@resources/bmfont.png \
     --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf
@@ -498,7 +498,7 @@ text/text_writing_anim: text/text_writing_anim.c
 
 # compile [text] example - text ttf loading
 text/text_ttf_loading: text/text_ttf_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
 
 # compile [text] example - text bmfont unordered
@@ -550,7 +550,37 @@ models/models_mesh_picking: models/models_mesh_picking.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/tower.obj@resources/tower.obj \
     --preload-file models/resources/tower.png@resources/tower.png
+    
+# compile [models] example - models mesh generation
+models/models_mesh_generation: models/models_mesh_generation.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
+# compile [models] example - models material pbr
+models/models_material_pbr: models/models_material_pbr.c
+ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+else
+	@echo models_material_pbr: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
+endif
+
+# compile [models] example - models skybox
+models/models_skybox: models/models_skybox.c
+ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+else
+	@echo models_skybox: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
+endif
+
+# compile [models] example - models yaw pitch roll
+models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file models/resources/plane.obj@resources/plane.obj \
+    --preload-file models/resources/plane_diffuse.png@resources/plane_diffuse.png \
+    --preload-file models/resources/plane.png@resources/plane.png \
+    --preload-file models/resources/pitch.png@resources/pitch.png \
+    --preload-file models/resources/background.png@resources/background.png \
+    --preload-file models/resources/angle_gauge.png@resources/angle_gauge.png \   
+ 
 # compile [shaders] example - model shader
 shaders/shaders_model_shader: shaders/shaders_model_shader.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
@@ -599,7 +629,7 @@ audio/audio_module_playing: audio/audio_module_playing.c
 
 # compile [audio] example - raw audio streaming
 audio/audio_raw_stream: audio/audio_raw_stream.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864
 
 # compile [physac] example - physics demo
 physac/physics_demo: physac/physics_demo.c

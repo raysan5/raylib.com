@@ -11,15 +11,40 @@
 
 #include "raylib.h"
 
-#define NUM_MODELS  7      // We generate 7 parametric 3d shapes
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
 
+#define NUM_MODELS  7       // We generate 7 parametric 3d shapes
+
+//----------------------------------------------------------------------------------
+// Global Variables Definition
+//----------------------------------------------------------------------------------
+int screenWidth = 800;
+int screenHeight = 450;
+
+Model models[NUM_MODELS];
+
+// Define the camera to look into our 3d world
+Camera camera = {{ 5.0f, 5.0f, 5.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+
+// Model drawing position
+Vector3 position = { 0.0f, 0.0f, 0.0f };
+
+int currentModel = 0;
+
+//----------------------------------------------------------------------------------
+// Module Functions Declaration
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void);     // Update and Draw one frame
+
+//----------------------------------------------------------------------------------
+// Main Enry Point
+//----------------------------------------------------------------------------------
 int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 450;
-
     InitWindow(screenWidth, screenHeight, "raylib [models] example - mesh generation");
     
     // We generate a checked image for texturing
@@ -39,70 +64,24 @@ int main()
     
     // Set checked texture as default diffuse component for all models material
     for (int i = 0; i < NUM_MODELS; i++) models[i].material.maps[MAP_DIFFUSE].texture = texture;
-
-    // Define the camera to look into our 3d world
-    Camera camera = {{ 5.0f, 5.0f, 5.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
-
-    // Model drawing position
-    Vector3 position = { 0.0f, 0.0f, 0.0f };
-    
-    int currentModel = 0;
     
     SetCameraMode(camera, CAMERA_ORBITAL);  // Set a orbital camera mode
 
-    SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+#else
+    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        UpdateCamera(&camera);      // Update internal camera and our camera
-        
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        {
-            currentModel = (currentModel + 1)%NUM_MODELS; // Cycle between the textures
-        }
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-
-            Begin3dMode(camera);
-
-                DrawModel(models[currentModel], position, 1.0f, WHITE);
-
-                DrawGrid(10, 1.0);
-
-            End3dMode();
-            
-            DrawRectangle(30, 400, 310, 30, Fade(SKYBLUE, 0.5f));
-            DrawRectangleLines(30, 400, 310, 30, Fade(DARKBLUE, 0.5f));
-            DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL MODELS", 40, 410, 10, BLUE);
-            
-            switch(currentModel)
-            {
-                case 0: DrawText("PLANE", 680, 10, 20, DARKBLUE); break;
-                case 1: DrawText("CUBE", 680, 10, 20, DARKBLUE); break;
-                case 2: DrawText("SPHERE", 680, 10, 20, DARKBLUE); break;
-                case 3: DrawText("HEMISPHERE", 640, 10, 20, DARKBLUE); break;
-                case 4: DrawText("CYLINDER", 680, 10, 20, DARKBLUE); break;
-                case 5: DrawText("TORUS", 680, 10, 20, DARKBLUE); break;
-                case 6: DrawText("KNOT", 680, 10, 20, DARKBLUE); break;
-                default: break;
-            }
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        UpdateDrawFrame();
     }
+#endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------
-    
+    //--------------------------------------------------------------------------------------   
     // Unload models data (GPU VRAM)
     for (int i = 0; i < NUM_MODELS; i++) UnloadModel(models[i]);
     
@@ -110,4 +89,53 @@ int main()
     //--------------------------------------------------------------------------------------
 
     return 0;
+}
+
+//----------------------------------------------------------------------------------
+// Module Functions Definition
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    UpdateCamera(&camera);      // Update internal camera and our camera
+    
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        currentModel = (currentModel + 1)%NUM_MODELS; // Cycle between the textures
+    }
+    //----------------------------------------------------------------------------------
+
+    // Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        Begin3dMode(camera);
+
+            DrawModel(models[currentModel], position, 1.0f, WHITE);
+
+            DrawGrid(10, 1.0);
+
+        End3dMode();
+        
+        DrawRectangle(30, 400, 310, 30, Fade(SKYBLUE, 0.5f));
+        DrawRectangleLines(30, 400, 310, 30, Fade(DARKBLUE, 0.5f));
+        DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL MODELS", 40, 410, 10, BLUE);
+        
+        switch(currentModel)
+        {
+            case 0: DrawText("PLANE", 680, 10, 20, DARKBLUE); break;
+            case 1: DrawText("CUBE", 680, 10, 20, DARKBLUE); break;
+            case 2: DrawText("SPHERE", 680, 10, 20, DARKBLUE); break;
+            case 3: DrawText("HEMISPHERE", 640, 10, 20, DARKBLUE); break;
+            case 4: DrawText("CYLINDER", 680, 10, 20, DARKBLUE); break;
+            case 5: DrawText("TORUS", 680, 10, 20, DARKBLUE); break;
+            case 6: DrawText("KNOT", 680, 10, 20, DARKBLUE); break;
+            default: break;
+        }
+
+    EndDrawing();
+    //----------------------------------------------------------------------------------
 }

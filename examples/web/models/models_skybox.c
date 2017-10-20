@@ -11,21 +11,38 @@
 
 #include "raylib.h"
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
+
+//----------------------------------------------------------------------------------
+// Global Variables Definition
+//----------------------------------------------------------------------------------
+int screenWidth = 800;
+int screenHeight = 450;
+
+// Define the camera to look into our 3d world
+Camera camera = {{ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+
+Model skybox;
+
+//----------------------------------------------------------------------------------
+// Module Functions Declaration
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void);     // Update and Draw one frame
+
+//----------------------------------------------------------------------------------
+// Main Enry Point
+//----------------------------------------------------------------------------------
 int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 450;
-
     InitWindow(screenWidth, screenHeight, "raylib [models] example - skybox loading and drawing");
-
-    // Define the camera to look into our 3d world
-    Camera camera = {{ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
 
     // Load skybox model   
     Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
-    Model skybox = LoadModelFromMesh(cube);
+    skybox = LoadModelFromMesh(cube);
     
     // Load skybox shader and set required locations
     // NOTE: Some locations are automatically set at shader loading
@@ -43,36 +60,18 @@ int main()
     
     SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
-    SetTargetFPS(60);                       // Set our game to run at 60 frames-per-second
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+#else
+    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    
     // Main game loop
-    while (!WindowShouldClose())            // Detect window close button or ESC key
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        UpdateCamera(&camera);              // Update camera
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
-            ClearBackground(RAYWHITE);
-
-            Begin3dMode(camera);
-
-                DrawModel(skybox, Vector3Zero(), 1.0f, WHITE);
-                
-                DrawGrid(10, 1.0f);
-
-            End3dMode();
-
-            DrawFPS(10, 10);
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        UpdateDrawFrame();
     }
+#endif
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
@@ -82,4 +81,34 @@ int main()
     //--------------------------------------------------------------------------------------
 
     return 0;
+}
+
+//----------------------------------------------------------------------------------
+// Module Functions Definition
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    UpdateCamera(&camera);              // Update camera
+    //----------------------------------------------------------------------------------
+
+    // Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+
+        ClearBackground(RAYWHITE);
+
+        Begin3dMode(camera);
+
+            DrawModel(skybox, Vector3Zero(), 1.0f, WHITE);
+            
+            DrawGrid(10, 1.0f);
+
+        End3dMode();
+
+        DrawFPS(10, 10);
+
+    EndDrawing();
+    //----------------------------------------------------------------------------------
 }

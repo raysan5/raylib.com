@@ -5,7 +5,7 @@
 *   This example has been created using raylib 1.3 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Copyright (c) 2015 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2017 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -45,9 +45,11 @@ int main()
 
     Image image = LoadImage("resources/heightmap.png");     // Load heightmap image (RAM)
     texture = LoadTextureFromImage(image);                  // Convert image to texture (VRAM)
-    map = LoadHeightmap(image, (Vector3){ 16, 8, 16 });     // Load heightmap model with defined size
-    map.material.texDiffuse = texture;                      // Set map diffuse texture
-
+    
+    Mesh mesh = GenMeshHeightmap(image, (Vector3){ 16, 8, 16 });    // Generate heightmap mesh (RAM and VRAM)
+    Model model = LoadModelFromMesh(mesh);                          // Load model from generated mesh
+    model.material.maps[MAP_DIFFUSE].texture = texture;             // Set map diffuse texture
+    
     UnloadImage(image);                         // Unload heightmap image from RAM, already uploaded to VRAM
     
     SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode

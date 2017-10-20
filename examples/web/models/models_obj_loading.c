@@ -45,7 +45,7 @@ int main()
 
     dwarf = LoadModel("resources/model/dwarf.obj");               // Load OBJ model
     texture = LoadTexture("resources/model/dwarf_diffuse.png");   // Load model texture
-    dwarf.material.texDiffuse = texture;                          // Set dwarf model diffuse texture
+    dwarf.material.maps[MAP_DIFFUSE].texture = texture;           // Set map diffuse texture
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);

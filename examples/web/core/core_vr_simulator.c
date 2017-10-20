@@ -41,8 +41,8 @@ int main()
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [core] example - oculus rift");
     
-    // NOTE: If device is not available, it fallbacks to default device (simulator)
-    InitVrSimulator(HMD_OCULUS_RIFT_CV1);               // Init VR simulator (Oculus Rift CV1 parameters)
+    // Init VR simulator (Oculus Rift CV1 parameters)
+    InitVrSimulator(GetVrDeviceInfo(HMD_OCULUS_RIFT_CV1));
     
     // Define the camera to look into our 3d world
     camera.position = (Vector3){ 5.0f, 5.0f, 5.0f };    // Camera position

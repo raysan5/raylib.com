@@ -25,7 +25,6 @@ int screenHeight = 450;
 Camera camera;
 Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
 
-
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
@@ -76,7 +75,7 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-     UpdateCamera(&camera);          // Update internal camera and our camera
+    UpdateCamera(&camera);          // Update internal camera and our camera
     //----------------------------------------------------------------------------------
 
     // Draw

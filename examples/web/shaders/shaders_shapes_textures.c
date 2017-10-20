@@ -108,7 +108,7 @@ void UpdateDrawFrame(void)
             DrawText("USING CUSTOM SHADER", 190, 40, 10, RED);
 
             DrawRectangle(250 - 60, 90, 120, 60, RED);
-            DrawRectangleGradient(250 - 90, 170, 180, 130, MAROON, GOLD);
+            DrawRectangleGradientH(250 - 90, 170, 180, 130, MAROON, GOLD);
             DrawRectangleLines(250 - 40, 320, 80, 60, ORANGE);
 
         // Activate our default shader for next drawings

@@ -5,7 +5,7 @@
 *   This example has been created using raylib 1.3 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Copyright (c) 2015 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2017 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -45,11 +45,13 @@ int main()
 
     Image image = LoadImage("resources/cubicmap.png");  // Load cubicmap image (RAM)
     cubicmap = LoadTextureFromImage(image);             // Convert image to texture to display (VRAM)
-    map = LoadCubicmap(image);                          // Load cubicmap model (generate model from image)
+    
+    Mesh mesh = GenMeshCubicmap(image, (Vector3){ 1.0f, 1.0f, 1.0f });
+    Model model = LoadModelFromMesh(mesh);
     
     // NOTE: By default each cube is mapped to one part of texture atlas
     Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-    map.material.texDiffuse = texture;                  // Set map diffuse texture
+    model.material.maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
 
     UnloadImage(image);     // Unload cubesmap image from RAM, already uploaded to VRAM
     
