@@ -26,7 +26,7 @@
 # Define required raylib variables
 # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
 PLATFORM ?= PLATFORM_DESKTOP
-RAYLIB_PATH ?= ..
+RAYLIB_PATH ?= ../..
 PROJECT_NAME ?= raylib_example
 
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -71,8 +71,8 @@ endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
     EMSDK_PATH = C:/emsdk
-    EMSCRIPTEN_VERSION = 1.37.9
-    CLANG_VERSION=e1.37.9_64bit
+    EMSCRIPTEN_VERSION = 1.37.21
+    CLANG_VERSION=e1.37.21_64bit
     PYTHON_VERSION=2.7.5.3_64bit
     NODE_VERSION=4.1.1_64bit
     export PATH=$(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
@@ -160,7 +160,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
-    CFLAGS += -s USE_GLFW=3 -s ASSERTIONS=1 --profiling TOTAL_MEMORY=16777216 --preload-file resources
+    CFLAGS += -s USE_GLFW=3 -s ASSERTIONS=1 --profiling -s TOTAL_MEMORY=16777216 --preload-file resources
 endif
 
 # Define include paths for required headers
@@ -228,12 +228,12 @@ endif
 ifeq ($(PLATFORM_OS),WINDOWS)
     # resources file contains windows exe icon
     # -Wl,--subsystem,windows hides the console window
-    WINFLAGS = $(RAYLIB_PATH)/src/resources -Wl,--subsystem,windows
+    CFLAGS += $(RAYLIB_PATH)/src/resources -Wl,--subsystem,windows
 endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     EXT = .html
-    WEB_SHELL = --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
+    CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
 endif
 
 # define all object files required
@@ -269,6 +269,7 @@ EXAMPLES = \
     textures/textures_particles_blending \
     textures/textures_image_processing \
     textures/textures_image_drawing \
+    textures/textures_image_generation \
     text/text_sprite_fonts \
     text/text_bmfont_ttf \
     text/text_raylib_fonts \
@@ -284,6 +285,10 @@ EXAMPLES = \
     models/models_heightmap \
     models/models_cubicmap \
     models/models_mesh_picking \
+    models/models_mesh_generation \
+    models/models_material_pbr \
+    models/models_skybox \
+    models/models_yaw_pitch_roll \
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
@@ -305,45 +310,45 @@ all: examples
 
 # Generic compilation pattern
 %: %.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # Compile all examples
 examples: $(EXAMPLES)
 
 # compile [core] example - basic window
 core/core_basic_window: core/core_basic_window.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - keyboard input
 core/core_input_keys: core/core_input_keys.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - mouse input
 core/core_input_mouse: core/core_input_mouse.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - mouse wheel
 core/core_mouse_wheel: core/core_mouse_wheel.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - gamepad input
 core/core_input_gamepad: core/core_input_gamepad.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file core/resources/ps3.png@resources/ps3.png \
     --preload-file core/resources/xbox.png@resources/xbox.png
 
 # compile [core] example - generate random values
 core/core_random_values: core/core_random_values.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - color selection (collision detection)
 core/core_color_select: core/core_color_select.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - drop files
 core/core_drop_files: core/core_drop_files.c
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 else
 	@echo core_drop_files: Example not supported on PLATFORM_ANDROID or PLATFORM_WEB or PLATFORM_RPI
 endif
@@ -351,125 +356,129 @@ endif
 # compile [core] example - storage values
 core/core_storage_values: core/core_storage_values.c
 ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP PLATFORM_RPI))
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 else
 	@echo core_storage_values: Example not supported on PLATFORM_ANDROID or PLATFORM_WEB
 endif
 
 # compile [core] example - gestures detection
 core/core_gestures_detection: core/core_gestures_detection.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 3d mode
 core/core_3d_mode: core/core_3d_mode.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 3d picking
 core/core_3d_picking: core/core_3d_picking.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 3d camera free
 core/core_3d_camera_free: core/core_3d_camera_free.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 3d camera first person
 core/core_3d_camera_first_person: core/core_3d_camera_first_person.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 2d camera
 core/core_2d_camera: core/core_2d_camera.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - world screen
 core/core_world_screen: core/core_world_screen.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - vr simulator
 core/core_vr_simulator: core/core_vr_simulator.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - raylib logo (with basic shapes)
 shapes/shapes_logo_raylib: shapes/shapes_logo_raylib.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - basic shapes usage (rectangle, circle, ...)
 shapes/shapes_basic_shapes: shapes/shapes_basic_shapes.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - raylib color palette
 shapes/shapes_colors_palette: shapes/shapes_colors_palette.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - raylib logo animation
 shapes/shapes_logo_raylib_anim: shapes/shapes_logo_raylib_anim.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
     
 # compile [shapes] example - lines bezier
 shapes/shapes_lines_bezier: shapes/shapes_lines_bezier.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [textures] example - raylib logo texture loading
 textures/textures_logo_raylib: textures/textures_logo_raylib.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [textures] example - image loading and conversion to texture
 textures/textures_image_loading: textures/textures_image_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
 
 # compile [textures] example - texture rectangle drawing
 textures/textures_rectangle: textures/textures_rectangle.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/scarfy.png@resources/scarfy.png
 
 # compile [textures] example - texture source and destination rectangles
 textures/textures_srcrec_dstrec: textures/textures_srcrec_dstrec.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/scarfy.png@resources/scarfy.png
 
 # compile [textures] example - texture to image
 textures/textures_to_image: textures/textures_to_image.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
     
 # compile [textures] example - texture raw data
 textures/textures_raw_data: textures/textures_raw_data.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/fudesumi.raw@resources/fudesumi.raw
     
 # compile [textures] example - texture particles blending
 textures/textures_particles_blending: textures/textures_particles_blending.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/smoke.png@resources/smoke.png
 
 # compile [textures] example - texture image processing
 textures/textures_image_processing: textures/textures_image_processing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/parrots.png@resources/parrots.png
     
 # compile [textures] example - texture image drawing
 textures/textures_image_drawing: textures/textures_image_drawing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/parrots.png@resources/parrots.png \
     --preload-file textures/resources/cat.png@resources/cat.png
     
+# compile [textures] example - texture image generation
+textures/textures_image_generation: textures/textures_image_generation.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
 # compile [text] example - sprite fonts loading
 text/text_sprite_fonts: text/text_sprite_fonts.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file text/resources/custom_mecha.png@resources/custom_mecha.png \
     --preload-file text/resources/custom_alagard.png@resources/custom_alagard.png \
     --preload-file text/resources/custom_jupiter_crash.png@resources/custom_jupiter_crash.png
 
 # compile [text] example - bmfonts and ttf loading
 text/text_bmfont_ttf: text/text_bmfont_ttf.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s ALLOW_MEMORY_GROWTH=1 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1 \
     --preload-file text/resources/bmfont.fnt@resources/bmfont.fnt \
     --preload-file text/resources/bmfont.png@resources/bmfont.png \
     --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf
 
 # compile [text] example - raylib fonts
 text/text_raylib_fonts: text/text_raylib_fonts.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file text/resources/fonts/alagard.png@resources/fonts/alagard.png \
     --preload-file text/resources/fonts/pixelplay.png@resources/fonts/pixelplay.png \
     --preload-file text/resources/fonts/mecha.png@resources/fonts/mecha.png \
@@ -481,70 +490,70 @@ text/text_raylib_fonts: text/text_raylib_fonts.c
 
 # compile [text] example - text formatting
 text/text_format_text: text/text_format_text.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [text] example - text writing animation
 text/text_writing_anim: text/text_writing_anim.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [text] example - text ttf loading
 text/text_ttf_loading: text/text_ttf_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s ALLOW_MEMORY_GROWTH=1 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1 \
     --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
 
 # compile [text] example - text bmfont unordered
 text/text_bmfont_unordered: text/text_bmfont_unordered.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file text/resources/pixantiqua.fnt@resources/pixantiqua.fnt \
     --preload-file text/resources/pixantiqua_0.png@resources/pixantiqua_0.png
 
 # compile [text] example - text input box
 text/text_input_box: text/text_input_box.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [models] example - basic geometric 3d shapes
 models/models_geometric_shapes: models/models_geometric_shapes.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [models] example - box collisions
 models/models_box_collisions: models/models_box_collisions.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [models] example - basic window
 models/models_planes: models/models_planes.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [models] example - billboard usage
 models/models_billboard: models/models_billboard.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/billboard.png@resources/billboard.png
 
 # compile [models] example - OBJ model loading
 models/models_obj_loading: models/models_obj_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s TOTAL_MEMORY=67108864 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file models/resources/model/dwarf.obj@resources/model/dwarf.obj \
     --preload-file models/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png
 
 # compile [models] example - heightmap loading
 models/models_heightmap: models/models_heightmap.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/heightmap.png@resources/heightmap.png
 
 # compile [models] example - cubesmap loading
 models/models_cubicmap: models/models_cubicmap.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/cubicmap.png@resources/cubicmap.png \
     --preload-file models/resources/cubicmap_atlas.png@resources/cubicmap_atlas.png
 
 # compile [models] example - model mesh picking
 models/models_mesh_picking: models/models_mesh_picking.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/tower.obj@resources/tower.obj \
     --preload-file models/resources/tower.png@resources/tower.png
 
 # compile [shaders] example - model shader
 shaders/shaders_model_shader: shaders/shaders_model_shader.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s TOTAL_MEMORY=67108864 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
     --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100/base.vs@resources/shaders/glsl100/base.vs \
@@ -552,14 +561,14 @@ shaders/shaders_model_shader: shaders/shaders_model_shader.c
 
 # compile [shaders] example - shapes texture shader
 shaders/shaders_shapes_textures: shaders/shaders_shapes_textures.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file shaders/resources/fudesumi.png@resources/fudesumi.png \
     --preload-file shaders/resources/shaders/glsl100/base.vs@resources/shaders/glsl100/base.vs \
     --preload-file shaders/resources/shaders/glsl100/grayscale.fs@resources/shaders/glsl100/grayscale.fs
 
 # compile [shaders] example - custom uniform in shader
 shaders/shaders_custom_uniform: shaders/shaders_custom_uniform.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s TOTAL_MEMORY=67108864 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
     --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100/base.vs@resources/shaders/glsl100/base.vs \
@@ -567,50 +576,50 @@ shaders/shaders_custom_uniform: shaders/shaders_custom_uniform.c
 
 # compile [shaders] example - postprocessing shader
 shaders/shaders_postprocessing: shaders/shaders_postprocessing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s TOTAL_MEMORY=67108864 \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
     --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100@resources/shaders/glsl100
 
 # compile [audio] example - sound loading and playing (WAV and OGG)
 audio/audio_sound_loading: audio/audio_sound_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file audio/resources/weird.wav@resources/weird.wav \
     --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
 
 # compile [audio] example - music stream playing (OGG)
 audio/audio_music_stream: audio/audio_music_stream.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file audio/resources/guitar_noodling.ogg@resources/guitar_noodling.ogg
 
 # compile [audio] example - module playing (XM)
 audio/audio_module_playing: audio/audio_module_playing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) \
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file audio/resources/mini1111.xm@resources/mini1111.xm
 
 # compile [audio] example - raw audio streaming
 audio/audio_raw_stream: audio/audio_raw_stream.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s ALLOW_MEMORY_GROWTH=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1
 
 # compile [physac] example - physics demo
 physac/physics_demo: physac/physics_demo.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -static -lpthread -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
 
 # compile [physac] example - physics friction
 physac/physics_friction: physac/physics_friction.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -static -lpthread -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
 
 # compile [physac] example - physics movement
 physac/physics_movement: physac/physics_movement.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -static -lpthread -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
 
 # compile [physac] example - physics restitution
 physac/physics_restitution: physac/physics_restitution.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -static -lpthread -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
 
 # compile [physac] example - physics shatter
 physac/physics_shatter: physac/physics_shatter.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDES) $(LFLAGS) $(LIBS) -static -lpthread -D$(PLATFORM) $(WINFLAGS) $(WEB_SHELL) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
 
 # fix dylib install path name for each executable (MAC)
 fix_dylib:
