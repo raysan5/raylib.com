@@ -47,11 +47,11 @@ int main()
     cubicmap = LoadTextureFromImage(image);             // Convert image to texture to display (VRAM)
     
     Mesh mesh = GenMeshCubicmap(image, (Vector3){ 1.0f, 1.0f, 1.0f });
-    Model model = LoadModelFromMesh(mesh);
+    map = LoadModelFromMesh(mesh);
     
     // NOTE: By default each cube is mapped to one part of texture atlas
     Texture2D texture = LoadTexture("resources/cubicmap_atlas.png");    // Load map texture
-    model.material.maps[MAP_DIFFUSE].texture = texture;                 // Set map diffuse texture
+    map.material.maps[MAP_DIFFUSE].texture = texture;                   // Set map diffuse texture
 
     UnloadImage(image);     // Unload cubesmap image from RAM, already uploaded to VRAM
     

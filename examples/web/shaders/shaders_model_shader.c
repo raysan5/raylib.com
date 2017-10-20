@@ -57,8 +57,8 @@ int main()
     shader = LoadShader("resources/shaders/glsl100/base.vs", 
                         "resources/shaders/glsl100/grayscale.fs");   // Load model shader
 
-    dwarf.material.shader = shader;             // Set shader effect to 3d model
-    dwarf.material.texDiffuse = texture;        // Bind texture to model
+    dwarf.material.shader = shader;                         // Set shader effect to 3d model
+    dwarf.material.maps[MAP_DIFFUSE].texture = texture;     // Bind texture to model
 
     // Setup orbital camera
     SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode

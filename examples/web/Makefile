@@ -191,7 +191,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         LDLIBS = -lraylib -lglfw3 -lopengl32 -lgdi32
 
         # Define required flags and libs for OpenAL Soft STATIC/SHARED usage
-        # NOTE: ALLIBS flag only required for raylib Win32 SHARED library building
+        # NOTE: Flag only required for raylib Win32 SHARED library building
         ifeq ($(OPENAL_LIBTYPE),STATIC)
             LDLIBS += -lopenal32 -lwinmm
             CFLAGS += -DAL_LIBTYPE_STATIC -Wl,-allow-multiple-definition
@@ -415,7 +415,8 @@ shapes/shapes_lines_bezier: shapes/shapes_lines_bezier.c
 
 # compile [textures] example - raylib logo texture loading
 textures/textures_logo_raylib: textures/textures_logo_raylib.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
 
 # compile [textures] example - image loading and conversion to texture
 textures/textures_image_loading: textures/textures_image_loading.c
@@ -460,7 +461,7 @@ textures/textures_image_drawing: textures/textures_image_drawing.c
     
 # compile [textures] example - texture image generation
 textures/textures_image_generation: textures/textures_image_generation.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1
     
 # compile [text] example - sprite fonts loading
 text/text_sprite_fonts: text/text_sprite_fonts.c

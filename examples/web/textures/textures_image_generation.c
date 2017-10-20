@@ -11,8 +11,30 @@
 
 #include "raylib.h"
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
+
 #define NUM_TEXTURES  7      // Currently we have 7 generation algorithms
 
+//----------------------------------------------------------------------------------
+// Global Variables Definition
+//----------------------------------------------------------------------------------
+int screenWidth = 800;
+int screenHeight = 450;
+
+Texture2D textures[NUM_TEXTURES];
+
+int currentTexture = 0;
+    
+//----------------------------------------------------------------------------------
+// Module Functions Declaration
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void);     // Update and Draw one frame
+
+//----------------------------------------------------------------------------------
+// Main Enry Point
+//----------------------------------------------------------------------------------
 int main()
 {
     // Initialization
@@ -30,7 +52,6 @@ int main()
     Image perlinNoise = GenImagePerlinNoise(screenWidth, screenHeight, 8.f);
     Image cellular = GenImageCellular(screenWidth, screenHeight, 32);
 
-    Texture2D textures[NUM_TEXTURES];
     textures[0] = LoadTextureFromImage(verticalGradient);
     textures[1] = LoadTextureFromImage(horizontalGradient);
     textures[2] = LoadTextureFromImage(radialGradient);
@@ -46,51 +67,20 @@ int main()
     UnloadImage(checked);
     UnloadImage(whiteNoise);
     UnloadImage(perlinNoise);
-    UnloadImage(cellular);
-
-    int currentTexture = 0;
+    UnloadImage(cellular);   
     
-    SetTargetFPS(60);
-    //---------------------------------------------------------------------------------------
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+#else
+    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+    //--------------------------------------------------------------------------------------
     
     // Main game loop
-    while (!WindowShouldClose())
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-        {
-            currentTexture = (currentTexture + 1)%NUM_TEXTURES; // Cycle between the textures
-        }
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-        
-            ClearBackground(RAYWHITE);
-            
-            DrawTexture(textures[currentTexture], 0, 0, WHITE);
-            
-            DrawRectangle(30, 400, 325, 30, Fade(SKYBLUE, 0.5f));
-            DrawRectangleLines(30, 400, 325, 30, Fade(WHITE, 0.5f));
-            DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL TEXTURES", 40, 410, 10, WHITE);
-            
-            switch(currentTexture)
-            {
-                case 0: DrawText("VERTICAL GRADIENT", 560, 10, 20, RAYWHITE); break;
-                case 1: DrawText("HORIZONTAL GRADIENT", 540, 10, 20, RAYWHITE); break;
-                case 2: DrawText("RADIAL GRADIENT", 580, 10, 20, LIGHTGRAY); break;
-                case 3: DrawText("CHECKED", 680, 10, 20, RAYWHITE); break;
-                case 4: DrawText("WHITE NOISE", 640, 10, 20, RED); break;
-                case 5: DrawText("PERLIN NOISE", 630, 10, 20, RAYWHITE); break;
-                case 6: DrawText("CELLULAR", 670, 10, 20, RAYWHITE); break;
-                default: break;
-            }
-            
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        UpdateDrawFrame();
     }
+#endif
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
@@ -102,4 +92,45 @@ int main()
     //--------------------------------------------------------------------------------------
     
     return 0;
+}
+
+//----------------------------------------------------------------------------------
+// Module Functions Definition
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        currentTexture = (currentTexture + 1)%NUM_TEXTURES; // Cycle between the textures
+    }
+    //----------------------------------------------------------------------------------
+
+    // Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+    
+        ClearBackground(RAYWHITE);
+        
+        DrawTexture(textures[currentTexture], 0, 0, WHITE);
+        
+        DrawRectangle(30, 400, 325, 30, Fade(SKYBLUE, 0.5f));
+        DrawRectangleLines(30, 400, 325, 30, Fade(WHITE, 0.5f));
+        DrawText("MOUSE LEFT BUTTON to CYCLE PROCEDURAL TEXTURES", 40, 410, 10, WHITE);
+        
+        switch(currentTexture)
+        {
+            case 0: DrawText("VERTICAL GRADIENT", 560, 10, 20, RAYWHITE); break;
+            case 1: DrawText("HORIZONTAL GRADIENT", 540, 10, 20, RAYWHITE); break;
+            case 2: DrawText("RADIAL GRADIENT", 580, 10, 20, LIGHTGRAY); break;
+            case 3: DrawText("CHECKED", 680, 10, 20, RAYWHITE); break;
+            case 4: DrawText("WHITE NOISE", 640, 10, 20, RED); break;
+            case 5: DrawText("PERLIN NOISE", 630, 10, 20, RAYWHITE); break;
+            case 6: DrawText("CELLULAR", 670, 10, 20, RAYWHITE); break;
+            default: break;
+        }
+        
+    EndDrawing();
+    //----------------------------------------------------------------------------------
 }

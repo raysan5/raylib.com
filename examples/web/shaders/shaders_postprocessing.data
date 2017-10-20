@@ -60782,8 +60782,8 @@ uniform vec4 colDiffuse;
 const float renderWidth = 800.0;
 const float renderHeight = 450.0;
 
-const float pixelWidth = 5.0;
-const float pixelHeight = 5.0;
+float pixelWidth = 5.0;
+float pixelHeight = 5.0;
 
 void main() 
 { 

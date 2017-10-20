@@ -52,8 +52,6 @@ int main()
     Texture2D texture = LoadTextureFromImage(checked);
     UnloadImage(checked);
     
-    Model models[NUM_MODELS];
-    
     models[0] = LoadModelFromMesh(GenMeshPlane(2, 2, 5, 5));
     models[1] = LoadModelFromMesh(GenMeshCube(2.0f, 1.0f, 2.0f));
     models[2] = LoadModelFromMesh(GenMeshSphere(2, 32, 32));

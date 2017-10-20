@@ -59,7 +59,7 @@ int main()
 
     dwarf = LoadModel("resources/model/dwarf.obj");               // Load OBJ model
     texture = LoadTexture("resources/model/dwarf_diffuse.png");   // Load model texture
-    dwarf.material.texDiffuse = texture;                          // Set dwarf model diffuse texture
+    dwarf.material.maps[MAP_DIFFUSE].texture = texture;          // Set dwarf model diffuse texture
 
     shader = LoadShader("resources/shaders/glsl100/base.vs", 
                         "resources/shaders/glsl100/swirl.fs");    // Load postpro shader

@@ -100,7 +100,7 @@ int main()
 
     dwarf = LoadModel("resources/model/dwarf.obj");               // Load OBJ model
     texture = LoadTexture("resources/model/dwarf_diffuse.png");   // Load model texture
-    dwarf.material.texDiffuse = texture;                          // Set dwarf model diffuse texture
+    dwarf.material.maps[MAP_DIFFUSE].texture = texture;          // Set dwarf model diffuse texture
 
     // Load all postpro shaders
     // NOTE 1: All postpro shader use the base vertex shader (DEFAULT_VERTEX_SHADER)
