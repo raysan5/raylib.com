@@ -60396,7 +60396,7 @@ attribute vec3 vertexNormal;
 attribute vec4 vertexColor;
 
 // Input uniform values
-uniform mat4 mvpMatrix;
+uniform mat4 mvp;
 
 // Output vertex attributes (to fragment shader)
 varying vec2 fragTexCoord;
@@ -60411,7 +60411,7 @@ void main()
     fragColor = vertexColor;
     
     // Calculate final vertex position
-    gl_Position = mvpMatrix*vec4(vertexPosition, 1.0);
+    gl_Position = mvp*vec4(vertexPosition, 1.0);
 }#version 100
 
 precision mediump float;
@@ -60427,16 +60427,16 @@ uniform vec4 colDiffuse;
 // NOTE: Add here your custom variables
 
 // NOTE: Render size values should be passed from code
-const float renderWidth = 800;
-const float renderHeight = 450;
-
-float radius = 250.0;
-float angle = 0.8;
-
 uniform vec2 center;
 
 void main()
 {
+    float renderWidth = 800.0;
+    float renderHeight = 450.0;
+
+    float radius = 250.0;
+    float angle = 0.8;
+
     vec2 texSize = vec2(renderWidth, renderHeight);
     vec2 tc = fragTexCoord*texSize;
     tc -= center;

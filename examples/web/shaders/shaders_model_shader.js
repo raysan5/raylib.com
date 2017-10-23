@@ -185,7 +185,7 @@ Module['FS_createPath']('/resources/shaders', 'glsl100', true, true);
   }
 
  }
- loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 2748249, "filename": "/resources/model/dwarf.obj"}, {"audio": 0, "start": 2748249, "crunched": 0, "end": 4022872, "filename": "/resources/model/dwarf_diffuse.png"}, {"audio": 0, "start": 4022872, "crunched": 0, "end": 4023477, "filename": "/resources/shaders/glsl100/base.vs"}, {"audio": 0, "start": 4023477, "crunched": 0, "end": 4024142, "filename": "/resources/shaders/glsl100/grayscale.fs"}], "remote_package_size": 4024142, "package_uuid": "3e369581-a002-4e04-a268-48ca37a6ee4c"});
+ loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 2748249, "filename": "/resources/model/dwarf.obj"}, {"audio": 0, "start": 2748249, "crunched": 0, "end": 4022872, "filename": "/resources/model/dwarf_diffuse.png"}, {"audio": 0, "start": 4022872, "crunched": 0, "end": 4023465, "filename": "/resources/shaders/glsl100/base.vs"}, {"audio": 0, "start": 4023465, "crunched": 0, "end": 4024130, "filename": "/resources/shaders/glsl100/grayscale.fs"}], "remote_package_size": 4024130, "package_uuid": "f3c8d826-ae04-47d4-9582-0e97d145347c"});
 
 })();
 

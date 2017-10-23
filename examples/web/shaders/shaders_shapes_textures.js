@@ -184,7 +184,7 @@ Module['FS_createPath']('/resources/shaders', 'glsl100', true, true);
   }
 
  }
- loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 219234, "filename": "/resources/fudesumi.png"}, {"audio": 0, "start": 219234, "crunched": 0, "end": 219839, "filename": "/resources/shaders/glsl100/base.vs"}, {"audio": 0, "start": 219839, "crunched": 0, "end": 220504, "filename": "/resources/shaders/glsl100/grayscale.fs"}], "remote_package_size": 220504, "package_uuid": "08616fcd-ba0d-4214-9679-fdacd0c13946"});
+ loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 219234, "filename": "/resources/fudesumi.png"}, {"audio": 0, "start": 219234, "crunched": 0, "end": 219827, "filename": "/resources/shaders/glsl100/base.vs"}, {"audio": 0, "start": 219827, "crunched": 0, "end": 220492, "filename": "/resources/shaders/glsl100/grayscale.fs"}], "remote_package_size": 220492, "package_uuid": "4caa2262-ea8d-402a-9094-fa538499d023"});
 
 })();
 
