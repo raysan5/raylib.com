@@ -15,6 +15,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 #define MAX_COLUMNS 20
 
 //----------------------------------------------------------------------------------
@@ -42,12 +46,20 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera first person");
-    
+#endif
+
     for (int i = 0; i < MAX_COLUMNS; i++)
     {
         heights[i] = (float)GetRandomValue(1, 12);
@@ -75,8 +87,9 @@ int main()
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------

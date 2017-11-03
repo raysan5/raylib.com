@@ -22,6 +22,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -45,12 +49,20 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     SetConfigFlags(FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [shaders] example - model shader");
+#endif
 
     dwarf = LoadModel("resources/model/dwarf.obj");                  // Load OBJ model
     texture = LoadTexture("resources/model/dwarf_diffuse.png");      // Load model texture

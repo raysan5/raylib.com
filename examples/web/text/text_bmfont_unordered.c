@@ -15,6 +15,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -35,11 +39,19 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [text] example - bmfont unordered loading and drawing");
+#endif
 
     // NOTE: Loaded font has an unordered list of characters (chars in the range 32..255)
     font = LoadSpriteFont("resources/pixantiqua.fnt");       // BMFont (AngelCode)
@@ -63,8 +75,9 @@ int main()
 
     CloseWindow();          // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------

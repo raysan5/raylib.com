@@ -15,6 +15,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -39,12 +43,20 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d picking");
-	
+#endif
+
     camera.position = (Vector3){ 10.0f, 10.0f, 10.0f };  // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
@@ -69,8 +81,9 @@ int main()
     //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------

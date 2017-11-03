@@ -15,6 +15,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -39,12 +43,20 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [text] example - sprite fonts usage");
-    
+#endif
+
     // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
     font1 = LoadSpriteFont("resources/custom_mecha.png");          // SpriteFont loading
     font2 = LoadSpriteFont("resources/custom_alagard.png");        // SpriteFont loading
@@ -79,8 +91,9 @@ int main()
     UnloadSpriteFont(font3);      // SpriteFont unloading
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------

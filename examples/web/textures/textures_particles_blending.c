@@ -15,6 +15,10 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
+#endif
+
 #define MAX_PARTICLES 200
 
 //----------------------------------------------------------------------------------
@@ -50,13 +54,21 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - particles blending");
-    
-     // Initialize particles
+#endif
+
+    // Initialize particles
     for (int i = 0; i < MAX_PARTICLES; i++)
     {
         mouseTail[i].position = (Vector2){ 0, 0 };
@@ -88,8 +100,9 @@ int main()
 
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------
