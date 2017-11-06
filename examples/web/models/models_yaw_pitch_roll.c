@@ -15,11 +15,12 @@
 #include "raylib.h"
 #include "raymath.h"
 
-// Draw angle gauge controls
-void DrawAngleGauge(Texture2D angleGauge, int x, int y, float angle, char title[], Color color);
-
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
+#endif
+
+#if defined(PLATFORM_ANDROID)
+    #include "android_native_app_glue.h"
 #endif
 
 //----------------------------------------------------------------------------------
@@ -48,17 +49,25 @@ float yaw = 0.0f;
 //----------------------------------------------------------------------------------
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
+// Draw angle gauge controls
+void DrawAngleGauge(Texture2D angleGauge, int x, int y, float angle, char title[], Color color);
+
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-int main()
+#if defined(PLATFORM_ANDROID)
+void android_main(struct android_app *app) 
+#else
+int main(void)
+#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
+#if defined(PLATFORM_ANDROID)
+    InitWindow(screenWidth, screenHeight, app);
+#else
     InitWindow(screenWidth, screenHeight, "raylib [models] example - plane rotations (yaw, pitch, roll)");
+#endif
 
     texAngleGauge = LoadTexture("resources/angle_gauge.png"); 
     texBackground = LoadTexture("resources/background.png");
@@ -106,8 +115,9 @@ int main()
     
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-    
+#if !defined(PLATFORM_ANDROID)
     return 0;
+#endif
 }
 
 //----------------------------------------------------------------------------------
