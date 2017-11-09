@@ -73,6 +73,7 @@ p a:hover{text-decoration: none; color:gray;}
 #facebook{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_facebook.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #twitter{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_twitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #github{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_github.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#kofi{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_kofi.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 .list{margin-top:10px; margin-left:30px; display: inline-block}
 
 #licensebox { width:808px; height:400px; border:12px solid; border-color:#d0d0d0; background-color:#e4e4e4;}
