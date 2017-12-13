@@ -12,7 +12,7 @@
 *   This example has been created using raylib 1.3 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Copyright (c) 2014 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2014-2017 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
@@ -42,7 +42,7 @@ int main()
     
     Vector3 position = { 0.0f, 0.0f, 0.0f };    // Set model position
     
-    SetCameraMode(camera, CAMERA_FREE);         // Set an orbital camera mode
+    SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode
 
     SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
