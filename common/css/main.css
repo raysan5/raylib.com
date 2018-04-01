@@ -61,7 +61,7 @@ p a:hover{text-decoration: none; color:gray;}
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e0e0e0',GradientType=0 );
 }
 	
-#social{ width:410px; height:50px; position:relative; float:right; margin-right:8px; margin-top:20px; margin-bottom:20px; }
+#social{ width:450px; height:50px; position:relative; float:right; margin-right:8px; margin-top:20px; margin-bottom:20px; }
 #social a:hover{ background-position: 0 -36px;}
 #youtube{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_youtube.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #handmade{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_handmade.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
@@ -75,6 +75,7 @@ p a:hover{text-decoration: none; color:gray;}
 #twitter{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_twitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #github{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_github.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #kofi{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_kofi.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#discord{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_discord.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 .list{margin-top:10px; margin-left:30px; display: inline-block}
 
 #licensebox { width:808px; height:400px; border:12px solid; border-color:#d0d0d0; background-color:#e4e4e4;}
