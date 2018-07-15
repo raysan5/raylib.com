@@ -1,7 +1,8 @@
 
     // Window-related functions
-    void InitWindow(int width, int height, char* title);                    // Initialize Window and Graphics Context (OpenGL)
+    void InitWindow(int width, int height, const char *title);              // Initialize window and OpenGL context
     void CloseWindow(void);                                                 // Close window and unload OpenGL context
+    bool IsWindowReady(void);                                               // Check if window has been initialized successfully
     bool WindowShouldClose(void);                                           // Check if KEY_ESCAPE pressed or Close icon pressed
     bool IsWindowMinimized(void);                                           // Check if window has been minimized (or lost focus)
     void ToggleFullscreen(void);                                            // Toggle fullscreen mode (only PLATFORM_DESKTOP)
@@ -10,9 +11,10 @@
     void SetWindowPosition(int x, int y);                                   // Set window position on screen (only PLATFORM_DESKTOP)
     void SetWindowMonitor(int monitor);                                     // Set monitor for the current window (fullscreen mode)
     void SetWindowMinSize(int width, int height);                           // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
+    void SetWindowSize(int width, int height);                              // Set window dimensions
     int GetScreenWidth(void);                                               // Get current screen width
     int GetScreenHeight(void);                                              // Get current screen height
-    
+
     // Cursor-related functions
     void ShowCursor(void);                                                  // Shows cursor
     void HideCursor(void);                                                  // Hides cursor
@@ -24,10 +26,10 @@
     void ClearBackground(Color color);                                      // Set background color (framebuffer clear color)
     void BeginDrawing(void);                                                // Setup canvas (framebuffer) to start drawing
     void EndDrawing(void);                                                  // End canvas drawing and swap buffers (double buffering)
-    void Begin2dMode(Camera2D camera);                                      // Initialize 2D mode with custom camera (2D)
-    void End2dMode(void);                                                   // Ends 2D mode with custom camera
-    void Begin3dMode(Camera camera);                                        // Initializes 3D mode with custom camera (3D)
-    void End3dMode(void);                                                   // Ends 3D mode and returns to default 2D orthographic mode
+    void BeginMode2D(Camera2D camera);                                      // Initialize 2D mode with custom camera (2D)
+    void EndMode2D(void);                                                   // Ends 2D mode with custom camera
+    void BeginMode3D(Camera3D camera);                                      // Initializes 3D mode with custom camera (3D)
+    void EndMode3D(void);                                                   // Ends 3D mode and returns to default 2D orthographic mode
     void BeginTextureMode(RenderTexture2D target);                          // Initializes render texture for drawing
     void EndTextureMode(void);                                              // Ends drawing to render texture
 
@@ -40,32 +42,29 @@
     void SetTargetFPS(int fps);                                             // Set target FPS (maximum)
     int GetFPS(void);                                                       // Returns current FPS
     float GetFrameTime(void);                                               // Returns time in seconds for last frame drawn
+    double GetTime(void);                                                   // Returns elapsed time in seconds since InitWindow()
 
     // Color-related functions
-    int GetHexValue(Color color);                                           // Returns hexadecimal value for a Color
+    int ColorToInt(Color color);                                            // Returns hexadecimal value for a Color
+    Vector4 ColorNormalize(Color color);                                    // Returns color normalized as float [0..1]
+    Vector3 ColorToHSV(Color color);                                        // Returns HSV values for a Color
     Color GetColor(int hexValue);                                           // Returns a Color struct from hexadecimal value
     Color Fade(Color color, float alpha);                                   // Color fade-in or fade-out, alpha goes from 0.0f to 1.0f
-    float *ColorToFloat(Color color);                                       // Converts Color to float array and normalizes
 
-    // Math useful functions (available from raymath.h)
-    float *VectorToFloat(Vector3 vec);                                      // Returns Vector3 as float array
-    float *MatrixToFloat(Matrix mat);                                       // Returns Matrix as float array
-    Vector3 Vector3Zero(void);                                              // Vector with components value 0.0f
-    Vector3 Vector3One(void);                                               // Vector with components value 1.0f
-    Matrix MatrixIdentity(void);                                            // Returns identity matrix
-    
     // Misc. functions
     void ShowLogo(void);                                                    // Activate raylib logo at startup (can be done with flags)
-    void SetConfigFlags(char flags);                                        // Setup window configuration flags (view FLAGS)
-    void TraceLog(int logType, const char *text, ...);                      // Show trace log messages (INFO, WARNING, ERROR, DEBUG)
+    void SetConfigFlags(unsigned char flags);                               // Setup window configuration flags (view FLAGS)
+    void SetTraceLog(unsigned char types);                                  // Enable trace log message types (bit flags based)
+    void TraceLog(int logType, const char *text, ...);                      // Show trace log messages (LOG_INFO, LOG_WARNING, LOG_ERROR, LOG_DEBUG)
     void TakeScreenshot(const char *fileName);                              // Takes a screenshot of current screen (saved a .png)
     int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
 
     // Files management functions
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension
-    const char *GetExtension(const char *fileName);                         // Get file extension
-    const char *GetDirectoryPath(const char *fileName);                     // Get directory for a given fileName (with path)
-    const char *GetWorkingDirectory(void);                                  // Get current working directory
+    const char *GetExtension(const char *fileName);                         // Get pointer to extension for a filename string
+    const char *GetFileName(const char *filePath);                          // Get pointer to filename for a path string
+    const char *GetDirectoryPath(const char *fileName);                     // Get full path for a given fileName (uses static string)
+    const char *GetWorkingDirectory(void);                                  // Get current working directory (uses static string)
     bool ChangeDirectory(const char *dir);                                  // Change working directory, returns true if success
     bool IsFileDropped(void);                                               // Check if a file has been dropped into window
     char **GetDroppedFiles(int *count);                                     // Get dropped files names

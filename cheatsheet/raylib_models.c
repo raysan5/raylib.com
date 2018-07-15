@@ -28,7 +28,13 @@
     // Mesh loading/unloading functions
     Mesh LoadMesh(const char *fileName);                                                                // Load mesh from file
     void UnloadMesh(Mesh *mesh);                                                                        // Unload mesh from memory (RAM and/or VRAM)
+    void ExportMesh(const char *fileName, Mesh mesh);                                                   // Export mesh as an OBJ file
 
+    // Mesh manipulation functions
+    BoundingBox MeshBoundingBox(Mesh mesh);                                                             // Compute mesh bounding box limits
+    void MeshTangents(Mesh *mesh);                                                                      // Compute mesh tangents
+    void MeshBinormals(Mesh *mesh);                                                                     // Compute mesh binormals
+    
     // Mesh generation functions
     Mesh GenMeshPlane(float width, float length, int resX, int resZ);                                   // Generate plane mesh (with subdivisions)
     Mesh GenMeshCube(float width, float height, float length);                                          // Generate cuboid mesh
@@ -64,8 +70,7 @@
     bool CheckCollisionRaySphere(Ray ray, Vector3 spherePosition, float sphereRadius);                              // Detect collision between ray and sphere
     bool CheckCollisionRaySphereEx(Ray ray, Vector3 spherePosition, float sphereRadius, Vector3 *collisionPoint);   // Detect collision between ray and sphere ex.
     bool CheckCollisionRayBox(Ray ray, Vector3 minBBox, Vector3 maxBBox);                                           // Detect collision between ray and box
-    BoundingBox CalculateBoundingBox(Mesh mesh);                                                                    // Calculate mesh bounding box limits
-    RayHitInfo GetCollisionRayMesh(Ray ray, Mesh *mesh);                                                // Get collision info between ray and mesh
+    RayHitInfo GetCollisionRayModel(Ray ray, Model *model);                                             // Get collision info between ray and model
     RayHitInfo GetCollisionRayTriangle(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3);                    // Get collision info between ray and triangle
     RayHitInfo GetCollisionRayGround(Ray ray, float groundHeight);                                      // Get collision info between ray and ground plane (Y-normal plane)
     
