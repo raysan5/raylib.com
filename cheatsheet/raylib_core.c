@@ -38,7 +38,7 @@
     Vector2 GetWorldToScreen(Vector3 position, Camera camera);              // Returns the screen space position for a 3d world space position
     Matrix GetCameraMatrix(Camera camera);                                  // Returns camera transform matrix (view matrix)
 
-    // Timming-related functions
+    // Timing-related functions
     void SetTargetFPS(int fps);                                             // Set target FPS (maximum)
     int GetFPS(void);                                                       // Returns current FPS
     float GetFrameTime(void);                                               // Returns time in seconds for last frame drawn
