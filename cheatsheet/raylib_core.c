@@ -122,7 +122,7 @@
     float GetGesturePinchAngle(void);                                       // Get gesture pinch angle
     
     // Camera-related functions
-    SetCameraMode(Camera camera, int mode);                                 // Set camera mode (multiple camera modes available)
+    void SetCameraMode(Camera camera, int mode);                            // Set camera mode (multiple camera modes available)
     void UpdateCamera(Camera *camera);                                      // Update camera position for selected mode
     void SetCameraPanControl(int panKey);                                   // Set camera pan key to combine with mouse movement (free camera)
     void SetCameraAltControl(int altKey);                                   // Set camera alt key to combine with mouse movement (free camera)
