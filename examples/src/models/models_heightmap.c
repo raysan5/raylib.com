@@ -21,7 +21,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [models] example - heightmap loading and drawing");
 
     // Define our custom camera to look into our 3d world
-    Camera camera = {{ 18.0f, 16.0f, 18.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+    Camera camera = {{ 18.0f, 16.0f, 18.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, 0 };
 
     Image image = LoadImage("resources/heightmap.png");             // Load heightmap image (RAM)
     Texture2D texture = LoadTextureFromImage(image);                // Convert image to texture (VRAM)
@@ -53,13 +53,13 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 DrawModel(model, mapPosition, 1.0f, RED);
 
                 DrawGrid(20, 1.0f);
 
-            End3dMode();
+            EndMode3D();
             
             DrawTexture(texture, screenWidth - texture.width - 20, 20, WHITE);
             DrawRectangleLines(screenWidth - texture.width - 20, 20, texture.width, texture.height, GREEN);

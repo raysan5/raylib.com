@@ -1,8 +1,6 @@
 /*******************************************************************************************
 *
-*   raylib [core] example - Basic window
-*
-*   Welcome to raylib!
+*   raylib [core] example - basic window
 *
 *   This example has been created using raylib 1.0 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)

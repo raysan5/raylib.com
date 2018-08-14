@@ -20,26 +20,29 @@ int main()
 
     InitWindow(screenWidth, screenHeight, "raylib [text] example - ttf loading");
     
-    const char msg[50] = "TTF SpriteFont";
+    const char msg[50] = "TTF Font";
 
     // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
     
-    // TTF SpriteFont loading with custom generation parameters
-    SpriteFont font = LoadSpriteFontEx("resources/KAISG.ttf", 96, 0, 0);
+    // TTF Font loading with custom generation parameters
+    Font font = LoadFontEx("resources/KAISG.ttf", 96, 0, 0);
     
     // Generate mipmap levels to use trilinear filtering
     // NOTE: On 2D drawing it won't be noticeable, it looks like FILTER_BILINEAR
     GenTextureMipmaps(&font.texture);
 
     float fontSize = font.baseSize;
-    Vector2 fontPosition = { 40, screenHeight/2 + 50 };
+    Vector2 fontPosition = { 40, screenHeight/2 - 80 };
     Vector2 textSize;
 
     SetTextureFilter(font.texture, FILTER_POINT);
     int currentFontFilter = 0;      // FILTER_POINT
     
+    // NOTE: Drag and drop support only available for desktop platforms: Windows, Linux, OSX
+#if defined(PLATFORM_DESKTOP)
     int count = 0;
     char **droppedFiles;
+#endif
     
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
@@ -74,6 +77,7 @@ int main()
         if (IsKeyDown(KEY_LEFT)) fontPosition.x -= 10;
         else if (IsKeyDown(KEY_RIGHT)) fontPosition.x += 10;
         
+#if defined(PLATFORM_DESKTOP)
         // Load a dropped TTF file dynamically (at current fontSize)
         if (IsFileDropped())
         {
@@ -81,11 +85,12 @@ int main()
             
             if (count == 1) // Only support one ttf file dropped
             {
-                UnloadSpriteFont(font);
-                font = LoadSpriteFontEx(droppedFiles[0], fontSize, 0, 0);
+                UnloadFont(font);
+                font = LoadFontEx(droppedFiles[0], fontSize, 0, 0);
                 ClearDroppedFiles();
             }
         }
+#endif
         //----------------------------------------------------------------------------------
         
         // Draw
@@ -119,10 +124,11 @@ int main()
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadSpriteFont(font);     // SpriteFont unloading
-    
+#if defined(PLATFORM_DESKTOP)
     ClearDroppedFiles();        // Clear internal buffers
-
+#endif
+    UnloadFont(font);     // Font unloading
+    
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
     

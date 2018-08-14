@@ -21,7 +21,7 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [models] example - box collisions");
 
     // Define the camera to look into our 3d world
-    Camera camera = {{ 0.0f, 10.0f, 10.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+    Camera camera = {{ 0.0f, 10.0f, 10.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, 0 };
     
     Vector3 playerPosition = { 0.0f, 1.0f, 2.0f };
     Vector3 playerSize = { 1.0f, 2.0f, 1.0f };
@@ -87,7 +87,7 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 // Draw enemy-box
                 DrawCube(enemyBoxPos, enemyBoxSize.x, enemyBoxSize.y, enemyBoxSize.z, GRAY);
@@ -102,7 +102,7 @@ int main()
 
                 DrawGrid(10, 1.0f);        // Draw a grid
 
-            End3dMode();
+            EndMode3D();
             
             DrawText("Move player with cursors to collide", 220, 40, 20, GRAY);
 

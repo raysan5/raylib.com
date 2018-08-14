@@ -31,6 +31,7 @@ int main()
     camera.target = (Vector3){ 0.0f, 2.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 60.0f;                                // Camera field-of-view Y
+    camera.type = CAMERA_PERSPECTIVE;                   // Camera type
     
     Vector3 cubePosition = { 0.0f, 0.0f, 0.0f };
     
@@ -57,14 +58,14 @@ int main()
             
             BeginVrDrawing();
 
-                Begin3dMode(camera);
+                BeginMode3D(camera);
 
                     DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
                     DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
 
                     DrawGrid(40, 1.0f);
 
-                End3dMode();
+                EndMode3D();
             
             EndVrDrawing();
 

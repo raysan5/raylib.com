@@ -41,7 +41,7 @@ int main()
     for (int i = 0; i < NUM_MODELS; i++) models[i].material.maps[MAP_DIFFUSE].texture = texture;
 
     // Define the camera to look into our 3d world
-    Camera camera = {{ 5.0f, 5.0f, 5.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+    Camera camera = {{ 5.0f, 5.0f, 5.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f, 0 };
 
     // Model drawing position
     Vector3 position = { 0.0f, 0.0f, 0.0f };
@@ -72,13 +72,13 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 DrawModel(models[currentModel], position, 1.0f, WHITE);
 
                 DrawGrid(10, 1.0);
 
-            End3dMode();
+            EndMode3D();
             
             DrawRectangle(30, 400, 310, 30, Fade(SKYBLUE, 0.5f));
             DrawRectangleLines(30, 400, 310, 30, Fade(DARKBLUE, 0.5f));

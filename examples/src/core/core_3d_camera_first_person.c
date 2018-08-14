@@ -23,7 +23,12 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera first person");
     
     // Define the camera to look into our 3d world (position, target, up vector)
-    Camera camera = {{ 4.0f, 2.0f, 4.0f }, { 0.0f, 1.8f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 60.0f };
+    Camera camera = { 0 };
+    camera.position = (Vector3){ 4.0f, 2.0f, 4.0f };
+    camera.target = (Vector3){ 0.0f, 1.8f, 0.0f };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 60.0f;
+    camera.type = CAMERA_PERSPECTIVE;
 
     // Generates some random columns
     float heights[MAX_COLUMNS];
@@ -56,7 +61,7 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 DrawPlane((Vector3){ 0.0f, 0.0f, 0.0f }, (Vector2){ 32.0f, 32.0f }, LIGHTGRAY); // Draw ground
                 DrawCube((Vector3){ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
@@ -70,7 +75,7 @@ int main()
                     DrawCubeWires(positions[i], 2.0f, heights[i], 2.0f, MAROON);
                 }
 
-            End3dMode();
+            EndMode3D();
             
             DrawRectangle( 10, 10, 220, 70, Fade(SKYBLUE, 0.5f));
             DrawRectangleLines( 10, 10, 220, 70, BLUE);
