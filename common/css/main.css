@@ -17,7 +17,7 @@
 ::-webkit-scrollbar-thumb:vertical { height: 50px; background-color: #000000; }
 ::-webkit-scrollbar-thumb:horizontal { width: 50px; background-color: #000000; }
 
-*{padding:0px; margin:0px; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; -moz-font-smoothing: none;-webkit-font-smoothing: none; line-height:24px;}
+*{padding:0px; margin:0px; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; line-height:24px;}
 a{text-decoration: none; color:black;}
 body{background-color:#f5f5f5;}
 p a:hover{text-decoration: none; color:gray;}
