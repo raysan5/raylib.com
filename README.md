@@ -8,7 +8,7 @@ raylib could be useful for prototyping, tools development, graphic applications,
 
 NOTE for ADVENTURERS: raylib is a programming library to learn videogames programming; 
 no fancy interface, no visual helpers, no auto-debugging... just coding in the most 
-pure spartan-programmers way. Are you ready to learn? Jump to [code examples!](http://www.raylib.com/examples.html)
+pure spartan-programmers way. Are you ready to learn? Jump to [code examples!](https://www.raylib.com/examples.html)
 
 features
 --------
@@ -31,16 +31,16 @@ features
 contact
 -------
 
-   * Webpage: [http://www.raylib.com](http://www.raylib.com)
-   * Twitter: [http://www.twitter.com/raysan5](http://www.twitter.com/raysan5)
-   * Facebook: [http://www.facebook.com/raylibgames](http://www.facebook.com/raylibgames)
+   * Webpage: [https://www.raylib.com](https://www.raylib.com)
+   * Twitter: [https://www.twitter.com/raysan5](https://www.twitter.com/raysan5)
+   * Facebook: [https://www.facebook.com/raylibgames](https://www.facebook.com/raylibgames)
    * Reddit: [https://www.reddit.com/r/raylib](https://www.reddit.com/r/raylib)
-   * Twitch: [http://www.twitch.tv/raysan5](http://www.twitch.tv/raysan5)
+   * Twitch: [https://www.twitch.tv/raysan5](https://www.twitch.tv/raysan5)
    * Patreon: [https://www.patreon.com/raysan5](https://www.patreon.com/raysan5)
 
 If you are using raylib and you enjoy it, please, [let me know][raysan5].
 
-If you feel you can help, then, [helpme!](http://www.raylib.com/helpme.html)
+If you feel you can help, then, [helpme!](https://www.raylib.com/helpme.html)
 
 license
 -------
