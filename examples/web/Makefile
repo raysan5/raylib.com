@@ -75,13 +75,13 @@ endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
-    EMSDK_PATH = C:/emsdk
-    EMSCRIPTEN_VERSION = 1.37.28
-    CLANG_VERSION=e1.37.28_64bit
-    PYTHON_VERSION=2.7.5.3_64bit
-    NODE_VERSION=4.1.1_64bit
-    export PATH=$(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
-    EMSCRIPTEN=$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION)
+    EMSDK_PATH          = D:/emsdk
+    EMSCRIPTEN_VERSION  = 1.38.20
+    CLANG_VERSION       = e1.38.20_64bit
+    PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
+    NODE_VERSION        = 8.9.1_64bit
+    export PATH         = $(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
+    EMSCRIPTEN          = $(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION)
 endif
 
 RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/release/libs
@@ -105,7 +105,7 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/rpi
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/html5
+    RAYLIB_RELEASE_PATH = .
 endif
 
 # Define default C compiler: gcc
@@ -178,7 +178,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s USE_PTHREADS=1          # multithreading support
     # -s WASM=1                  # support Web Assembly (https://github.com/kripken/emscripten/wiki/WebAssembly)
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 --profiling --preload-file resources
+    CFLAGS += -s USE_GLFW=3 -s WASM=1 --preload-file resources
     
     # Define a custom shell .html and output extension
     CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
@@ -324,6 +324,7 @@ EXAMPLES = \
     shaders/shaders_postprocessing \
     audio/audio_sound_loading \
     audio/audio_music_stream \
+    audio/audio_music_stream_test \
     audio/audio_module_playing \
     audio/audio_raw_stream \
     physac/physics_demo \
@@ -643,6 +644,11 @@ audio/audio_sound_loading: audio/audio_sound_loading.c
 audio/audio_music_stream: audio/audio_music_stream.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file audio/resources/guitar_noodling.ogg@resources/guitar_noodling.ogg
+    
+# compile [audio] example - music stream playing (OGG)
+audio/audio_music_stream_test: audio/audio_music_stream_test.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file audio/resources/game.mp3@resources/game.mp3
 
 # compile [audio] example - module playing (XM)
 audio/audio_module_playing: audio/audio_module_playing.c
