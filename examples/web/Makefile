@@ -26,7 +26,7 @@
 # Define required raylib variables
 # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
 PLATFORM ?= PLATFORM_DESKTOP
-RAYLIB_PATH = C:/GitHub/raylib
+RAYLIB_PATH = D:/GitHub/raylib
 PROJECT_NAME ?= raylib_example
 
 # Default path for raylib on Raspberry Pi, if installed in different path, update it!
@@ -75,37 +75,37 @@ endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
-    EMSDK_PATH          = D:/emsdk
-    EMSCRIPTEN_VERSION  = 1.38.20
-    CLANG_VERSION       = e1.38.20_64bit
+    EMSDK_PATH          = C:/emsdk
+    EMSCRIPTEN_VERSION  = 1.38.21
+    CLANG_VERSION       = e1.38.21_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
     NODE_VERSION        = 8.9.1_64bit
     export PATH         = $(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
     EMSCRIPTEN          = $(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION)
 endif
 
-RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/release/libs
+RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/src
 
 # Define raylib release directory for compiled library
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/win32/mingw32
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/linux
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),OSX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/osx
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),FREEBSD)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/freebsd
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
-    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/rpi
+    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    RAYLIB_RELEASE_PATH = .
+    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
 endif
 
 # Define default C compiler: gcc
@@ -178,7 +178,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s USE_PTHREADS=1          # multithreading support
     # -s WASM=1                  # support Web Assembly (https://github.com/kripken/emscripten/wiki/WebAssembly)
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -s USE_GLFW=3 -s WASM=1 --preload-file resources
+    CFLAGS += -Os -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1
     
     # Define a custom shell .html and output extension
     CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
