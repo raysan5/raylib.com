@@ -26,7 +26,7 @@
 # Define required raylib variables
 # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
 PLATFORM ?= PLATFORM_DESKTOP
-RAYLIB_PATH = C:/GitHub/raylib
+RAYLIB_PATH = D:/GitHub/raylib
 PROJECT_NAME ?= raylib_example
 
 # Default path for raylib on Raspberry Pi, if installed in different path, update it!
@@ -75,37 +75,37 @@ endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
-    EMSDK_PATH          = D:/emsdk
-    EMSCRIPTEN_VERSION  = 1.38.20
-    CLANG_VERSION       = e1.38.20_64bit
+    EMSDK_PATH          = C:/emsdk
+    EMSCRIPTEN_VERSION  = 1.38.21
+    CLANG_VERSION       = e1.38.21_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
     NODE_VERSION        = 8.9.1_64bit
     export PATH         = $(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
     EMSCRIPTEN          = $(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION)
 endif
 
-RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/release/libs
+RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/src
 
 # Define raylib release directory for compiled library
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/win32/mingw32
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/linux
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),OSX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/osx
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
     ifeq ($(PLATFORM_OS),FREEBSD)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/freebsd
+        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
-    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/release/libs/rpi
+    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    RAYLIB_RELEASE_PATH = .
+    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
 endif
 
 # Define default C compiler: gcc
@@ -171,14 +171,25 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     CFLAGS += -std=gnu99
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    # -O2                        # if used, also set --memory-init-file 0
+    # -Os                        # size optimization
+    # -O2                        # optimization level 2, if used, also set --memory-init-file 0
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
+    # -s USE_GLFW=3              # Use glfw3 library (context/input management)
+    # -s USE_SDL=2               # Use SDL2 library, required for audio backend
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
     # -s WASM=1                  # support Web Assembly (https://github.com/kripken/emscripten/wiki/WebAssembly)
+    # -s EMTERPRETIFY=1          # enable emscripten code interpreter (very slow)
+    # -s EMTERPRETIFY_ASYNC=1    # support synchronous loops by emterpreter
+    # --profiling                # include information for code profiling
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -s USE_GLFW=3 -s WASM=1 --preload-file resources
+    CFLAGS += -Os -s USE_GLFW=3 -s USE_SDL=2 -s WASM=1 -s FORCE_FILESYSTEM=1
+    
+    # NOTE: Simple raylib examples are compiled to be interpreter by emterpreter, that way,
+    # we can compile same code for ALL platforms with no change required, but, working on bigger
+    # projects, code needs to be refactored to avoid a blocking while() loop, moving Update and Draw
+    # logic to a self contained function: UpdateDrawFrame(), check core_basic_window_web.c for reference.
     
     # Define a custom shell .html and output extension
     CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
@@ -368,20 +379,13 @@ core/core_color_select: core/core_color_select.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - drop files
+# NOTE: File drop not supported on PLATFORM_ANDROID and PLATFORM_RPI (native)
 core/core_drop_files: core/core_drop_files.c
-ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-else
-	@echo core_drop_files: Example not supported on PLATFORM_ANDROID or PLATFORM_WEB or PLATFORM_RPI
-endif
 
 # compile [core] example - storage values
 core/core_storage_values: core/core_storage_values.c
-ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP PLATFORM_RPI))
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-else
-	@echo core_storage_values: Example not supported on PLATFORM_ANDROID or PLATFORM_WEB
-endif
 
 # compile [core] example - gestures detection
 core/core_gestures_detection: core/core_gestures_detection.c
