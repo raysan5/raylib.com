@@ -7,9 +7,13 @@
     void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                        // Draw a line defining thickness
     void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                    // Draw a line using cubic-bezier curves in-out
     void DrawCircle(int centerX, int centerY, float radius, Color color);                               // Draw a color-filled circle
+    void DrawCircleSector(Vector2 center, float radius, int startAngle, int endAngle, int segments, Color color);      // Draw a piece of a circle
+    void DrawCircleSectorLines(Vector2 center, float radius, int startAngle, int endAngle, int segments, Color color); // Draw circle sector outline
     void DrawCircleGradient(int centerX, int centerY, float radius, Color color1, Color color2);        // Draw a gradient-filled circle
     void DrawCircleV(Vector2 center, float radius, Color color);                                        // Draw a color-filled circle (Vector version)
     void DrawCircleLines(int centerX, int centerY, float radius, Color color);                          // Draw circle outline
+    void DrawRing(Vector2 center, float innerRadius, float outerRadius, int startAngle, int endAngle, int segments, Color color);      // Draw ring
+    void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, int startAngle, int endAngle, int segments, Color color); // Draw ring outline
     void DrawRectangle(int posX, int posY, int width, int height, Color color);                         // Draw a color-filled rectangle
     void DrawRectangleV(Vector2 position, Vector2 size, Color color);                                   // Draw a color-filled rectangle (Vector version)
     void DrawRectangleRec(Rectangle rec, Color color);                                                  // Draw a color-filled rectangle
@@ -19,11 +23,15 @@
     void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, Color col4);        // Draw a gradient-filled rectangle with custom vertex colors
     void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                    // Draw rectangle outline
     void DrawRectangleLinesEx(Rectangle rec, int lineThick, Color color);                               // Draw rectangle outline with extended parameters
+    void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);               // Draw rectangle with rounded edges
+    void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, int lineThick, Color color); // Draw rectangle with rounded edges outline
     void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                 // Draw a color-filled triangle
     void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                            // Draw triangle outline
     void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
     void DrawPolyEx(Vector2 *points, int numPoints, Color color);                                       // Draw a closed polygon defined by points
     void DrawPolyExLines(Vector2 *points, int numPoints, Color color);                                  // Draw polygon lines
+
+    void SetShapesTexture(Texture2D texture, Rectangle source);                                         // Define default texture used to draw shapes
 
     // Basic shapes collision detection functions
     bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                            // Check collision between two rectangles
