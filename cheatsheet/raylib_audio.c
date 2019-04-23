@@ -5,12 +5,6 @@
     bool IsAudioDeviceReady(void);                                                  // Check if audio device is ready
     void SetMasterVolume(float volume);                                             // Set master volume (listener)
 
-    // Audio device management functions
-    void InitAudioDevice(void);                                                     // Initialize audio device and context
-    void CloseAudioDevice(void);                                                    // Close the audio device and context
-    bool IsAudioDeviceReady(void);                                                  // Check if audio device has been initialized successfully
-    void SetMasterVolume(float volume);                                             // Set master volume (listener)
-
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                                            // Load wave data from file
     Wave LoadWaveEx(void *data, int sampleCount, int sampleRate, int sampleSize, int channels); // Load wave data from raw array data
