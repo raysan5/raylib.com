@@ -184,7 +184,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s EMTERPRETIFY_ASYNC=1    # support synchronous loops by emterpreter
     # --profiling                # include information for code profiling
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -Os -s USE_GLFW=3 -s USE_SDL=2 -s WASM=1 -s FORCE_FILESYSTEM=1
+    CFLAGS += -Os -s USE_GLFW=3 -s WASM=1 -s FORCE_FILESYSTEM=1
     
     # NOTE: Simple raylib examples are compiled to be interpreter by emterpreter, that way,
     # we can compile same code for ALL platforms with no change required, but, working on bigger
