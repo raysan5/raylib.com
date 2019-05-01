@@ -2,7 +2,7 @@
 #
 #   raylib makefile for Desktop platforms, Raspberry Pi, Android and HTML5
 #
-#   Copyright (c) 2013-2018 Ramon Santamaria (@raysan5)
+#   Copyright (c) 2013-2019 Ramon Santamaria (@raysan5)
 #
 #   This software is provided "as-is", without any express or implied warranty. In no event
 #   will the authors be held liable for any damages arising from the use of this software.
@@ -24,28 +24,45 @@
 .PHONY: all clean
 
 # Define required raylib variables
-# WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
-PLATFORM ?= PLATFORM_DESKTOP
-RAYLIB_PATH = D:/GitHub/raylib
-PROJECT_NAME ?= raylib_example
+PROJECT_NAME       ?= raylib_examples
+RAYLIB_VERSION     ?= 2.5.0
+RAYLIB_API_VERSION ?= 1
+RAYLIB_PATH        ?= C:\GitHub\raylib
 
-# Default path for raylib on Raspberry Pi, if installed in different path, update it!
-ifeq ($(PLATFORM),PLATFORM_RPI)
-    RAYLIB_PATH ?= /home/pi/raylib
-endif
+# Define default options
+
+# One of PLATFORM_DESKTOP, PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
+PLATFORM           ?= PLATFORM_DESKTOP
+
+# Locations of your newly installed library and associated headers. See ../src/Makefile
+# On Linux, if you have installed raylib but cannot compile the examples, check that
+# the *_INSTALL_PATH values here are the same as those in src/Makefile or point to known locations.
+# To enable system-wide compile-time and runtime linking to libraylib.so, run ../src/$ sudo make install RAYLIB_LIBTYPE_SHARED.
+# To enable compile-time linking to a special version of libraylib.so, change these variables here.
+# To enable runtime linking to a special version of libraylib.so, see EXAMPLE_RUNTIME_PATH below.
+# If there is a libraylib in both EXAMPLE_RUNTIME_PATH and RAYLIB_INSTALL_PATH, at runtime,
+# the library at EXAMPLE_RUNTIME_PATH, if present, will take precedence over the one at RAYLIB_INSTALL_PATH.
+# RAYLIB_INSTALL_PATH should be the desired full path to libraylib. No relative paths.
+DESTDIR ?= /usr/local
+RAYLIB_INSTALL_PATH ?= $(DESTDIR)/lib
+# RAYLIB_H_INSTALL_PATH locates the installed raylib header and associated source files.
+RAYLIB_H_INSTALL_PATH ?= $(DESTDIR)/include
 
 # Library type used for raylib: STATIC (.a) or SHARED (.so/.dll)
-RAYLIB_LIBTYPE ?= STATIC
+RAYLIB_LIBTYPE        ?= STATIC
+
+# Build mode for project: DEBUG or RELEASE
+RAYLIB_BUILD_MODE     ?= RELEASE
 
 # Use external GLFW library instead of rglfw module
-USE_EXTERNAL_GLFW ?= FALSE
+# TODO: Review usage on Linux. Target version of choice. Switch on -lglfw or -lglfw3
+USE_EXTERNAL_GLFW     ?= FALSE
 
 # Use Wayland display server protocol on Linux desktop
 # by default it uses X11 windowing system
-USE_WAYLAND_DISPLAY ?= FALSE
+USE_WAYLAND_DISPLAY   ?= FALSE
 
 # NOTE: On PLATFORM_WEB OpenAL Soft backend is used by default (check raylib/src/Makefile)
-
 
 # Determine PLATFORM_OS in case PLATFORM_DESKTOP selected
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -59,7 +76,16 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
             PLATFORM_OS=LINUX
         endif
         ifeq ($(UNAMEOS),FreeBSD)
-            PLATFORM_OS=FREEBSD
+            PLATFORM_OS=BSD
+        endif
+        ifeq ($(UNAMEOS),OpenBSD)
+            PLATFORM_OS=BSD
+        endif
+        ifeq ($(UNAMEOS),NetBSD)
+            PLATFORM_OS=BSD
+        endif
+        ifeq ($(UNAMEOS),DragonFly)
+            PLATFORM_OS=BSD
         endif
         ifeq ($(UNAMEOS),Darwin)
             PLATFORM_OS=OSX
@@ -73,20 +99,35 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     endif
 endif
 
+# RAYLIB_PATH adjustment for different platforms.
+# If using GNU make, we can get the full path to the top of the tree. Windows? BSD?
+# Required for ldconfig or other tools that do not perform path expansion.
+ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+    ifeq ($(PLATFORM_OS),LINUX)
+        RAYLIB_PREFIX ?= ..
+        RAYLIB_PATH    = $(realpath $(RAYLIB_PREFIX))
+    endif
+endif
+# Default path for raylib on Raspberry Pi, if installed in different path, update it!
+# This is not currently used by src/Makefile. Not sure of its origin or usage. Refer to wiki.
+# TODO: update install: target in src/Makefile for RPI, consider relation to LINUX.
+ifeq ($(PLATFORM),PLATFORM_RPI)
+    RAYLIB_PATH       ?= /home/pi/raylib
+endif
+
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
     EMSDK_PATH          = C:/emsdk
-    EMSCRIPTEN_VERSION  = 1.38.21
-    CLANG_VERSION       = e1.38.21_64bit
+    EMSCRIPTEN_VERSION  = 1.38.30
+    CLANG_VERSION       = e1.38.30_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
     NODE_VERSION        = 8.9.1_64bit
     export PATH         = $(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
     EMSCRIPTEN          = $(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION)
 endif
 
-RAYLIB_RELEASE_PATH ?= $(RAYLIB_PATH)/src
-
-# Define raylib release directory for compiled library
+# Define raylib release directory for compiled library.
+# RAYLIB_RELEASE_PATH points to provided binaries or your freshly built version.
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
@@ -97,7 +138,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
         RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
-    ifeq ($(PLATFORM_OS),FREEBSD)
+    ifeq ($(PLATFORM_OS),BSD)
         RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
     endif
 endif
@@ -108,6 +149,20 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
 endif
 
+# EXAMPLE_RUNTIME_PATH embeds a custom runtime location of libraylib.so or other desired libraries
+# into each example binary compiled with RAYLIB_LIBTYPE=SHARED. It defaults to RAYLIB_RELEASE_PATH
+# so that these examples link at runtime with your version of libraylib.so in ../release/libs/linux
+# without formal installation from ../src/Makefile. It aids portability and is useful if you have
+# multiple versions of raylib, have raylib installed to a non-standard location, or want to
+# bundle libraylib.so with your game. Change it to your liking.
+# Note: If, at runtime, there is a libraylib.so at both EXAMPLE_RUNTIME_PATH and RAYLIB_INSTALL_PATH,
+# The library at EXAMPLE_RUNTIME_PATH, if present, will take precedence over RAYLIB_INSTALL_PATH,
+# Implemented for LINUX below with CFLAGS += -Wl,-rpath,$(EXAMPLE_RUNTIME_PATH)
+# To see the result, run readelf -d core/core_basic_window; looking at the RPATH or RUNPATH attribute.
+# To see which libraries a built example is linking to, ldd core/core_basic_window;
+# Look for libraylib.so.1 => $(RAYLIB_INSTALL_PATH)/libraylib.so.1 or similar listing.
+EXAMPLE_RUNTIME_PATH   ?= $(RAYLIB_RELEASE_PATH)
+
 # Define default C compiler: gcc
 # NOTE: define g++ compiler if using C++
 CC = gcc
@@ -117,8 +172,8 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # OSX default compiler
         CC = clang
     endif
-    ifeq ($(PLATFORM_OS),FREEBSD)
-        # FreeBSD default compiler
+    ifeq ($(PLATFORM_OS),BSD)
+        # FreeBSD, OpenBSD, NetBSD, DragonFly default compiler
         CC = clang
     endif
 endif
@@ -130,6 +185,7 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
+    # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
     # HTML5 emscripten compiler
     CC = emcc
 endif
@@ -150,21 +206,30 @@ endif
 #  -Wall                turns on most, but not all, compiler warnings
 #  -std=c99             defines C language mode (standard C from 1999 revision)
 #  -std=gnu99           defines C language mode (GNU C from 1999 revision)
-#  -fgnu89-inline       declaring inline functions support (GCC optimized)
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
-CFLAGS += -O1 -s -Wall -std=c99 -D_DEFAULT_SOURCE -fgnu89-inline -Wno-missing-braces
+CFLAGS += -O1 -s -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces
 
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
-        # resources file contains windows exe icon
+        # resource file contains windows executable icon and properties
         # -Wl,--subsystem,windows hides the console window
-        CFLAGS += $(RAYLIB_PATH)/src/resources -Wl,--subsystem,windows
+        CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-        CFLAGS += -no-pie -D_DEFAULT_SOURCE
+        ifeq ($(RAYLIB_BUILD_MODE),DEBUG)
+            CFLAGS += -g
+            #CC = clang
+        endif
+        ifeq ($(RAYLIB_LIBTYPE),STATIC)
+        CFLAGS += -D_DEFAULT_SOURCE
+        endif
+        ifeq ($(RAYLIB_LIBTYPE),SHARED)
+        # Explicitly enable runtime link to libraylib.so
+        CFLAGS += -Wl,-rpath,$(EXAMPLE_RUNTIME_PATH)
+        endif
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -175,46 +240,65 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -O2                        # optimization level 2, if used, also set --memory-init-file 0
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # -s USE_GLFW=3              # Use glfw3 library (context/input management)
-    # -s USE_SDL=2               # Use SDL2 library, required for audio backend
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
     # -s WASM=1                  # support Web Assembly (https://github.com/kripken/emscripten/wiki/WebAssembly)
     # -s EMTERPRETIFY=1          # enable emscripten code interpreter (very slow)
     # -s EMTERPRETIFY_ASYNC=1    # support synchronous loops by emterpreter
+    # -s FORCE_FILESYSTEM=1      # force filesystem to load/save files data
     # --profiling                # include information for code profiling
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -Os -s USE_GLFW=3 -s WASM=1 -s FORCE_FILESYSTEM=1
+    CFLAGS += -Os -s USE_GLFW=3 -s ASSERTIONS=2 -s WASM=1 -s FORCE_FILESYSTEM=1
+    # -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1 --preload-file audio/resources@resources
     
     # NOTE: Simple raylib examples are compiled to be interpreter by emterpreter, that way,
     # we can compile same code for ALL platforms with no change required, but, working on bigger
     # projects, code needs to be refactored to avoid a blocking while() loop, moving Update and Draw
     # logic to a self contained function: UpdateDrawFrame(), check core_basic_window_web.c for reference.
-    
+
     # Define a custom shell .html and output extension
     CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
     EXT = .html
 endif
 
-# Define include paths for required headers
+# Define include paths for required headers.
+# Precedence: immediately local, raysan5 provided sources
 # NOTE: Several external required libraries (stb and others)
 INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/release/include -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
 
 # Define additional directories containing required header files
 ifeq ($(PLATFORM),PLATFORM_RPI)
-    # RPI requried libraries
+    # RPI required libraries
     INCLUDE_PATHS += -I/opt/vc/include
     INCLUDE_PATHS += -I/opt/vc/include/interface/vmcs_host/linux
     INCLUDE_PATHS += -I/opt/vc/include/interface/vcos/pthreads
 endif
+ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+    ifeq ($(PLATFORM_OS),BSD)
+        # Consider -L$(RAYLIB_H_INSTALL_PATH)
+        INCLUDE_PATHS += -I/usr/local/include
+    endif
+    ifeq ($(PLATFORM_OS),LINUX)
+        # Reset everything.
+        # Precedence: immediately local, installed version, raysan5 provided libs -I$(RAYLIB_H_INSTALL_PATH) -I$(RAYLIB_PATH)/release/include
+        INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -isystem. -isystem$(RAYLIB_PATH)/src -isystem$(RAYLIB_PATH)/release/include -isystem$(RAYLIB_PATH)/src/external
+    endif
+endif
 
-# Define library paths containing required libs
-LDFLAGS = -L. -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src 
+# Define library paths containing required libs.
+# Precedence: immediately local, then raysan5 provided libs
+LDFLAGS = -L. -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    ifeq ($(PLATFORM_OS),FREEBSD)
-        INCLUDE_PATHS += -I/usr/local/include
+    ifeq ($(PLATFORM_OS),BSD)
+        # Consider -L$(RAYLIB_INSTALL_PATH)
         LDFLAGS += -L. -Lsrc -L/usr/local/lib
+    endif
+    ifeq ($(PLATFORM_OS),LINUX)
+        # Reset everything.
+        # Precedence: immediately local, installed version, raysan5 provided libs
+        LDFLAGS = -L. -L$(RAYLIB_INSTALL_PATH) -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src
     endif
 endif
 
@@ -228,7 +312,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # Libraries for Windows desktop compilation
         LDLIBS = -lraylib -lopengl32 -lgdi32
-        
         # Required for physac examples
         LDLIBS += -static -lpthread
     endif
@@ -236,15 +319,17 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # Libraries for Debian GNU/Linux desktop compiling
         # NOTE: Required packages: libegl1-mesa-dev
         LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt
-        
         # On X11 requires also below libraries
         LDLIBS += -lX11
         # NOTE: It seems additional libraries are not required any more, latest GLFW just dlopen them
         #LDLIBS += -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
-        
         # On Wayland windowing system, additional libraries requires
         ifeq ($(USE_WAYLAND_DISPLAY),TRUE)
             LDLIBS += -lwayland-client -lwayland-cursor -lwayland-egl -lxkbcommon
+        endif
+        # Explicit link to libc
+        ifeq ($(RAYLIB_LIBTYPE),SHARED)
+            LDLIBS += -lc
         endif
     endif
     ifeq ($(PLATFORM_OS),OSX)
@@ -252,11 +337,10 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # NOTE: Required packages: libopenal-dev libegl1-mesa-dev
         LDLIBS = -lraylib -framework OpenGL -framework OpenAL -framework Cocoa
     endif
-    ifeq ($(PLATFORM_OS),FREEBSD)
-        # Libraries for FreeBSD desktop compiling
+    ifeq ($(PLATFORM_OS),BSD)
+        # Libraries for FreeBSD, OpenBSD, NetBSD, DragonFly desktop compiling
         # NOTE: Required packages: mesa-libs
         LDLIBS = -lraylib -lGL -lpthread -lm
-
         # On XWindow requires also below libraries
         LDLIBS += -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
     endif
@@ -294,6 +378,7 @@ EXAMPLES = \
     core/core_2d_camera \
     core/core_world_screen \
     core/core_vr_simulator \
+    core/core_input_multitouch \
     shapes/shapes_logo_raylib \
     shapes/shapes_basic_shapes \
     shapes/shapes_colors_palette \
@@ -318,10 +403,12 @@ EXAMPLES = \
     text/text_ttf_loading \
     text/text_bmfont_unordered \
     text/text_input_box \
+    text/text_font_sdf \
     models/models_geometric_shapes \
     models/models_box_collisions \
     models/models_billboard \
     models/models_obj_loading \
+    models/models_obj_viewer \
     models/models_heightmap \
     models/models_cubicmap \
     models/models_mesh_picking \
@@ -333,9 +420,10 @@ EXAMPLES = \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
     shaders/shaders_postprocessing \
+    shaders/shaders_raymarching \
+    shaders/shaders_palette_switch \
     audio/audio_sound_loading \
     audio/audio_music_stream \
-    audio/audio_music_stream_test \
     audio/audio_module_playing \
     audio/audio_raw_stream \
     physac/physics_demo \
@@ -344,6 +432,8 @@ EXAMPLES = \
     physac/physics_restitution \
     physac/physics_shatter \
 
+
+CURRENT_MAKEFILE = $(lastword $(MAKEFILE_LIST))
 
 # Default target entry
 all: $(EXAMPLES)
@@ -696,7 +786,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-		find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -f
+		find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
@@ -705,11 +795,10 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
 	find . -type f -executable -delete
-	rm -f *.o
+	rm -fv *.o
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    # TODO: Remove all generated files in all folders... avoid deleting loader.html!
-	del *.o *.html *.js *.data
+	del *.o *.html *.js
 endif
 	@echo Cleaning done
 
