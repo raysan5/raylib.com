@@ -33,14 +33,11 @@ contact
 
    * Webpage: [https://www.raylib.com](https://www.raylib.com)
    * Twitter: [https://www.twitter.com/raysan5](https://www.twitter.com/raysan5)
-   * Facebook: [https://www.facebook.com/raylibgames](https://www.facebook.com/raylibgames)
    * Reddit: [https://www.reddit.com/r/raylib](https://www.reddit.com/r/raylib)
    * Twitch: [https://www.twitch.tv/raysan5](https://www.twitch.tv/raysan5)
    * Patreon: [https://www.patreon.com/raysan5](https://www.patreon.com/raysan5)
 
 If you are using raylib and you enjoy it, please, [let me know][raysan5].
-
-If you feel you can help, then, [helpme!](https://www.raylib.com/helpme.html)
 
 license
 -------
