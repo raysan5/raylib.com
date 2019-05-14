@@ -40,6 +40,7 @@
             body{background-color:#f5f5f5;}
             #fulldata{width: 1315px!important;}
 			.eximage img{ margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
+            p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
 			pre code{ font-family: Courier New; font-size:12px; width: auto!important; border: 1px solid; border-color:#b0b0b0; width:758px; height:auto; }
 			.exdownbtn{width:250px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px; 
 						line-height:30px; text-align: center; border-width:5px;	background-color:#e1e1e1; color:#5c5a5a; 
@@ -55,13 +56,12 @@
             #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff; height: 440px!important}
             #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2; width:600px!important; }
             #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-            p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
             #header{position:relative; height:110px; width: 1000px;}
             #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
             #plinks{color: gray;}
             #plinks a, #copyright a{color: gray; text-decoration:none;}
             #plinks a:hover{color: black;}
-            #version {margin-top: 23px; width:300px;}
+            #version {margin-top: 23px; width:500px;}
             #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
             #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
             #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
@@ -78,6 +78,9 @@
 
             #copyright{color:#8b8b8b; font-size:10px; margin-left:590px; display:inline; }
             #copyright a:hover{color:black;}
+            
+            #downpdf{text-decoration: none;color:#aaaaaa;}
+            #downpdf:hover{color:#444;}
         </style>
 		
 		<script type="text/javascript">
@@ -128,7 +131,7 @@
             <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
             <p id="plinks">[<a href="https://discordapp.com/invite/VkzNHUE">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>]</p>
             <p></p>
-            <p id="version">v2.5 quick reference card  </p>
+            <p id="version">v2.5 quick reference card  [<a id="downpdf" href="raylib_cheatsheet.pdf">download as PDF</a>]</p>
         </div>
         <br>
         <div id="fulldata">
