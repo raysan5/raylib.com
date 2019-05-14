@@ -12,11 +12,17 @@
 *   This example has been created using raylib 1.3 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Copyright (c) 2014-2017 Ramon Santamaria (@raysan5)
+*   Copyright (c) 2014 Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
 #include "raylib.h"
+
+#if defined(PLATFORM_DESKTOP)
+    #define GLSL_VERSION            330
+#else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
+    #define GLSL_VERSION            100
+#endif
 
 int main()
 {
@@ -30,19 +36,26 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [shaders] example - model shader");
 
     // Define the camera to look into our 3d world
-    Camera camera = {{ 3.0f, 3.0f, 3.0f }, { 0.0f, 1.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+    Camera camera = { 0 };
+    camera.position = (Vector3){ 4.0f, 4.0f, 4.0f };
+    camera.target = (Vector3){ 0.0f, 1.0f, -1.0f };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 45.0f;
+    camera.type = CAMERA_PERSPECTIVE;
 
-    Model dwarf = LoadModel("resources/model/dwarf.obj");                   // Load OBJ model
-    Texture2D texture = LoadTexture("resources/model/dwarf_diffuse.png");   // Load model texture
-    Shader shader = LoadShader("resources/shaders/glsl330/base.vs", 
-                               "resources/shaders/glsl330/grayscale.fs");   // Load model shader
+    Model model = LoadModel("resources/models/watermill.obj");                   // Load OBJ model
+    Texture2D texture = LoadTexture("resources/models/watermill_diffuse.png");   // Load model texture
+    
+    // Load shader for model
+    // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
+    Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/grayscale.fs", GLSL_VERSION));
 
-    dwarf.material.shader = shader;                     // Set shader effect to 3d model
-    dwarf.material.maps[MAP_DIFFUSE].texture = texture; // Bind texture to model
+    model.materials[0].shader = shader;                     // Set shader effect to 3d model
+    model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Bind texture to model
     
     Vector3 position = { 0.0f, 0.0f, 0.0f };    // Set model position
     
-    SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode
+    SetCameraMode(camera, CAMERA_FREE);         // Set an orbital camera mode
 
     SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -61,15 +74,15 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
-                DrawModel(dwarf, position, 2.0f, WHITE);   // Draw 3d model with texture
+                DrawModel(model, position, 0.2f, WHITE);   // Draw 3d model with texture
 
                 DrawGrid(10, 1.0f);     // Draw a grid
 
-            End3dMode();
+            EndMode3D();
             
-            DrawText("(c) Dwarf 3D model by David Moreno", screenWidth - 200, screenHeight - 20, 10, GRAY);
+            DrawText("(c) Watermill 3D model by Alberto Cano", screenWidth - 210, screenHeight - 20, 10, GRAY);
             
             DrawText(FormatText("Camera position: (%.2f, %.2f, %.2f)", camera.position.x, camera.position.y, camera.position.z), 600, 20, 10, BLACK);
             DrawText(FormatText("Camera target: (%.2f, %.2f, %.2f)", camera.target.x, camera.target.y, camera.target.z), 600, 40, 10, GRAY);
@@ -84,7 +97,7 @@ int main()
     //--------------------------------------------------------------------------------------
     UnloadShader(shader);       // Unload shader
     UnloadTexture(texture);     // Unload texture
-    UnloadModel(dwarf);         // Unload model
+    UnloadModel(model);         // Unload model
 
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------

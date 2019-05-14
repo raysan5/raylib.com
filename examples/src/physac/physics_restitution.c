@@ -7,16 +7,18 @@
 *
 *   Use the following line to compile:
 *
-*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s $(RAYLIB_DIR)\raylib\raylib_icon -static -lraylib -lpthread 
-*   -lglfw3 -lopengl32 -lgdi32 -lopenal32 -lwinmm -std=c99 -Wl,--subsystem,windows -Wl,-allow-multiple-definition
+*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s -static  /
+*       -lraylib -lpthread -lglfw3 -lopengl32 -lgdi32 -lopenal32 -lwinmm /
+*       -std=c99 -Wl,--subsystem,windows -Wl,-allow-multiple-definition
 *   
-*   Copyright (c) 2017 Victor Fisac
+*   Copyright (c) 2016-2018 Victor Fisac
 *
 ********************************************************************************************/
 
 #include "raylib.h"
 
 #define PHYSAC_IMPLEMENTATION
+#define PHYSAC_NO_THREADS
 #include "physac.h"
 
 int main()
@@ -50,6 +52,9 @@ int main()
     circleC->restitution = 1;
     
     SetTargetFPS(60);
+
+    // Restitution demo needs a very tiny physics time step for a proper simulation
+    SetPhysicsTimeStep(1.0/60.0/100 * 1000);
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -57,6 +62,8 @@ int main()
     {
         // Update
         //----------------------------------------------------------------------------------
+        RunPhysicsStep();
+
         if (IsKeyPressed('R'))    // Reset physics input
         {
             // Reset circles physics bodies position and velocity
@@ -120,4 +127,3 @@ int main()
 
     return 0;
 }
-

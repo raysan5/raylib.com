@@ -12,6 +12,8 @@
 #include "raylib.h"
 #include "raymath.h"
 
+#include <stdio.h>
+
 #define RLIGHTS_IMPLEMENTATION
 #include "rlights.h"
 
@@ -34,19 +36,29 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [models] example - pbr material");
 
     // Define the camera to look into our 3d world
-    Camera camera = {{ 4.0f, 4.0f, 4.0f }, { 0.0f, 0.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+    Camera camera = { 0 };
+    camera.position = (Vector3){ 4.0f, 4.0f, 4.0f };    // Camera position
+    camera.target = (Vector3){ 0.0f, 0.5f, 0.0f };      // Camera looking at point
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
 
     // Load model and PBR material
     Model model = LoadModel("resources/pbr/trooper.obj");
-    model.material = LoadMaterialPBR((Color){ 255, 255, 255, 255 }, 1.0f, 1.0f);
+    
+    // Mesh tangents are generated... and uploaded to GPU
+    // NOTE: New VBO for tangents is generated at default location and also binded to mesh VAO
+    MeshTangents(&model.meshes[0]);
+
+    model.materials[0] = LoadMaterialPBR((Color){ 255, 255, 255, 255 }, 1.0f, 1.0f);
 
     // Define lights attributes
     // NOTE: Shader is passed to every light on creation to define shader bindings internally
     Light lights[MAX_LIGHTS] = { 
-        CreateLight(LIGHT_POINT, (Vector3){ LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 255, 0, 0, 255 }, model.material.shader),
-        CreateLight(LIGHT_POINT, (Vector3){ 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 0, 255, 0, 255 }, model.material.shader),
-        CreateLight(LIGHT_POINT, (Vector3){ -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 0, 0, 255, 255 }, model.material.shader),
-        CreateLight(LIGHT_DIRECTIONAL, (Vector3){ 0.0f, LIGHT_HEIGHT*2.0f, -LIGHT_DISTANCE }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 255, 0, 255, 255 }, model.material.shader) 
+        CreateLight(LIGHT_POINT, (Vector3){ LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 255, 0, 0, 255 }, model.materials[0].shader),
+        CreateLight(LIGHT_POINT, (Vector3){ 0.0f, LIGHT_HEIGHT, LIGHT_DISTANCE }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 0, 255, 0, 255 }, model.materials[0].shader),
+        CreateLight(LIGHT_POINT, (Vector3){ -LIGHT_DISTANCE, LIGHT_HEIGHT, 0.0f }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 0, 0, 255, 255 }, model.materials[0].shader),
+        CreateLight(LIGHT_DIRECTIONAL, (Vector3){ 0.0f, LIGHT_HEIGHT*2.0f, -LIGHT_DISTANCE }, (Vector3){ 0.0f, 0.0f, 0.0f }, (Color){ 255, 0, 255, 255 }, model.materials[0].shader) 
     };
     
     SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
@@ -63,7 +75,7 @@ int main()
         
         // Send to material PBR shader camera view position
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-        SetShaderValue(model.material.shader, model.material.shader.locs[LOC_VECTOR_VIEW], cameraPos, 3);
+        SetShaderValue(model.materials[0].shader, model.materials[0].shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
         //----------------------------------------------------------------------------------
 
         // Draw
@@ -72,13 +84,13 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 DrawModel(model, Vector3Zero(), 1.0f, WHITE);
                 
                 DrawGrid(10, 1.0f);
 
-            End3dMode();
+            EndMode3D();
 
             DrawFPS(10, 10);
 
@@ -113,7 +125,7 @@ static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
     mat.shader.locs[LOC_MAP_METALNESS] = GetShaderLocation(mat.shader, "metalness.sampler");
     mat.shader.locs[LOC_MAP_NORMAL] = GetShaderLocation(mat.shader, "normals.sampler");
     mat.shader.locs[LOC_MAP_ROUGHNESS] = GetShaderLocation(mat.shader, "roughness.sampler");
-    mat.shader.locs[LOC_MAP_OCCUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
+    mat.shader.locs[LOC_MAP_OCCLUSION] = GetShaderLocation(mat.shader, "occlusion.sampler");
     //mat.shader.locs[LOC_MAP_EMISSION] = GetShaderLocation(mat.shader, "emission.sampler");
     //mat.shader.locs[LOC_MAP_HEIGHT] = GetShaderLocation(mat.shader, "height.sampler");
     mat.shader.locs[LOC_MAP_IRRADIANCE] = GetShaderLocation(mat.shader, "irradianceMap");
@@ -121,7 +133,7 @@ static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
     mat.shader.locs[LOC_MAP_BRDF] = GetShaderLocation(mat.shader, "brdfLUT");
 
     // Set view matrix location
-    mat.shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "mMatrix");
+    mat.shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(mat.shader, "matModel");
     mat.shader.locs[LOC_MATRIX_VIEW] = GetShaderLocation(mat.shader, "view");
     mat.shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(mat.shader, "viewPos");
     
@@ -142,20 +154,24 @@ static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
     #define     PATH_BRDF_FS            "resources/shaders/brdf.fs"     // Path to bidirectional reflectance distribution function fragment shader
     
     Shader shdrCubemap = LoadShader(PATH_CUBEMAP_VS, PATH_CUBEMAP_FS);
+    printf("Loaded shader: cubemap\n");
     Shader shdrIrradiance = LoadShader(PATH_SKYBOX_VS, PATH_IRRADIANCE_FS);
+    printf("Loaded shader: irradiance\n");
     Shader shdrPrefilter = LoadShader(PATH_SKYBOX_VS, PATH_PREFILTER_FS);
+    printf("Loaded shader: prefilter\n");
     Shader shdrBRDF = LoadShader(PATH_BRDF_VS, PATH_BRDF_FS);
+    printf("Loaded shader: brdf\n");
     
     // Setup required shader locations
-    SetShaderValuei(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, 1);
-    SetShaderValuei(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), (int[1]){ 0 }, 1);
-    SetShaderValuei(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), (int[1]){ 0 }, 1);
+    SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, UNIFORM_INT);
+    SetShaderValue(shdrIrradiance, GetShaderLocation(shdrIrradiance, "environmentMap"), (int[1]){ 0 }, UNIFORM_INT);
+    SetShaderValue(shdrPrefilter, GetShaderLocation(shdrPrefilter, "environmentMap"), (int[1]){ 0 }, UNIFORM_INT);
 
-    Texture2D texHDR = LoadTexture("resources/pinetree.hdr");
+    Texture2D texHDR = LoadTexture("resources/dresden_square.hdr");
     Texture2D cubemap = GenTextureCubemap(shdrCubemap, texHDR, CUBEMAP_SIZE);
     mat.maps[MAP_IRRADIANCE].texture = GenTextureIrradiance(shdrIrradiance, cubemap, IRRADIANCE_SIZE);
     mat.maps[MAP_PREFILTER].texture = GenTexturePrefilter(shdrPrefilter, cubemap, PREFILTERED_SIZE);
-    mat.maps[MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, cubemap, BRDF_SIZE);
+    mat.maps[MAP_BRDF].texture = GenTextureBRDF(shdrBRDF, BRDF_SIZE);
     UnloadTexture(cubemap);
     UnloadTexture(texHDR);
     
@@ -173,14 +189,14 @@ static Material LoadMaterialPBR(Color albedo, float metalness, float roughness)
     SetTextureFilter(mat.maps[MAP_OCCLUSION].texture, FILTER_BILINEAR);
     
     // Enable sample usage in shader for assigned textures
-    SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), (int[1]){ 1 }, 1);
-    SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), (int[1]){ 1 }, 1);
-    SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), (int[1]){ 1 }, 1);
-    SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), (int[1]){ 1 }, 1);
-    SetShaderValuei(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), (int[1]){ 1 }, 1);
+    SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "albedo.useSampler"), (int[1]){ 1 }, UNIFORM_INT);
+    SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "normals.useSampler"), (int[1]){ 1 }, UNIFORM_INT);
+    SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "metalness.useSampler"), (int[1]){ 1 }, UNIFORM_INT);
+    SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "roughness.useSampler"), (int[1]){ 1 }, UNIFORM_INT);
+    SetShaderValue(mat.shader, GetShaderLocation(mat.shader, "occlusion.useSampler"), (int[1]){ 1 }, UNIFORM_INT);
     
     int renderModeLoc = GetShaderLocation(mat.shader, "renderMode");
-    SetShaderValuei(mat.shader, renderModeLoc, (int[1]){ 0 }, 1);
+    SetShaderValue(mat.shader, renderModeLoc, (int[1]){ 0 }, UNIFORM_INT);
 
     // Set up material properties color
     mat.maps[MAP_ALBEDO].color = albedo;

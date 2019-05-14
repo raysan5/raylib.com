@@ -7,16 +7,18 @@
 *
 *   Use the following line to compile:
 *
-*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s $(RAYLIB_DIR)\raylib\raylib_icon -static -lraylib -lpthread 
-*   -lglfw3 -lopengl32 -lgdi32 -lopenal32 -lwinmm -std=c99 -Wl,--subsystem,windows -Wl,-allow-multiple-definition
+*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s -static  /
+*       -lraylib -lpthread -lglfw3 -lopengl32 -lgdi32 -lopenal32 -lwinmm /
+*       -std=c99 -Wl,--subsystem,windows -Wl,-allow-multiple-definition
 *   
-*   Copyright (c) 2017 Victor Fisac
+*   Copyright (c) 2016-2018 Victor Fisac
 *
 ********************************************************************************************/
 
 #include "raylib.h"
 
 #define PHYSAC_IMPLEMENTATION
+#define PHYSAC_NO_THREADS
 #include "physac.h"
 
 int main()
@@ -71,6 +73,8 @@ int main()
     {
         // Update
         //----------------------------------------------------------------------------------
+        RunPhysicsStep();
+
         if (IsKeyPressed('R'))    // Reset physics input
         {
             // Reset dynamic physics bodies position, velocity and rotation
@@ -141,4 +145,3 @@ int main()
 
     return 0;
 }
-

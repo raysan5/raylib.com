@@ -13,7 +13,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#define FLT_MAX     3.40282347E+38F     // Maximum value of a float, defined in <float.h>
+#define FLT_MAX     340282346638528859811704183484516925440.0f     // Maximum value of a float, from bit pattern 01111111011111111111111111111111
 
 int main()
 {
@@ -25,20 +25,21 @@ int main()
     InitWindow(screenWidth, screenHeight, "raylib [models] example - mesh picking");
 
     // Define the camera to look into our 3d world
-    Camera camera;
-    camera.position = (Vector3){ 10.0f, 8.0f, 10.0f };  // Camera position
-    camera.target = (Vector3){ 0.0f, 2.3f, 0.0f };      // Camera looking at point
+    Camera camera = { 0 };
+    camera.position = (Vector3){ 20.0f, 20.0f, 20.0f }; // Camera position
+    camera.target = (Vector3){ 0.0f, 8.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.6f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
 
-    Ray ray;        // Picking ray
+    Ray ray = { 0 };        // Picking ray
     
-    Model tower = LoadModel("resources/tower.obj");             // Load OBJ model
-    Texture2D texture = LoadTexture("resources/tower.png");     // Load model texture
-    tower.material.maps[MAP_DIFFUSE].texture = texture;         // Set model diffuse texture
+    Model tower = LoadModel("resources/models/turret.obj");                 // Load OBJ model
+    Texture2D texture = LoadTexture("resources/models/turret_diffuse.png"); // Load model texture
+    tower.materials[0].maps[MAP_DIFFUSE].texture = texture;                 // Set model diffuse texture
     
     Vector3 towerPos = { 0.0f, 0.0f, 0.0f };                    // Set model position
-    BoundingBox towerBBox = CalculateBoundingBox(tower.mesh);    
+    BoundingBox towerBBox = MeshBoundingBox(tower.meshes[0]);   // Get mesh bounding box
     bool hitMeshBBox = false;
     bool hitTriangle = false;
 
@@ -61,7 +62,7 @@ int main()
         UpdateCamera(&camera);          // Update camera
         
         // Display information about closest hit
-        RayHitInfo nearestHit;
+        RayHitInfo nearestHit = { 0 };
         char *hitObjectName = "None";
         nearestHit.distance = FLT_MAX;
         nearestHit.hit = false;
@@ -94,15 +95,16 @@ int main()
         } 
         else hitTriangle = false;
 
-        RayHitInfo meshHitInfo;
+        RayHitInfo meshHitInfo = { 0 };
 
         // Check ray collision against bounding box first, before trying the full ray-mesh test
         if (CheckCollisionRayBox(ray, towerBBox)) 
         {
             hitMeshBBox = true;
             
-            // Check ray collision against mesh
-            meshHitInfo = GetCollisionRayMesh(ray, &tower.mesh);    
+            // Check ray collision against model
+            // NOTE: It considers model.transform matrix!
+            meshHitInfo = GetCollisionRayModel(ray, &tower);   
             
             if ((meshHitInfo.hit) && (meshHitInfo.distance < nearestHit.distance)) 
             {
@@ -111,7 +113,9 @@ int main()
                 hitObjectName = "Mesh";
             }
             
-        } hitMeshBBox = false; 
+        } 
+        
+        hitMeshBBox = false; 
         //----------------------------------------------------------------------------------
         
         // Draw
@@ -120,10 +124,12 @@ int main()
 
             ClearBackground(RAYWHITE);
 
-            Begin3dMode(camera);
+            BeginMode3D(camera);
 
                 // Draw the tower
-                DrawModel(tower, towerPos, 1.0, WHITE);
+                // WARNING: If scale is different than 1.0f, 
+                // not considered by GetCollisionRayModel()
+                DrawModel(tower, towerPos, 1.0f, WHITE);
                 
                 // Draw the test triangle
                 DrawLine3D(ta, tb, PURPLE);
@@ -149,9 +155,9 @@ int main()
 
                 DrawRay(ray, MAROON);
                 
-                DrawGrid(100, 1.0f);
+                DrawGrid(10, 10.0f);
 
-            End3dMode();
+            EndMode3D();
             
             // Draw some debug GUI text
             DrawText(FormatText("Hit Object: %s", hitObjectName), 10, 50, 10, BLACK);
@@ -176,6 +182,8 @@ int main()
             }
 
             DrawText("Use Mouse to Move Camera", 10, 430, 10, GRAY);
+            
+            DrawText("(c) Turret 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
             DrawFPS(10, 10);
 
