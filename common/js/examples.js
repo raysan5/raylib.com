@@ -90,6 +90,7 @@ $(document).ready(function() {
         'shaders_texture_drawing',
         'shaders_texture_waves',
         'shaders_julia_set',
+        'shaders_eratosthenes',
         'audio_module_playing',
         'audio_music_stream',
         'audio_raw_stream',

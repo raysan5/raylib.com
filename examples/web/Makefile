@@ -27,7 +27,7 @@
 PROJECT_NAME       ?= raylib_examples
 RAYLIB_VERSION     ?= 2.5.0
 RAYLIB_API_VERSION ?= 1
-RAYLIB_PATH        ?= C:\GitHub\raylib
+RAYLIB_PATH        ?= D:\GitHub\raylib
 
 # Define default options
 
@@ -52,7 +52,7 @@ RAYLIB_H_INSTALL_PATH ?= $(DESTDIR)/include
 RAYLIB_LIBTYPE        ?= STATIC
 
 # Build mode for project: DEBUG or RELEASE
-RAYLIB_BUILD_MODE     ?= RELEASE
+BUILD_MODE     ?= RELEASE
 
 # Use external GLFW library instead of rglfw module
 # TODO: Review usage on Linux. Target version of choice. Switch on -lglfw or -lglfw3
@@ -117,9 +117,9 @@ endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
-    EMSDK_PATH          = C:/emsdk
-    EMSCRIPTEN_VERSION  = 1.38.30
-    CLANG_VERSION       = e1.38.30_64bit
+    EMSDK_PATH          ?= D:/emsdk
+    EMSCRIPTEN_VERSION  ?= 1.38.31
+    CLANG_VERSION       = e$(EMSCRIPTEN_VERSION)_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
     NODE_VERSION        = 8.9.1_64bit
     export PATH         = $(EMSDK_PATH);$(EMSDK_PATH)\clang\$(CLANG_VERSION);$(EMSDK_PATH)\node\$(NODE_VERSION)\bin;$(EMSDK_PATH)\python\$(PYTHON_VERSION);$(EMSDK_PATH)\emscripten\$(EMSCRIPTEN_VERSION);C:\raylib\MinGW\bin:$$(PATH)
@@ -201,7 +201,7 @@ endif
 
 # Define compiler flags:
 #  -O1                  defines optimization level
-#  -g                   enable debugging
+#  -g                   include debug information on compilation
 #  -s                   strip unnecessary data from build
 #  -Wall                turns on most, but not all, compiler warnings
 #  -std=c99             defines C language mode (standard C from 1999 revision)
@@ -209,6 +209,10 @@ endif
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
 CFLAGS += -O1 -s -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces
+
+ifeq ($(BUILD_MODE),DEBUG)
+    CFLAGS += -g
+endif
 
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
@@ -219,10 +223,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-        ifeq ($(RAYLIB_BUILD_MODE),DEBUG)
-            CFLAGS += -g
-            #CC = clang
-        endif
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
         CFLAGS += -D_DEFAULT_SOURCE
         endif
@@ -238,24 +238,21 @@ endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # -Os                        # size optimization
     # -O2                        # optimization level 2, if used, also set --memory-init-file 0
-    # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # -s USE_GLFW=3              # Use glfw3 library (context/input management)
-    # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing
+    # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing -> WARNING: Audio buffers could FAIL!
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
-    # -s WASM=1                  # support Web Assembly (https://github.com/kripken/emscripten/wiki/WebAssembly)
+    # -s WASM=0                  # disable Web Assembly, emitted by default
     # -s EMTERPRETIFY=1          # enable emscripten code interpreter (very slow)
     # -s EMTERPRETIFY_ASYNC=1    # support synchronous loops by emterpreter
     # -s FORCE_FILESYSTEM=1      # force filesystem to load/save files data
+    # -s ASSERTIONS=1            # enable runtime checks for common memory allocation errors (-O1 and above turn it off)
     # --profiling                # include information for code profiling
+    # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -Os -s USE_GLFW=3 -s ASSERTIONS=2 -s WASM=1 -s FORCE_FILESYSTEM=1
-    # -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1 --preload-file audio/resources@resources
+    CFLAGS += -Os -s USE_GLFW=3
     
-    # NOTE: Simple raylib examples are compiled to be interpreter by emterpreter, that way,
-    # we can compile same code for ALL platforms with no change required, but, working on bigger
-    # projects, code needs to be refactored to avoid a blocking while() loop, moving Update and Draw
-    # logic to a self contained function: UpdateDrawFrame(), check core_basic_window_web.c for reference.
+    # NOTE: On PLATFORM_WEB, every example requires its own flags
 
     # Define a custom shell .html and output extension
     CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
@@ -265,7 +262,7 @@ endif
 # Define include paths for required headers.
 # Precedence: immediately local, raysan5 provided sources
 # NOTE: Several external required libraries (stb and others)
-INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/release/include -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
+INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
 
 # Define additional directories containing required header files
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -298,7 +295,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
         # Reset everything.
         # Precedence: immediately local, installed version, raysan5 provided libs
-        LDFLAGS = -L. -L$(RAYLIB_INSTALL_PATH) -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src
+        LDFLAGS = -L. -L$(RAYLIB_INSTALL_PATH) -L$(RAYLIB_RELEASE_PATH)
     endif
 endif
 
@@ -311,7 +308,8 @@ endif
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # Libraries for Windows desktop compilation
-        LDLIBS = -lraylib -lopengl32 -lgdi32
+        # NOTE: WinMM library required to set high-res timer resolution
+        LDLIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
         # Required for physac examples
         LDLIBS += -static -lpthread
     endif
@@ -364,73 +362,98 @@ EXAMPLES = \
     core/core_basic_window \
     core/core_input_keys \
     core/core_input_mouse \
-    core/core_mouse_wheel \
+    core/core_input_mouse_wheel \
     core/core_input_gamepad \
-    core/core_random_values \
-    core/core_color_select \
-    core/core_drop_files \
-    core/core_storage_values \
-    core/core_gestures_detection \
-    core/core_3d_mode \
-    core/core_3d_picking \
+    core/core_input_multitouch \
+    core/core_input_gestures \
+    core/core_2d_camera \
+    core/core_3d_camera_mode \
     core/core_3d_camera_free \
     core/core_3d_camera_first_person \
-    core/core_2d_camera \
+    core/core_3d_picking \
     core/core_world_screen \
+    core/core_custom_logging \
+    core/core_window_letterbox \
+    core/core_drop_files \
+    core/core_random_values \
+    core/core_storage_values \
     core/core_vr_simulator \
-    core/core_input_multitouch \
-    shapes/shapes_logo_raylib \
+    core/core_loading_thread \
     shapes/shapes_basic_shapes \
+    shapes/shapes_bouncing_ball \
     shapes/shapes_colors_palette \
+    shapes/shapes_logo_raylib \
     shapes/shapes_logo_raylib_anim \
+    shapes/shapes_rectangle_scaling \
     shapes/shapes_lines_bezier \
+    shapes/shapes_collision_area \
+    shapes/shapes_following_eyes \
+    shapes/shapes_easings_ball_anim \
+    shapes/shapes_easings_box_anim \
+    shapes/shapes_easings_rectangle_array \
+    shapes/shapes_draw_ring \
+    shapes/shapes_draw_circle_sector \
+    shapes/shapes_draw_rectangle_rounded \
+    text/text_raylib_fonts \
+    text/text_sprite_fonts \
+    text/text_ttf_loading \
+    text/text_bmfont_ttf \
+    text/text_font_sdf \
+    text/text_format_text \
+    text/text_input_box \
+    text/text_writing_anim \
+    text/text_rectangle_bounds \
+    text/text_unicode \
     textures/textures_logo_raylib \
-    textures/textures_image_loading \
     textures/textures_rectangle \
     textures/textures_srcrec_dstrec \
+    textures/textures_image_drawing \
+    textures/textures_image_generation \
+    textures/textures_image_loading \
+    textures/textures_image_processing \
+    textures/textures_image_text \
     textures/textures_to_image \
     textures/textures_raw_data \
     textures/textures_particles_blending \
-    textures/textures_image_processing \
-    textures/textures_image_drawing \
-    textures/textures_image_generation \
-    textures/textures_image_text \
-    text/text_sprite_fonts \
-    text/text_bmfont_ttf \
-    text/text_raylib_fonts \
-    text/text_format_text \
-    text/text_writing_anim \
-    text/text_ttf_loading \
-    text/text_bmfont_unordered \
-    text/text_input_box \
-    text/text_font_sdf \
-    models/models_geometric_shapes \
-    models/models_box_collisions \
+    textures/textures_npatch_drawing \
+    textures/textures_background_scrolling \
+    textures/textures_sprite_button \
+    textures/textures_sprite_explosion \
+    textures/textures_bunnymark \
+    models/models_animation \
     models/models_billboard \
+    models/models_box_collisions \
+    models/models_cubicmap \
+    models/models_first_person_maze \
+    models/models_geometric_shapes \
+    models/models_material_pbr \
+    models/models_mesh_generation \
+    models/models_mesh_picking \
     models/models_obj_loading \
     models/models_obj_viewer \
-    models/models_heightmap \
-    models/models_cubicmap \
-    models/models_mesh_picking \
-    models/models_mesh_generation \
-    models/models_material_pbr \
+    models/models_orthographic_projection \
+    models/models_rlgl_solar_system \
     models/models_skybox \
     models/models_yaw_pitch_roll \
+    models/models_heightmap \
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
     shaders/shaders_postprocessing \
-    shaders/shaders_raymarching \
     shaders/shaders_palette_switch \
-    audio/audio_sound_loading \
-    audio/audio_music_stream \
+    shaders/shaders_raymarching \
+    shaders/shaders_texture_drawing \
+    shaders/shaders_texture_waves \
+    shaders/shaders_julia_set \
     audio/audio_module_playing \
+    audio/audio_music_stream \
     audio/audio_raw_stream \
+    audio/audio_sound_loading \
     physac/physics_demo \
     physac/physics_friction \
     physac/physics_movement \
     physac/physics_restitution \
-    physac/physics_shatter \
+    physac/physics_shatter
 
 
 CURRENT_MAKEFILE = $(lastword $(MAKEFILE_LIST))
@@ -451,7 +474,11 @@ core/core_input_mouse: core/core_input_mouse.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - mouse wheel
-core/core_mouse_wheel: core/core_mouse_wheel.c
+core/core_input_mouse_wheel: core/core_input_mouse_wheel.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+# compile [core] example - gestures detection
+core/core_input_gestures: core/core_input_gestures.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - gamepad input
@@ -464,31 +491,23 @@ core/core_input_gamepad: core/core_input_gamepad.c
 core/core_random_values: core/core_random_values.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-# compile [core] example - color selection (collision detection)
-core/core_color_select: core/core_color_select.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
 # compile [core] example - drop files
 # NOTE: File drop not supported on PLATFORM_ANDROID and PLATFORM_RPI (native)
 core/core_drop_files: core/core_drop_files.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
 
 # compile [core] example - storage values
 core/core_storage_values: core/core_storage_values.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
 
-# compile [core] example - gestures detection
-core/core_gestures_detection: core/core_gestures_detection.c
+# compile [core] example - 2d camera
+core/core_2d_camera: core/core_2d_camera.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
-# compile [core] example - 3d mode
-core/core_3d_mode: core/core_3d_mode.c
+    
+# compile [core] example - 3d camera mode
+core/core_3d_camera_mode: core/core_3d_camera_mode.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
-# compile [core] example - 3d picking
-core/core_3d_picking: core/core_3d_picking.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
+    
 # compile [core] example - 3d camera free
 core/core_3d_camera_free: core/core_3d_camera_free.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
@@ -497,8 +516,8 @@ core/core_3d_camera_free: core/core_3d_camera_free.c
 core/core_3d_camera_first_person: core/core_3d_camera_first_person.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-# compile [core] example - 2d camera
-core/core_2d_camera: core/core_2d_camera.c
+# compile [core] example - 3d picking
+core/core_3d_picking: core/core_3d_picking.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - world screen
@@ -618,12 +637,6 @@ text/text_ttf_loading: text/text_ttf_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
 
-# compile [text] example - text bmfont unordered
-text/text_bmfont_unordered: text/text_bmfont_unordered.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file text/resources/pixantiqua.fnt@resources/pixantiqua.fnt \
-    --preload-file text/resources/pixantiqua_0.png@resources/pixantiqua_0.png
-
 # compile [text] example - text input box
 text/text_input_box: text/text_input_box.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
@@ -737,7 +750,9 @@ audio/audio_sound_loading: audio/audio_sound_loading.c
 # compile [audio] example - music stream playing (OGG)
 audio/audio_music_stream: audio/audio_music_stream.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file audio/resources/guitar_noodling.ogg@resources/guitar_noodling.ogg
+    --preload-file audio/resources/game.mp3@resources/game.mp3 \
+    --preload-file audio/resources/weird.wav@resources/weird.wav \
+    --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
     
 # compile [audio] example - music stream playing (OGG)
 audio/audio_music_stream_test: audio/audio_music_stream_test.c
