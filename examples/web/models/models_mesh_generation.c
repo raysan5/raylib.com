@@ -15,10 +15,6 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
-#endif
-
 #define NUM_MODELS  7       // We generate 7 parametric 3d shapes
 
 //----------------------------------------------------------------------------------
@@ -45,19 +41,11 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [models] example - mesh generation");
-#endif
 
     // We generate a checked image for texturing
     Image checked = GenImageChecked(2, 2, 1, 1, RED, GREEN);
@@ -97,9 +85,8 @@ int main(void)
     
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------

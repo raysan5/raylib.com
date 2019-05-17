@@ -18,7 +18,11 @@
 
 #include "raylib.h"
 
-#include "raymath.h"
+#if defined(PLATFORM_DESKTOP)
+    #define GLSL_VERSION            330
+#else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
+    #define GLSL_VERSION            100
+#endif
 
 // A few good julia sets
 const float POINTS_OF_INTEREST[6][2] =
@@ -42,14 +46,16 @@ int main()
 
     // Load julia set shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-    Shader shader = LoadShader(0, "resources/shaders/glsl330/julia_shader.fs");
+    Shader shader = LoadShader(0, FormatText("resources/shaders/glsl%i/julia_set.fs", GLSL_VERSION));
     
     // c constant to use in z^2 + c
     float c[2] = { POINTS_OF_INTEREST[0][0], POINTS_OF_INTEREST[0][1] };
     
-    // Offset and zoom to draw the julia set at. (centered on screen and 1.6 times smaller)
-    float offset[2] = { -(float)screenWidth/2, -(float)screenHeight/2 }; 
-    float zoom = 1.6f;
+    // Offset and zoom to draw the julia set at. (centered on screen and default size)
+    float offset[2] = { -(float)screenWidth/2, -(float)screenHeight/2 };
+    float zoom = 1.0f;
+    
+    Vector2 offsetSpeed = { 0.0f, 0.0f };
     
     // Get variable (uniform) locations on the shader to connect with the program
     // NOTE: If uniform variable could not be found in the shader, function returns -1
@@ -68,7 +74,7 @@ int main()
     // Create a RenderTexture2D to be used for render to texture
     RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
     
-    int incrementSpeed = 3;     // Multiplier of speed to change c value
+    int incrementSpeed = 0;     // Multiplier of speed to change c value
     bool showControls = true;   // Show controls
     bool pause = false;         // Pause animation
 
@@ -99,29 +105,34 @@ int main()
             SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
         }
 
-        if (IsKeyPressed(KEY_P)) pause = !pause;                 // Pause animation (c change)
+        if (IsKeyPressed(KEY_SPACE)) pause = !pause;                 // Pause animation (c change)
         if (IsKeyPressed(KEY_F1)) showControls = !showControls;  // Toggle whether or not to show controls
         
         if (!pause)
         {
-            if (IsKeyDown(KEY_RIGHT)) incrementSpeed++;
-            else if (IsKeyDown(KEY_LEFT)) incrementSpeed--;
+            if (IsKeyPressed(KEY_RIGHT)) incrementSpeed++;
+            else if (IsKeyPressed(KEY_LEFT)) incrementSpeed--;
 
-            // Use mouse wheel to change zoom
-            zoom -= (float)GetMouseWheelMove()/10.f;
-            SetShaderValue(shader, zoomLoc, &zoom, UNIFORM_FLOAT);
-            
-            // Use mouse button to change offset
-            if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+            // TODO: The idea is to zoom and move around with mouse
+            // Probably offset movement should be proportional to zoom level
+            if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsMouseButtonDown(MOUSE_RIGHT_BUTTON))
             {
-                // TODO: Logic is not correct, the idea is getting zoom focus to pointed area
-                Vector2 mousePos = GetMousePosition();
+                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) zoom += zoom*0.003f;
+                if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) zoom -= zoom*0.003f;
 
-                offset[0] = mousePos.x -(float)screenWidth;
-                offset[1] = mousePos.y -(float)screenHeight;
+                Vector2 mousePos = GetMousePosition();
                 
-                SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
+                offsetSpeed.x = mousePos.x -(float)screenWidth/2;
+                offsetSpeed.y = mousePos.y -(float)screenHeight/2;
+                
+                // Slowly move camera to targetOffset
+                offset[0] += GetFrameTime()*offsetSpeed.x*0.8f;
+                offset[1] += GetFrameTime()*offsetSpeed.y*0.8f;
             }
+            else offsetSpeed = (Vector2){ 0.0f, 0.0f };
+
+            SetShaderValue(shader, zoomLoc, &zoom, UNIFORM_FLOAT);
+            SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
 
             // Increment c value with time
             float amount = GetFrameTime()*incrementSpeed*0.0005f;
@@ -142,25 +153,26 @@ int main()
             BeginTextureMode(target);       // Enable drawing to texture
                 ClearBackground(BLACK);     // Clear the render texture
 
-                // Draw a rectangle in shader mode
-                // NOTE: This acts as a canvas for the shader to draw on
-                BeginShaderMode(shader);
-                    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BLACK);
-                EndShaderMode();
+                // Draw a rectangle in shader mode to be used as shader canvas
+                // NOTE: Rectangle uses font white character texture coordinates,
+                // so shader can not be applied here directly because input vertexTexCoord
+                // do not represent full screen coordinates (space where want to apply shader)
+                DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), BLACK);
             EndTextureMode();
 
-            // Draw the saved texture (rendered julia set)
-            DrawTextureRec(target.texture, (Rectangle){ 0, 0, target.texture.width, -target.texture.height }, Vector2Zero(), WHITE);
-            
-            // Draw information
-            //DrawText( FormatText("cx: %f\ncy: %f\nspeed: %d", c[0], c[1], incrementSpeed), 10, 10, 10, RAYWHITE);
-
+            // Draw the saved texture and rendered julia set with shader
+            // NOTE: We do not invert texture on Y, already considered inside shader
+            BeginShaderMode(shader);
+                DrawTexture(target.texture, 0, 0, WHITE);
+            EndShaderMode();
+                
             if (showControls)
             {
-                DrawText("Press keys [1 - 6] to change point of interest", 10, GetScreenHeight() - 60, 10, RAYWHITE);
-                DrawText("Press KEY_LEFT | KEY_RIGHT to change speed", 10, GetScreenHeight() - 45, 10, RAYWHITE);
-                DrawText("Press KEY_P to pause movement animation", 10, GetScreenHeight() - 30, 10, RAYWHITE);
-                DrawText("Press KEY_F1 to toggle these controls", 10, GetScreenHeight() - 15, 10, RAYWHITE);
+                DrawText("Press Mouse buttons right/left to zoom in/out and move", 10, 15, 10, RAYWHITE);
+                DrawText("Press KEY_F1 to toggle these controls", 10, 30, 10, RAYWHITE);
+                DrawText("Press KEYS [1 - 6] to change point of interest", 10, 45, 10, RAYWHITE);
+                DrawText("Press KEY_LEFT | KEY_RIGHT to change speed", 10, 60, 10, RAYWHITE);
+                DrawText("Press KEY_SPACE to pause movement animation", 10, 75, 10, RAYWHITE);
             }
 
         EndDrawing();

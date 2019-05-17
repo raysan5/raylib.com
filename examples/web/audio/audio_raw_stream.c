@@ -17,14 +17,11 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
-#endif
-
 #include <stdlib.h>         // Required for: malloc(), free()
 #include <math.h>           // Required for: sinf()
+#include <string.h>         // Required for: memcpy()
 
-#define MAX_SAMPLES             22050
+#define MAX_SAMPLES               512
 #define MAX_SAMPLES_PER_UPDATE   4096
 
 //----------------------------------------------------------------------------------
@@ -35,6 +32,7 @@ const int screenHeight = 450;
 
 AudioStream stream;
 short *data;
+short *writeBuf;
 
 int totalSamples = MAX_SAMPLES;
 int samplesLeft = MAX_SAMPLES;
@@ -49,34 +47,22 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [audio] example - raw audio streaming");
-#endif
 
     InitAudioDevice();              // Initialize audio device
 
     // Init raw audio stream (sample rate: 22050, sample size: 16bit-short, channels: 1-mono)
     stream = InitAudioStream(22050, 16, 1);
     
-    // Generate samples data from sine wave
+    // Buffer for the single cycle waveform we are synthesizing
     data = (short *)malloc(sizeof(short)*MAX_SAMPLES);
-    
-    // TODO: Review data generation, it seems data is discontinued for loop,
-    // for that reason, there is a clip everytime audio stream is looped...
-    for (int i = 0; i < MAX_SAMPLES; i++)
-    {
-        data[i] = (short)(sinf(((2*PI*(float)i)/2)*DEG2RAD)*32000);
-    }
+
+    // Frame buffer, describing the waveform when repeated over the course of a frame
+    writeBuf = (short *)malloc(sizeof(short)*MAX_SAMPLES_PER_UPDATE);
     
     PlayAudioStream(stream);        // Start processing stream buffer (no data loaded currently)
     
@@ -96,16 +82,15 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     free(data);                 // Unload sine wave data
+    free(writeBuf);             // Unload write buffer
     
     CloseAudioStream(stream);   // Close raw audio stream and delete buffers from RAM
-
     CloseAudioDevice();         // Close audio device (music streaming is automatically stopped)
 
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------

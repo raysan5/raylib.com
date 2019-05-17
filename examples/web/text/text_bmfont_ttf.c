@@ -15,10 +15,6 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
-#endif
-
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -42,19 +38,11 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [text] example - bmfont and ttf sprite fonts loading");
-#endif
 
     fontBm = LoadSpriteFont("resources/bmfont.fnt");       // BMFont (AngelCode)
     fontTtf = LoadSpriteFont("resources/pixantiqua.ttf");  // TTF font
@@ -82,9 +70,8 @@ int main(void)
     
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------

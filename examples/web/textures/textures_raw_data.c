@@ -19,10 +19,6 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
-#endif
-
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -40,19 +36,11 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - texture from raw data");
-#endif
 
     // Load RAW image data (512x512, 32bit RGBA, no file header)
     Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, UNCOMPRESSED_R8G8B8A8, 0);
@@ -103,9 +91,8 @@ int main(void)
     
     CloseWindow();				// Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------

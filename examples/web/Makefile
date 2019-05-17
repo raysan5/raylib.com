@@ -52,7 +52,7 @@ RAYLIB_H_INSTALL_PATH ?= $(DESTDIR)/include
 RAYLIB_LIBTYPE        ?= STATIC
 
 # Build mode for project: DEBUG or RELEASE
-BUILD_MODE     ?= RELEASE
+BUILD_MODE            ?= RELEASE
 
 # Use external GLFW library instead of rglfw module
 # TODO: Review usage on Linux. Target version of choice. Switch on -lglfw or -lglfw3
@@ -251,7 +251,10 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
     CFLAGS += -Os -s USE_GLFW=3
-    
+    ifeq ($(BUILD_MODE), DEBUG)
+        CFLAGS += -s ASSERTIONS=1 --profiling
+    endif
+
     # NOTE: On PLATFORM_WEB, every example requires its own flags
 
     # Define a custom shell .html and output extension
@@ -259,8 +262,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     EXT = .html
 endif
 
-# Define include paths for required headers.
-# Precedence: immediately local, raysan5 provided sources
+# Define include paths for required headers
 # NOTE: Several external required libraries (stb and others)
 INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
 
@@ -284,7 +286,6 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 endif
 
 # Define library paths containing required libs.
-# Precedence: immediately local, then raysan5 provided libs
 LDFLAGS = -L. -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
@@ -317,10 +318,12 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # Libraries for Debian GNU/Linux desktop compiling
         # NOTE: Required packages: libegl1-mesa-dev
         LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt
+        
         # On X11 requires also below libraries
         LDLIBS += -lX11
         # NOTE: It seems additional libraries are not required any more, latest GLFW just dlopen them
         #LDLIBS += -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
+        
         # On Wayland windowing system, additional libraries requires
         ifeq ($(USE_WAYLAND_DISPLAY),TRUE)
             LDLIBS += -lwayland-client -lwayland-cursor -lwayland-egl -lxkbcommon
@@ -339,6 +342,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # Libraries for FreeBSD, OpenBSD, NetBSD, DragonFly desktop compiling
         # NOTE: Required packages: mesa-libs
         LDLIBS = -lraylib -lGL -lpthread -lm
+
         # On XWindow requires also below libraries
         LDLIBS += -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
     endif
@@ -445,6 +449,7 @@ EXAMPLES = \
     shaders/shaders_texture_drawing \
     shaders/shaders_texture_waves \
     shaders/shaders_julia_set \
+    shaders/shaders_eratosthenes \
     audio/audio_module_playing \
     audio/audio_music_stream \
     audio/audio_raw_stream \

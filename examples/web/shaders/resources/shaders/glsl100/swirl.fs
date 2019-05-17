@@ -13,16 +13,16 @@ uniform vec4 colDiffuse;
 // NOTE: Add here your custom variables
 
 // NOTE: Render size values should be passed from code
+const float renderWidth = 800.0;
+const float renderHeight = 450.0;
+
+float radius = 250.0;
+float angle = 0.8;
+
 uniform vec2 center;
 
 void main()
 {
-    float renderWidth = 800.0;
-    float renderHeight = 450.0;
-
-    float radius = 250.0;
-    float angle = 0.8;
-
     vec2 texSize = vec2(renderWidth, renderHeight);
     vec2 tc = fragTexCoord*texSize;
     tc -= center;

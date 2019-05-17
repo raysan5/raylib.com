@@ -17,10 +17,6 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
-#endif
-
 #define MAX_CIRCLES 32
 
 //----------------------------------------------------------------------------------
@@ -59,19 +55,11 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [audio] example - module playing (streaming)");
-#endif
 
     InitAudioDevice();              // Initialize audio device
     
@@ -110,9 +98,8 @@ int main(void)
 
     CloseWindow();                  // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------
@@ -142,8 +129,9 @@ void UpdateDrawFrame(void)
     
     // Get timePlayed scaled to bar dimensions
     timePlayed = GetMusicTimePlayed(xm)/GetMusicTimeLength(xm)*(screenWidth - 40);
-        
-    for (int i = MAX_CIRCLES - 1; i >= 0; i--)
+
+    // Color circles animation
+    for (int i = MAX_CIRCLES - 1; (i >= 0) && !pause; i--)
     {
         circles[i].alpha += circles[i].speed;
         circles[i].radius += circles[i].speed*10.0f;

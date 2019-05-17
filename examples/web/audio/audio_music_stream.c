@@ -1,6 +1,6 @@
 /*******************************************************************************************
 *
-*   raylib [audio] example - Music playing (streaming) (adapted for HTML5 platform)
+*   raylib [audio] example - Music playing (streaming)
 *
 *   NOTE: This example requires OpenAL Soft library installed
 *
@@ -15,10 +15,6 @@
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
-#endif
-
-#if defined(PLATFORM_ANDROID)
-    #include "android_native_app_glue.h"
 #endif
 
 //----------------------------------------------------------------------------------
@@ -41,19 +37,11 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Main Enry Point
 //----------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-void android_main(struct android_app *app) 
-#else
 int main(void)
-#endif
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-#if defined(PLATFORM_ANDROID)
-    InitWindow(screenWidth, screenHeight, app);
-#else
     InitWindow(screenWidth, screenHeight, "raylib [audio] example - music playing (streaming)");
-#endif
 
     InitAudioDevice();              // Initialize audio device
 
@@ -81,9 +69,8 @@ int main(void)
     CloseAudioDevice();     // Close audio device (music streaming is automatically stopped)
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-#if !defined(PLATFORM_ANDROID)
+
     return 0;
-#endif
 }
 
 //----------------------------------------------------------------------------------
@@ -113,6 +100,8 @@ void UpdateDrawFrame(void)
     
     // Get timePlayed scaled to bar dimensions (400 pixels)
     timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*400;
+        
+    if (timePlayed > 400) StopMusicStream(music);
     //----------------------------------------------------------------------------------
 
     // Draw
