@@ -398,22 +398,12 @@ EXAMPLES = \
     shapes/shapes_draw_ring \
     shapes/shapes_draw_circle_sector \
     shapes/shapes_draw_rectangle_rounded \
-    text/text_raylib_fonts \
-    text/text_sprite_fonts \
-    text/text_ttf_loading \
-    text/text_bmfont_ttf \
-    text/text_font_sdf \
-    text/text_format_text \
-    text/text_input_box \
-    text/text_writing_anim \
-    text/text_rectangle_bounds \
-    text/text_unicode \
     textures/textures_logo_raylib \
     textures/textures_rectangle \
     textures/textures_srcrec_dstrec \
+    textures/textures_image_loading \
     textures/textures_image_drawing \
     textures/textures_image_generation \
-    textures/textures_image_loading \
     textures/textures_image_processing \
     textures/textures_image_text \
     textures/textures_to_image \
@@ -424,22 +414,33 @@ EXAMPLES = \
     textures/textures_sprite_button \
     textures/textures_sprite_explosion \
     textures/textures_bunnymark \
-    models/models_animation \
-    models/models_billboard \
-    models/models_box_collisions \
-    models/models_cubicmap \
-    models/models_first_person_maze \
+    text/text_raylib_fonts \
+    text/text_sprite_fonts \
+    text/text_ttf_loading \
+    text/text_bmfont_ttf \
+    text/text_font_sdf \
+    text/text_format_text \
+    text/text_input_box \
+    text/text_writing_anim \
+    text/text_rectangle_bounds \
+    text/text_unicode \
     models/models_geometric_shapes \
-    models/models_material_pbr \
-    models/models_mesh_generation \
-    models/models_mesh_picking \
+    models/models_orthographic_projection \
+    models/models_box_collisions \
+    models/models_billboard \
     models/models_obj_loading \
     models/models_obj_viewer \
-    models/models_orthographic_projection \
-    models/models_rlgl_solar_system \
-    models/models_skybox \
     models/models_yaw_pitch_roll \
+    models/models_mesh_generation \
+    models/models_mesh_picking \
     models/models_heightmap \
+    models/models_cubicmap \
+    models/models_first_person_maze \
+    models/models_animation \
+    models/models_skybox \
+    models/models_material_pbr \
+    models/models_rlgl_solar_system \
+
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
@@ -492,18 +493,7 @@ core/core_input_gamepad: core/core_input_gamepad.c
     --preload-file core/resources/ps3.png@resources/ps3.png \
     --preload-file core/resources/xbox.png@resources/xbox.png
 
-# compile [core] example - generate random values
-core/core_random_values: core/core_random_values.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
-# compile [core] example - drop files
-# NOTE: File drop not supported on PLATFORM_ANDROID and PLATFORM_RPI (native)
-core/core_drop_files: core/core_drop_files.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
-
-# compile [core] example - storage values
-core/core_storage_values: core/core_storage_values.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
+core/core_input_multitouch \
 
 # compile [core] example - 2d camera
 core/core_2d_camera: core/core_2d_camera.c
@@ -529,40 +519,66 @@ core/core_3d_picking: core/core_3d_picking.c
 core/core_world_screen: core/core_world_screen.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
+core/core_custom_logging \
+core/core_window_letterbox \ 
+
+# compile [core] example - drop files
+# NOTE: File drop not supported on PLATFORM_ANDROID and PLATFORM_RPI (native)
+core/core_drop_files: core/core_drop_files.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
+    
+# compile [core] example - generate random values
+core/core_random_values: core/core_random_values.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+
+# compile [core] example - storage values
+core/core_storage_values: core/core_storage_values.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1
+
 # compile [core] example - vr simulator
 core/core_vr_simulator: core/core_vr_simulator.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-# compile [shapes] example - raylib logo (with basic shapes)
-shapes/shapes_logo_raylib: shapes/shapes_logo_raylib.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
+core/core_loading_thread \
+   
 # compile [shapes] example - basic shapes usage (rectangle, circle, ...)
 shapes/shapes_basic_shapes: shapes/shapes_basic_shapes.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_bouncing_ball \
 
 # compile [shapes] example - raylib color palette
 shapes/shapes_colors_palette: shapes/shapes_colors_palette.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+# compile [shapes] example - raylib logo (with basic shapes)
+shapes/shapes_logo_raylib: shapes/shapes_logo_raylib.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - raylib logo animation
 shapes/shapes_logo_raylib_anim: shapes/shapes_logo_raylib_anim.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-    
+
+shapes/shapes_rectangle_scaling \
+
 # compile [shapes] example - lines bezier
 shapes/shapes_lines_bezier: shapes/shapes_lines_bezier.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_collision_area \
+shapes/shapes_following_eyes \
+shapes/shapes_easings_ball_anim \
+shapes/shapes_easings_box_anim \
+shapes/shapes_easings_rectangle_array \
+shapes/shapes_draw_ring \
+shapes/shapes_draw_circle_sector \
+shapes/shapes_draw_rectangle_rounded \
 
 # compile [textures] example - raylib logo texture loading
 textures/textures_logo_raylib: textures/textures_logo_raylib.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
-
-# compile [textures] example - image loading and conversion to texture
-textures/textures_image_loading: textures/textures_image_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
-
+    
 # compile [textures] example - texture rectangle drawing
 textures/textures_rectangle: textures/textures_rectangle.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
@@ -572,6 +588,28 @@ textures/textures_rectangle: textures/textures_rectangle.c
 textures/textures_srcrec_dstrec: textures/textures_srcrec_dstrec.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/scarfy.png@resources/scarfy.png
+    
+# compile [textures] example - image loading and conversion to texture
+textures/textures_image_loading: textures/textures_image_loading.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/raylib_logo.png@resources/raylib_logo.png
+
+# compile [textures] example - texture image drawing
+textures/textures_image_drawing: textures/textures_image_drawing.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/parrots.png@resources/parrots.png \
+    --preload-file textures/resources/cat.png@resources/cat.png
+    
+# compile [textures] example - texture image generation
+textures/textures_image_generation: textures/textures_image_generation.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1
+    
+# compile [textures] example - texture image processing
+textures/textures_image_processing: textures/textures_image_processing.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/parrots.png@resources/parrots.png
+    
+textures/textures_image_text \
 
 # compile [textures] example - texture to image
 textures/textures_to_image: textures/textures_to_image.c
@@ -588,35 +626,12 @@ textures/textures_particles_blending: textures/textures_particles_blending.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/smoke.png@resources/smoke.png
 
-# compile [textures] example - texture image processing
-textures/textures_image_processing: textures/textures_image_processing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file textures/resources/parrots.png@resources/parrots.png
+textures/textures_npatch_drawing \
+textures/textures_background_scrolling \
+textures/textures_sprite_button \
+textures/textures_sprite_explosion \
+textures/textures_bunnymark \
     
-# compile [textures] example - texture image drawing
-textures/textures_image_drawing: textures/textures_image_drawing.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file textures/resources/parrots.png@resources/parrots.png \
-    --preload-file textures/resources/cat.png@resources/cat.png
-    
-# compile [textures] example - texture image generation
-textures/textures_image_generation: textures/textures_image_generation.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ALLOW_MEMORY_GROWTH=1
-    
-# compile [text] example - sprite fonts loading
-text/text_sprite_fonts: text/text_sprite_fonts.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file text/resources/custom_mecha.png@resources/custom_mecha.png \
-    --preload-file text/resources/custom_alagard.png@resources/custom_alagard.png \
-    --preload-file text/resources/custom_jupiter_crash.png@resources/custom_jupiter_crash.png
-
-# compile [text] example - bmfonts and ttf loading
-text/text_bmfont_ttf: text/text_bmfont_ttf.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/bmfont.fnt@resources/bmfont.fnt \
-    --preload-file text/resources/bmfont.png@resources/bmfont.png \
-    --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf
-
 # compile [text] example - raylib fonts
 text/text_raylib_fonts: text/text_raylib_fonts.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
@@ -629,6 +644,27 @@ text/text_raylib_fonts: text/text_raylib_fonts.c
     --preload-file text/resources/fonts/alpha_beta.png@resources/fonts/alpha_beta.png \
     --preload-file text/resources/fonts/jupiter_crash.png@resources/fonts/jupiter_crash.png
 
+# compile [text] example - sprite fonts loading
+text/text_sprite_fonts: text/text_sprite_fonts.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file text/resources/custom_mecha.png@resources/custom_mecha.png \
+    --preload-file text/resources/custom_alagard.png@resources/custom_alagard.png \
+    --preload-file text/resources/custom_jupiter_crash.png@resources/custom_jupiter_crash.png
+
+# compile [text] example - text ttf loading
+text/text_ttf_loading: text/text_ttf_loading.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
+
+# compile [text] example - bmfonts and ttf loading
+text/text_bmfont_ttf: text/text_bmfont_ttf.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file text/resources/bmfont.fnt@resources/bmfont.fnt \
+    --preload-file text/resources/bmfont.png@resources/bmfont.png \
+    --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf  
+
+text/text_font_sdf \
+    
 # compile [text] example - text formatting
 text/text_format_text: text/text_format_text.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
@@ -637,14 +673,12 @@ text/text_format_text: text/text_format_text.c
 text/text_writing_anim: text/text_writing_anim.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-# compile [text] example - text ttf loading
-text/text_ttf_loading: text/text_ttf_loading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
-
 # compile [text] example - text input box
 text/text_input_box: text/text_input_box.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+text/text_rectangle_bounds \
+text/text_unicode \
 
 # compile [models] example - basic geometric 3d shapes
 models/models_geometric_shapes: models/models_geometric_shapes.c
