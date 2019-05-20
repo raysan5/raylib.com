@@ -58,13 +58,13 @@
                 
                 document.title = "raylib - " + name.replace('_', ' ');
 
-                var type = name.substring(0, name.indexOf("_"));
+                //var type = name.substring(0, name.indexOf("_"));
                 //var srcUrl = '../../src/' + type + '/' + name + '.c';
                 //var imgUrl = '../' + type + '/' + name + '.png';
                 
                 // Get example code and image directly from original raylib GitHub and avoid duplicate code to maintain
-                var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
-                var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
+                var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/physac/' + name + '.c';
+                var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/physac/' + name + '.png';
 
                 $('#eximage img').attr('src', imgUrl);
 

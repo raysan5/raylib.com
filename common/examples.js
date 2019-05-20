@@ -94,13 +94,20 @@ $(document).ready(function() {
         'audio_module_playing',
         'audio_music_stream',
         'audio_raw_stream',
-        'audio_sound_loading'];
+        'audio_sound_loading',
+        'physics_demo',
+        'physics_friction',
+        'physics_movement',
+        'physics_restitution',
+        'physics_shatter'];
 
     for (var i = 0; i < exampleName.length; i++)
     {
         var filterType = exampleName[i].substring(0, exampleName[i].indexOf("_"));
         var exampleBase = exampleName[i].slice(exampleName[i].indexOf('_') + 1);
         var exampleDesc = exampleBase.replace('_', ' ');
+        
+        if (filterType == "physics") filterType = "physac";
 
         $('#container').append(
             '<div class="mix f' + filterType + '">' +
@@ -117,7 +124,6 @@ $(document).ready(function() {
     $("#container a").hover(
         function(){ $(this).find(".extext").show(); },
         function(){ $(this).find(".extext").hide(); });
-
 /*
     $("#container a img").hover(
         function() { $(this).stop().animate({ opacity:0.6 }, 200, "easeOutQuad" ); },
