@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'grixel_acme_7_wide_xtnd';
-    src: url('../font/acme_7_wide_xtnd.eot');
-    src: url('../font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
-         url('../font/acme_7_wide_xtnd.woff') format('woff'),
-         url('../font/acme_7_wide_xtnd.ttf') format('truetype');
+    src: url('font/acme_7_wide_xtnd.eot');
+    src: url('font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+         url('font/acme_7_wide_xtnd.woff') format('woff'),
+         url('font/acme_7_wide_xtnd.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 	font-size-adjust:0.49;
@@ -37,7 +37,7 @@ p a:hover{text-decoration: none; color:gray;}
 .downloadButtonInstaller { font-size: x-small; }
 .list, .list strong {font-family: Courier New, Verdana, Arial!important; font-size: medium; line-height: 200%;  }
 
-#logo{width:128px; height:128px; float:left; position:relative; background-image:url(../img/raylib_logo.png);}
+#logo{width:128px; height:128px; float:left; position:relative; background-image:url(img/raylib_logo.png);}
 .menu{width:740px; height:39px; text-align:right; right:0px; left:30px; bottom:7px; position:relative; float:left; margin-left:0px; margin-top:10px;}
 .menu a{padding:5px 20px; color:black; font-size:12pt; float:left; position:relative; border-bottom:1px solid black;}
 .menu a:hover{margin-top:-20px; padding:15px 15px; background: rgb(254,255,255); 
@@ -63,19 +63,19 @@ p a:hover{text-decoration: none; color:gray;}
 	
 #social{ width:390px; height:50px; position:relative; float:right; margin-right:8px; margin-top:20px; margin-bottom:20px; }
 #social a:hover{ background-position: 0 -36px;}
-#youtube{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_youtube.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#handmade{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_handmade.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#twitch{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_twitch.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#patreon{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_patreon.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#itchio{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_itchio.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#reddit{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_reddit.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#freenode{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_freenode_irc.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#gitter{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_gitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#facebook{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_facebook.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#twitter{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_twitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#github{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_github.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#kofi{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_kofi.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#discord{ width:36px; height:36px; float:left; position:relative; background-image: url(../img/icon_discord.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#youtube{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_youtube.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#handmade{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_handmade.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#twitch{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_twitch.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#patreon{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_patreon.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#itchio{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_itchio.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#reddit{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_reddit.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#freenode{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_freenode_irc.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#gitter{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_gitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#facebook{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_facebook.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#twitter{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_twitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#github{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_github.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#kofi{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_kofi.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#discord{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_discord.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 .list{margin-top:10px; margin-left:30px; display: inline-block}
 
 #licensebox{ width:808px; height:400px; border:12px solid; border-color:#d0d0d0; background-color:#e4e4e4;}

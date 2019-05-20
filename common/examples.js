@@ -105,7 +105,7 @@ $(document).ready(function() {
         $('#container').append(
             '<div class="mix f' + filterType + '">' +
             '<a class="fancybox fancybox.iframe" href="examples/web/' + filterType + '/' + 'loader.html?name=' + exampleName[i] + '" title="' + exampleDesc + '">' +
-            '<img width="400" height="225" src="../examples/web/' + filterType + '/' + exampleName[i] + '.png"><div class="extext"><p>' + exampleDesc + '</p></div></a>' +
+            '<img width="400" height="225" src="https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + filterType + '/' + exampleName[i] + '.png"><div class="extext"><p>' + exampleDesc + '</p></div></a>' +
             '</div>');
 
         $('#container a .extext').hide();

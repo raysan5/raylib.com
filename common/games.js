@@ -62,12 +62,6 @@ $(document).ready(function() {
                 case 'user_funwithsat': linkTag = '<a target="_blank" href="http://marcmde.github.io/FunWithSATCollisions_v_1_0_Browser/" title="' + exampleDesc[i] + '">'; break;
                 default: break;
             }
-            /*
-            https://github.com/MarcMDE/TapToJump    //http://marcmde.github.io/TapToJump_v1_0_Browser/
-            https://github.com/MarcMDE/TapToJAmp    //http://marcmde.github.io/TapToJAmp_v2_0/
-            https://github.com/MarcMDE/FunWithSATCollisions //http://marcmde.github.io/FunWithSATCollisions_v_1_0_Browser/
-            https://kurnic.wordpress.com/portfolio/flappy-jetpack/
-            */
         }
         
         $('#container').append(
