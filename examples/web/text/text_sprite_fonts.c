@@ -1,6 +1,6 @@
 /*******************************************************************************************
 *
-*   raylib [core] example - SpriteFont loading and usage (adapted for HTML5 platform)
+*   raylib [text] example - Font loading and usage
 *
 *   This example has been created using raylib 1.0 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
@@ -18,18 +18,20 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 const char msg1[50] = "THIS IS A custom SPRITE FONT...";
 const char msg2[50] = "...and this is ANOTHER CUSTOM font...";
 const char msg3[50] = "...and a THIRD one! GREAT! :D";
 
-SpriteFont font1;
-SpriteFont font2;
-SpriteFont font3;
+Font font1 = { 0 };
+Font font2 = { 0 };
+Font font3 = { 0 };
 
-Vector2 fontPosition1, fontPosition2, fontPosition3;
+Vector2 fontPosition1 = { 0 };
+Vector2 fontPosition2 = { 0 };
+Vector2 fontPosition3 = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -37,7 +39,7 @@ Vector2 fontPosition1, fontPosition2, fontPosition3;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -46,10 +48,10 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [text] example - sprite fonts usage");
 
     // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
-    font1 = LoadSpriteFont("resources/custom_mecha.png");          // SpriteFont loading
-    font2 = LoadSpriteFont("resources/custom_alagard.png");        // SpriteFont loading
-    font3 = LoadSpriteFont("resources/custom_jupiter_crash.png");  // SpriteFont loading
-    
+    font1 = LoadFont("resources/custom_mecha.png");          // SpriteFont loading
+    font2 = LoadFont("resources/custom_alagard.png");        // SpriteFont loading
+    font3 = LoadFont("resources/custom_jupiter_crash.png");  // SpriteFont loading
+
     fontPosition1.x = screenWidth/2 - MeasureTextEx(font1, msg1, font1.baseSize, -3).x/2;
     fontPosition1.y = screenHeight/2 - font1.baseSize/2 - 80;
 
@@ -58,13 +60,13 @@ int main(void)
 
     fontPosition3.x = screenWidth/2 - MeasureTextEx(font3, msg3, font3.baseSize, 2).x/2;
     fontPosition3.y = screenHeight/2 - font3.baseSize/2 + 50;
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -74,9 +76,10 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadSpriteFont(font1);      // SpriteFont unloading
-    UnloadSpriteFont(font2);      // SpriteFont unloading
-    UnloadSpriteFont(font3);      // SpriteFont unloading
+    UnloadFont(font1);      // SpriteFont unloading
+    UnloadFont(font2);      // SpriteFont unloading
+    UnloadFont(font3);      // SpriteFont unloading
+
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 

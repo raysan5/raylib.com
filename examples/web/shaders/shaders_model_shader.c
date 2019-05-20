@@ -22,18 +22,24 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#if defined(PLATFORM_DESKTOP)
+    #define GLSL_VERSION            330
+#else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
+    #define GLSL_VERSION            100
+#endif
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define the camera to look into our 3d world
-Camera camera = {{ 3.0f, 3.0f, 3.0f }, { 0.0f, 1.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+Camera camera = { 0 };
 
-Model dwarf;         // OBJ model
-Texture2D texture;   // Model texture
-Shader shader;       // Postpro shader
+Model model = { 0 };         // OBJ model
+Texture2D texture = { 0 };   // Model texture
+Shader shader = { 0 };       // Postpro shader
 
 Vector3 position = { 0.0f, 0.0f, 0.0f };  // Set model position
 
@@ -43,7 +49,7 @@ Vector3 position = { 0.0f, 0.0f, 0.0f };  // Set model position
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -52,13 +58,21 @@ int main(void)
     SetConfigFlags(FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
     InitWindow(screenWidth, screenHeight, "raylib [shaders] example - model shader");
 
-    dwarf = LoadModel("resources/model/dwarf.obj");                  // Load OBJ model
-    texture = LoadTexture("resources/model/dwarf_diffuse.png");      // Load model texture
-    shader = LoadShader("resources/shaders/glsl100/base.vs", 
-                        "resources/shaders/glsl100/grayscale.fs");   // Load model shader
+    // Define the camera to look into our 3d world
+    camera.position = (Vector3){ 4.0f, 4.0f, 4.0f };
+    camera.target = (Vector3){ 0.0f, 1.0f, -1.0f };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 45.0f;
+    camera.type = CAMERA_PERSPECTIVE;
+    model = LoadModel("resources/models/watermill.obj");                  // Load OBJ model
+    texture = LoadTexture("resources/models/watermill_diffuse.png");      // Load model texture
 
-    dwarf.material.shader = shader;                         // Set shader effect to 3d model
-    dwarf.material.maps[MAP_DIFFUSE].texture = texture;     // Bind texture to model
+    // Load shader for model
+    // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
+    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/grayscale.fs", GLSL_VERSION));
+
+    model.materials[0].shader = shader;                     // Set shader effect to 3d model
+    model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Bind texture to model
 
     // Setup orbital camera
     SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode
@@ -68,7 +82,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -80,7 +94,7 @@ int main(void)
     //--------------------------------------------------------------------------------------
     UnloadShader(shader);       // Unload shader
     UnloadTexture(texture);     // Unload texture
-    UnloadModel(dwarf);         // Unload model
+    UnloadModel(model);         // Unload model
 
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -104,15 +118,15 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        Begin3dMode(camera);
+        BeginMode3D(camera);
 
-            DrawModel(dwarf, position, 2.0f, WHITE);   // Draw 3d model with texture
+            DrawModel(model, position, 0.2f, WHITE);   // Draw 3d model with texture
 
             DrawGrid(10, 1.0f);     // Draw a grid
 
-        End3dMode();
-        
-        DrawText("(c) Dwarf 3D model by David Moreno", screenWidth - 200, screenHeight - 20, 10, GRAY);
+        EndMode3D();
+
+        DrawText("(c) Watermill 3D model by Alberto Cano", screenWidth - 210, screenHeight - 20, 10, GRAY);
 
         DrawFPS(10, 10);
 

@@ -27,7 +27,7 @@ Camera camera = { 0 };
 
 Model model = { 0 };
 Texture2D texture = { 0 };
-    
+
 Vector3 position = { 0.0f, 0.0f, 0.0f };
 
 // Load animation data
@@ -43,7 +43,7 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -82,7 +82,7 @@ int main()
     //--------------------------------------------------------------------------------------
     // Unload model animations data
     for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
-    
+
     UnloadModel(model);         // Unload model
 
     CloseWindow();              // Close window and OpenGL context

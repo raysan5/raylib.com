@@ -18,18 +18,18 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-Texture2D scarfy;
+Texture2D scarfy = { 0 };
 
-int frameWidth;
-int frameHeight;
+int frameWidth = 0;
+int frameHeight = 0;
 
-Rectangle sourceRec;
-Rectangle destRec;
-Vector2 origin;
+Rectangle sourceRec = { 0 };
+Rectangle destRec = { 0 };
+Vector2 origin = { 0 };
 
 int rotation = 0;
 
@@ -39,7 +39,7 @@ int rotation = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -48,12 +48,12 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [textures] examples - texture source and destination rectangles");
 
     scarfy = LoadTexture("resources/scarfy.png");        // Texture loading
-    
+
     frameWidth = scarfy.width/6;
     frameHeight = scarfy.height;
-    
+
     // NOTE: On PLATFORM_WEB, NPOT textures support is limited
-    
+
     // NOTE: Source rectangle (part of the texture to use for drawing)
     sourceRec = (Rectangle){ 0, 0, frameWidth, frameHeight };
 
@@ -68,7 +68,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -79,7 +79,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(scarfy);          // Texture unloading
-     
+
     CloseWindow();                  // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -111,7 +111,7 @@ void UpdateDrawFrame(void)
 
         DrawLine(destRec.x, 0, destRec.x, screenHeight, GRAY);
         DrawLine(0, destRec.y, screenWidth, destRec.y, GRAY);
-        
+
         DrawText("(c) Scarfy sprite by Eiden Marsal", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
     EndDrawing();

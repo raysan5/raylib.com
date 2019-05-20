@@ -37,9 +37,9 @@ Vector2 touchPosition = { 0.0f };
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -74,7 +74,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     ballPosition = GetMousePosition();
-    
+
     ballColor = BEIGE;
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) ballColor = MAROON;
@@ -84,7 +84,7 @@ void UpdateDrawFrame(void)
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) touchCounter = 10;
     if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) touchCounter = 10;
     if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) touchCounter = 10;
-    
+
     if (touchCounter > 0) touchCounter--;
     //----------------------------------------------------------------------------------
 
@@ -96,15 +96,15 @@ void UpdateDrawFrame(void)
 
         // Multitouch
         for (int i = 0; i < MAX_TOUCH_POINTS; ++i)
-        {              
+        {
             touchPosition = GetTouchPosition(i);                    // Get the touch point
-            
+
             if ((touchPosition.x >= 0) && (touchPosition.y >= 0))   // Make sure point is not (-1,-1) as this means there is no touch for it
             {
                 // Draw circle and touch index number
                 DrawCircleV(touchPosition, 34, ORANGE);
                 DrawText(FormatText("%d", i), touchPosition.x - 10, touchPosition.y - 70, 40, BLACK);
-            } 
+            }
         }
 
         // Draw the normal mouse location

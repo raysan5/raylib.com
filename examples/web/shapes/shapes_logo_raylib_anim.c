@@ -18,11 +18,11 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-int logoPositionX;
-int logoPositionY;
+int logoPositionX = 0;
+int logoPositionY= 0;
 
 int framesCounter = 0;
 int lettersCount = 0;
@@ -42,7 +42,7 @@ float alpha = 1.0f;             // Useful for fading
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -52,13 +52,13 @@ int main(void)
 
     logoPositionX = screenWidth/2 - 128;
     logoPositionY = screenHeight/2 - 128;
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

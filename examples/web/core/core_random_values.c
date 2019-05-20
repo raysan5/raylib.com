@@ -18,11 +18,11 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-int framesCounter = 0;  // Variable used to count frames
-int randValue;
+int framesCounter = 0;          // Variable used to count frames
+int randValue = 0;
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -30,7 +30,7 @@ int randValue;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -39,13 +39,13 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - generate random values");
 
     randValue = GetRandomValue(-8, 5);   // Get a random integer number between -8 and 5 (both included)
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

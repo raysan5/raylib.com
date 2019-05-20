@@ -20,13 +20,13 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 char name[MAX_INPUT_CHARS + 1] = "\0";      // NOTE: One extra space required for line ending char '\0'
 int letterCount = 0;
 
-Rectangle textBox;
+Rectangle textBox = { 0 };
 bool mouseOnText = false;
 
 int framesCounter = 0;
@@ -37,7 +37,7 @@ int framesCounter = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -52,7 +52,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -77,27 +77,27 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     if (CheckCollisionPointRec(GetMousePosition(), textBox)) mouseOnText = true;
     else mouseOnText = false;
-    
+
     if (mouseOnText)
     {
         int key = GetKeyPressed();
-        
+
         // NOTE: Only allow keys in range [32..125]
         if ((key >= 32) && (key <= 125) && (letterCount < MAX_INPUT_CHARS))
         {
             name[letterCount] = (char)key;
             letterCount++;
         }
-        
+
         if (key == KEY_BACKSPACE)
         {
             letterCount--;
             name[letterCount] = '\0';
-            
+
             if (letterCount < 0) letterCount = 0;
         }
     }
-    
+
     if (mouseOnText) framesCounter++;
     else framesCounter = 0;
     //----------------------------------------------------------------------------------
@@ -107,15 +107,15 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        
+
         DrawText("PLACE MOUSE OVER INPUT BOX!", 240, 140, 20, GRAY);
 
         DrawRectangleRec(textBox, LIGHTGRAY);
         if (mouseOnText) DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, RED);
         else DrawRectangleLines(textBox.x, textBox.y, textBox.width, textBox.height, DARKGRAY);
-        
+
         DrawText(name, textBox.x + 5, textBox.y + 8, 40, MAROON);
-        
+
         DrawText(FormatText("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
 
         if (mouseOnText)
@@ -127,7 +127,7 @@ void UpdateDrawFrame(void)
             }
             else DrawText("Press BACKSPACE to delete chars...", 230, 300, 20, GRAY);
         }
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

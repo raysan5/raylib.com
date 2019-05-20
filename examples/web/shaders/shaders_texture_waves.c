@@ -33,8 +33,8 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -65,43 +65,43 @@ float seconds = 0.0f;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main() 
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-	InitWindow(screenWidth, screenHeight, "raylib [shaders] example - texture waves");
-	
+    InitWindow(screenWidth, screenHeight, "raylib [shaders] example - texture waves");
+
     // Load space texture to apply shaders
-	texture = LoadTexture("resources/space.png");
-	
+    texture = LoadTexture("resources/space.png");
+
     // Load shader and setup location points and values
     shader = LoadShader(0, FormatText("resources/shaders/glsl%i/wave.fs", GLSL_VERSION));
 
-	secondsLoc = GetShaderLocation(shader, "secondes");
-	freqXLoc = GetShaderLocation(shader, "freqX");
-	freqYLoc = GetShaderLocation(shader, "freqY");
-	ampXLoc = GetShaderLocation(shader, "ampX");
-	ampYLoc = GetShaderLocation(shader, "ampY");
-	speedXLoc = GetShaderLocation(shader, "speedX");
-	speedYLoc = GetShaderLocation(shader, "speedY");
+    secondsLoc = GetShaderLocation(shader, "secondes");
+    freqXLoc = GetShaderLocation(shader, "freqX");
+    freqYLoc = GetShaderLocation(shader, "freqY");
+    ampXLoc = GetShaderLocation(shader, "ampX");
+    ampYLoc = GetShaderLocation(shader, "ampY");
+    speedXLoc = GetShaderLocation(shader, "speedX");
+    speedYLoc = GetShaderLocation(shader, "speedY");
 
     float screenSize[2] = { (float)GetScreenWidth(), (float)GetScreenHeight() };
-	SetShaderValue(shader, GetShaderLocation(shader, "size"), &screenSize, UNIFORM_VEC2);
-	SetShaderValue(shader, freqXLoc, &freqX, UNIFORM_FLOAT);
-	SetShaderValue(shader, freqYLoc, &freqY, UNIFORM_FLOAT);
-	SetShaderValue(shader, ampXLoc, &ampX, UNIFORM_FLOAT);
-	SetShaderValue(shader, ampYLoc, &ampY, UNIFORM_FLOAT);
-	SetShaderValue(shader, speedXLoc, &speedX, UNIFORM_FLOAT);
-	SetShaderValue(shader, speedYLoc, &speedY, UNIFORM_FLOAT);
-    
+    SetShaderValue(shader, GetShaderLocation(shader, "size"), &screenSize, UNIFORM_VEC2);
+    SetShaderValue(shader, freqXLoc, &freqX, UNIFORM_FLOAT);
+    SetShaderValue(shader, freqYLoc, &freqY, UNIFORM_FLOAT);
+    SetShaderValue(shader, ampXLoc, &ampX, UNIFORM_FLOAT);
+    SetShaderValue(shader, ampYLoc, &ampY, UNIFORM_FLOAT);
+    SetShaderValue(shader, speedXLoc, &speedX, UNIFORM_FLOAT);
+    SetShaderValue(shader, speedYLoc, &speedY, UNIFORM_FLOAT);
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -113,11 +113,11 @@ int main()
     //--------------------------------------------------------------------------------------
     UnloadShader(shader);         // Unload shader
     UnloadTexture(texture);       // Unload texture
-    
+
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
-	return 0;
+    return 0;
 }
 
 //----------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     seconds += GetFrameTime();
-    
+
     SetShaderValue(shader, secondsLoc, &seconds, UNIFORM_FLOAT);
     //----------------------------------------------------------------------------------
 
@@ -139,10 +139,10 @@ void UpdateDrawFrame(void)
         ClearBackground(RAYWHITE);
 
         BeginShaderMode(shader);
-        
+
             DrawTexture(texture, 0, 0, WHITE);
             DrawTexture(texture, texture.width, 0, WHITE);
-            
+
         EndShaderMode();
 
     EndDrawing();

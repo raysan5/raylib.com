@@ -33,8 +33,8 @@ typedef struct {
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 Color colors[14] = { ORANGE, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PINK,
                      YELLOW, GREEN, SKYBLUE, PURPLE, BEIGE };
@@ -42,7 +42,7 @@ Color colors[14] = { ORANGE, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PI
 // Creates ome circles for visual effect
 CircleWave circles[MAX_CIRCLES];
 
-Music xm;
+Music xm = { 0 };
 
 float timePlayed = 0.0f;
 static bool pause = false;
@@ -53,7 +53,7 @@ static bool pause = false;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -62,7 +62,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [audio] example - module playing (streaming)");
 
     InitAudioDevice();              // Initialize audio device
-    
+
     for (int i = MAX_CIRCLES - 1; i >= 0; i--)
     {
         circles[i].alpha = 0.0f;
@@ -74,15 +74,15 @@ int main(void)
     }
 
     xm = LoadMusicStream("resources/mini1111.xm");
-    
+
     PlayMusicStream(xm);            // Play module stream
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -93,7 +93,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadMusicStream(xm);          // Unload music stream buffers from RAM
-    
+
     CloseAudioDevice();             // Close audio device (music streaming is automatically stopped)
 
     CloseWindow();                  // Close window and OpenGL context
@@ -110,23 +110,23 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     UpdateMusicStream(xm);        // Update music buffer with new stream data
-    
+
     // Restart music playing (stop and play)
-    if (IsKeyPressed(KEY_SPACE)) 
+    if (IsKeyPressed(KEY_SPACE))
     {
         StopMusicStream(xm);
         PlayMusicStream(xm);
     }
-    
-    // Pause/Resume music playing 
+
+    // Pause/Resume music playing
     if (IsKeyPressed(KEY_P))
     {
         pause = !pause;
-        
+
         if (pause) PauseMusicStream(xm);
         else ResumeMusicStream(xm);
     }
-    
+
     // Get timePlayed scaled to bar dimensions
     timePlayed = GetMusicTimePlayed(xm)/GetMusicTimeLength(xm)*(screenWidth - 40);
 
@@ -135,9 +135,9 @@ void UpdateDrawFrame(void)
     {
         circles[i].alpha += circles[i].speed;
         circles[i].radius += circles[i].speed*10.0f;
-        
+
         if (circles[i].alpha > 1.0f) circles[i].speed *= -1;
-        
+
         if (circles[i].alpha <= 0.0f)
         {
             circles[i].alpha = 0.0f;
@@ -155,12 +155,12 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        
+
         for (int i = MAX_CIRCLES - 1; i >= 0; i--)
         {
             DrawCircleV(circles[i].position, circles[i].radius, Fade(circles[i].color, circles[i].alpha));
         }
-        
+
         // Draw time bar
         DrawRectangle(20, screenHeight - 20 - 12, screenWidth - 40, 12, LIGHTGRAY);
         DrawRectangle(20, screenHeight - 20 - 12, (int)timePlayed, 12, MAROON);

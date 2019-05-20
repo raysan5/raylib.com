@@ -23,24 +23,24 @@
 // Custom logging function
 void LogCustom(int msgType, const char *text, va_list args)
 {
-	char timeStr[64];
-	time_t now = time(NULL);
-	struct tm *tm_info = localtime(&now);
+    char timeStr[64];
+    time_t now = time(NULL);
+    struct tm *tm_info = localtime(&now);
 
-	strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", tm_info);
-	printf("[%s] ", timeStr);
+    strftime(timeStr, sizeof(timeStr), "%Y-%m-%d %H:%M:%S", tm_info);
+    printf("[%s] ", timeStr);
 
-	switch (msgType)
-	{
-		case LOG_INFO: printf("[INFO] : "); break;
-		case LOG_ERROR: printf("[ERROR]: "); break;
-		case LOG_WARNING: printf("[WARN] : "); break;
-		case LOG_DEBUG: printf("[DEBUG]: "); break;
-		default: break;
-	}
-    
-	vprintf(text, args);
-	printf("\n");
+    switch (msgType)
+    {
+        case LOG_INFO: printf("[INFO] : "); break;
+        case LOG_ERROR: printf("[ERROR]: "); break;
+        case LOG_WARNING: printf("[WARN] : "); break;
+        case LOG_DEBUG: printf("[DEBUG]: "); break;
+        default: break;
+    }
+
+    vprintf(text, args);
+    printf("\n");
 }
 
 //----------------------------------------------------------------------------------
@@ -51,31 +51,30 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main(int argc, char* argv[])
+int main(void)
 {
-	// Initialization
-	//--------------------------------------------------------------------------------------
-	// First thing we do is setting our custom logger to ensure everything raylib logs
-	// will use our own logger instead of its internal one
-	SetTraceLogCallback(LogCustom);
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    // First thing we do is setting our custom logger to ensure everything raylib logs
+    // will use our own logger instead of its internal one
+    SetTraceLogCallback(LogCustom);
 
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - custom logging");
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - custom logging");
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -83,12 +82,12 @@ int main(int argc, char* argv[])
     }
 #endif
 
-	// De-Initialization
-	//--------------------------------------------------------------------------------------
-	CloseWindow();        // Close window and OpenGL context
-	//--------------------------------------------------------------------------------------
+    // De-Initialization
+    //--------------------------------------------------------------------------------------
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
 
-	return 0;
+    return 0;
 }
 
 //----------------------------------------------------------------------------------

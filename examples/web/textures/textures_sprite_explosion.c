@@ -21,16 +21,16 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
 // Load explosion sound
-Sound fxBoom;
+Sound fxBoom = { 0 };
 
 // Load explosion texture
-Texture2D explosion;
+Texture2D explosion = { 0 };
 
 // Init variables for animation
 int frameWidth = 0;
@@ -50,34 +50,34 @@ int framesCounter = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite explosion");
-    
+
     InitAudioDevice();
-    
+
     // Load explosion sound
     fxBoom = LoadSound("resources/boom.wav");
-    
+
     // Load explosion texture
     explosion = LoadTexture("resources/explosion.png");
-    
+
     // Init variables for animation
     frameWidth = explosion.width/NUM_FRAMES;    // Sprite one frame rectangle width
     frameHeight = explosion.height/NUM_LINES;   // Sprite one frame rectangle height
 
     frameRec = (Rectangle){ 0, 0, frameWidth, frameHeight };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -89,12 +89,12 @@ int main()
     //--------------------------------------------------------------------------------------
     UnloadTexture(explosion);   // Unload texture
     UnloadSound(fxBoom);          // Unload sound
-    
+
     CloseAudioDevice();
-    
+
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-    
+
     return 0;
 }
 
@@ -105,57 +105,57 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    
+
     // Check for mouse button pressed and activate explosion (if not active)
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !active)
     {
         position = GetMousePosition();
         active = true;
-        
+
         position.x -= frameWidth/2;
         position.y -= frameHeight/2;
-        
+
         PlaySound(fxBoom);
     }
-    
+
     // Compute explosion animation frames
     if (active)
     {
         framesCounter++;
-        
+
         if (framesCounter > 2)
         {
             currentFrame++;
-            
+
             if (currentFrame >= NUM_FRAMES)
             {
                 currentFrame = 0;
                 currentLine++;
-                
+
                 if (currentLine >= NUM_LINES)
                 {
                     currentLine = 0;
                     active = false;
                 }
             }
-        
+
             framesCounter = 0;
         }
     }
-    
+
     frameRec.x = frameWidth*currentFrame;
     frameRec.y = frameHeight*currentLine;
     //----------------------------------------------------------------------------------
-    
+
     // Draw
     //----------------------------------------------------------------------------------
     BeginDrawing();
-    
+
         ClearBackground(RAYWHITE);
-        
+
         // Draw explosion required frame rectangle
         if (active) DrawTextureRec(explosion, frameRec, position, WHITE);
-    
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

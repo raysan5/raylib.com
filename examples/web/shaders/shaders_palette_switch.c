@@ -76,8 +76,8 @@ static const char *paletteText[] = {
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -93,14 +93,14 @@ int lineHeight = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 450;
+    const int screenWidth = 800;
+    const int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "raylib [shaders] example - color palette switch");
 
@@ -120,7 +120,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -164,7 +164,7 @@ void UpdateDrawFrame(void)
 
         BeginShaderMode(shader);
 
-            for (int i = 0; i < COLORS_PER_PALETTE; i++) 
+            for (int i = 0; i < COLORS_PER_PALETTE; i++)
             {
                 // Draw horizontal screen-wide rectangles with increasing "palette index"
                 // The used palette index is encoded in the RGB components of the pixel
@@ -176,7 +176,7 @@ void UpdateDrawFrame(void)
         DrawText("< >", 10, 10, 30, DARKBLUE);
         DrawText("CURRENT PALETTE:", 60, 15, 20, RAYWHITE);
         DrawText(paletteText[currentPalette], 300, 15, 20, RED);
-        
+
         DrawFPS(700, 15);
 
     EndDrawing();

@@ -40,22 +40,22 @@ bool mouseScaleMode = false;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - rectangle scaling mouse");
-    
+
     rec = (Rectangle){ 100, 100, 200, 80 };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -64,7 +64,7 @@ int main()
 #endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------   
+    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -79,25 +79,25 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     mousePosition = GetMousePosition();
-    
-    if (CheckCollisionPointRec(mousePosition, rec) && 
+
+    if (CheckCollisionPointRec(mousePosition, rec) &&
         CheckCollisionPointRec(mousePosition, (Rectangle){ rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE, MOUSE_SCALE_MARK_SIZE }))
     {
         mouseScaleReady = true;
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) mouseScaleMode = true;
     }
     else mouseScaleReady = false;
-    
+
     if (mouseScaleMode)
     {
         mouseScaleReady = true;
-        
+
         rec.width = (mousePosition.x - rec.x);
         rec.height = (mousePosition.y - rec.y);
-        
+
         if (rec.width < MOUSE_SCALE_MARK_SIZE) rec.width = MOUSE_SCALE_MARK_SIZE;
         if (rec.height < MOUSE_SCALE_MARK_SIZE) rec.height = MOUSE_SCALE_MARK_SIZE;
-        
+
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) mouseScaleMode = false;
     }
     //----------------------------------------------------------------------------------
@@ -107,15 +107,15 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        
+
         DrawText("Scale rectangle dragging from bottom-right corner!", 10, 10, 20, GRAY);
 
         DrawRectangleRec(rec, Fade(GREEN, 0.5f));
-        
-        if (mouseScaleReady) 
+
+        if (mouseScaleReady)
         {
             DrawRectangleLinesEx(rec, 1, RED);
-            DrawTriangle((Vector2){ rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height }, 
+            DrawTriangle((Vector2){ rec.x + rec.width - MOUSE_SCALE_MARK_SIZE, rec.y + rec.height },
                          (Vector2){ rec.x + rec.width, rec.y + rec.height },
                          (Vector2){ rec.x + rec.width, rec.y + rec.height - MOUSE_SCALE_MARK_SIZE }, RED);
         }

@@ -30,7 +30,7 @@
 
 // A few good julia sets
 const float POINTS_OF_INTEREST[6][2] =
-{ 
+{
     { -0.348827, 0.607167 },
     { -0.786268, 0.169728 },
     { -0.8, 0.156 },
@@ -42,8 +42,8 @@ const float POINTS_OF_INTEREST[6][2] =
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -62,7 +62,7 @@ Vector2 offsetSpeed = { 0.0f, 0.0f };
 
 int incrementSpeed = 0;     // Multiplier of speed to change c value
 bool showControls = true;   // Show controls
-bool pause = false;         // Pause animation
+static bool pause = false;         // Pause animation
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -70,9 +70,9 @@ bool pause = false;         // Pause animation
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -81,11 +81,11 @@ int main()
     // Load julia set shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
     shader = LoadShader(0, FormatText("resources/shaders/glsl%i/julia_set.fs", GLSL_VERSION));
-    
+
     // c constant to use in z^2 + c
     c[0] = POINTS_OF_INTEREST[0][0];
     c[1] = POINTS_OF_INTEREST[0][1];
-    
+
     // Offset and zoom to draw the julia set at. (centered on screen and default size)
     offset[0] = -(float)screenWidth/2;
     offset[1] = -(float)screenHeight/2;
@@ -99,7 +99,7 @@ int main()
     // Tell the shader what the screen dimensions, zoom, offset and c are
     float screenDims[2] = { (float)screenWidth, (float)screenHeight };
     SetShaderValue(shader, GetShaderLocation(shader, "screenDims"), screenDims, UNIFORM_VEC2);
-    
+
     SetShaderValue(shader, cLoc, c, UNIFORM_VEC2);
     SetShaderValue(shader, zoomLoc, &zoom, UNIFORM_FLOAT);
     SetShaderValue(shader, offsetLoc, offset, UNIFORM_VEC2);
@@ -112,7 +112,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -140,11 +140,11 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
 
     // Press [1 - 6] to reset c to a point of interest
-    if (IsKeyPressed(KEY_ONE) || 
-        IsKeyPressed(KEY_TWO) || 
-        IsKeyPressed(KEY_THREE) || 
-        IsKeyPressed(KEY_FOUR) || 
-        IsKeyPressed(KEY_FIVE) || 
+    if (IsKeyPressed(KEY_ONE) ||
+        IsKeyPressed(KEY_TWO) ||
+        IsKeyPressed(KEY_THREE) ||
+        IsKeyPressed(KEY_FOUR) ||
+        IsKeyPressed(KEY_FIVE) ||
         IsKeyPressed(KEY_SIX))
     {
         if (IsKeyPressed(KEY_ONE)) c[0] = POINTS_OF_INTEREST[0][0], c[1] = POINTS_OF_INTEREST[0][1];
@@ -159,7 +159,7 @@ void UpdateDrawFrame(void)
 
     if (IsKeyPressed(KEY_SPACE)) pause = !pause;                 // Pause animation (c change)
     if (IsKeyPressed(KEY_F1)) showControls = !showControls;  // Toggle whether or not to show controls
-    
+
     if (!pause)
     {
         if (IsKeyPressed(KEY_RIGHT)) incrementSpeed++;
@@ -173,10 +173,10 @@ void UpdateDrawFrame(void)
             if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) zoom -= zoom*0.003f;
 
             Vector2 mousePos = GetMousePosition();
-            
+
             offsetSpeed.x = mousePos.x -(float)screenWidth/2;
             offsetSpeed.y = mousePos.y -(float)screenHeight/2;
-            
+
             // Slowly move camera to targetOffset
             offset[0] += GetFrameTime()*offsetSpeed.x*0.8f;
             offset[1] += GetFrameTime()*offsetSpeed.y*0.8f;
@@ -200,7 +200,7 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(BLACK);         // Clear the screen of the previous frame.
-        
+
         // Using a render texture to draw Julia set
         BeginTextureMode(target);       // Enable drawing to texture
             ClearBackground(BLACK);     // Clear the render texture
@@ -217,7 +217,7 @@ void UpdateDrawFrame(void)
         BeginShaderMode(shader);
             DrawTexture(target.texture, 0, 0, WHITE);
         EndShaderMode();
-            
+
         if (showControls)
         {
             DrawText("Press Mouse buttons right/left to zoom in/out and move", 10, 15, 10, RAYWHITE);

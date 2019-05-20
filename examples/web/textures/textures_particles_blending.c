@@ -20,8 +20,8 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Particle structure with basic data
 typedef struct {
@@ -33,11 +33,11 @@ typedef struct {
     bool active;        // NOTE: Use it to activate/deactive particle
 } Particle;
 
-Particle mouseTail[MAX_PARTICLES]; 
+Particle mouseTail[MAX_PARTICLES] = { 0 };
 
 float gravity = 3.0f;
 
-Texture2D smoke;
+Texture2D smoke = { 0 };
 
 int blending = BLEND_ALPHA;
 
@@ -48,7 +48,7 @@ int blending = BLEND_ALPHA;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -66,15 +66,15 @@ int main(void)
         mouseTail[i].rotation = GetRandomValue(0, 360);
         mouseTail[i].active = false;
     }
-    
+
     smoke = LoadTexture("resources/smoke.png");
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -84,7 +84,7 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-	UnloadTexture(smoke);	// Texture unloading
+    UnloadTexture(smoke);    // Texture unloading
 
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -120,13 +120,13 @@ void UpdateDrawFrame(void)
         {
             mouseTail[i].position.y += gravity;
             mouseTail[i].alpha -= 0.01f;
-            
+
             if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
-            
+
             mouseTail[i].rotation += 5.0f;
         }
     }
-    
+
     if (IsKeyPressed(KEY_SPACE))
     {
         if (blending == BLEND_ALPHA) blending = BLEND_ADDITIVE;
@@ -139,22 +139,22 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(DARKGRAY);
-            
+
         BeginBlendMode(blending);
 
-	        // Draw active particles
-	        for (int i = 0; i < MAX_PARTICLES; i++)
-	        {
-	            if (mouseTail[i].active) DrawTexturePro(smoke, (Rectangle){ 0, 0, smoke.width, smoke.height }, 
-	                                                   (Rectangle){ mouseTail[i].position.x, mouseTail[i].position.y, smoke.width*mouseTail[i].size, smoke.height*mouseTail[i].size },
-	                                                   (Vector2){ smoke.width*mouseTail[i].size/2, smoke.height*mouseTail[i].size/2 }, mouseTail[i].rotation,
-	                                                   Fade(mouseTail[i].color, mouseTail[i].alpha));
-	        }
-        
+            // Draw active particles
+            for (int i = 0; i < MAX_PARTICLES; i++)
+            {
+                if (mouseTail[i].active) DrawTexturePro(smoke, (Rectangle){ 0, 0, smoke.width, smoke.height },
+                                                       (Rectangle){ mouseTail[i].position.x, mouseTail[i].position.y, smoke.width*mouseTail[i].size, smoke.height*mouseTail[i].size },
+                                                       (Vector2){ smoke.width*mouseTail[i].size/2, smoke.height*mouseTail[i].size/2 }, mouseTail[i].rotation,
+                                                       Fade(mouseTail[i].color, mouseTail[i].alpha));
+            }
+
         EndBlendMode();
-		
+
         DrawText("PRESS SPACE to CHANGE BLENDING MODE", 180, 20, 20, BLACK);
-        
+
         if (blending == BLEND_ALPHA) DrawText("ALPHA BLENDING", 290, screenHeight - 40, 20, BLACK);
         else DrawText("ADDITIVE BLENDING", 280, screenHeight - 40, 20, RAYWHITE);
 

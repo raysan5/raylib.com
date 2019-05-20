@@ -20,16 +20,16 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define the camera to look into our 3d world (position, target, up vector)
-Camera camera = {{ 4.0f, 2.0f, 4.0f }, { 0.0f, 1.8f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 60.0f };
+Camera camera = { 0 };
 
 // Generates some random columns
-float heights[MAX_COLUMNS];
-Vector3 positions[MAX_COLUMNS];
-Color colors[MAX_COLUMNS];
+float heights[MAX_COLUMNS] = { 0 };
+Vector3 positions[MAX_COLUMNS] = { 0 };
+Color colors[MAX_COLUMNS] = { 0 };
 
 //Vector3 playerPosition;
 Vector3 playerPosition = { 4.0f, 2.0f, 4.0f };      // Define player position
@@ -40,7 +40,7 @@ Vector3 playerPosition = { 4.0f, 2.0f, 4.0f };      // Define player position
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -54,7 +54,14 @@ int main(void)
         positions[i] = (Vector3){ GetRandomValue(-15, 15), heights[i]/2, GetRandomValue(-15, 15) };
         colors[i] = (Color){ GetRandomValue(20, 255), GetRandomValue(10, 55), 30, 255 };
     }
-    
+
+    // Define the camera to look into our 3d world (position, target, up vector)
+    camera.position = (Vector3){ 4.0f, 2.0f, 4.0f };
+    camera.target = (Vector3){ 0.0f, 1.8f, 0.0f };
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+    camera.fovy = 60.0f;
+    camera.type = CAMERA_PERSPECTIVE;
+
     SetCameraMode(camera, CAMERA_FIRST_PERSON);         // Set a first person camera mode
 
 #if defined(PLATFORM_WEB)
@@ -63,7 +70,7 @@ int main(void)
 
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -87,7 +94,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     UpdateCamera(&camera);          // Update camera and player position
-    
+
     // Lock mouse cursor if mouse click on canvas
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) DisableCursor();
     //----------------------------------------------------------------------------------
@@ -98,13 +105,13 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        Begin3dMode(camera);
+        BeginMode3D(camera);
 
             DrawPlane((Vector3){ 0.0f, 0.0f, 0.0f }, (Vector2){ 32.0f, 32.0f }, LIGHTGRAY); // Draw ground
             DrawCube((Vector3){ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
             DrawCube((Vector3){ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
             DrawCube((Vector3){ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
-            
+
             // Draw some cubes around
             for (int i = 0; i < MAX_COLUMNS; i++)
             {
@@ -112,8 +119,8 @@ void UpdateDrawFrame(void)
                 DrawCubeWires(positions[i], 2.0f, heights[i], 2.0f, MAROON);
             }
 
-            End3dMode();
-            
+            EndMode3D();
+
         DrawRectangle( 10, 10, 220, 70, Fade(SKYBLUE, 0.5f));
         DrawRectangleLines( 10, 10, 220, 70, BLUE);
 

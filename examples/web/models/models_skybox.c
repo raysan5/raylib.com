@@ -18,13 +18,13 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define the camera to look into our 3d world
 Camera camera = {{ 1.0f, 1.0f, 1.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
 
-Model skybox;
+Model skybox = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -32,7 +32,7 @@ Model skybox;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -40,10 +40,10 @@ int main(void)
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [models] example - skybox loading and drawing");
 
-    // Load skybox model   
+    // Load skybox model
     Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
     skybox = LoadModelFromMesh(cube);
-    
+
     // Load skybox shader and set required locations
     // NOTE: Some locations are automatically set at shader loading
     skybox.material.shader = LoadShader("resources/shaders/skybox.vs", "resources/shaders/skybox.fs");
@@ -52,12 +52,12 @@ int main(void)
     // Load cubemap shader and setup required shader locations
     Shader shdrCubemap = LoadShader("resources/shaders/cubemap.vs", "resources/shaders/cubemap.fs");
     SetShaderValuei(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, 1);
-    
+
     Texture2D texHDR = LoadTexture("resources/pinetree.hdr");
     skybox.material.maps[MAP_CUBEMAP].texture = GenTextureCubemap(shdrCubemap, texHDR, 512);
-    
+
     UnloadShader(shdrCubemap);  // Cubemap generation shader not required any more
-    
+
     SetCameraMode(camera, CAMERA_ORBITAL);  // Set an orbital camera mode
 
 #if defined(PLATFORM_WEB)
@@ -65,7 +65,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -102,7 +102,7 @@ void UpdateDrawFrame(void)
         BeginMode3D(camera);
 
             DrawModel(skybox, Vector3Zero(), 1.0f, WHITE);
-            
+
             DrawGrid(10, 1.0f);
 
         EndMode3D();

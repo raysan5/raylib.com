@@ -18,16 +18,16 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define the camera to look into our 3d world
-Camera camera;
+Camera camera = { 0 };
 
 Vector3 cubePosition = { 0.0f, 1.0f, 0.0f };
 Vector3 cubeSize = { 2.0f, 2.0f, 2.0f };
 
-Ray ray;        // Picking line ray
+Ray ray = { 0 };        // Picking line ray
 
 bool collision = false;
 
@@ -37,7 +37,7 @@ bool collision = false;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -57,7 +57,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -81,14 +81,13 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     UpdateCamera(&camera);          // Update internal camera and our camera
-        
+
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        // NOTE: This function is NOT WORKING properly!
         ray = GetMouseRay(GetMousePosition(), camera);
-        
-        // TODO: Check collision between ray and box
-		collision = CheckCollisionRayBox(ray,
+
+        // Check collision between ray and box
+        collision = CheckCollisionRayBox(ray,
                     (BoundingBox){(Vector3){ cubePosition.x - cubeSize.x/2, cubePosition.y - cubeSize.y/2, cubePosition.z - cubeSize.z/2 },
                                   (Vector3){ cubePosition.x + cubeSize.x/2, cubePosition.y + cubeSize.y/2, cubePosition.z + cubeSize.z/2 }});
     }
@@ -100,9 +99,9 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        Begin3dMode(camera);
+        BeginMode3D(camera);
 
-            if (collision) 
+            if (collision)
             {
                 DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
                 DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
@@ -114,16 +113,16 @@ void UpdateDrawFrame(void)
                 DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
                 DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
             }
-                
+
             DrawRay(ray, MAROON);
-			
+
             DrawGrid(10, 1.0f);
 
-        End3dMode();
-        
+        EndMode3D();
+
         DrawText("Try selecting the box with mouse!", 240, 10, 20, DARKGRAY);
-		
-		if(collision) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, screenHeight * 0.1f, 30, GREEN);
+
+        if(collision) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, screenHeight * 0.1f, 30, GREEN);
 
         DrawFPS(10, 10);
 

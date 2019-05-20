@@ -20,10 +20,10 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-Texture2D texture;              // Texture, GPU memory (VRAM)
+Texture2D texture = { 0 };      // Texture, GPU memory (VRAM)
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -31,7 +31,7 @@ Texture2D texture;              // Texture, GPU memory (VRAM)
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -43,24 +43,24 @@ int main(void)
     ImageCrop(&cat, (Rectangle){ 100, 10, 280, 380 });      // Crop an image piece
     ImageFlipHorizontal(&cat);                              // Flip cropped image horizontally
     ImageResize(&cat, 150, 200);                            // Resize flipped-cropped image
-    
+
     Image parrots = LoadImage("resources/parrots.png");     // Load image in CPU memory (RAM)
-    
+
     // Draw one image over the other with a scaling of 1.5f
     ImageDraw(&parrots, cat, (Rectangle){ 0, 0, cat.width, cat.height }, (Rectangle){ 30, 40, cat.width*1.5f, cat.height*1.5f });
     ImageCrop(&parrots, (Rectangle){ 0, 50, parrots.width, parrots.height - 100 }); // Crop resulting image
-    
+
     UnloadImage(cat);       // Unload image from RAM
-    
+
     texture = LoadTextureFromImage(parrots);      // Image converted to texture, uploaded to GPU memory (VRAM)
     UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -70,9 +70,9 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(texture);		// Texture unloading
-    
-    CloseWindow();				// Close window and OpenGL context
+    UnloadTexture(texture);        // Texture unloading
+
+    CloseWindow();                // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;

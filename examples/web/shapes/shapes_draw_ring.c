@@ -47,22 +47,22 @@ bool drawCircleLines = false;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - draw ring");
 
     center = (Vector2){ (GetScreenWidth() - 300)/2, GetScreenHeight()/2 };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -71,7 +71,7 @@ int main()
 #endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------  
+    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -87,13 +87,13 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     // NOTE: All variables update happens inside GUI control functions
     //----------------------------------------------------------------------------------
-    
+
     // Draw
     //----------------------------------------------------------------------------------
     BeginDrawing();
-    
+
         ClearBackground(RAYWHITE);
-        
+
         DrawLine(500, 0, 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.6f));
         DrawRectangle(500, 0, GetScreenWidth() - 500, GetScreenHeight(), Fade(LIGHTGRAY, 0.3f));
 
@@ -105,21 +105,21 @@ void UpdateDrawFrame(void)
         //------------------------------------------------------------------------------
         startAngle = GuiSliderBar((Rectangle){ 600, 40, 120, 20 }, "StartAngle", startAngle, -450, 450, true);
         endAngle = GuiSliderBar((Rectangle){ 600, 70, 120, 20 }, "EndAngle", endAngle, -450, 450, true);
-        
+
         innerRadius = GuiSliderBar((Rectangle){ 600, 140, 120, 20 }, "InnerRadius", innerRadius, 0, 100, true);
         outerRadius = GuiSliderBar((Rectangle){ 600, 170, 120, 20 }, "OuterRadius", outerRadius, 0, 200, true);
-        
+
         segments = GuiSliderBar((Rectangle){ 600, 240, 120, 20 }, "Segments", segments, 0, 100, true);
-        
+
         drawRing = GuiCheckBox((Rectangle){ 600, 320, 20, 20 }, "Draw Ring", drawRing);
         drawRingLines = GuiCheckBox((Rectangle){ 600, 350, 20, 20 }, "Draw RingLines", drawRingLines);
         drawCircleLines = GuiCheckBox((Rectangle){ 600, 380, 20, 20 }, "Draw CircleLines", drawCircleLines);
         //------------------------------------------------------------------------------
-        
+
         DrawText(FormatText("MODE: %s", (segments >= 4)? "MANUAL" : "AUTO"), 600, 270, 10, (segments >= 4)? MAROON : DARKGRAY);
-        
+
         DrawFPS(10, 10);
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

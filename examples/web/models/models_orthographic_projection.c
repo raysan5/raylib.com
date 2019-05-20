@@ -1,6 +1,6 @@
 /*******************************************************************************************
 *
-*   raylib [models] example - Show the difference between perspective and orthographic projection 
+*   raylib [models] example - Show the difference between perspective and orthographic projection
 *
 *   This program is heavily based on the geometric objects example
 *
@@ -40,7 +40,7 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -77,14 +77,14 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    if (IsKeyPressed(KEY_SPACE)) 
+    if (IsKeyPressed(KEY_SPACE))
     {
-        if (camera.type == CAMERA_PERSPECTIVE) 
+        if (camera.type == CAMERA_PERSPECTIVE)
         {
             camera.fovy = WIDTH_ORTHOGRAPHIC;
             camera.type = CAMERA_ORTHOGRAPHIC;
-        } 
-        else 
+        }
+        else
         {
             camera.fovy = FOVY_PERSPECTIVE;
             camera.type = CAMERA_PERSPECTIVE;

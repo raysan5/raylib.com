@@ -440,7 +440,6 @@ EXAMPLES = \
     models/models_skybox \
     models/models_material_pbr \
     models/models_rlgl_solar_system \
-
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
@@ -493,7 +492,8 @@ core/core_input_gamepad: core/core_input_gamepad.c
     --preload-file core/resources/ps3.png@resources/ps3.png \
     --preload-file core/resources/xbox.png@resources/xbox.png
 
-core/core_input_multitouch \
+core/core_input_multitouch: core/core_input_multitouch.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - 2d camera
 core/core_2d_camera: core/core_2d_camera.c
@@ -519,8 +519,11 @@ core/core_3d_picking: core/core_3d_picking.c
 core/core_world_screen: core/core_world_screen.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-core/core_custom_logging \
-core/core_window_letterbox \ 
+core/core_custom_logging: core/core_custom_logging.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+
+core/core_window_letterbox: core/core_window_letterbox.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [core] example - drop files
 # NOTE: File drop not supported on PLATFORM_ANDROID and PLATFORM_RPI (native)
@@ -537,15 +540,18 @@ core/core_storage_values: core/core_storage_values.c
 
 # compile [core] example - vr simulator
 core/core_vr_simulator: core/core_vr_simulator.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/distortion.fs@resources/shaders/glsl100/distortion.fs
 
-core/core_loading_thread \
+core/core_loading_thread: core/core_loading_thread.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -std=c11
    
 # compile [shapes] example - basic shapes usage (rectangle, circle, ...)
 shapes/shapes_basic_shapes: shapes/shapes_basic_shapes.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
     
-shapes/shapes_bouncing_ball \
+shapes/shapes_bouncing_ball: shapes/shapes_bouncing_ball.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - raylib color palette
 shapes/shapes_colors_palette: shapes/shapes_colors_palette.c
@@ -559,20 +565,36 @@ shapes/shapes_logo_raylib: shapes/shapes_logo_raylib.c
 shapes/shapes_logo_raylib_anim: shapes/shapes_logo_raylib_anim.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-shapes/shapes_rectangle_scaling \
+shapes/shapes_rectangle_scaling: shapes/shapes_rectangle_scaling.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [shapes] example - lines bezier
 shapes/shapes_lines_bezier: shapes/shapes_lines_bezier.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
     
-shapes/shapes_collision_area \
-shapes/shapes_following_eyes \
-shapes/shapes_easings_ball_anim \
-shapes/shapes_easings_box_anim \
-shapes/shapes_easings_rectangle_array \
-shapes/shapes_draw_ring \
-shapes/shapes_draw_circle_sector \
-shapes/shapes_draw_rectangle_rounded \
+shapes/shapes_collision_area: shapes/shapes_collision_area.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_following_eyes: shapes/shapes_following_eyes.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_easings_ball_anim: shapes/shapes_easings_ball_anim.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_easings_box_anim: shapes/shapes_easings_box_anim.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_easings_rectangle_array: shapes/shapes_easings_rectangle_array.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_draw_ring: shapes/shapes_draw_ring.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_draw_circle_sector: shapes/shapes_draw_circle_sector.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+shapes/shapes_draw_rectangle_rounded: shapes/shapes_draw_rectangle_rounded.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [textures] example - raylib logo texture loading
 textures/textures_logo_raylib: textures/textures_logo_raylib.c
@@ -609,7 +631,10 @@ textures/textures_image_processing: textures/textures_image_processing.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/parrots.png@resources/parrots.png
     
-textures/textures_image_text \
+textures/textures_image_text: textures/textures_image_text.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file textures/resources/parrots.png@resources/parrots.png \
+    --preload-file textures/resources/KAISG.ttf@resources/KAISG.ttf
 
 # compile [textures] example - texture to image
 textures/textures_to_image: textures/textures_to_image.c
@@ -626,11 +651,29 @@ textures/textures_particles_blending: textures/textures_particles_blending.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/smoke.png@resources/smoke.png
 
-textures/textures_npatch_drawing \
-textures/textures_background_scrolling \
-textures/textures_sprite_button \
-textures/textures_sprite_explosion \
-textures/textures_bunnymark \
+textures/textures_npatch_drawing: textures/textures_npatch_drawing.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/ninepatch_button.png@resources/ninepatch_button.png
+    
+textures/textures_background_scrolling: textures/textures_background_scrolling.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/cyberpunk_street_background.png@resources/cyberpunk_street_background.png \
+    --preload-file textures/resources/cyberpunk_street_midground.png@resources/cyberpunk_street_midground.png \
+    --preload-file textures/resources/cyberpunk_street_foreground.png@resources/cyberpunk_street_foreground.png \
+    
+textures/textures_sprite_button: textures/textures_sprite_button.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/button.png@resources/button.png \
+    --preload-file textures/resources/buttonfx.wav@resources/buttonfx.wav
+    
+textures/textures_sprite_explosion: textures/textures_sprite_explosion.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/explosion.png@resources/explosion.png \
+    --preload-file textures/resources/boom.wav@resources/boom.wav
+    
+textures/textures_bunnymark: textures/textures_bunnymark.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/wabbit_alpha.png@resources/wabbit_alpha.png
     
 # compile [text] example - raylib fonts
 text/text_raylib_fonts: text/text_raylib_fonts.c
@@ -663,7 +706,10 @@ text/text_bmfont_ttf: text/text_bmfont_ttf.c
     --preload-file text/resources/bmfont.png@resources/bmfont.png \
     --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf  
 
-text/text_font_sdf \
+text/text_font_sdf: text/text_font_sdf.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file text/resources/AnonymousPro-Bold.ttf@resources/AnonymousPro-Bold.ttf \
+    --preload-file shaders/resources/shaders/glsl100/sdf.fs@resources/shaders/glsl100/sdf.fs
     
 # compile [text] example - text formatting
 text/text_format_text: text/text_format_text.c
@@ -677,31 +723,64 @@ text/text_writing_anim: text/text_writing_anim.c
 text/text_input_box: text/text_input_box.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
     
-text/text_rectangle_bounds \
-text/text_unicode \
+text/text_rectangle_bounds: text/text_rectangle_bounds.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+
+text/text_unicode: text/text_unicode.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file text/resources/dejavu.fnt@resources/dejavu.fnt \
+    --preload-file text/resources/dejavu.png@resources/dejavu.png \
+    --preload-file text/resources/notoCJK.fnt@resources/notoCJK.fnt \
+    --preload-file text/resources/notoCJK.png@resources/notoCJK.png \
+    --preload-file text/resources/emoji.fnt@resources/emoji.fnt \
+    --preload-file text/resources/emoji.png@resources/emoji.png
 
 # compile [models] example - basic geometric 3d shapes
 models/models_geometric_shapes: models/models_geometric_shapes.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+models/models_orthographic_projection: models/models_orthographic_projection.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # compile [models] example - box collisions
 models/models_box_collisions: models/models_box_collisions.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
-# compile [models] example - basic window
-models/models_planes: models/models_planes.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-
 # compile [models] example - billboard usage
 models/models_billboard: models/models_billboard.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/billboard.png@resources/billboard.png
-
+    
 # compile [models] example - OBJ model loading
 models/models_obj_loading: models/models_obj_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file models/resources/model/dwarf.obj@resources/model/dwarf.obj \
-    --preload-file models/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png
+    --preload-file models/resources/models/castle.obj@resources/models/castle.obj \
+    --preload-file models/resources/models/castle_diffuse.png@resources/model/castle_diffuse.png
+
+models/models_obj_viewer: models/models_obj_viewer.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1 \
+    --preload-file models/resources/models/turret.obj@resources/models/turret.obj \
+    --preload-file models/resources/models/turret_diffuse.png@resources/model/turret_diffuse.png
+
+# compile [models] example - models yaw pitch roll
+models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file models/resources/plane.obj@resources/plane.obj \
+    --preload-file models/resources/plane_diffuse.png@resources/plane_diffuse.png \
+    --preload-file models/resources/plane.png@resources/plane.png \
+    --preload-file models/resources/pitch.png@resources/pitch.png \
+    --preload-file models/resources/background.png@resources/background.png \
+    --preload-file models/resources/angle_gauge.png@resources/angle_gauge.png  
+     
+# compile [models] example - models mesh generation
+models/models_mesh_generation: models/models_mesh_generation.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+# compile [models] example - model mesh picking
+models/models_mesh_picking: models/models_mesh_picking.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file models/resources/tower.obj@resources/tower.obj \
+    --preload-file models/resources/tower.png@resources/tower.png
 
 # compile [models] example - heightmap loading
 models/models_heightmap: models/models_heightmap.c
@@ -714,15 +793,25 @@ models/models_cubicmap: models/models_cubicmap.c
     --preload-file models/resources/cubicmap.png@resources/cubicmap.png \
     --preload-file models/resources/cubicmap_atlas.png@resources/cubicmap_atlas.png
 
-# compile [models] example - model mesh picking
-models/models_mesh_picking: models/models_mesh_picking.c
+models/models_first_person_maze: models/models_first_person_maze.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file models/resources/tower.obj@resources/tower.obj \
-    --preload-file models/resources/tower.png@resources/tower.png
+    --preload-file models/resources/cubicmap.png@resources/cubicmap.png \
+    --preload-file models/resources/cubicmap_atlas.png@resources/cubicmap_atlas.png
     
-# compile [models] example - models mesh generation
-models/models_mesh_generation: models/models_mesh_generation.c
+models/models_animation: models/models_animation.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
+    --preload-file models/resources/guy/guy.iqm@resources/guy/guy.iqm \
+    --preload-file models/resources/guy/guytex.png@resources/guy/guytex.png \
+    --preload-file models/resources/guy/guyanim.iqm@resources/guy/guyanim.iqm
+
+# compile [models] example - models skybox
+models/models_skybox: models/models_skybox.c
+ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    --preload-file models/resources/dresden_square.hdr@resources/dresden_square.hdr
+else
+	@echo models_skybox: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
+endif
 
 # compile [models] example - models material pbr
 models/models_material_pbr: models/models_material_pbr.c
@@ -732,30 +821,14 @@ else
 	@echo models_material_pbr: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
 endif
 
-# compile [models] example - models skybox
-models/models_skybox: models/models_skybox.c
-ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
+models/models_rlgl_solar_system: models/models_rlgl_solar_system.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
-else
-	@echo models_skybox: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
-endif
-
-# compile [models] example - models yaw pitch roll
-models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file models/resources/plane.obj@resources/plane.obj \
-    --preload-file models/resources/plane_diffuse.png@resources/plane_diffuse.png \
-    --preload-file models/resources/plane.png@resources/plane.png \
-    --preload-file models/resources/pitch.png@resources/pitch.png \
-    --preload-file models/resources/background.png@resources/background.png \
-    --preload-file models/resources/angle_gauge.png@resources/angle_gauge.png \   
- 
+    
 # compile [shaders] example - model shader
 shaders/shaders_model_shader: shaders/shaders_model_shader.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
-    --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
-    --preload-file shaders/resources/shaders/glsl100/base.vs@resources/shaders/glsl100/base.vs \
+    --preload-file shaders/resources/models/watermill.obj@resources/models/watermill.obj \
+    --preload-file shaders/resources/models/watermill_diffuse.png@resources/models/watermill_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100/grayscale.fs@resources/shaders/glsl100/grayscale.fs
 
 # compile [shaders] example - shapes texture shader
@@ -768,18 +841,42 @@ shaders/shaders_shapes_textures: shaders/shaders_shapes_textures.c
 # compile [shaders] example - custom uniform in shader
 shaders/shaders_custom_uniform: shaders/shaders_custom_uniform.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
-    --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
-    --preload-file shaders/resources/shaders/glsl100/base.vs@resources/shaders/glsl100/base.vs \
+    --preload-file shaders/resources/models/barracks.obj@resources/models/barracks.obj \
+    --preload-file shaders/resources/models/barracks_diffuse.png@resources/models/barracks_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100/swirl.fs@resources/shaders/glsl100/swirl.fs
 
 # compile [shaders] example - postprocessing shader
 shaders/shaders_postprocessing: shaders/shaders_postprocessing.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file shaders/resources/model/dwarf.obj@resources/model/dwarf.obj \
-    --preload-file shaders/resources/model/dwarf_diffuse.png@resources/model/dwarf_diffuse.png \
+    --preload-file shaders/resources/models/church.obj@resources/models/church.obj \
+    --preload-file shaders/resources/models/church_diffuse.png@resources/models/church_diffuse.png \
     --preload-file shaders/resources/shaders/glsl100@resources/shaders/glsl100
 
+shaders/shaders_palette_switch: shaders/shaders_palette_switch.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/palette_switch.fs@resources/shaders/glsl100/palette_switch.fs
+    
+shaders/shaders_raymarching: shaders/shaders_raymarching.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/raymarching.fs@resources/shaders/glsl100/raymarching.fs
+    
+shaders/shaders_texture_drawing: shaders/shaders_texture_drawing.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/cubes_panning.fs@resources/shaders/glsl100/cubes_panning.fs
+    
+shaders/shaders_texture_waves: shaders/shaders_texture_waves.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/space.png@resources/space.png \
+    --preload-file shaders/resources/shaders/glsl100/wave.fs@resources/shaders/glsl100/wave.fs
+
+shaders/shaders_julia_set: shaders/shaders_julia_set.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/julia_set.fs@resources/shaders/glsl100/julia_set.fs
+
+shaders/shaders_eratosthenes: shaders/shaders_eratosthenes.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file shaders/resources/shaders/glsl100/erastosthenes.fs@resources/shaders/glsl100/erastosthenes.fs
+    
 # compile [audio] example - sound loading and playing (WAV and OGG)
 audio/audio_sound_loading: audio/audio_sound_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \

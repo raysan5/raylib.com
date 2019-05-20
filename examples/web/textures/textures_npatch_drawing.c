@@ -22,12 +22,12 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Texture2D nPatchTexture;
+Texture2D nPatchTexture = { 0 };
 
 Vector2 mousePosition = { 0 };
 Vector2 origin = { 0.0f, 0.0f };
@@ -54,9 +54,9 @@ NPatchInfo v3PatchInfo = { (Rectangle){ 0.0f, 192.0f, 64.0f, 64.0f }, 6, 6, 6, 6
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ int main()
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -96,7 +96,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     mousePosition = GetMousePosition();
-    
+
     // Resize the n-patches based on mouse position
     dstRec1.width = mousePosition.x - dstRec1.x;
     dstRec1.height = mousePosition.y - dstRec1.y;
@@ -127,7 +127,7 @@ void UpdateDrawFrame(void)
         DrawTextureNPatch(nPatchTexture, ninePatchInfo1, dstRec1, origin, 0.0f, WHITE);
         DrawTextureNPatch(nPatchTexture, h3PatchInfo, dstRecH, origin, 0.0f, WHITE);
         DrawTextureNPatch(nPatchTexture, v3PatchInfo, dstRecV, origin, 0.0f, WHITE);
-        
+
         // Draw the source texture
         DrawRectangleLines(5, 88, 74, 266, BLUE);
         DrawTexture(nPatchTexture, 10, 93, WHITE);

@@ -24,18 +24,18 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-typedef enum { 
-    NONE = 0, 
-    COLOR_GRAYSCALE, 
-    COLOR_TINT, 
-    COLOR_INVERT, 
-    COLOR_CONTRAST, 
-    COLOR_BRIGHTNESS, 
-    FLIP_VERTICAL, 
-    FLIP_HORIZONTAL 
+typedef enum {
+    NONE = 0,
+    COLOR_GRAYSCALE,
+    COLOR_TINT,
+    COLOR_INVERT,
+    COLOR_CONTRAST,
+    COLOR_BRIGHTNESS,
+    FLIP_VERTICAL,
+    FLIP_HORIZONTAL
 } ImageProcess;
 
 static const char *processText[] = {
@@ -49,13 +49,13 @@ static const char *processText[] = {
     "FLIP HORIZONTAL"
 };
 
-Image image;
-Texture2D texture;
+Image image = { 0 };
+Texture2D texture = { 0 };
 
 int currentProcess = NONE;
 bool textureReload = false;
 
-Rectangle selectRecs[NUM_PROCESSES];
+Rectangle selectRecs[NUM_PROCESSES] = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -63,7 +63,7 @@ Rectangle selectRecs[NUM_PROCESSES];
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -76,15 +76,15 @@ int main(void)
     image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
     ImageFormat(&image, UNCOMPRESSED_R8G8B8A8);   // Format image to RGBA 32bit (required for texture update)
     texture = LoadTextureFromImage(image);        // Image converted to texture, GPU memory (VRAM)
-    
+
     for (int i = 0; i < NUM_PROCESSES; i++) selectRecs[i] = (Rectangle){ 40, 50 + 32*i, 150, 30 };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -96,8 +96,8 @@ int main(void)
     //--------------------------------------------------------------------------------------
     UnloadTexture(texture);       // Unload texture from VRAM
     UnloadImage(image);           // Unload image from RAM
-    
-    CloseWindow();				// Close window and OpenGL context
+
+    CloseWindow();                // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;
@@ -122,14 +122,14 @@ void UpdateDrawFrame(void)
         if (currentProcess < 0) currentProcess = 7;
         textureReload = true;
     }
-    
+
     if (textureReload)
     {
         UnloadImage(image);                         // Unload current image data
         image = LoadImage("resources/parrots.png"); // Re-load image data
 
-        // NOTE: Image processing is a costly CPU process to be done every frame, 
-        // If image processing is required in a frame-basis, it should be done 
+        // NOTE: Image processing is a costly CPU process to be done every frame,
+        // If image processing is required in a frame-basis, it should be done
         // with a texture and by shaders
         switch (currentProcess)
         {
@@ -142,11 +142,11 @@ void UpdateDrawFrame(void)
             case FLIP_HORIZONTAL: ImageFlipHorizontal(&image); break;
             default: break;
         }
-        
+
         Color *pixels = GetImageData(image);        // Get pixel data from image (RGBA 32bit)
         UpdateTexture(texture, pixels);             // Update texture with new image data
         free(pixels);                               // Unload pixels data from RAM
-        
+
         textureReload = false;
     }
     //----------------------------------------------------------------------------------
@@ -156,9 +156,9 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        
+
         DrawText("IMAGE PROCESSING:", 40, 30, 10, DARKGRAY);
-        
+
         // Draw rectangles
         for (int i = 0; i < NUM_PROCESSES; i++)
         {
@@ -178,7 +178,7 @@ void UpdateDrawFrame(void)
 
         DrawTexture(texture, screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, WHITE);
         DrawRectangleLines(screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, texture.width, texture.height, BLACK);
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

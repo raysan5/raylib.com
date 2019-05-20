@@ -20,13 +20,13 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Sound fxButton;
-Texture2D button;
+Sound fxButton = { 0 };
+Texture2D button = { 0 };
 
 // Define frame rectangle for drawing
 int frameHeight = 0;
@@ -46,32 +46,32 @@ Vector2 mousePoint = { 0.0f, 0.0f };
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - sprite button");
 
     InitAudioDevice();      // Initialize audio device
-    
+
     fxButton = LoadSound("resources/buttonfx.wav");   // Load button sound
     button = LoadTexture("resources/button.png"); // Load button texture
-    
+
     // Define frame rectangle for drawing
     frameHeight = button.height/NUM_FRAMES;
     sourceRec = (Rectangle){ 0, 0, button.width, frameHeight };
-    
+
     // Define button bounds on screen
     btnBounds = (Rectangle){ screenWidth/2 - button.width/2, screenHeight/2 - button.height/NUM_FRAMES/2, button.width, frameHeight };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -85,10 +85,10 @@ int main()
     UnloadSound(fxButton);  // Unload sound
 
     CloseAudioDevice();     // Close audio device
-    
+
     CloseWindow();          // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-    
+
     return 0;
 }
 
@@ -101,7 +101,7 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     mousePoint = GetMousePosition();
     btnAction = false;
-    
+
     // Check button state
     if (CheckCollisionPointRec(mousePoint, btnBounds))
     {
@@ -111,26 +111,26 @@ void UpdateDrawFrame(void)
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) btnAction = true;
     }
     else btnState = 0;
-    
+
     if (btnAction)
     {
         PlaySound(fxButton);
-        
+
         // TODO: Any desired action
     }
-    
+
     // Calculate button frame rectangle to draw depending on button state
     sourceRec.y = btnState*frameHeight;
     //----------------------------------------------------------------------------------
-    
+
     // Draw
     //----------------------------------------------------------------------------------
     BeginDrawing();
-    
+
         ClearBackground(RAYWHITE);
 
         DrawTextureRec(button, sourceRec, (Vector2){ btnBounds.x, btnBounds.y }, WHITE); // Draw button frame
-    
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

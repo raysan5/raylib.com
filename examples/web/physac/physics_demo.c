@@ -7,9 +7,9 @@
 *
 *   Use the following line to compile:
 *
-*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s $(RAYLIB_DIR)\raylib\raylib_icon -static -lraylib -lpthread 
+*   gcc -o $(NAME_PART).exe $(FILE_NAME) -s $(RAYLIB_DIR)\raylib\raylib_icon -static -lraylib -lpthread
 *   -lglfw3 -lopengl32 -lgdi32 -lopenal32 -lwinmm -std=c99 -Wl,--subsystem,windows -Wl,-allow-multiple-definition
-*   
+*
 *   Copyright (c) 2017 Victor Fisac
 *
 ********************************************************************************************/
@@ -26,15 +26,15 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Physac logo drawing position
 int logoX = 0;
 int logoY = 15;
 
-PhysicsBody ground;
-PhysicsBody circle;
+PhysicsBody ground = { 0 };
+PhysicsBody circle = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -42,16 +42,16 @@ PhysicsBody circle;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(screenWidth, screenHeight, "Physac [raylib] - Physics demo");
     SetTargetFPS(60);
-    
+
     logoX = screenWidth - MeasureText("Physac", 30) - 10;
 
     // Initialize physics and default physics bodies
@@ -70,7 +70,7 @@ int main()
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -79,7 +79,7 @@ int main()
 #endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------   
+    //--------------------------------------------------------------------------------------
     ClosePhysics();       // Uninitialize physics
 
     CloseWindow();        // Close window and OpenGL context
@@ -112,7 +112,7 @@ void UpdateDrawFrame(void)
 
     // Destroy falling physics bodies
     int bodiesCount = GetPhysicsBodiesCount();
-    
+
     for (int i = bodiesCount - 1; i >= 0; i--)
     {
         PhysicsBody body = GetPhysicsBody(i);
@@ -130,7 +130,7 @@ void UpdateDrawFrame(void)
 
         // Draw created physics bodies
         bodiesCount = GetPhysicsBodiesCount();
-        
+
         for (int i = 0; i < bodiesCount; i++)
         {
             PhysicsBody body = GetPhysicsBody(i);

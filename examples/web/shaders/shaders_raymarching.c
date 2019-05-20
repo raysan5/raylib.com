@@ -31,8 +31,8 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
@@ -55,15 +55,15 @@ float runTime = 0.0f;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 450;
-    
+    const int screenWidth = 800;
+    const int screenHeight = 450;
+
     InitWindow(screenWidth, screenHeight, "raylib [shaders] example - raymarching shapes");
 
     camera.position = (Vector3){ 2.5f, 2.5f, 3.0f };    // Camera position
@@ -76,7 +76,7 @@ int main()
     // Load raymarching shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
     shader = LoadShader(0, FormatText("resources/shaders/glsl%i/raymarching.fs", GLSL_VERSION));
-    
+
     // Get shader locations for required uniforms
     viewEyeLoc = GetShaderLocation(shader, "viewEye");
     viewCenterLoc = GetShaderLocation(shader, "viewCenter");
@@ -93,7 +93,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -124,7 +124,7 @@ void UpdateDrawFrame(void)
     float cameraTarget[3] = { camera.target.x, camera.target.y, camera.target.z };
     float cameraUp[3] = { camera.up.x, camera.up.y, camera.up.z };
 
-    float deltaTime = GetFrameTime();  
+    float deltaTime = GetFrameTime();
     runTime += deltaTime;
 
     // Set shader required uniform values

@@ -18,11 +18,11 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 const char message[128] = "This sample illustrates a text writing\nanimation effect! Check it out! ;)";
-    
+
 int framesCounter = 0;
 
 //----------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ int framesCounter = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -44,7 +44,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -68,7 +68,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     framesCounter++;
-    
+
     if (IsKeyPressed(KEY_ENTER)) framesCounter = 0;
     //----------------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ void UpdateDrawFrame(void)
         ClearBackground(RAYWHITE);
 
         DrawText(SubText(message, 0, framesCounter/10), 210, 160, 20, MAROON);
-        
+
         DrawText("PRESS [ENTER] to RESTART!", 240, 280, 20, LIGHTGRAY);
 
     EndDrawing();

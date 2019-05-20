@@ -18,8 +18,8 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 int score = 0;
 int hiscore = 0;
@@ -35,7 +35,7 @@ typedef enum { STORAGE_SCORE = 0, STORAGE_HISCORE } StorageData;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -48,7 +48,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
- 
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -73,7 +73,7 @@ void UpdateDrawFrame(void)
         score = GetRandomValue(1000, 2000);
         hiscore = GetRandomValue(2000, 4000);
     }
-    
+
     if (IsKeyPressed(KEY_ENTER))
     {
         StorageSaveValue(STORAGE_SCORE, score);
@@ -85,7 +85,7 @@ void UpdateDrawFrame(void)
         score = StorageLoadValue(STORAGE_SCORE);
         hiscore = StorageLoadValue(STORAGE_HISCORE);
     }
-    
+
     framesCounter++;
     //----------------------------------------------------------------------------------
 
@@ -97,9 +97,9 @@ void UpdateDrawFrame(void)
 
         DrawText(FormatText("SCORE: %i", score), 280, 130, 40, MAROON);
         DrawText(FormatText("HI-SCORE: %i", hiscore), 210, 200, 50, BLACK);
-        
+
         DrawText(FormatText("frames: %i", framesCounter), 10, 10, 20, LIME);
-        
+
         DrawText("Press R to generate random numbers", 220, 40, 20, LIGHTGRAY);
         DrawText("Press ENTER to SAVE values", 250, 310, 20, LIGHTGRAY);
         DrawText("Press SPACE to LOAD values", 252, 350, 20, LIGHTGRAY);

@@ -1,6 +1,6 @@
 /*******************************************************************************************
 *
-*   raylib [text] example - BMFont and TTF SpriteFonts loading (adapted for HTML5 platform)
+*   raylib [text] example - BMFont and TTF Fonts loading (adapted for HTML5 platform)
 *
 *   This example has been created using raylib 1.4 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
@@ -18,17 +18,20 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-const char msgBm[64] = "THIS IS AN AngelCode SPRITE FONT";
-const char msgTtf[64] = "THIS SPRITE FONT has been GENERATED from a TTF";
+// Define characters to draw
+// NOTE: raylib supports UTF-8 encoding, following list is actually codified as UTF8 internally
+const char msg[256] = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI\nJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmn\nopqrstuvwxyz{|}~¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓ\nÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷\nøùúûüýþÿ";
 
 // NOTE: Textures/Fonts MUST be loaded after Window initialization (OpenGL context is required)
-SpriteFont fontBm;      // BMFont (AngelCode)
-SpriteFont fontTtf;     // TTF font
+Font fontBm = { 0 };      // BMFont (AngelCode)
+Font fontTtf = { 0 };     // TTF font
 
-Vector2 fontPosition;
+Vector2 fontPosition = { 0.0f };
+
+bool useTtf = false;
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -36,7 +39,7 @@ Vector2 fontPosition;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -44,18 +47,22 @@ int main(void)
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [text] example - bmfont and ttf sprite fonts loading");
 
-    fontBm = LoadSpriteFont("resources/bmfont.fnt");       // BMFont (AngelCode)
-    fontTtf = LoadSpriteFont("resources/pixantiqua.ttf");  // TTF font
-    
-    fontPosition.x = screenWidth/2 - MeasureTextEx(fontBm, msgBm, fontBm.baseSize, 0).x/2;
+    // BMFont (AngelCode) : Font data and image atlas have been generated using external program
+    fontBm = LoadFont("resources/pixantiqua.fnt");
+
+    // TTF font : Font data and atlas are generated directly from TTF
+    // NOTE: We define a font base size of 32 pixels tall and up-to 250 characters
+    fontTtf = LoadFontEx("resources/pixantiqua.ttf", 32, 0, 250);
+
+    fontPosition.x = screenWidth/2 - MeasureTextEx(fontBm, msg, fontBm.baseSize, 0).x/2;
     fontPosition.y = screenHeight/2 - fontBm.baseSize/2 - 80;
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -65,9 +72,9 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadSpriteFont(fontBm);     // AngelCode SpriteFont unloading
-    UnloadSpriteFont(fontTtf);    // TTF SpriteFont unloading
-    
+    UnloadFont(fontBm);     // AngelCode Font unloading
+    UnloadFont(fontTtf);    // TTF Font unloading
+
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -81,7 +88,8 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    // TODO: Update variables here...
+    if (IsKeyDown(KEY_SPACE)) useTtf = true;
+    else useTtf = false;
     //----------------------------------------------------------------------------------
 
     // Draw
@@ -90,8 +98,18 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawTextEx(fontBm, msgBm, fontPosition, fontBm.baseSize, 0, MAROON);
-        DrawTextEx(fontTtf, msgTtf, (Vector2){ 75.0f, 240.0f }, fontTtf.baseSize*0.8f, 2, LIME);
+        DrawText("Press SPACE to use TTF generated font", 20, 20, 20, LIGHTGRAY);
+
+        if (!useTtf)
+        {
+            DrawTextEx(fontBm, msg, (Vector2){ 20.0f, 100.0f }, fontBm.baseSize, 2, MAROON);
+            DrawText("Using BMFont (Angelcode) imported", 20, GetScreenHeight() - 30, 20, GRAY);
+        }
+        else
+        {
+            DrawTextEx(fontTtf, msg, (Vector2){ 20.0f, 100.0f }, fontTtf.baseSize, 2, LIME);
+            DrawText("Using TTF font generated", 20, GetScreenHeight() - 30, 20, GRAY);
+        }
 
     EndDrawing();
     //----------------------------------------------------------------------------------

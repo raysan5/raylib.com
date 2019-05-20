@@ -25,14 +25,14 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-const Color colors[MAX_COLORS_COUNT] = { 
+const Color colors[MAX_COLORS_COUNT] = {
     DARKGRAY, MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, DARKBROWN,
     GRAY, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PINK, YELLOW,
     GREEN, SKYBLUE, PURPLE, BEIGE };
-                     
-const char *colorNames[MAX_COLORS_COUNT] = { 
-    "DARKGRAY", "MAROON", "ORANGE", "DARKGREEN", "DARKBLUE", "DARKPURPLE", 
-    "DARKBROWN", "GRAY", "RED", "GOLD", "LIME", "BLUE", "VIOLET", "BROWN", 
+
+const char *colorNames[MAX_COLORS_COUNT] = {
+    "DARKGRAY", "MAROON", "ORANGE", "DARKGREEN", "DARKBLUE", "DARKPURPLE",
+    "DARKBROWN", "GRAY", "RED", "GOLD", "LIME", "BLUE", "VIOLET", "BROWN",
     "LIGHTGRAY", "PINK", "YELLOW", "GREEN", "SKYBLUE", "PURPLE", "BEIGE" };
 
 Rectangle colorsRecs[MAX_COLORS_COUNT] = { 0 };     // Rectangles array
@@ -47,9 +47,9 @@ Vector2 mousePoint = { 0.0f };
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ int main()
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -106,19 +106,19 @@ void UpdateDrawFrame(void)
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        
+
         DrawText("raylib colors palette", 28, 42, 20, BLACK);
         DrawText("press SPACE to see all colors", GetScreenWidth() - 180, GetScreenHeight() - 40, 10, GRAY);
 
         for (int i = 0; i < MAX_COLORS_COUNT; i++)    // Draw all rectangles
         {
             DrawRectangleRec(colorsRecs[i], Fade(colors[i], colorState[i]? 0.6f : 1.0f));
-            
-            if (IsKeyDown(KEY_SPACE) || colorState[i]) 
+
+            if (IsKeyDown(KEY_SPACE) || colorState[i])
             {
                 DrawRectangle(colorsRecs[i].x, colorsRecs[i].y + colorsRecs[i].height - 26, colorsRecs[i].width, 20, BLACK);
                 DrawRectangleLinesEx(colorsRecs[i], 6, Fade(BLACK, 0.3f));
-                DrawText(colorNames[i], colorsRecs[i].x + colorsRecs[i].width - MeasureText(colorNames[i], 10) - 12, 
+                DrawText(colorNames[i], colorsRecs[i].x + colorsRecs[i].width - MeasureText(colorNames[i], 10) - 12,
                          colorsRecs[i].y + colorsRecs[i].height - 20, 10, colors[i]);
             }
         }

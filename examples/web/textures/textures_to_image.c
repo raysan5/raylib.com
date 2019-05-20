@@ -20,14 +20,13 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Image image;
-Texture2D texture;
-
+Image image = { 0 };
+Texture2D texture = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -35,7 +34,7 @@ Texture2D texture;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -46,19 +45,19 @@ int main(void)
     image = LoadImage("resources/raylib_logo.png");  // Load image data into CPU memory (RAM)
     texture = LoadTextureFromImage(image);           // Image converted to texture, GPU memory (RAM -> VRAM)
     UnloadImage(image);                              // Unload image data from CPU memory (RAM)
-    
+
     image = GetTextureData(texture);                 // Retrieve image data from GPU memory (VRAM -> RAM)
     UnloadTexture(texture);                          // Unload texture from GPU memory (VRAM)
-    
+
     texture = LoadTextureFromImage(image);           // Recreate texture from retrieved image data (RAM -> VRAM)
     UnloadImage(image);                              // Unload retrieved image data from CPU memory (RAM)
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -69,7 +68,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(texture);       // Texture unloading
-    
+
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 

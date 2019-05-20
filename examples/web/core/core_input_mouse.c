@@ -18,8 +18,8 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 Vector2 ballPosition = { -100.0f, -100.0f };
 Color ballColor = MAROON;
@@ -30,7 +30,7 @@ Color ballColor = MAROON;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -43,7 +43,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -67,7 +67,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     ballPosition = GetMousePosition();
-        
+
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) ballColor = MAROON;
     else if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) ballColor = LIME;
     else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) ballColor = DARKBLUE;

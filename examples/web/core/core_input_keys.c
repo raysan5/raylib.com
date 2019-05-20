@@ -18,11 +18,10 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-Vector2 ballPosition;
-
+Vector2 ballPosition = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -30,7 +29,7 @@ Vector2 ballPosition;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -39,13 +38,13 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - keyboard input");
 
     ballPosition = (Vector2){ (float)screenWidth/2, (float)screenHeight/2 };
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {

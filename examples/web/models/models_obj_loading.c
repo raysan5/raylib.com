@@ -18,14 +18,14 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define the camera to look into our 3d world
-Camera camera = {{ 3.0f, 3.0f, 3.0f }, { 0.0f, 1.5f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
+Camera camera = { 0 };
 
-Model dwarf;        // Declare OBJ model
-Texture2D texture;  // Declare model texture
+Model model = { 0 };            // Declare OBJ model
+Texture2D texture = { 0 };      // Declare model texture
 
 Vector3 position = { 0.0f, 0.0f, 0.0f };   // Define model position
 
@@ -35,7 +35,7 @@ Vector3 position = { 0.0f, 0.0f, 0.0f };   // Define model position
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -43,16 +43,22 @@ int main(void)
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [models] example - obj model loading");
 
-    dwarf = LoadModel("resources/model/dwarf.obj");               // Load OBJ model
-    texture = LoadTexture("resources/model/dwarf_diffuse.png");   // Load model texture
-    dwarf.material.maps[MAP_DIFFUSE].texture = texture;           // Set map diffuse texture
+    camera.position = (Vector3){ 8.0f, 8.0f, 8.0f };    // Camera position
+    camera.target = (Vector3){ 0.0f, 2.5f, 0.0f };      // Camera looking at point
+    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
+
+    model = LoadModel("resources/models/castle.obj");               // Load OBJ model
+    texture = LoadTexture("resources/models/castle_diffuse.png");   // Load model texture
+    model.materials[0].maps[MAP_DIFFUSE].texture = texture;         // Set map diffuse texture
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -63,7 +69,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(texture);     // Unload texture
-    UnloadModel(dwarf);         // Unload model
+    UnloadModel(model);         // Unload model
 
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -87,17 +93,17 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        Begin3dMode(camera);
+        BeginMode3D(camera);
 
-            DrawModel(dwarf, position, 2.0f, WHITE);   // Draw 3d model with texture
+            DrawModel(model, position, 0.2f, WHITE);   // Draw 3d model with texture
 
             DrawGrid(10, 1.0f);         // Draw a grid
 
             DrawGizmo(position);        // Draw gizmo
 
-        End3dMode();
-        
-        DrawText("(c) Dwarf 3D model by David Moreno", screenWidth - 200, screenHeight - 20, 10, GRAY);
+        EndMode3D();
+
+        DrawText("(c) Castle 3D model by Alberto Cano", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
         DrawFPS(10, 10);
 

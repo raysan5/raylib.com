@@ -39,20 +39,20 @@ int framesCounter = 0;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - easings ball anim");
-       
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -61,7 +61,7 @@ int main()
 #endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------   
+    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ void UpdateDrawFrame(void)
     {
         framesCounter++;
         ballPositionX = EaseElasticOut(framesCounter, -100, screenWidth/2 + 100, 120);
-        
+
         if (framesCounter >= 120)
         {
             framesCounter = 0;
@@ -90,7 +90,7 @@ void UpdateDrawFrame(void)
     {
         framesCounter++;
         ballRadius = EaseElasticIn(framesCounter, 20, 500, 200);
-        
+
         if (framesCounter >= 200)
         {
             framesCounter = 0;
@@ -101,7 +101,7 @@ void UpdateDrawFrame(void)
     {
         framesCounter++;
         ballAlpha = EaseCubicOut(framesCounter, 0.0f, 1.0f, 200);
-        
+
         if (framesCounter >= 200)
         {
             framesCounter = 0;
@@ -110,7 +110,7 @@ void UpdateDrawFrame(void)
     }
     else if (state == 3)        // Reset state to play again
     {
-        if (IsKeyPressed(KEY_ENTER)) 
+        if (IsKeyPressed(KEY_ENTER))
         {
             // Reset required variables to play again
             ballPositionX = -100;
@@ -119,7 +119,7 @@ void UpdateDrawFrame(void)
             state = 0;
         }
     }
-    
+
     if (IsKeyPressed(KEY_R)) framesCounter = 0;
     //----------------------------------------------------------------------------------
 
@@ -131,9 +131,9 @@ void UpdateDrawFrame(void)
 
         if (state >= 2) DrawRectangle(0, 0, screenWidth, screenHeight, GREEN);
         DrawCircle(ballPositionX, 200, ballRadius, Fade(RED, 1.0f - ballAlpha));
-        
+
         if (state == 3) DrawText("PRESS [ENTER] TO PLAY AGAIN!", 240, 200, 20, BLACK);
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

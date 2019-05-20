@@ -18,11 +18,11 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
-Texture2D texture;
+Texture2D texture = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -30,7 +30,7 @@ Texture2D texture;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -39,13 +39,13 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - texture loading and drawing");
 
     texture = LoadTexture("resources/raylib_logo.png");        // Texture loading
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -55,8 +55,8 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-	UnloadTexture(texture);       // Texture unloading
-	
+    UnloadTexture(texture);       // Texture unloading
+
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 

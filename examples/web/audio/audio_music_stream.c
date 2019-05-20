@@ -20,14 +20,14 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 int framesCounter = 0;
 float timePlayed = 0.0f;
 static bool pause = false;
 
-Music music;
+Music music = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -35,7 +35,7 @@ Music music;
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -46,15 +46,15 @@ int main(void)
     InitAudioDevice();              // Initialize audio device
 
     music = LoadMusicStream("resources/guitar_noodling.ogg");
-    
+
     PlayMusicStream(music);
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -81,26 +81,26 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     UpdateMusicStream(music);        // Update music buffer with new stream data
-    
+
     // Restart music playing (stop and play)
-    if (IsKeyPressed(KEY_SPACE)) 
+    if (IsKeyPressed(KEY_SPACE))
     {
         StopMusicStream(music);
         PlayMusicStream(music);
     }
-    
-    // Pause/Resume music playing 
+
+    // Pause/Resume music playing
     if (IsKeyPressed(KEY_P))
     {
         pause = !pause;
-        
+
         if (pause) PauseMusicStream(music);
         else ResumeMusicStream(music);
     }
-    
+
     // Get timePlayed scaled to bar dimensions (400 pixels)
     timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*400;
-        
+
     if (timePlayed > 400) StopMusicStream(music);
     //----------------------------------------------------------------------------------
 
@@ -115,10 +115,10 @@ void UpdateDrawFrame(void)
         DrawRectangle(200, 200, 400, 12, LIGHTGRAY);
         DrawRectangle(200, 200, (int)timePlayed, 12, MAROON);
         DrawRectangleLines(200, 200, 400, 12, GRAY);
-        
+
         DrawText("PRESS SPACE TO RESTART MUSIC", 215, 250, 20, LIGHTGRAY);
         DrawText("PRESS P TO PAUSE/RESUME MUSIC", 208, 280, 20, LIGHTGRAY);
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }

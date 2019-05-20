@@ -32,15 +32,15 @@ typedef struct Bunny {
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Texture2D texBunny;
-Bunny *bunnies = NULL;   // Bunnies array
+Texture2D texBunny = { 0 };     // Bunny texture
+Bunny *bunnies = NULL;          // Bunnies array
 
-int bunniesCount = 0;    // Bunnies counter
+int bunniesCount = 0;           // Bunnies counter
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -48,9 +48,9 @@ int bunniesCount = 0;    // Bunnies counter
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ int main()
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -76,7 +76,7 @@ int main()
     // De-Initialization
     //--------------------------------------------------------------------------------------
     free(bunnies);              // Unload bunnies data array
-    
+
     UnloadTexture(texBunny);    // Unload bunny texture
 
     CloseWindow();              // Close window and OpenGL context
@@ -100,8 +100,8 @@ void UpdateDrawFrame(void)
             bunnies[bunniesCount].position = GetMousePosition();
             bunnies[bunniesCount].speed.x = (float)GetRandomValue(-250, 250)/60.0f;
             bunnies[bunniesCount].speed.y = (float)GetRandomValue(-250, 250)/60.0f;
-            bunnies[bunniesCount].color = (Color){ GetRandomValue(50, 240), 
-                                                   GetRandomValue(80, 240), 
+            bunnies[bunniesCount].color = (Color){ GetRandomValue(50, 240),
+                                                   GetRandomValue(80, 240),
                                                    GetRandomValue(100, 240), 255 };
             bunniesCount++;
         }
@@ -113,9 +113,9 @@ void UpdateDrawFrame(void)
         bunnies[i].position.x += bunnies[i].speed.x;
         bunnies[i].position.y += bunnies[i].speed.y;
 
-        if (((bunnies[i].position.x + texBunny.width/2) > GetScreenWidth()) || 
+        if (((bunnies[i].position.x + texBunny.width/2) > GetScreenWidth()) ||
             ((bunnies[i].position.x + texBunny.width/2) < 0)) bunnies[i].speed.x *= -1;
-        if (((bunnies[i].position.y + texBunny.height/2) > GetScreenHeight()) || 
+        if (((bunnies[i].position.y + texBunny.height/2) > GetScreenHeight()) ||
             ((bunnies[i].position.y + texBunny.height/2 - 40) < 0)) bunnies[i].speed.y *= -1;
     }
     //----------------------------------------------------------------------------------
@@ -128,9 +128,9 @@ void UpdateDrawFrame(void)
 
         for (int i = 0; i < bunniesCount; i++)
         {
-            // NOTE: When internal batch buffer limit is reached (MAX_BATCH_ELEMENTS), 
+            // NOTE: When internal batch buffer limit is reached (MAX_BATCH_ELEMENTS),
             // a draw call is launched and buffer starts being filled again;
-            // before issuing a draw call, updated vertex data from internal CPU buffer is send to GPU... 
+            // before issuing a draw call, updated vertex data from internal CPU buffer is send to GPU...
             // Process of sending data is costly and it could happen that GPU data has not been completely
             // processed for drawing while new data is tried to be sent (updating current in-use buffers)
             // it could generates a stall and consequently a frame drop, limiting the number of drawn bunnies
@@ -140,7 +140,7 @@ void UpdateDrawFrame(void)
         DrawRectangle(0, 0, screenWidth, 40, BLACK);
         DrawText(FormatText("bunnies: %i", bunniesCount), 120, 10, 20, GREEN);
         DrawText(FormatText("batched draw calls: %i", 1 + bunniesCount/MAX_BATCH_ELEMENTS), 320, 10, 20, MAROON);
-        
+
         DrawFPS(10, 10);
 
     EndDrawing();

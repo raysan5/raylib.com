@@ -20,15 +20,25 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
-SpriteFont fonts[MAX_FONTS];
+Font fonts[MAX_FONTS] = { 0 };
 const int spacings[MAX_FONTS] = { 2, 4, 8, 4, 3, 4, 4, 1 };
-Vector2 positions[MAX_FONTS];
+Vector2 positions[MAX_FONTS] = { 0 };
 
-Color *colors;
-const char (*messages)[64];
+Color colors[MAX_FONTS] = { MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, LIME, GOLD, RED };
+
+const char *messages[MAX_FONTS] = { 
+   "ALAGARD FONT designed by Hewett Tsoi",
+   "PIXELPLAY FONT designed by Aleksander Shevchuk",
+   "MECHA FONT designed by Captain Falcon",
+   "SETBACK FONT designed by Brian Kent (AEnigma)",
+   "ROMULUS FONT designed by Hewett Tsoi",
+   "PIXANTIQUA FONT designed by Gerhard Grossmann",
+   "ALPHA_BETA FONT designed by Brian Kent (AEnigma)",
+   "JUPITER_CRASH FONT designed by Brian Kent (AEnigma)" 
+};
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -36,7 +46,7 @@ const char (*messages)[64];
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -44,47 +54,32 @@ int main(void)
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [text] example - raylib fonts");
 
-    Color tempColors[MAX_FONTS] = { MAROON, ORANGE, DARKGREEN, DARKBLUE, DARKPURPLE, LIME, GOLD, RED };
-    
-    colors = tempColors;
-    
-    const char tempMessages[MAX_FONTS][64] = { "ALAGARD FONT designed by Hewett Tsoi", 
-                               "PIXELPLAY FONT designed by Aleksander Shevchuk",
-                               "MECHA FONT designed by Captain Falcon",  
-                               "SETBACK FONT designed by Brian Kent (AEnigma)", 
-                               "ROMULUS FONT designed by Hewett Tsoi", 
-                               "PIXANTIQUA FONT designed by Gerhard Grossmann",
-                               "ALPHA_BETA FONT designed by Brian Kent (AEnigma)",
-                               "JUPITER_CRASH FONT designed by Brian Kent (AEnigma)" };
-    
-    messages = tempMessages;
-    
-    fonts[0] = LoadSpriteFont("resources/fonts/alagard.png");
-    fonts[1] = LoadSpriteFont("resources/fonts/pixelplay.png");
-    fonts[2] = LoadSpriteFont("resources/fonts/mecha.png");
-    fonts[3] = LoadSpriteFont("resources/fonts/setback.png");
-    fonts[4] = LoadSpriteFont("resources/fonts/romulus.png");
-    fonts[5] = LoadSpriteFont("resources/fonts/pixantiqua.png");
-    fonts[6] = LoadSpriteFont("resources/fonts/alpha_beta.png");
-    fonts[7] = LoadSpriteFont("resources/fonts/jupiter_crash.png"); 
+    fonts[0] = LoadFont("resources/fonts/alagard.png");
+    fonts[1] = LoadFont("resources/fonts/pixelplay.png");
+    fonts[2] = LoadFont("resources/fonts/mecha.png");
+    fonts[3] = LoadFont("resources/fonts/setback.png");
+    fonts[4] = LoadFont("resources/fonts/romulus.png");
+    fonts[5] = LoadFont("resources/fonts/pixantiqua.png");
+    fonts[6] = LoadFont("resources/fonts/alpha_beta.png");
+    fonts[7] = LoadFont("resources/fonts/jupiter_crash.png");
 
     for (int i = 0; i < MAX_FONTS; i++)
     {
         positions[i].x = screenWidth/2 - MeasureTextEx(fonts[i], messages[i], fonts[i].baseSize*2, spacings[i]).x/2;
         positions[i].y = 60 + fonts[i].baseSize + 45*i;
     }
-    
+
     // Small Y position corrections
     positions[3].y += 8;
     positions[4].y += 2;
     positions[7].y -= 8;
-    
+
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -94,9 +89,9 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    
+
     // SpriteFont unloading
-    for (int i = 0; i < MAX_FONTS; i++) UnloadSpriteFont(fonts[i]);
+    for (int i = 0; i < MAX_FONTS; i++) UnloadFont(fonts[i]);
 
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -122,8 +117,8 @@ void UpdateDrawFrame(void)
 
         DrawText("free fonts included with raylib", 250, 20, 20, DARKGRAY);
         DrawLine(220, 50, 590, 50, DARKGRAY);
-        
-        for (int i = 0; i < 8; i++)
+
+        for (int i = 0; i < MAX_FONTS; i++)
         {
             DrawTextEx(fonts[i], messages[i], positions[i], fonts[i].baseSize*2, spacings[i], colors[i]);
         }

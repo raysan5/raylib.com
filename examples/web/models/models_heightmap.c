@@ -18,16 +18,16 @@
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-int screenWidth = 800;
-int screenHeight = 450;
+const int screenWidth = 800;
+const int screenHeight = 450;
 
 // Define our custom camera to look into our 3d world
 Camera camera = {{ 18.0f, 16.0f, 18.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 1.0f, 0.0f }, 45.0f };
 
-Texture2D texture;
-Model map;
+Texture2D texture = { 0 };
+Model model = { 0 };
 
-Vector3 mapPosition = { -8.0f, 0.0f, -8.0f };	// Set model position (depends on model scaling!)
+Vector3 mapPosition = { -8.0f, 0.0f, -8.0f };    // Set model position (depends on model scaling!)
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -35,7 +35,7 @@ Vector3 mapPosition = { -8.0f, 0.0f, -8.0f };	// Set model position (depends on 
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
 int main(void)
 {
@@ -45,13 +45,13 @@ int main(void)
 
     Image image = LoadImage("resources/heightmap.png");     // Load heightmap image (RAM)
     texture = LoadTextureFromImage(image);                  // Convert image to texture (VRAM)
-    
+
     Mesh mesh = GenMeshHeightmap(image, (Vector3){ 16, 8, 16 });    // Generate heightmap mesh (RAM and VRAM)
-    map = LoadModelFromMesh(mesh);                          // Load model from generated mesh
-    map.material.maps[MAP_DIFFUSE].texture = texture;             // Set map diffuse texture
-    
+    model = LoadModelFromMesh(mesh);                        // Load model from generated mesh
+    model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Set map diffuse texture
+
     UnloadImage(image);                         // Unload heightmap image from RAM, already uploaded to VRAM
-    
+
     SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode
 
 #if defined(PLATFORM_WEB)
@@ -59,7 +59,7 @@ int main(void)
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -70,7 +70,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(texture);     // Unload texture
-    UnloadModel(map);           // Unload model
+    UnloadModel(model);         // Unload model
 
     CloseWindow();              // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -94,15 +94,14 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        Begin3dMode(camera);
+        BeginMode3D(camera);
 
-            // NOTE: Model is scaled to 1/4 of its original size (128x128 units)
-            DrawModel(map, mapPosition, 1.0f, RED);
+            DrawModel(model, mapPosition, 1.0f, RED);
 
-        	DrawGrid(20, 1.0f);
+            DrawGrid(20, 1.0f);
 
-            End3dMode();
-            
+            EndMode3D();
+
             DrawTexture(texture, screenWidth - texture.width - 20, 20, WHITE);
             DrawRectangleLines(screenWidth - texture.width - 20, 20, texture.width, texture.height, GREEN);
 

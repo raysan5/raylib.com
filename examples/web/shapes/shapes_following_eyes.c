@@ -32,33 +32,33 @@ float scleraRadius = 80;
 Vector2 irisLeftPosition = { 0.0f };
 Vector2 irisRightPosition = { 0.0f };
 float irisRadius = 24;
-   
+
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
 void UpdateDrawFrame(void);     // Update and Draw one frame
 
 //----------------------------------------------------------------------------------
-// Main Enry Point
+// Program Main Entry Point
 //----------------------------------------------------------------------------------
-int main()
+int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - following eyes");
-    
+
     scleraLeftPosition = (Vector2){ GetScreenWidth()/2 - 100, GetScreenHeight()/2 };
     scleraRightPosition = (Vector2){ GetScreenWidth()/2 + 100, GetScreenHeight()/2 };
-    
+
     irisLeftPosition = (Vector2){ GetScreenWidth()/2 - 100, GetScreenHeight()/2 };
-    irisRightPosition = (Vector2){ GetScreenWidth()/2 + 100, GetScreenHeight()/2}; 
+    irisRightPosition = (Vector2){ GetScreenWidth()/2 + 100, GetScreenHeight()/2};
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -67,7 +67,7 @@ int main()
 #endif
 
     // De-Initialization
-    //--------------------------------------------------------------------------------------   
+    //--------------------------------------------------------------------------------------
     CloseWindow();        // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
@@ -83,16 +83,16 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     irisLeftPosition = GetMousePosition();
     irisRightPosition = GetMousePosition();
-    
-    float angle = 0.0f;  
-    float dx, dy, dxx, dyy; 
-    
+
+    float angle = 0.0f;
+    float dx, dy, dxx, dyy;
+
     // Check not inside the left eye sclera
     if (!CheckCollisionPointCircle(irisLeftPosition, scleraLeftPosition, scleraRadius - 20))
     {
         dx = irisLeftPosition.x - scleraLeftPosition.x;
         dy = irisLeftPosition.y - scleraLeftPosition.y;
-    
+
         angle = atan2f(dy, dx);
 
         dxx = (scleraRadius - irisRadius)*cosf(angle);
@@ -107,7 +107,7 @@ void UpdateDrawFrame(void)
     {
         dx = irisRightPosition.x - scleraRightPosition.x;
         dy = irisRightPosition.y - scleraRightPosition.y;
-    
+
         angle = atan2f(dy, dx);
 
         dxx = (scleraRadius - irisRadius)*cosf(angle);
@@ -127,13 +127,13 @@ void UpdateDrawFrame(void)
         DrawCircleV(scleraLeftPosition, scleraRadius, LIGHTGRAY);
         DrawCircleV(irisLeftPosition, irisRadius, BROWN);
         DrawCircleV(irisLeftPosition, 10, BLACK);
-        
+
         DrawCircleV(scleraRightPosition, scleraRadius, LIGHTGRAY);
         DrawCircleV(irisRightPosition, irisRadius, DARKGREEN);
         DrawCircleV(irisRightPosition, 10, BLACK);
-        
+
         DrawFPS(10, 10);
-        
+
     EndDrawing();
     //----------------------------------------------------------------------------------
 }
