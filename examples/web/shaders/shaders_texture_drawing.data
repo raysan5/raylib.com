@@ -8,7 +8,8 @@ varying vec4 fragColor;
 
 // Custom variables
 #define PI 3.14159265358979323846
-uniform float uTime = 0.0;
+
+uniform float uTime;
 
 float divisions = 5.0;
 float angle = 0.0;

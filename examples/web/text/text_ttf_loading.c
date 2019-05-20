@@ -25,7 +25,7 @@ const char msg[50] = "TTF SpriteFont";
 
 Font font = { 0 };
 float fontSize = 0.0f;
-Vector2 fontPosition = { 40, screenHeight/2 + 50 };
+Vector2 fontPosition = { 0.0f };
 Vector2 textSize = { 0 };
 
 int currentFontFilter = 0;      // FILTER_POINT
@@ -56,6 +56,8 @@ int main(void)
     fontSize = font.baseSize;
 
     SetTextureFilter(font.texture, FILTER_POINT);
+    
+    fontPosition = (Vector2){ 40, screenHeight/2 - 70 };
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);

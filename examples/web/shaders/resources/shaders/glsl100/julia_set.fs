@@ -30,7 +30,6 @@ vec3 Hsv2rgb(vec3 c)
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
 
-
 void main()
 {
     /**********************************************************************************************
@@ -57,8 +56,10 @@ void main()
     vec2 z = vec2((fragTexCoord.x + offset.x/screenDims.x)*2.5/zoom, (fragTexCoord.y + offset.y/screenDims.y)*1.5/zoom);
 
     int iterations = 0;
-    for (iterations = 0; iterations < MAX_ITERATIONS; iterations++)
+    for (int i = 0; i < MAX_ITERATIONS; i++)
     {
+        iterations = i;
+        
         z = ComplexSquare(z) + c;  // Iterate function
         
         if (dot(z, z) > 4.0) break;

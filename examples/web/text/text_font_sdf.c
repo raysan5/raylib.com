@@ -120,7 +120,7 @@ void UpdateDrawFrame(void)
 
     if (fontSize < 6) fontSize = 6;
 
-    if (IsKeyDown(KEY_SPACE)) currentFont = 1;
+    if (IsKeyDown(KEY_S)) currentFont = 1;
     else currentFont = 0;
 
     if (currentFont == 0) textSize = MeasureTextEx(fontDefault, msg, fontSize, 0);
@@ -158,7 +158,7 @@ void UpdateDrawFrame(void)
         DrawText(FormatText("RENDER SIZE: %02.02f", fontSize), GetScreenWidth() - 240, 50, 20, DARKGRAY);
         DrawText("Use MOUSE WHEEL to SCALE TEXT!", GetScreenWidth() - 240, 90, 10, DARKGRAY);
 
-        DrawText("PRESS SPACE to USE SDF FONT VERSION!", 340, GetScreenHeight() - 30, 20, MAROON);
+        DrawText("PRESS S KEY to USE SDF FONT VERSION!", 340, GetScreenHeight() - 30, 20, MAROON);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

@@ -88,7 +88,7 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    if (IsKeyDown(KEY_SPACE)) useTtf = true;
+    if (IsKeyDown(KEY_S)) useTtf = true;
     else useTtf = false;
     //----------------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Press SPACE to use TTF generated font", 20, 20, 20, LIGHTGRAY);
+        DrawText("Press S KEY to use TTF generated font", 20, 20, 20, LIGHTGRAY);
 
         if (!useTtf)
         {

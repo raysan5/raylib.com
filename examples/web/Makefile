@@ -26,8 +26,8 @@
 # Define required raylib variables
 PROJECT_NAME       ?= raylib_examples
 RAYLIB_VERSION     ?= 2.5.0
-RAYLIB_API_VERSION ?= 1
-RAYLIB_PATH        ?= D:\GitHub\raylib
+RAYLIB_API_VERSION ?= 2
+RAYLIB_PATH        ?= C:\GitHub\raylib
 
 # Define default options
 
@@ -117,7 +117,7 @@ endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Emscripten required variables
-    EMSDK_PATH          ?= D:/emsdk
+    EMSDK_PATH          ?= C:/emsdk
     EMSCRIPTEN_VERSION  ?= 1.38.31
     CLANG_VERSION       = e$(EMSCRIPTEN_VERSION)_64bit
     PYTHON_VERSION      = 2.7.13.1_64bit\python-2.7.13.amd64
@@ -541,7 +541,7 @@ core/core_storage_values: core/core_storage_values.c
 # compile [core] example - vr simulator
 core/core_vr_simulator: core/core_vr_simulator.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file shaders/resources/shaders/glsl100/distortion.fs@resources/shaders/glsl100/distortion.fs
+    --preload-file core/resources/distortion100.fs@resources/distortion100.fs
 
 core/core_loading_thread: core/core_loading_thread.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -std=c11
@@ -702,14 +702,14 @@ text/text_ttf_loading: text/text_ttf_loading.c
 # compile [text] example - bmfonts and ttf loading
 text/text_bmfont_ttf: text/text_bmfont_ttf.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/bmfont.fnt@resources/bmfont.fnt \
-    --preload-file text/resources/bmfont.png@resources/bmfont.png \
+    --preload-file text/resources/pixantiqua.fnt@resources/pixantiqua.fnt \
+    --preload-file text/resources/pixantiqua.png@resources/pixantiqua.png \
     --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf  
 
 text/text_font_sdf: text/text_font_sdf.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file text/resources/AnonymousPro-Bold.ttf@resources/AnonymousPro-Bold.ttf \
-    --preload-file shaders/resources/shaders/glsl100/sdf.fs@resources/shaders/glsl100/sdf.fs
+    --preload-file text/resources/shaders/glsl100/sdf.fs@resources/shaders/glsl100/sdf.fs
     
 # compile [text] example - text formatting
 text/text_format_text: text/text_format_text.c
@@ -755,12 +755,12 @@ models/models_billboard: models/models_billboard.c
 models/models_obj_loading: models/models_obj_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file models/resources/models/castle.obj@resources/models/castle.obj \
-    --preload-file models/resources/models/castle_diffuse.png@resources/model/castle_diffuse.png
+    --preload-file models/resources/models/castle_diffuse.png@resources/models/castle_diffuse.png
 
 models/models_obj_viewer: models/models_obj_viewer.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1 \
     --preload-file models/resources/models/turret.obj@resources/models/turret.obj \
-    --preload-file models/resources/models/turret_diffuse.png@resources/model/turret_diffuse.png
+    --preload-file models/resources/models/turret_diffuse.png@resources/models/turret_diffuse.png
 
 # compile [models] example - models yaw pitch roll
 models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
@@ -779,8 +779,8 @@ models/models_mesh_generation: models/models_mesh_generation.c
 # compile [models] example - model mesh picking
 models/models_mesh_picking: models/models_mesh_picking.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file models/resources/tower.obj@resources/tower.obj \
-    --preload-file models/resources/tower.png@resources/tower.png
+    --preload-file models/resources/models/turret.obj@resources/models/turret.obj \
+    --preload-file models/resources/models/turret_diffuse.png@resources/models/turret_diffuse.png
 
 # compile [models] example - heightmap loading
 models/models_heightmap: models/models_heightmap.c
@@ -875,7 +875,7 @@ shaders/shaders_julia_set: shaders/shaders_julia_set.c
 
 shaders/shaders_eratosthenes: shaders/shaders_eratosthenes.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file shaders/resources/shaders/glsl100/erastosthenes.fs@resources/shaders/glsl100/erastosthenes.fs
+    --preload-file shaders/resources/shaders/glsl100/eratosthenes.fs@resources/shaders/glsl100/eratosthenes.fs
     
 # compile [audio] example - sound loading and playing (WAV and OGG)
 audio/audio_sound_loading: audio/audio_sound_loading.c
@@ -885,15 +885,8 @@ audio/audio_sound_loading: audio/audio_sound_loading.c
 
 # compile [audio] example - music stream playing (OGG)
 audio/audio_music_stream: audio/audio_music_stream.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file audio/resources/game.mp3@resources/game.mp3 \
-    --preload-file audio/resources/weird.wav@resources/weird.wav \
-    --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
-    
-# compile [audio] example - music stream playing (OGG)
-audio/audio_music_stream_test: audio/audio_music_stream_test.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file audio/resources/game.mp3@resources/game.mp3
+    --preload-file audio/resources/guitar_noodling.ogg@resources/guitar_noodling.ogg
 
 # compile [audio] example - module playing (XM)
 audio/audio_module_playing: audio/audio_module_playing.c
