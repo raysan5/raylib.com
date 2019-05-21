@@ -84,12 +84,16 @@ void UpdateDrawFrame(void)
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        ray = GetMouseRay(GetMousePosition(), camera);
+        if (!collision)
+        {
+            ray = GetMouseRay(GetMousePosition(), camera);
 
-        // Check collision between ray and box
-        collision = CheckCollisionRayBox(ray,
-                    (BoundingBox){(Vector3){ cubePosition.x - cubeSize.x/2, cubePosition.y - cubeSize.y/2, cubePosition.z - cubeSize.z/2 },
-                                  (Vector3){ cubePosition.x + cubeSize.x/2, cubePosition.y + cubeSize.y/2, cubePosition.z + cubeSize.z/2 }});
+            // Check collision between ray and box
+            collision = CheckCollisionRayBox(ray,
+                        (BoundingBox){(Vector3){ cubePosition.x - cubeSize.x/2, cubePosition.y - cubeSize.y/2, cubePosition.z - cubeSize.z/2 },
+                                      (Vector3){ cubePosition.x + cubeSize.x/2, cubePosition.y + cubeSize.y/2, cubePosition.z + cubeSize.z/2 }});
+        }
+        else collision = false;
     }
     //----------------------------------------------------------------------------------
 
@@ -122,7 +126,7 @@ void UpdateDrawFrame(void)
 
         DrawText("Try selecting the box with mouse!", 240, 10, 20, DARKGRAY);
 
-        if(collision) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, screenHeight * 0.1f, 30, GREEN);
+        if (collision) DrawText("BOX SELECTED", (screenWidth - MeasureText("BOX SELECTED", 30)) / 2, screenHeight * 0.1f, 30, GREEN);
 
         DrawFPS(10, 10);
 
