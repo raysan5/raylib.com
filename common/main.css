@@ -71,7 +71,6 @@ p a:hover{text-decoration: none; color:gray;}
 #reddit{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_reddit.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #freenode{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_freenode_irc.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #gitter{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_gitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
-#facebook{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_facebook.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #twitter{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_twitter.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #github{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_github.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #kofi{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_kofi.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
