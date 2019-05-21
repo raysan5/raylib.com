@@ -101,7 +101,7 @@ void UpdateDrawFrame(void)
     UpdateCamera(&camera);
 
     // Play animation when spacebar is held down
-    if (IsKeyDown(KEY_SPACE))
+    if (IsKeyDown(KEY_A))
     {
         animFrameCounter++;
         UpdateModelAnimation(model, anims[0], animFrameCounter);
@@ -128,7 +128,7 @@ void UpdateDrawFrame(void)
 
         EndMode3D();
 
-        DrawText("PRESS SPACE to PLAY MODEL ANIMATION", 10, 10, 20, MAROON);
+        DrawText("PRESS KEY_A to PLAY MODEL ANIMATION", 10, 10, 20, MAROON);
         DrawText("(c) Guy IQM 3D model by @culacant", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
     EndDrawing();
