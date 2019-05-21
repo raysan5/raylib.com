@@ -20,9 +20,8 @@ $(document).ready(function() {
         'game_koala_seasons',
         'game_light_my_ritual',
         'game_wave_collector',
-        'user_super_red_rope',
-        'user_taptojamp',    
-        'user_funwithsat'];
+        'game_transmission',
+        'game_cat_vs_roomba'];
 
     var exampleDesc = [
         'arkanoid',
@@ -41,9 +40,8 @@ $(document).ready(function() {
         'Koala Seasons',
         'LIGHT MY RITUAL',
         'Wave Collector',
-        'Super Red Rope Puzzles (Kurnic)',
-        'TapToJAmp (MarcMDE)',    
-        'FunWithSATCollisions (MarcMDE)'];
+        'Transmission Mission',
+        'Cat vs Roomba'];
 
     for (var i = 0; i < exampleName.length; i++)
     {
