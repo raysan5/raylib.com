@@ -74,7 +74,8 @@
 				}, 'text');
                 
                 // Quick hack for some examples not working on web
-                if (0)
+                if ((name == "core_drop_files") || 
+                    (name == "core_loading_thread"))
                 {
                     $('#eximage').append('<img src="' + imgUrl + '" alt=" ">');
                 }
