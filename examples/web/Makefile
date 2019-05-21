@@ -62,8 +62,6 @@ USE_EXTERNAL_GLFW     ?= FALSE
 # by default it uses X11 windowing system
 USE_WAYLAND_DISPLAY   ?= FALSE
 
-# NOTE: On PLATFORM_WEB OpenAL Soft backend is used by default (check raylib/src/Makefile)
-
 # Determine PLATFORM_OS in case PLATFORM_DESKTOP selected
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     # No uname.exe on MinGW!, but OS=Windows_NT on Windows!
@@ -127,27 +125,8 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define raylib release directory for compiled library.
-# RAYLIB_RELEASE_PATH points to provided binaries or your freshly built version.
-ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    ifeq ($(PLATFORM_OS),WINDOWS)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-    endif
-    ifeq ($(PLATFORM_OS),LINUX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-    endif
-    ifeq ($(PLATFORM_OS),OSX)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-    endif
-    ifeq ($(PLATFORM_OS),BSD)
-        RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-    endif
-endif
-ifeq ($(PLATFORM),PLATFORM_RPI)
-    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-endif
-ifeq ($(PLATFORM),PLATFORM_WEB)
-    RAYLIB_RELEASE_PATH = $(RAYLIB_PATH)/src
-endif
+# RAYLIB_RELEASE_PATH points to provided binaries or your freshly built version
+RAYLIB_RELEASE_PATH 	?= $(RAYLIB_PATH)/src
 
 # EXAMPLE_RUNTIME_PATH embeds a custom runtime location of libraylib.so or other desired libraries
 # into each example binary compiled with RAYLIB_LIBTYPE=SHARED. It defaults to RAYLIB_RELEASE_PATH
@@ -224,11 +203,11 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     endif
     ifeq ($(PLATFORM_OS),LINUX)
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
-        CFLAGS += -D_DEFAULT_SOURCE
+            CFLAGS += -D_DEFAULT_SOURCE
         endif
         ifeq ($(RAYLIB_LIBTYPE),SHARED)
-        # Explicitly enable runtime link to libraylib.so
-        CFLAGS += -Wl,-rpath,$(EXAMPLE_RUNTIME_PATH)
+            # Explicitly enable runtime link to libraylib.so
+            CFLAGS += -Wl,-rpath,$(EXAMPLE_RUNTIME_PATH)
         endif
     endif
 endif
@@ -930,7 +909,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-		find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
