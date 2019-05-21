@@ -21,7 +21,7 @@ $(document).ready(function() {
         'game_light_my_ritual',
         'game_wave_collector',
         'game_transmission',
-        'game_cat_vs_roomba'];
+        'game_roomba'];
 
     var exampleDesc = [
         'arkanoid',
