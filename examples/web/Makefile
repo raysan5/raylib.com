@@ -28,7 +28,6 @@ PROJECT_NAME       ?= raylib_examples
 RAYLIB_VERSION     ?= 2.5.0
 RAYLIB_API_VERSION ?= 2
 RAYLIB_PATH        ?= C:\GitHub\raylib
-RAYLIB_PATH        ?= D:\GitHub\raylib
 
 # Define default options
 
