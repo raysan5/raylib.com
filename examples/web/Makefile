@@ -28,6 +28,7 @@ PROJECT_NAME       ?= raylib_examples
 RAYLIB_VERSION     ?= 2.5.0
 RAYLIB_API_VERSION ?= 2
 RAYLIB_PATH        ?= C:\GitHub\raylib
+RAYLIB_PATH        ?= D:\GitHub\raylib
 
 # Define default options
 
@@ -237,7 +238,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # NOTE: On PLATFORM_WEB, every example requires its own flags
 
     # Define a custom shell .html and output extension
-    CFLAGS += --shell-file $(RAYLIB_PATH)\templates\web_shell\shell.html
+    CFLAGS += --shell-file $(RAYLIB_PATH)\src\shell.html
     EXT = .html
 endif
 
@@ -786,7 +787,7 @@ models/models_animation: models/models_animation.c
 # compile [models] example - models skybox
 models/models_skybox: models/models_skybox.c
 ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file models/resources/dresden_square.hdr@resources/dresden_square.hdr
 else
 	@echo models_skybox: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
