@@ -6,6 +6,7 @@
     void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                      // Draw a line (Vector version)
     void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                        // Draw a line defining thickness
     void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                    // Draw a line using cubic-bezier curves in-out
+    void DrawLineStrip(Vector2 *points, int numPoints, Color color);                                    // Draw lines sequence
     void DrawCircle(int centerX, int centerY, float radius, Color color);                               // Draw a color-filled circle
     void DrawCircleSector(Vector2 center, float radius, int startAngle, int endAngle, int segments, Color color);      // Draw a piece of a circle
     void DrawCircleSectorLines(Vector2 center, float radius, int startAngle, int endAngle, int segments, Color color); // Draw circle sector outline
@@ -27,9 +28,8 @@
     void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, int lineThick, Color color); // Draw rectangle with rounded edges outline
     void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                 // Draw a color-filled triangle
     void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                            // Draw triangle outline
+    void DrawTriangleFan(Vector2 *points, int numPoints, Color color);                                  // Draw a triangle fan defined by points
     void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
-    void DrawPolyEx(Vector2 *points, int numPoints, Color color);                                       // Draw a closed polygon defined by points
-    void DrawPolyExLines(Vector2 *points, int numPoints, Color color);                                  // Draw polygon lines
 
     void SetShapesTexture(Texture2D texture, Rectangle source);                                         // Define default texture used to draw shapes
 
