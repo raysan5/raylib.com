@@ -29,6 +29,9 @@ static void *LoadDataThread(void *arg);     // Loading data thread function decl
 
 static int dataProgress = 0;                // Data progress accumulator
 
+// NOTE: On PLATFORM_WEB, if timeCounter is a local variable while() condition is never true... weird...
+static int timeCounter = 0;                 // Time counted in ms
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -154,7 +157,6 @@ void UpdateDrawFrame(void)
 // Loading data thread function definition
 static void *LoadDataThread(void *arg)
 {
-    int timeCounter = 0;            // Time counted in ms
     clock_t prevTime = clock();     // Previous time
 
     // We simulate data loading with a time counter for 5 seconds
