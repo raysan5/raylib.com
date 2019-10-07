@@ -110,3 +110,6 @@ p a:hover{text-decoration: none; color:gray;}
 
 #bindings>a>img{ border: 6px solid #888888; transition: all .2s ease; }
 #bindings>a>img:hover{ border: 6px solid #111111; }
+
+#raylibtech>a>img{ transition: all .2s ease; }
+#raylibtech>a>img:hover{ filter: contrast(180%); }
