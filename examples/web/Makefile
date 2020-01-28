@@ -133,7 +133,7 @@ RAYLIB_RELEASE_PATH 	?= $(RAYLIB_PATH)/src
 # without formal installation from ../src/Makefile. It aids portability and is useful if you have
 # multiple versions of raylib, have raylib installed to a non-standard location, or want to
 # bundle libraylib.so with your game. Change it to your liking.
-# Note: If, at runtime, there is a libraylib.so at both EXAMPLE_RUNTIME_PATH and RAYLIB_INSTALL_PATH,
+# NOTE: If, at runtime, there is a libraylib.so at both EXAMPLE_RUNTIME_PATH and RAYLIB_INSTALL_PATH,
 # The library at EXAMPLE_RUNTIME_PATH, if present, will take precedence over RAYLIB_INSTALL_PATH,
 # Implemented for LINUX below with CFLAGS += -Wl,-rpath,$(EXAMPLE_RUNTIME_PATH)
 # To see the result, run readelf -d core/core_basic_window; looking at the RPATH or RUNPATH attribute.
@@ -163,8 +163,9 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    # WARNING: To compile to HTML5, code must be redesigned to use emscripten.h and emscripten_set_main_loop()
     # HTML5 emscripten compiler
+    # WARNING: To compile to HTML5, code must be redesigned
+    # to use emscripten.h and emscripten_set_main_loop()
     CC = emcc
 endif
 
@@ -186,10 +187,15 @@ endif
 #  -std=gnu99           defines C language mode (GNU C from 1999 revision)
 #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
-CFLAGS += -O1 -s -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces
+CFLAGS += -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces
 
 ifeq ($(BUILD_MODE),DEBUG)
     CFLAGS += -g
+    ifeq ($(PLATFORM),PLATFORM_WEB)
+        CFLAGS += -s ASSERTIONS=1 --profiling
+    endif
+else
+    CFLAGS += -s -O1
 endif
 
 # Additional flags for compiler (if desired)
@@ -198,7 +204,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
         # resource file contains windows executable icon and properties
         # -Wl,--subsystem,windows hides the console window
-        CFLAGS += $(RAYLIB_PATH)/raylib.rc.data -Wl,--subsystem,windows
+        CFLAGS += $(RAYLIB_PATH)/src/raylib.rc.data -Wl,--subsystem,windows
     endif
     ifeq ($(PLATFORM_OS),LINUX)
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
@@ -228,15 +234,12 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # --profiling                # include information for code profiling
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
-    CFLAGS += -Os -s USE_GLFW=3
-    ifeq ($(BUILD_MODE), DEBUG)
-        CFLAGS += -s ASSERTIONS=1 --profiling
-    endif
+    CFLAGS += -s USE_GLFW=3
 
     # NOTE: On PLATFORM_WEB, every example requires its own flags
 
     # Define a custom shell .html and output extension
-    CFLAGS += --shell-file $(RAYLIB_PATH)\src\shell.html
+    CFLAGS += --shell-file $(RAYLIB_PATH)/src/shell.html
     EXT = .html
 endif
 
@@ -296,12 +299,12 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
         # Libraries for Debian GNU/Linux desktop compiling
         # NOTE: Required packages: libegl1-mesa-dev
         LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt
-        
+
         # On X11 requires also below libraries
         LDLIBS += -lX11
         # NOTE: It seems additional libraries are not required any more, latest GLFW just dlopen them
         #LDLIBS += -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
-        
+
         # On Wayland windowing system, additional libraries requires
         ifeq ($(USE_WAYLAND_DISPLAY),TRUE)
             LDLIBS += -lwayland-client -lwayland-cursor -lwayland-egl -lxkbcommon
@@ -314,7 +317,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
         # Libraries for OSX 10.9 desktop compiling
         # NOTE: Required packages: libopenal-dev libegl1-mesa-dev
-        LDLIBS = -lraylib -framework OpenGL -framework OpenAL -framework Cocoa
+        LDLIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo 
     endif
     ifeq ($(PLATFORM_OS),BSD)
         # Libraries for FreeBSD, OpenBSD, NetBSD, DragonFly desktop compiling
@@ -358,6 +361,7 @@ EXAMPLES = \
     core/core_window_letterbox \
     core/core_drop_files \
     core/core_random_values \
+    core/core_scissor_test \
     core/core_storage_values \
     core/core_vr_simulator \
     core/core_loading_thread \
@@ -377,11 +381,12 @@ EXAMPLES = \
     shapes/shapes_draw_circle_sector \
     shapes/shapes_draw_rectangle_rounded \
     textures/textures_logo_raylib \
+    textures/textures_mouse_painting \
     textures/textures_rectangle \
     textures/textures_srcrec_dstrec \
-    textures/textures_image_loading \
     textures/textures_image_drawing \
     textures/textures_image_generation \
+    textures/textures_image_loading \
     textures/textures_image_processing \
     textures/textures_image_text \
     textures/textures_to_image \
@@ -393,31 +398,30 @@ EXAMPLES = \
     textures/textures_sprite_explosion \
     textures/textures_bunnymark \
     text/text_raylib_fonts \
-    text/text_sprite_fonts \
-    text/text_ttf_loading \
-    text/text_bmfont_ttf \
+    text/text_font_spritefont \
+    text/text_font_loading \
+    text/text_font_filters \
     text/text_font_sdf \
     text/text_format_text \
     text/text_input_box \
     text/text_writing_anim \
     text/text_rectangle_bounds \
     text/text_unicode \
-    models/models_geometric_shapes \
-    models/models_orthographic_projection \
-    models/models_box_collisions \
+    models/models_animation \
     models/models_billboard \
-    models/models_obj_loading \
-    models/models_obj_viewer \
-    models/models_yaw_pitch_roll \
-    models/models_mesh_generation \
-    models/models_mesh_picking \
-    models/models_heightmap \
+    models/models_box_collisions \
     models/models_cubicmap \
     models/models_first_person_maze \
-    models/models_animation \
-    models/models_skybox \
+    models/models_geometric_shapes \
     models/models_material_pbr \
+    models/models_mesh_generation \
+    models/models_mesh_picking \
+    models/models_loading \
+    models/models_orthographic_projection \
     models/models_rlgl_solar_system \
+    models/models_skybox \
+    models/models_yaw_pitch_roll \
+    models/models_heightmap \
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
     shaders/shaders_custom_uniform \
@@ -428,10 +432,14 @@ EXAMPLES = \
     shaders/shaders_texture_waves \
     shaders/shaders_julia_set \
     shaders/shaders_eratosthenes \
+    shaders/shaders_basic_lighting \
+    shaders/shaders_fog \
+    shaders/shaders_simple_mask \
     audio/audio_module_playing \
     audio/audio_music_stream \
     audio/audio_raw_stream \
     audio/audio_sound_loading \
+    audio/audio_multichannel_sound \
     physac/physics_demo \
     physac/physics_friction \
     physac/physics_movement \
@@ -908,7 +916,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable|x-pie-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
