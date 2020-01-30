@@ -58,13 +58,13 @@
                 
                 document.title = "raylib - " + name.replace('_', ' ');
 
-                //var type = name.substring(0, name.indexOf("_"));
+                var type = name.substring(0, name.indexOf("_"));
                 //var srcUrl = '../../src/' + type + '/' + name + '.c';
                 //var imgUrl = '../' + type + '/' + name + '.png';
                 
                 // Get example code and image directly from original raylib GitHub and avoid duplicate code to maintain
-                var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/physac/' + name + '.c';
-                var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/physac/' + name + '.png';
+                var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
+                var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
 
                 $('#eximage img').attr('src', imgUrl);
 
@@ -74,11 +74,7 @@
 				}, 'text');
                 
                 // Quick hack for some examples not working on web
-                if ((name == "physics_demo") || 
-                    (name == "physics_friction") || 
-                    (name == "physics_movement") || 
-                    (name == "physics_restitution") || 
-                    (name == "physics_shatter"))
+                if (name == "example_to_avoid")
                 {
                     $('#eximage').append('<img src="' + imgUrl + '" alt=" ">');
                 }
