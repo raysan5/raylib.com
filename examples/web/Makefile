@@ -570,7 +570,7 @@ core/core_vr_simulator: core/core_vr_simulator.c
 
 # compile [core] example - loading thread
 core/core_loading_thread: core/core_loading_thread.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
    
 # compile [shapes] example - basic shapes usage (rectangle, circle, ...)
 shapes/shapes_basic_shapes: shapes/shapes_basic_shapes.c
@@ -649,6 +649,7 @@ textures/textures_image_loading: textures/textures_image_loading.c
 # compile [textures] example - texture image drawing
 textures/textures_image_drawing: textures/textures_image_drawing.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
+    --preload-file textures/resources/custom_jupiter_crash.png@resources/custom_jupiter_crash.png \
     --preload-file textures/resources/parrots.png@resources/parrots.png \
     --preload-file textures/resources/cat.png@resources/cat.png
     
@@ -727,14 +728,14 @@ text/text_font_spritefont: text/text_font_spritefont.c
 # compile [text] example - font loading
 text/text_font_loading: text/text_font_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
+    --preload-file text/resources/pixantiqua.fnt@resources/pixantiqua.fnt \
+    --preload-file text/resources/pixantiqua.png@resources/pixantiqua.png \
+    --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf  
 
 # compile [text] example - font filters
 text/text_font_filters: text/text_font_filters.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/pixantiqua.fnt@resources/pixantiqua.fnt \
-    --preload-file text/resources/pixantiqua.png@resources/pixantiqua.png \
-    --preload-file text/resources/pixantiqua.ttf@resources/pixantiqua.ttf  
+    --preload-file text/resources/KAISG.ttf@resources/KAISG.ttf
 
 text/text_font_sdf: text/text_font_sdf.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
@@ -946,7 +947,7 @@ audio/audio_sound_loading: audio/audio_sound_loading.c
 
 audio/audio_multichannel_sound: audio/audio_multichannel_sound.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file audio/resources/weird.wav@resources/weird.wav \
+    --preload-file audio/resources/sound.wav@resources/sound.wav \
     --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
 
 # compile [physac] example - physics demo
