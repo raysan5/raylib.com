@@ -75,7 +75,7 @@ Model model = { 0 };         // OBJ model
 Texture2D texture = { 0 };   // Model texture
 
 Shader shaders[MAX_POSTPRO_SHADERS] = { 0 };    // Postpro shaders
-int currentShader = FX_GRAYSCALE = { 0 };       // Current shader selected
+int currentShader = FX_GRAYSCALE;               // Current shader selected
 
 Vector3 position = { 0.0f, 0.0f, 0.0f };        // Set model position
 

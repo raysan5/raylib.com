@@ -80,8 +80,11 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    // Unload model animations data
+    UnloadTexture(texture);     // Unload texture
+
+	// Unload model animations data
     for (int i = 0; i < animsCount; i++) UnloadModelAnimation(anims[i]);
+    RL_FREE(anims);
 
     UnloadModel(model);         // Unload model
 
@@ -101,7 +104,7 @@ void UpdateDrawFrame(void)
     UpdateCamera(&camera);
 
     // Play animation when spacebar is held down
-    if (IsKeyDown(KEY_A))
+    if (IsKeyDown(KEY_SPACE))
     {
         animFrameCounter++;
         UpdateModelAnimation(model, anims[0], animFrameCounter);
@@ -128,7 +131,7 @@ void UpdateDrawFrame(void)
 
         EndMode3D();
 
-        DrawText("PRESS KEY_A to PLAY MODEL ANIMATION", 10, 10, 20, MAROON);
+        DrawText("PRESS SPACE to PLAY MODEL ANIMATION", 10, 10, 20, MAROON);
         DrawText("(c) Guy IQM 3D model by @culacant", screenWidth - 200, screenHeight - 20, 10, GRAY);
 
     EndDrawing();

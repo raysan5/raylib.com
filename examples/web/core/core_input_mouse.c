@@ -68,9 +68,10 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     ballPosition = GetMousePosition();
 
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) ballColor = MAROON;
-    else if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) ballColor = LIME;
-    else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) ballColor = DARKBLUE;
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) ballColor = LIME;
+    else ballColor = MAROON;
+    //else if (IsMouseButtonPressed(MOUSE_MIDDLE_BUTTON)) ballColor = LIME;
+    //else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) ballColor = DARKBLUE;
     //----------------------------------------------------------------------------------
 
     // Draw

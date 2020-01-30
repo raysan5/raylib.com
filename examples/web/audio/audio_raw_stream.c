@@ -34,9 +34,11 @@ AudioStream stream = { 0 };
 short *data;
 short *writeBuf;
 
-int totalSamples = MAX_SAMPLES;
-int samplesLeft = MAX_SAMPLES;
-
+Vector2 mousePosition = { -100.0f, -100.0f };
+float frequency = 440.0f;
+float oldFrequency = 1.0f;
+int readCursor = 0;
+int waveLength = 1;
 Vector2 position = { 0, 0 };
 
 //----------------------------------------------------------------------------------
@@ -69,7 +71,7 @@ int main(void)
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
-    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+    SetTargetFPS(30);               // Set our game to run at 30 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -100,23 +102,62 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
+    mousePosition = GetMousePosition();
+
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+    {
+        float fp = (float)(mousePosition.y);
+        frequency = 40.0f + (float)(fp);
+    }
+
+    // Rewrite the sine wave.
+    // Compute two cycles to allow the buffer padding, simplifying any modulation, resampling, etc.
+    if (frequency != oldFrequency)
+    {
+        // Compute wavelength. Limit size in both directions.
+        int oldWavelength = waveLength;
+        waveLength = (int)(22050/frequency);
+        if (waveLength > MAX_SAMPLES/2) waveLength = MAX_SAMPLES/2;
+        if (waveLength < 1) waveLength = 1;
+
+        // Write sine wave.
+        for (int i = 0; i < waveLength*2; i++)
+        {
+            data[i] = (short)(sinf(((2*PI*(float)i/waveLength)))*32000);
+        }
+
+        // Scale read cursor's position to minimize transition artifacts
+        readCursor = (int)(readCursor * ((float)waveLength / (float)oldWavelength));
+        oldFrequency = frequency;
+    }
 
     // Refill audio stream if required
-    // NOTE: Every update we check if stream data has been already consumed and we update
-    // buffer with new data from the generated samples, we upload data at a rate (MAX_SAMPLES_PER_UPDATE),
-    // but notice that at some point we update < MAX_SAMPLES_PER_UPDATE data...
-    if (IsAudioBufferProcessed(stream))
+    if (IsAudioStreamProcessed(stream))
     {
-        int numSamples = 0;
-        if (samplesLeft >= MAX_SAMPLES_PER_UPDATE) numSamples = MAX_SAMPLES_PER_UPDATE;
-        else numSamples = samplesLeft;
+        // Synthesize a buffer that is exactly the requested size
+        int writeCursor = 0;
 
-        UpdateAudioStream(stream, data + (totalSamples - samplesLeft), numSamples);
+        while (writeCursor < MAX_SAMPLES_PER_UPDATE)
+        {
+            // Start by trying to write the whole chunk at once
+            int writeLength = MAX_SAMPLES_PER_UPDATE-writeCursor;
 
-        samplesLeft -= numSamples;
+            // Limit to the maximum readable size
+            int readLength = waveLength-readCursor;
 
-        // Reset samples feeding (loop audio)
-        if (samplesLeft <= 0) samplesLeft = totalSamples;
+            if (writeLength > readLength) writeLength = readLength;
+
+            // Write the slice
+            memcpy(writeBuf + writeCursor, data + readCursor, writeLength*sizeof(short));
+
+            // Update cursors and loop audio
+            readCursor = (readCursor + writeLength) % waveLength;
+
+            writeCursor += writeLength;
+        }
+
+        // Copy finished frame to audio stream
+        UpdateAudioStream(stream, writeBuf, MAX_SAMPLES_PER_UPDATE);
     }
     //----------------------------------------------------------------------------------
 
@@ -126,13 +167,14 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText("SINE WAVE SHOULD BE PLAYING!", 240, 140, 20, LIGHTGRAY);
+        DrawText(FormatText("sine frequency: %i",(int)frequency), GetScreenWidth() - 220, 10, 20, RED);
+        DrawText("click mouse button to change frequency", 10, 10, 20, DARKGRAY);
 
-        // NOTE: Draw a part of the sine wave (only screen width, proportional values)
-        for (int i = 0; i < GetScreenWidth(); i++)
+        // Draw the current buffer state proportionate to the screen
+        for (int i = 0; i < screenWidth; i++)
         {
             position.x = i;
-            position.y = 250 + 50*data[i]/32000;
+            position.y = 250 + 50*data[i*MAX_SAMPLES/screenWidth]/32000;
 
             DrawPixelV(position, RED);
         }

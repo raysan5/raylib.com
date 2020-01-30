@@ -2,18 +2,19 @@
 *
 *   raylib [shapes] example - draw circle sector (with gui options)
 *
-*   This example has been created using raylib 2.5 (www.raylib.com)
+*   This example has been created using raylib 2.6 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
 *   Example contributed by Vlad Adrian (@demizdor) and reviewed by Ramon Santamaria (@raysan5)
 *
-*   Copyright (c) 2018 Vlad Adrian (@demizdor) and Ramon Santamaria (@raysan5)
+*   Copyright (c) 2018-2020 Vlad Adrian (@demizdor) and Ramon Santamaria (@raysan5)
 *
 ********************************************************************************************/
 
 #include <raylib.h>
 
 #define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
 #include "raygui.h"                 // Required for GUI controls
 
 #if defined(PLATFORM_WEB)
@@ -99,11 +100,11 @@ void UpdateDrawFrame(void)
 
         // Draw GUI controls
         //------------------------------------------------------------------------------
-        startAngle = GuiSliderBar((Rectangle){ 600, 40, 120, 20}, "StartAngle", startAngle, 0, 720, true );
-        endAngle = GuiSliderBar((Rectangle){ 600, 70, 120, 20}, "EndAngle", endAngle, 0, 720, true);
+        startAngle = GuiSliderBar((Rectangle){ 600, 40, 120, 20}, "StartAngle", TextFormat("%2i deg.", startAngle), startAngle, 0, 720);
+        endAngle = GuiSliderBar((Rectangle){ 600, 70, 120, 20}, "EndAngle", TextFormat("%2i deg.", endAngle), endAngle, 0, 720);
 
-        outerRadius = GuiSliderBar((Rectangle){ 600, 140, 120, 20}, "Radius", outerRadius, 0, 200, true);
-        segments = GuiSliderBar((Rectangle){ 600, 170, 120, 20}, "Segments", segments, 0, 100, true);
+        outerRadius = GuiSliderBar((Rectangle){ 600, 140, 120, 20}, "Radius", TextFormat("%2.2f", outerRadius), outerRadius, 0, 200);
+        segments = GuiSliderBar((Rectangle){ 600, 170, 120, 20}, "Segments", TextFormat("%2i", segments), segments, 0, 20);
         //------------------------------------------------------------------------------
 
         DrawText(FormatText("MODE: %s", (segments >= 4)? "MANUAL" : "AUTO"), 600, 200, 10, (segments >= 4)? MAROON : DARKGRAY);

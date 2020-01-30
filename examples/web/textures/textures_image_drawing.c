@@ -25,6 +25,8 @@ const int screenHeight = 450;
 
 Texture2D texture = { 0 };      // Texture, GPU memory (VRAM)
 
+Font font = { 0 };
+
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
 //----------------------------------------------------------------------------------
@@ -47,10 +49,18 @@ int main(void)
     Image parrots = LoadImage("resources/parrots.png");     // Load image in CPU memory (RAM)
 
     // Draw one image over the other with a scaling of 1.5f
-    ImageDraw(&parrots, cat, (Rectangle){ 0, 0, cat.width, cat.height }, (Rectangle){ 30, 40, cat.width*1.5f, cat.height*1.5f });
+    ImageDraw(&parrots, cat, (Rectangle){ 0, 0, cat.width, cat.height }, (Rectangle){ 30, 40, cat.width*1.5f, cat.height*1.5f }, WHITE);
     ImageCrop(&parrots, (Rectangle){ 0, 50, parrots.width, parrots.height - 100 }); // Crop resulting image
 
     UnloadImage(cat);       // Unload image from RAM
+
+    // Load custom font for frawing on image
+    font = LoadFont("resources/custom_jupiter_crash.png");
+
+    // Draw over image using custom font
+    ImageDrawTextEx(&parrots, (Vector2){ 300, 230 }, font, "PARROTS & CAT", font.baseSize, -2, WHITE);
+
+    UnloadFont(font); // Unload custom spritefont (already drawn used on image)
 
     texture = LoadTextureFromImage(parrots);      // Image converted to texture, uploaded to GPU memory (VRAM)
     UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM

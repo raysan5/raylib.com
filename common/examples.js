@@ -12,6 +12,7 @@ $(document).ready(function() {
         'core_input_multitouch',
         'core_input_gestures',
         'core_2d_camera',
+        'core_2d_camera_platformer',
         'core_3d_camera_mode',
         'core_3d_camera_free',
         'core_3d_camera_first_person',
@@ -21,6 +22,7 @@ $(document).ready(function() {
         'core_window_letterbox',
         'core_drop_files',
         'core_random_values',
+        'core_scissor_test',
         'core_storage_values',
         'core_vr_simulator',
         'core_loading_thread',
@@ -40,9 +42,9 @@ $(document).ready(function() {
         'shapes_draw_circle_sector',
         'shapes_draw_rectangle_rounded',
         'text_raylib_fonts',
-        'text_sprite_fonts',
-        'text_ttf_loading',
-        'text_bmfont_ttf',
+        'text_font_spritefont',
+        'text_font_loading',
+        'text_font_filters',
         'text_font_sdf',
         'text_format_text',
         'text_input_box',
@@ -50,6 +52,7 @@ $(document).ready(function() {
         'text_rectangle_bounds',
         'text_unicode',
         'textures_logo_raylib',
+        'textures_mouse_painting',
         'textures_rectangle',
         'textures_srcrec_dstrec',
         'textures_image_drawing',
@@ -74,13 +77,13 @@ $(document).ready(function() {
         'models_material_pbr',
         'models_mesh_generation',
         'models_mesh_picking',
-        'models_obj_loading',
-        'models_obj_viewer',
+        'models_loading',
         'models_orthographic_projection',
         'models_rlgl_solar_system',
         'models_skybox',
         'models_yaw_pitch_roll',
         'models_heightmap',
+        'models_waving_cubes',
         'shaders_model_shader',
         'shaders_shapes_textures',
         'shaders_custom_uniform',
@@ -91,10 +94,14 @@ $(document).ready(function() {
         'shaders_texture_waves',
         'shaders_julia_set',
         'shaders_eratosthenes',
+        'shaders_basic_lighting',
+        'shaders_fog',
+        'shaders_simple_mask',
         'audio_module_playing',
         'audio_music_stream',
         'audio_raw_stream',
         'audio_sound_loading',
+        'audio_multichannel_sound',
         'physics_demo',
         'physics_friction',
         'physics_movement',
@@ -107,8 +114,6 @@ $(document).ready(function() {
         var exampleBase = exampleName[i].slice(exampleName[i].indexOf('_') + 1);
         var exampleDesc = exampleBase.replace('_', ' ');
         
-        if (filterType == "physics") filterType = "physac";
-
         $('#container').append(
             '<div class="mix f' + filterType + '">' +
             '<a class="fancybox fancybox.iframe" href="examples/web/' + filterType + '/' + 'loader.html?name=' + exampleName[i] + '" title="' + exampleDesc + '">' +
