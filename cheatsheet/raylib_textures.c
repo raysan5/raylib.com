@@ -1,5 +1,5 @@
 
-    // Image/Texture2D data loading/unloading/saving functions
+      // Image/Texture2D data loading/unloading/saving functions
     Image LoadImage(const char *fileName);                                                              // Load image from file into CPU memory (RAM)
     Image LoadImageEx(Color *pixels, int width, int height);                                            // Load image from Color array data (RGBA - 32bit)
     Image LoadImagePro(void *data, int width, int height, int format);                                  // Load image from raw data with parameters
@@ -15,6 +15,7 @@
     void UnloadRenderTexture(RenderTexture2D target);                                                   // Unload render texture from GPU memory (VRAM)
     Color *GetImageData(Image image);                                                                   // Get pixel data from image as a Color struct array
     Vector4 *GetImageDataNormalized(Image image);                                                       // Get pixel data from image as Vector4 array (float normalized)
+    Rectangle GetImageAlphaBorder(Image image, float threshold);                                        // Get image alpha border rectangle
     int GetPixelDataSize(int width, int height, int format);                                            // Get pixel data size in bytes (image or texture)
     Image GetTextureData(Texture2D texture);                                                            // Get pixel data from GPU texture and return an Image
     Image GetScreenData(void);                                                                          // Get pixel data from screen buffer and return an Image (screenshot)
@@ -22,6 +23,7 @@
                                                                                                         
     // Image manipulation functions                                                                     
     Image ImageCopy(Image image);                                                                       // Create an image duplicate (useful for transformations)
+    Image ImageFromImage(Image image, Rectangle rec);                                                   // Create an image from another image piece
     void ImageToPOT(Image *image, Color fillColor);                                                     // Convert image to POT (power-of-two)
     void ImageFormat(Image *image, int newFormat);                                                      // Convert image data to desired format
     void ImageAlphaMask(Image *image, Image alphaMask);                                                 // Apply alpha mask to image
@@ -37,7 +39,7 @@
     Color *ImageExtractPalette(Image image, int maxPaletteSize, int *extractCount);                     // Extract color palette from image to maximum size (memory should be freed)
     Image ImageText(const char *text, int fontSize, Color color);                                       // Create an image from text (default font)
     Image ImageTextEx(Font font, const char *text, float fontSize, float spacing, Color tint);          // Create an image from text (custom sprite font)
-    void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec);                          // Draw a source image within a destination image
+    void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);              // Draw a source image within a destination image (tint applied to source)
     void ImageDrawRectangle(Image *dst, Rectangle rec, Color color);                                    // Draw rectangle within an image
     void ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);                    // Draw rectangle lines within an image
     void ImageDrawText(Image *dst, Vector2 position, const char *text, int fontSize, Color color);      // Draw text (default font) within an image (destination)
@@ -62,6 +64,11 @@
     Image GenImageWhiteNoise(int width, int height, float factor);                                      // Generate image: white noise
     Image GenImagePerlinNoise(int width, int height, int offsetX, int offsetY, float scale);            // Generate image: perlin noise
     Image GenImageCellular(int width, int height, int tileSize);                                        // Generate image: cellular algorithm. Bigger tileSize means bigger cells
+                                                                                                        
+    // Texture2D configuration functions                                                                
+    void GenTextureMipmaps(Texture2D *texture);                                                         // Generate GPU mipmaps for a texture
+    void SetTextureFilter(Texture2D texture, int filterMode);                                           // Set texture scaling filter mode
+    void SetTextureWrap(Texture2D texture, int wrapMode);                                               // Set texture wrapping mode
                                                                                                         
     // Texture2D configuration functions                                                                
     void GenTextureMipmaps(Texture2D *texture);                                                         // Generate GPU mipmaps for a texture

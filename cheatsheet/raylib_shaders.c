@@ -17,14 +17,13 @@
     void SetMatrixProjection(Matrix proj);                                                              // Set a custom projection matrix (replaces internal projection matrix)
     void SetMatrixModelview(Matrix view);                                                               // Set a custom modelview matrix (replaces internal modelview matrix)
     Matrix GetMatrixModelview();                                                                        // Get internal modelview matrix
+    Matrix GetMatrixProjection(void);                                                                   // Get internal projection matrix
 
     // Shading begin/end functions
     void BeginShaderMode(Shader shader);                                                                // Begin custom shader drawing
     void EndShaderMode(void);                                                                           // End custom shader drawing (use default shader)
     void BeginBlendMode(int mode);                                                                      // Begin blending mode (alpha, additive, multiplied)
     void EndBlendMode(void);                                                                            // End blending mode (reset to default: alpha blending)
-    void BeginScissorMode(int x, int y, int width, int height);                                         // Begin scissor mode (define screen area for following drawing)
-    void EndScissorMode(void);                                                                          // End scissor mode
 
     // VR control functions
     void InitVrSimulator(void);                                                                         // Init VR simulator for selected device parameters

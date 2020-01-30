@@ -18,9 +18,12 @@
 
     // Wave/Sound management functions
     void PlaySound(Sound sound);                                                    // Play a sound
+    void StopSound(Sound sound);                                                    // Stop playing a sound
     void PauseSound(Sound sound);                                                   // Pause a sound
     void ResumeSound(Sound sound);                                                  // Resume a paused sound
-    void StopSound(Sound sound);                                                    // Stop playing a sound
+    void PlaySoundMulti(Sound sound);                                               // Play a sound (using multichannel buffer pool)
+    void StopSoundMulti(void);                                                      // Stop any sound playing (using multichannel buffer pool)
+    int GetSoundsPlaying(void);                                                     // Get number of sounds playing in the multichannel
     bool IsSoundPlaying(Sound sound);                                               // Check if a sound is currently playing
     void SetSoundVolume(Sound sound, float volume);                                 // Set volume for a sound (1.0 is max level)
     void SetSoundPitch(Sound sound, float pitch);                                   // Set pitch for a sound (1.0 is base level)
