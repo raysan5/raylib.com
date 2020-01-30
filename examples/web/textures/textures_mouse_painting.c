@@ -29,7 +29,8 @@ const int screenHeight = 450;
 static Color colors[MAX_COLORS_COUNT] = {
     RAYWHITE, YELLOW, GOLD, ORANGE, PINK, RED, MAROON, GREEN, LIME, DARKGREEN,
     SKYBLUE, BLUE, DARKBLUE, PURPLE, VIOLET, DARKPURPLE, BEIGE, BROWN, DARKBROWN,
-    LIGHTGRAY, GRAY, DARKGRAY, BLACK };
+    LIGHTGRAY, GRAY, DARKGRAY, BLACK 
+};
     
 // Define colorsRecs data (for every rectangle)
 static Rectangle colorsRecs[MAX_COLORS_COUNT] = { 0 };
@@ -128,7 +129,7 @@ void UpdateDrawFrame(void)
         else colorMouseHover = -1;
     }
     
-    if ((colorMouseHover >= 0) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
+    if ((colorMouseHover >= 0) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         colorSelected = colorMouseHover;
         colorSelectedPrev = colorSelected;
@@ -181,6 +182,9 @@ void UpdateDrawFrame(void)
         ExportImage(image, "my_amazing_texture_painting.png");
         UnloadImage(image);
         showSaveMessage = true;
+        
+        // Download file from MEMFS (emscripten memory filesystem)
+        emscripten_run_script(TextFormat("saveFileFromMEMFSToDisk('%s','%s')", "my_amazing_texture_painting.png", "my_amazing_texture_painting.png"));
     }
     
     if (showSaveMessage)
