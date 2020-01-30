@@ -107,6 +107,8 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
+    PhysicsStep();
+
     if (IsKeyPressed('R'))    // Reset physics input
     {
         // Reset movement physics body position, velocity and rotation

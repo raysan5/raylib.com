@@ -90,6 +90,8 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
+    PhysicsStep();
+
     if (IsKeyPressed('R'))    // Reset physics input
     {
         ResetPhysics();

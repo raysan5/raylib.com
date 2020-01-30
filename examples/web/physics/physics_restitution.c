@@ -101,6 +101,8 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
+    PhysicsStep();
+
     if (IsKeyPressed('R'))    // Reset physics input
     {
         // Reset circles physics bodies position and velocity
