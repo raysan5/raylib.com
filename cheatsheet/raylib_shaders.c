@@ -7,7 +7,10 @@
                                 
     Shader GetShaderDefault(void);                                                                      // Get default shader
     Texture2D GetTextureDefault(void);                                                                  // Get default texture
-                                
+    Texture2D GetShapesTexture(void);                                                                   // Get texture to draw shapes
+    Rectangle GetShapesTextureRec(void);                                                                // Get texture rectangle to draw shapes
+    void SetShapesTexture(Texture2D texture, Rectangle source);                                         // Define default texture used to draw shapes
+    
     // Shader configuration functions                               
     int GetShaderLocation(Shader shader, const char *uniformName);                                      // Get shader uniform location
     void SetShaderValue(Shader shader, int uniformLoc, const void *value, int uniformType);             // Set shader uniform value

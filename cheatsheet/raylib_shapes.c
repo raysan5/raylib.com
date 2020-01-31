@@ -35,8 +35,6 @@
     void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);                // Draw a regular polygon (Vector version)
     void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);           // Draw a polygon outline of n sides
 
-    void SetShapesTexture(Texture2D texture, Rectangle source);                                         // Define default texture used to draw shapes
-
     // Basic shapes collision detection functions
     bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                            // Check collision between two rectangles
     bool CheckCollisionCircles(Vector2 center1, float radius1, Vector2 center2, float radius2);         // Check collision between two circles
