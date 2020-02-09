@@ -21,7 +21,8 @@ $(document).ready(function() {
         'game_light_my_ritual',
         'game_wave_collector',
         'game_transmission',
-        'game_roomba'];
+        'game_roomba',
+        'game_repair'];
 
     var exampleDesc = [
         'arkanoid',
@@ -41,7 +42,8 @@ $(document).ready(function() {
         'LIGHT MY RITUAL',
         'Wave Collector',
         'Transmission Mission',
-        'Cat vs Roomba'];
+        'Cat vs Roomba',
+        'RE-PAIR'];
 
     for (var i = 0; i < exampleName.length; i++)
     {
