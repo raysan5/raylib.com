@@ -82,7 +82,9 @@
     void TakeScreenshot(const char *fileName);                              // Takes a screenshot of current screen (saved a .png)
     int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
                 
-    // Files management functions           
+    // Files management functions
+    unsigned char *LoadFileData(const char *fileName, int *bytesRead);      // Load file data as byte array (read)
+    void SaveFileData(const char *fileName, void *data, int bytesToWrite);  // Save data to file from byte array (write)    
     bool FileExists(const char *fileName);                                  // Check if file exists
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension
     bool DirectoryExists(const char *dirPath);                              // Check if a directory path exists
@@ -104,8 +106,8 @@
     unsigned char *DecompressData(unsigned char *compData, int compDataLength, int *dataLength);  // Decompress data (DEFLATE algorythm)
     
     // Persistent storage management
-    void StorageSaveValue(int position, int value);                         // Save integer value to storage file (to defined position)
-    int StorageLoadValue(int position);                                     // Load integer value from storage file (from defined position)
+    int LoadStorageValue(int position);                                     // Load integer value from storage file (from defined position)
+    void SaveStorageValue(int position, int value);                         // Save integer value to storage file (to defined position)
     
     void OpenURL(const char *url);                                          // Open URL with default system browser (if available)
 
