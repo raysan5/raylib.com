@@ -69,12 +69,7 @@
     void GenTextureMipmaps(Texture2D *texture);                                                         // Generate GPU mipmaps for a texture
     void SetTextureFilter(Texture2D texture, int filterMode);                                           // Set texture scaling filter mode
     void SetTextureWrap(Texture2D texture, int wrapMode);                                               // Set texture wrapping mode
-                                                                                                        
-    // Texture2D configuration functions                                                                
-    void GenTextureMipmaps(Texture2D *texture);                                                         // Generate GPU mipmaps for a texture
-    void SetTextureFilter(Texture2D texture, int filterMode);                                           // Set texture scaling filter mode
-    void SetTextureWrap(Texture2D texture, int wrapMode);                                               // Set texture wrapping mode
-                                                                                                        
+
     // Texture2D drawing functions                                                                      
     void DrawTexture(Texture2D texture, int posX, int posY, Color tint);                                // Draw a Texture2D
     void DrawTextureV(Texture2D texture, Vector2 position, Color tint);                                 // Draw a Texture2D with position defined as Vector2
