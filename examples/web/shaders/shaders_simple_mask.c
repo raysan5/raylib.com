@@ -90,8 +90,7 @@ int main(void)
     model3 = LoadModelFromMesh(sphere);
 
     // Load the shader
-    shader = LoadShader(FormatText("resources/shaders/glsl%i/mask.vs", GLSL_VERSION), 
-                        FormatText("resources/shaders/glsl%i/mask.fs", GLSL_VERSION));
+    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/mask.fs", GLSL_VERSION));
 
     // Load and apply the diffuse texture (colour map)
     texDiffuse = LoadTexture("resources/plasma.png");

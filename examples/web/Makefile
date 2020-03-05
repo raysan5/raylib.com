@@ -905,21 +905,20 @@ shaders/shaders_eratosthenes: shaders/shaders_eratosthenes.c
 shaders/shaders_basic_lighting: shaders/shaders_basic_lighting.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file shaders/resources/texel_checker.png@resources/texel_checker.png \
-    --preload-file shaders/resources/shaders/glsl100/basic_lighting.fs@resources/shaders/glsl100/basic_lighting.fs \
-    --preload-file shaders/resources/shaders/glsl100/basic_lighting.vs@resources/shaders/glsl100/basic_lighting.vs
+    --preload-file shaders/resources/shaders/glsl100/basic_lighting.fs@resources/shaders/glsl100/lighting.fs \
+    --preload-file shaders/resources/shaders/glsl100/basic_lighting.vs@resources/shaders/glsl100/base_lighting.vs
 
 shaders/shaders_fog: shaders/shaders_fog.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file shaders/resources/texel_checker.png@resources/texel_checker.png \
     --preload-file shaders/resources/shaders/glsl100/fog.fs@resources/shaders/glsl100/fog.fs \
-    --preload-file shaders/resources/shaders/glsl100/fog.vs@resources/shaders/glsl100/fog.vs
+    --preload-file shaders/resources/shaders/glsl100/basic_lighting.vs@resources/shaders/glsl100/base_lighting.vs
 
 shaders/shaders_simple_mask: shaders/shaders_simple_mask.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file shaders/resources/plasma.png@resources/plasma.png \
     --preload-file shaders/resources/mask.png@resources/mask.png \
-    --preload-file shaders/resources/shaders/glsl100/mask.fs@resources/shaders/glsl100/mask.fs \
-    --preload-file shaders/resources/shaders/glsl100/mask.vs@resources/shaders/glsl100/mask.vs
+    --preload-file shaders/resources/shaders/glsl100/mask.fs@resources/shaders/glsl100/mask.fs
 
 # compile [audio] example - module playing (XM)
 audio/audio_module_playing: audio/audio_module_playing.c
