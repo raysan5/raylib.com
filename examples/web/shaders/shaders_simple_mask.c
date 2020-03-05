@@ -106,7 +106,7 @@ int main(void)
     shader.locs[LOC_MAP_EMISSION] = GetShaderLocation(shader, "mask");
 
     // Frame is incremented each frame to animate the shader
-    shaderFrame = GetShaderLocation(shader, "framesCounter");
+    shaderFrame = GetShaderLocation(shader, "frame");
 
     // Apply the shader to the two models
     model1.materials[0].shader = shader;
