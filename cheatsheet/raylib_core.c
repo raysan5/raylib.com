@@ -84,7 +84,9 @@
                 
     // Files management functions
     unsigned char *LoadFileData(const char *fileName, int *bytesRead);      // Load file data as byte array (read)
-    void SaveFileData(const char *fileName, void *data, int bytesToWrite);  // Save data to file from byte array (write)    
+    void SaveFileData(const char *fileName, void *data, int bytesToWrite);  // Save data to file from byte array (write)
+    char *LoadFileText(const char *fileName);                               // Load text data from file (read), returns a '\0' terminated string
+    void SaveFileText(const char *fileName, char *text);                    // Save text data to file (write), string must be '\0' terminated    
     bool FileExists(const char *fileName);                                  // Check if file exists
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension
     bool DirectoryExists(const char *dirPath);                              // Check if a directory path exists

@@ -42,6 +42,10 @@
     void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);              // Draw a source image within a destination image (tint applied to source)
     void ImageDrawRectangle(Image *dst, Rectangle rec, Color color);                                    // Draw rectangle within an image
     void ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);                    // Draw rectangle lines within an image
+    void ImageClearBackground(Image *dst, Color color);                                                 // Clear image background with given color
+    void ImageDrawPixel(Image *dst, Vector2 position, Color color);                                     // Draw pixel within an image
+    void ImageDrawCircle(Image *dst, Vector2 center, int radius, Color color);                          // Draw circle within an image
+    void ImageDrawLineEx(Image *dst, Vector2 start, Vector2 end, Color color);                          // Draw line within an image
     void ImageDrawText(Image *dst, Vector2 position, const char *text, int fontSize, Color color);      // Draw text (default font) within an image (destination)
     void ImageDrawTextEx(Image *dst, Vector2 position, Font font, const char *text, float fontSize, float spacing, Color color); // Draw text (custom sprite font) within an image (destination)
     void ImageFlipVertical(Image *image);                                                               // Flip image vertically
