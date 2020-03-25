@@ -7,6 +7,7 @@
     bool IsWindowMinimized(void);                                           // Check if window has been minimized (or lost focus)
     bool IsWindowResized(void);                                             // Check if window has been resized
     bool IsWindowHidden(void);                                              // Check if window is currently hidden
+    bool IsWindowFullscree(void);                                           // Check if window is currently fullscreen
     void ToggleFullscreen(void);                                            // Toggle fullscreen mode (only PLATFORM_DESKTOP)
     void UnhideWindow(void);                                                // Show the window
     void HideWindow(void);                                                  // Hide the window
@@ -54,9 +55,9 @@
     Matrix GetCameraMatrix(Camera camera);                                  // Returns camera transform matrix (view matrix)
     Matrix GetCameraMatrix2D(Camera2D camera);                              // Returns camera 2d transform matrix
     Vector2 GetWorldToScreen(Vector3 position, Camera camera);              // Returns the screen space position for a 3d world space position
-    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera,             int width, int height); // Returns size position for a 3d world space position
-    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera            ); // Returns the screen space position for a 2d camera world space position
-    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera            ); // Returns the world space position for a 2d camera screen space position
+    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera,int width, int height); // Returns size position for a 3d world space position
+    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);          // Returns the screen space position for a 2d camera world space position
+    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);          // Returns the world space position for a 2d camera screen space position
                 
     // Timing-related functions         
     void SetTargetFPS(int fps);                                             // Set target FPS (maximum)
