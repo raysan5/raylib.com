@@ -7,7 +7,7 @@
     bool IsWindowMinimized(void);                                           // Check if window has been minimized (or lost focus)
     bool IsWindowResized(void);                                             // Check if window has been resized
     bool IsWindowHidden(void);                                              // Check if window is currently hidden
-    bool IsWindowFullscree(void);                                           // Check if window is currently fullscreen
+    bool IsWindowFullscreen(void);                                           // Check if window is currently fullscreen
     void ToggleFullscreen(void);                                            // Toggle fullscreen mode (only PLATFORM_DESKTOP)
     void UnhideWindow(void);                                                // Show the window
     void HideWindow(void);                                                  // Hide the window
