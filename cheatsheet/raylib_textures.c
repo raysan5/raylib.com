@@ -1,5 +1,4 @@
-
-      // Image/Texture2D data loading/unloading/saving functions
+    // Image/Texture2D data loading/unloading/saving functions
     Image LoadImage(const char *fileName);                                                              // Load image from file into CPU memory (RAM)
     Image LoadImageEx(Color *pixels, int width, int height);                                            // Load image from Color array data (RGBA - 32bit)
     Image LoadImagePro(void *data, int width, int height, int format);                                  // Load image from raw data with parameters
@@ -40,12 +39,17 @@
     Image ImageText(const char *text, int fontSize, Color color);                                       // Create an image from text (default font)
     Image ImageTextEx(Font font, const char *text, float fontSize, float spacing, Color tint);          // Create an image from text (custom sprite font)
     void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);              // Draw a source image within a destination image (tint applied to source)
-    void ImageDrawRectangle(Image *dst, Rectangle rec, Color color);                                    // Draw rectangle within an image
+    void ImageDrawRectangle(Image *dst, int posX, int posY, int width, int height, Color color);        // Draw rectangle within an image
+    void ImageDrawRectangleV(Image *dst, Vector2 position, Vector2 size, Color color);                  // Draw rectangle within an image (Vector version)
+    void ImageDrawRectangleRec(Image *dst, Rectangle rec, Color color);                                 // Draw rectangle within an image 
     void ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);                    // Draw rectangle lines within an image
     void ImageClearBackground(Image *dst, Color color);                                                 // Clear image background with given color
-    void ImageDrawPixel(Image *dst, Vector2 position, Color color);                                     // Draw pixel within an image
-    void ImageDrawCircle(Image *dst, Vector2 center, int radius, Color color);                          // Draw circle within an image
-    void ImageDrawLineEx(Image *dst, Vector2 start, Vector2 end, Color color);                          // Draw line within an image
+    void ImageDrawPixel(Image *dst, int posX, int posY, Color color);                                   // Draw pixel within an image
+    void ImageDrawPixelV(Image *dst, Vector2 position, Color color);                                    // Draw pixel within an image (Vector version)
+    void ImageDrawCircle(Image *dst, int centerX, int centerY, int radius, Color color);                // Draw circle within an image
+    void ImageDrawCircleV(Image *dst, Vector2 center, int radius, Color color);                         // Draw circle within an image (Vector version)
+    void ImageDrawLine(Image *dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color); // Draw line within an image
+    void ImageDrawLineV(Image *dst, Vector2 start, Vector2 end, Color color);                           // Draw line within an image (Vector version)
     void ImageDrawText(Image *dst, Vector2 position, const char *text, int fontSize, Color color);      // Draw text (default font) within an image (destination)
     void ImageDrawTextEx(Image *dst, Vector2 position, Font font, const char *text, float fontSize, float spacing, Color color); // Draw text (custom sprite font) within an image (destination)
     void ImageFlipVertical(Image *image);                                                               // Flip image vertically
@@ -58,7 +62,7 @@
     void ImageColorContrast(Image *image, float contrast);                                              // Modify image color: contrast (-100 to 100)
     void ImageColorBrightness(Image *image, int brightness);                                            // Modify image color: brightness (-255 to 255)
     void ImageColorReplace(Image *image, Color color, Color replace);                                   // Modify image color: replace color
-                                                                                                        
+                                                                                      
     // Image generation functions                                                                       
     Image GenImageColor(int width, int height, Color color);                                            // Generate image: plain color
     Image GenImageGradientV(int width, int height, Color top, Color bottom);                            // Generate image: vertical gradient
@@ -82,4 +86,3 @@
     void DrawTextureQuad(Texture2D texture, Vector2 tiling, Vector2 offset, Rectangle quad, Color tint);  // Draw texture quad with tiling and offset parameters
     void DrawTexturePro(Texture2D texture, Rectangle sourceRec, Rectangle destRec, Vector2 origin, float rotation, Color tint);       // Draw a part of a texture defined by a rectangle with 'pro' parameters
     void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle destRec, Vector2 origin, float rotation, Color tint);  // Draws a texture (or part of it) that stretches or shrinks nicely
-
