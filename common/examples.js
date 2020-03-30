@@ -94,6 +94,7 @@ $(document).ready(function() {
         'shaders_texture_waves',
         'shaders_julia_set',
         'shaders_eratosthenes',
+        'shaders_spotlight',
         'shaders_basic_lighting',
         'shaders_fog',
         'shaders_simple_mask',
