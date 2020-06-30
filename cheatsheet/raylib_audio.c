@@ -7,7 +7,6 @@
 
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                                            // Load wave data from file
-    Wave LoadWaveEx(void *data, int sampleCount, int sampleRate, int sampleSize, int channels); // Load wave data from raw array data
     Sound LoadSound(const char *fileName);                                          // Load sound from file
     Sound LoadSoundFromWave(Wave wave);                                             // Load sound from wave data
     void UpdateSound(Sound sound, const void *data, int samplesCount);              // Update sound buffer with new data
@@ -51,7 +50,7 @@
     AudioStream InitAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // Init audio stream (to stream raw audio pcm data)
     void UpdateAudioStream(AudioStream stream, const void *data, int samplesCount); // Update audio stream buffers with data
     void CloseAudioStream(AudioStream stream);                                      // Close audio stream and free memory
-    bool IsAudioBufferProcessed(AudioStream stream);                                // Check if any audio stream buffers requires refill
+    bool IsAudioStreamProcessed(AudioStream stream);                                // Check if any audio stream buffers requires refill
     void PlayAudioStream(AudioStream stream);                                       // Play audio stream
     void PauseAudioStream(AudioStream stream);                                      // Pause audio stream
     void ResumeAudioStream(AudioStream stream);                                     // Resume audio stream
@@ -59,4 +58,4 @@
     void StopAudioStream(AudioStream stream);                                       // Stop audio stream
     void SetAudioStreamVolume(AudioStream stream, float volume);                    // Set volume for audio stream (1.0 is max level)
     void SetAudioStreamPitch(AudioStream stream, float pitch);                      // Set pitch for audio stream (1.0 is base level)
-    
+    void SetAudioStreamBufferSizeDefault(int size);                                 // Default size for new audio streams
