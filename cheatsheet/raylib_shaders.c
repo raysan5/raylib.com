@@ -1,6 +1,5 @@
 
     // Shader loading/unloading functions
-    char *LoadText(const char *fileName);                                                               // Load chars array from text file
     Shader LoadShader(const char *vsFileName, const char *fsFileName);                                  // Load shader from files and bind default locations
     Shader LoadShaderCode(char *vsCode, char *fsCode);                                                  // Load shader from code strings and bind default locations
     void UnloadShader(Shader shader);                                                                   // Unload shader from GPU memory (VRAM)
