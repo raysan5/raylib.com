@@ -27,64 +27,137 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
 
         <style type="text/css">
-         @font-face {
-             font-family: 'grixel_acme_7_wide_xtnd';
-             src: url('../common/font/acme_7_wide_xtnd.eot');
-             src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
-             url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
-             url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
-             font-weight: normal;
-             font-style: normal;
-             font-size-adjust:0.49;
-         }
-         body{background-color:#f5f5f5;}
-         #fulldata{width: 1315px!important;}
-         .eximage img{margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
-         p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
-         pre code{font-family: Courier New; font-size:12px; width: auto!important; border: 1px solid; border-color:#b0b0b0; width:758px; height:auto; }
-         .exdownbtn{
-             width:250px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px;
-             line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a;
-             border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
-         }
-         .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
-         #core pre code{border:10px solid; border-color:#888888; background-color:#dbdbe1; }
-         #shapes pre code{border:10px solid; border-color:#e66666; background-color:#e9d0d6; }
-         #textures pre code{border:10px solid; border-color:#75a06d; background-color:#c3e4bf; }
-         #text pre code{border:10px solid; border-color:#52b296; background-color:#b9e9dd; }
-         #models pre code{border:10px solid; border-color:#5d9cbd; background-color:#b9d6e8; }
-         #shaders pre code{border:10px solid; border-color:#a864d2; background-color:#e0c6f1; }
-         #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
-         #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
-         #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
-         #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-         #header{position:relative; height:110px; width: 1000px;}
-         #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
-         #plinks{color: gray;}
-         #plinks a, #copyright a{color: gray; text-decoration:none;}
-         #plinks a:hover{color: black;}
-         #version {margin-top: 23px; width:500px;}
-         #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
-         #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
-         #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
-         #ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
-         #pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
-         #pshaders{margin-bottom:-12px; margin-left:12px; color:#a864d2;}
-         #paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
-         #pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
-         #pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
+			@font-face {
+				font-family: 'grixel_acme_7_wide_xtnd';
+				src: url('../common/font/acme_7_wide_xtnd.eot');
+				src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+				url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
+				url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
+				font-weight: normal;
+				font-style: normal;
+				font-size-adjust:0.49;
+			}
+			html{overflow-x: hidden;}
+			.l{
+				--bg: #fff;
+				--txt: #000;
+				--txt2: #555;
+				--cmt: #488;
+				--kwd: #942;
+				
+				--corebor: #888;
+				--corebg: #ddd;
+				--shapesbor: #e66;
+				--shapesbg: #edd;
+				--texturesbor: #796;
+				--texturesbg: #cec;
+				--textbor: #5b9;
+				--textbg: #bed;
+				--modelsbor: #59b;
+				--modelsbg: #bde;
+				--shadersbor: #a6d;
+				--shadersbg: #dce;
+				--audiobor: #ca5;
+				--audiobg: #eda;
+				--structsbor: #dcd;
+				--structsbg: #eef;
+				--colorsbor: #cdc;
+				--colorsbg: #eff;
+			}
+			.d{
+				--bg: #000;
+				--txt: #fff;
+				--txt2: #aaa;
+				--cmt: #ff9;
+				--kwd: #99f;
+				
+				--corebor: #444;
+				--corebg: #222;
+				--shapesbor: #500;
+				--shapesbg: #411;
+				--texturesbor: #050;
+				--texturesbg: #130;
+				--textbor: #055;
+				--textbg: #122;
+				--modelsbor: #005;
+				--modelsbg: #003;
+				--shadersbor: #505;
+				--shadersbg: #203;
+				--audiobor: #550;
+				--audiobg: #330;
+				--structsbor: #503;
+				--structsbg: #403;
+				--colorsbor: #222;
+				--colorsbg: #111;
+			}
+			.hljs{color:var(--txt)!important;}
+			.hljs-comment,.hljs-template_comment,.diff .hljs-header,.hljs-javadoc {color:var(--cmt)!important;}
+			.hljs-keyword,.assignment,.hljs-literal,.css .rule .hljs-keyword,.hljs-winutils,.javascript .hljs-title,.lisp .hljs-title,.hljs-subst {color:var(--kwd)!important;}
+			body{background-color:var(--bg);}
+			#pthemes{color: var(--txt);}
+			#themes{float:left;height:110px;padding:5px;border-color:var(--txt);border-style:solid;border-radius:10px;}
+			.theme{width:50px; height:50px; border-radius:10px; float:left;}
+			#light{background-color:white;}
+			#dark{background-color:black;}
+			#fulldata{width: min(1315px, 100%)!important;}
+			.eximage img{margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
+			p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;color:var(--txt);}
+			pre code{font-family: Courier New; font-size:12px; width: auto!important; border: 1px solid; border-color:#b0b0b0; width:758px; height:auto; }
+			.exdownbtn{
+				width:250px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px;
+				line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a;
+				border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+			}
+			.exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
+			#core pre code{border:10px solid; border-color:var(--corebor); background-color:var(--corebg); }
+			#shapes pre code{border:10px solid; border-color:var(--shapesbor); background-color:var(--shapesbg); }
+			#textures pre code{border:10px solid; border-color:var(--texturesbor); background-color:var(--texturesbg); }
+			#text pre code{border:10px solid; border-color:var(--textbor); background-color:var(--textbg); }
+			#models pre code{border:10px solid; border-color:var(--modelsbor); background-color:var(--modelsbg); }
+			#shaders pre code{border:10px solid; border-color:var(--shadersbor); background-color:var(--shadersbg); }
+			#audio pre code{border:10px solid; border-color:var(--audiobor); background-color:var(--audiobg); }
+			#structs pre code{border:10px solid; border-color:var(--structsbor); background-color:var(--structsbg);}
+			#colors pre code{border:10px solid; border-color:var(--colorsbor); background-color:var(--colorsbg);}
+			#logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
+			#header{position:relative; height:110px; width: 80%;float:left;}
+			#title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
+			#plinks{color: var(--txt2);}
+			#plinks a, #copyright a{color: var(--txt2); text-decoration:none;}
+			#plinks a:hover{color: var(--txt);}
+			#version {margin-top: 23px; width:500px;}
+			#pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
+			#pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
+			#ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
+			#ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
+			#pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
+			#pshaders{margin-bottom:-12px; margin-left:12px; color:#a864d2;}
+			#paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
+			#pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
+			#pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
 
-         #fullgroup{
-             display: grid;
-             grid-column-gap: 20px;
-             grid-template-columns: auto auto;
-         }
+			#fullgroup{display: grid;grid-column-gap: 20px;grid-template-columns: repeat(2, calc(50% - 10px));}
+			#copyright p{color:#8b8b8b; font-size:10px}
+			#copyright a:hover{color:black;}
 
-         #copyright p{color:#8b8b8b; font-size:10px}
-         #copyright a:hover{color:black;}
-
-         #downpdf{text-decoration: none;color:#aaaaaa;}
-         #downpdf:hover{color:#444;}
+			#downpdf{text-decoration: none;color:#aaaaaa;}
+			#downpdf:hover{color:#444;}
+			
+			#fulldata{
+				margin:auto;
+			}
+			::-webkit-scrollbar {
+				width: 10px;
+				height: 10px;
+			}
+			::-webkit-scrollbar-track {
+				background: transparent;
+			}
+			::-webkit-scrollbar-thumb {
+				background: rgba(69, 69, 69, 0.5);
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: rgba(89, 89, 89, 0.5);
+			}
         </style>
 
         <script type="text/javascript">
@@ -125,19 +198,50 @@
                  $('#structs pre code').text(data);
                  $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-         });
+			document.getElementById("light").onclick = function(){setCookie("theme", "l");document.body.classList.add("l");document.body.classList.remove("d");};
+			document.getElementById("dark").onclick = function(){setCookie("theme", "d");document.body.classList.add("d");document.body.classList.remove("l");};
+			document.body.classList.add(getCookie("theme") || "l");
+		 });
+		 function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for(var i = 0; i <ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+			return "";
+		};
+		function setCookie(cname, cvalue) {
+			var d = new Date();
+			d.setTime(d.getTime() + (7*24*60*60*1000));
+			var expires = "expires="+ d.toUTCString();
+			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		};
         </script>
     </head>
 
     <body>
-        <div id="header">
-            <a id="logo" href="https://www.raylib.com/index.html"></a>
-            <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
-            <p id="plinks">[<a href="https://discordapp.com/invite/VkzNHUE">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>]</p>
-            <p></p>
-            <p id="version">v3.0 quick reference card  [<a id="downpdf" href="raylib_cheatsheet.pdf">download as PDF</a>]</p>
+		<div style="height:110px;">
+			<div id="header">
+				<a id="logo" href="https://www.raylib.com/index.html"></a>
+				<p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
+				<p id="plinks">[<a href="https://discordapp.com/invite/VkzNHUE">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>]</p>
+				<p></p>
+				<p id="version">v3.0 quick reference card  [<a id="downpdf" href="raylib_cheatsheet.pdf">download as PDF</a>]</p>
+			</div>
+			<div id="themes">
+				<p id="pthemes">Theme:</p>
+				<div id="light" class="theme"></div>
+				<div id="dark" class="theme"></div>
+			</div>
         </div>
-        <br>
+		<br>
         <div id="fulldata">
             <p id="pcore">module: core</p>
             <div id="core"><pre><code class="cpp"></code></pre></div>
@@ -168,7 +272,6 @@
                 <p>raylib quick reference card - Copyright (c) 2013-2020 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
             </div>
         </div>
-
 
         <!-- Google Analytics tracking code -->
         <script>
