@@ -95,7 +95,7 @@
 			.hljs-keyword,.assignment,.hljs-literal,.css .rule .hljs-keyword,.hljs-winutils,.javascript .hljs-title,.lisp .hljs-title,.hljs-subst {color:var(--kwd)!important;}
 			body{background-color:var(--bg);}
 			#pthemes{color: var(--txt);}
-			#themes{float:left;height:110px;padding:5px;border-color:var(--txt);border-style:solid;border-radius:10px;}
+			#themes{float:right;height:112px;width:112px;padding:5px;border-color:var(--txt);border-style:solid;border-radius:10px;}
 			.theme{width:50px; height:50px; border-radius:10px; float:left;}
 			#light{background-color:white;}
 			#dark{background-color:black;}
@@ -119,12 +119,12 @@
 			#structs pre code{border:10px solid; border-color:var(--structsbor); background-color:var(--structsbg);}
 			#colors pre code{border:10px solid; border-color:var(--colorsbor); background-color:var(--colorsbg);}
 			#logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-			#header{position:relative; height:110px; width: 80%;float:left;}
-			#title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
+			#header{width: calc(100% - 256px);width: -webkit-fill-available; display:table; text-align:center;}
+			#title, #plinks, #version{position:relative; margin:0px; margin-left:10px; margin-top:10px;}
 			#plinks{color: var(--txt2);}
 			#plinks a, #copyright a{color: var(--txt2); text-decoration:none;}
 			#plinks a:hover{color: var(--txt);}
-			#version {margin-top: 23px; width:500px;}
+			#version {margin-top: 23px;}
 			#pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
 			#pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
 			#ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
@@ -227,18 +227,17 @@
     </head>
 
     <body>
-		<div style="height:110px;">
-			<div id="header">
-				<a id="logo" href="https://www.raylib.com/index.html"></a>
-				<p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
-				<p id="plinks">[<a href="https://discordapp.com/invite/VkzNHUE">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>]</p>
-				<p></p>
-				<p id="version">v3.0 quick reference card  [<a id="downpdf" href="raylib_cheatsheet.pdf">download as PDF</a>]</p>
-			</div>
+		<div style="display:table; width:100%;">
+			<a id="logo" href="https://www.raylib.com/index.html"></a>
 			<div id="themes">
 				<p id="pthemes">Theme:</p>
 				<div id="light" class="theme"></div>
 				<div id="dark" class="theme"></div>
+			</div>
+			<div id="header">
+				<p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
+				<p id="plinks">[<a href="https://discordapp.com/invite/VkzNHUE">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>]</p>
+				<p id="version">v3.0 quick reference card  [<a id="downpdf" href="raylib_cheatsheet.pdf">download as PDF</a>]</p>
 			</div>
         </div>
 		<br>
@@ -272,6 +271,7 @@
                 <p>raylib quick reference card - Copyright (c) 2013-2020 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
             </div>
         </div>
+
 
         <!-- Google Analytics tracking code -->
         <script>
