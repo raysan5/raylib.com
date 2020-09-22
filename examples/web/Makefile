@@ -235,7 +235,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
     # --source-map-base          # allow debugging in browser with source map
-    CFLAGS += -s USE_GLFW=3 -g4 --source-map-base https://www.raylib.com/examples/web/models/
+    CFLAGS += -s USE_GLFW=3 -g4 --source-map-base https://www.raylib.com/examples/web/
 
     # NOTE: On PLATFORM_WEB, every example requires its own flags
 

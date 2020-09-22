@@ -189,7 +189,7 @@ var Module = typeof Module !== 'undefined' ? Module : {};
     }
   
    }
-   loadPackage({"files": [{"filename": "/resources/cubicmap.png", "start": 0, "end": 201, "audio": 0}, {"filename": "/resources/cubicmap_atlas.png", "start": 201, "end": 37426, "audio": 0}], "remote_package_size": 37426, "package_uuid": "41ddaf2d-de45-46a8-82a8-49135fa70e79"});
+   loadPackage({"files": [{"filename": "/resources/cubicmap.png", "start": 0, "end": 201, "audio": 0}, {"filename": "/resources/cubicmap_atlas.png", "start": 201, "end": 37426, "audio": 0}], "remote_package_size": 37426, "package_uuid": "430a30bf-ebb8-47a8-88d7-27b7045ded4f"});
   
   })();
   
