@@ -55,7 +55,7 @@
     Matrix GetCameraMatrix(Camera camera);                                  // Returns camera transform matrix (view matrix)
     Matrix GetCameraMatrix2D(Camera2D camera);                              // Returns camera 2d transform matrix
     Vector2 GetWorldToScreen(Vector3 position, Camera camera);              // Returns the screen space position for a 3d world space position
-    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera,int width, int height); // Returns size position for a 3d world space position
+    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // Returns size position for a 3d world space position
     Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);          // Returns the screen space position for a 2d camera world space position
     Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);          // Returns the world space position for a 2d camera screen space position
                 
@@ -84,8 +84,8 @@
     int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
                 
     // Files management functions
-    unsigned char *LoadFileData(const char *fileName, int *bytesRead);      // Load file data as byte array (read)
-    void SaveFileData(const char *fileName, void *data, int bytesToWrite);  // Save data to file from byte array (write)
+    unsigned char *LoadFileData(const char *fileName, unsigned int *bytesRead);     // Load file data as byte array (read)
+    void SaveFileData(const char *fileName, void *data, unsigned int bytesToWrite); // Save data to file from byte array (write)
     char *LoadFileText(const char *fileName);                               // Load text data from file (read), returns a '\0' terminated string
     void SaveFileText(const char *fileName, char *text);                    // Save text data to file (write), string must be '\0' terminated    
     bool FileExists(const char *fileName);                                  // Check if file exists
@@ -109,8 +109,8 @@
     unsigned char *DecompressData(unsigned char *compData, int compDataLength, int *dataLength);  // Decompress data (DEFLATE algorythm)
     
     // Persistent storage management
-    int LoadStorageValue(int position);                                     // Load integer value from storage file (from defined position)
-    void SaveStorageValue(int position, int value);                         // Save integer value to storage file (to defined position)
+    void SaveStorageValue(unsigned int position, int value);                // Save integer value to storage file (to defined position)
+    int LoadStorageValue(unsigned int position);                            // Load integer value from storage file (from defined position)
     
     void OpenURL(const char *url);                                          // Open URL with default system browser (if available)
 
