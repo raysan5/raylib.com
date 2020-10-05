@@ -29,7 +29,7 @@ Vector2 ballPosition = { -100.0f, -100.0f };
 Color ballColor = BEIGE;
 
 int touchCounter = 0;
-Vector2 touchPosition = { 0.0f };
+Vector2 touchPosition = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration

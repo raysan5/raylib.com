@@ -25,12 +25,12 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Vector2 scleraLeftPosition = { 0.0f };
-Vector2 scleraRightPosition = { 0.0f };
+Vector2 scleraLeftPosition = { 0 };
+Vector2 scleraRightPosition = { 0 };
 float scleraRadius = 80;
 
-Vector2 irisLeftPosition = { 0.0f };
-Vector2 irisRightPosition = { 0.0f };
+Vector2 irisLeftPosition = { 0 };
+Vector2 irisRightPosition = { 0 };
 float irisRadius = 24;
 
 //----------------------------------------------------------------------------------

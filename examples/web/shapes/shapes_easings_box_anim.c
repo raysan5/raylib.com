@@ -25,7 +25,7 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Rectangle rec = { 0.0f };
+Rectangle rec = { 0 };
 
 float rotation = 0.0f;
 float alpha = 1.0f;

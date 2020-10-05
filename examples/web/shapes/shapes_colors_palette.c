@@ -39,7 +39,7 @@ Rectangle colorsRecs[MAX_COLORS_COUNT] = { 0 };     // Rectangles array
 
 int colorState[MAX_COLORS_COUNT] = { 0 };           // Color state: 0-DEFAULT, 1-MOUSE_HOVER
 
-Vector2 mousePoint = { 0.0f };
+Vector2 mousePoint = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration

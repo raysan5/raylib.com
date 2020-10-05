@@ -29,7 +29,7 @@ const char msg[50] = "Loaded Font";
 
 Font font = { 0 };
 float fontSize = 0.0f;
-Vector2 fontPosition = { 0.0f };
+Vector2 fontPosition = { 0 };
 Vector2 textSize = { 0 };
 
 int currentFontFilter = 0;      // FILTER_POINT

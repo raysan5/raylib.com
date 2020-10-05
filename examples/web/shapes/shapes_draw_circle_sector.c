@@ -29,7 +29,7 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Vector2 center = { 0.0f };
+Vector2 center = { 0 };
 
 float outerRadius = 180.f;
 int startAngle = 0;

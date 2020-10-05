@@ -27,9 +27,9 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Rectangle rec = { 0.0f };
+Rectangle rec = { 0 };
 
-Vector2 mousePosition = { 0.0f };
+Vector2 mousePosition = { 0 };
 
 bool mouseScaleReady = false;
 bool mouseScaleMode = false;

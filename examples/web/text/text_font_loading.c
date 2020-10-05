@@ -38,7 +38,7 @@ const char msg[256] = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI\nJKLMNOPQRSTUV
 Font fontBm = { 0 };      // BMFont (AngelCode)
 Font fontTtf = { 0 };     // TTF font
 
-Vector2 fontPosition = { 0.0f };
+Vector2 fontPosition = { 0 };
 
 bool useTtf = false;
 

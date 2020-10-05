@@ -44,7 +44,7 @@ Shader shader = { 0 };       // Postpro shader
 Vector3 position = { 0.0f, 0.0f, 0.0f };  // Set model position
 
 int swirlCenterLoc = 0;
-float swirlCenter[2] = { 0.0f };
+float swirlCenter[2] = { 0 };
 
 RenderTexture2D target = { 0 };
 

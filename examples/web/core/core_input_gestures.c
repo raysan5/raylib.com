@@ -26,7 +26,7 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Vector2 touchPosition = { 0.0f };
+Vector2 touchPosition = { 0 };
 Rectangle touchArea = { 0 };
 
 int gesturesCount = 0;

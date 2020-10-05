@@ -34,7 +34,7 @@ Texture2D texture = { 0 };
 Color *mapPixels = NULL;
 
 Vector3 mapPosition = { -16.0f, 0.0f, -8.0f };  // Set model position
-Vector3 playerPosition = { 0.0f };
+Vector3 playerPosition = { 0 };
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration

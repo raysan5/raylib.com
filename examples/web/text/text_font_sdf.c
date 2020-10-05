@@ -36,8 +36,8 @@ Font fontSDF = { 0 };
 
 Shader shader = { 0 };
 
-Vector2 fontPosition = { 0.0f };
-Vector2 textSize = { 0.0f };
+Vector2 fontPosition = { 0 };
+Vector2 textSize = { 0 };
 float fontSize = 16.0f;
 int currentFont = 0;    // 0 - fontDefault, 1 - fontSDF
 

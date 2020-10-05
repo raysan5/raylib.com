@@ -23,7 +23,7 @@ const int screenHeight = 450;
 
 // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-Vector2 ballPosition = { 0.0f };
+Vector2 ballPosition = { 0 };
 
 Vector2 ballSpeed = { 5.0f, 4.0f };
 int ballRadius = 20;
