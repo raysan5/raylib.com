@@ -2,7 +2,7 @@
 
 **raylib is a simple and easy-to-use library to enjoy videogames programming.**
 
-raylib is highly inspired by Borland BGI graphics lib and by XNA framework.
+raylib is heavily inspired by Borland BGI graphics lib and by XNA framework.
 
 raylib could be useful for prototyping, tools development, graphic applications, embedded systems and education.
 
