@@ -78,7 +78,7 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText(SubText(message, 0, framesCounter/10), 210, 160, 20, MAROON);
+        DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
 
         DrawText("PRESS [ENTER] to RESTART!", 240, 280, 20, LIGHTGRAY);
 
