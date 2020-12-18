@@ -80,7 +80,7 @@ void UpdateDrawFrame(void)
 
     if (mouseOnText)
     {
-        int key = GetKeyPressed();
+        int key = GetCharPressed();
 
         // NOTE: Only allow keys in range [32..125]
         if ((key >= 32) && (key <= 125) && (letterCount < MAX_INPUT_CHARS))
@@ -137,7 +137,7 @@ void UpdateDrawFrame(void)
 bool IsAnyKeyPressed()
 {
     bool keyPressed = false;
-    int key = GetKeyPressed();
+    int key = GetCharPressed();
 
     if ((key >= 32) && (key <= 126)) keyPressed = true;
 
