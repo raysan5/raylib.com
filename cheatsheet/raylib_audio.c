@@ -1,19 +1,20 @@
 
     // Audio device management functions
     void InitAudioDevice(void);                                                     // Initialize audio device and context
-    void CloseAudioDevice(void);                                                    // Close the audio device and context (and music stream)
-    bool IsAudioDeviceReady(void);                                                  // Check if audio device is ready
+    void CloseAudioDevice(void);                                                    // Close the audio device and context
+    bool IsAudioDeviceReady(void);                                                  // Check if audio device has been initialized successfully
     void SetMasterVolume(float volume);                                             // Set master volume (listener)
 
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                                            // Load wave data from file
+    Wave LoadWaveFromMemory(const char *fileType, const unsigned char *fileData, int dataSize); // Load wave from memory buffer
     Sound LoadSound(const char *fileName);                                          // Load sound from file
     Sound LoadSoundFromWave(Wave wave);                                             // Load sound from wave data
     void UpdateSound(Sound sound, const void *data, int samplesCount);              // Update sound buffer with new data
     void UnloadWave(Wave wave);                                                     // Unload wave data
     void UnloadSound(Sound sound);                                                  // Unload sound
-    void ExportWave(Wave wave, const char *fileName);                               // Export wave data to file
-    void ExportWaveAsCode(Wave wave, const char *fileName);                         // Export wave sample data to code (.h)
+    bool ExportWave(Wave wave, const char *fileName);                               // Export wave data to file, returns true on success
+    bool ExportWaveAsCode(Wave wave, const char *fileName);                         // Export wave sample data to code (.h), returns true on success
 
     // Wave/Sound management functions
     void PlaySound(Sound sound);                                                    // Play a sound
@@ -29,7 +30,8 @@
     void WaveFormat(Wave *wave, int sampleRate, int sampleSize, int channels);      // Convert wave data to desired format
     Wave WaveCopy(Wave wave);                                                       // Copy a wave to a new wave
     void WaveCrop(Wave *wave, int initSample, int finalSample);                     // Crop a wave to defined samples range
-    float *GetWaveData(Wave wave);                                                  // Get samples data from wave as a floats array
+    float *LoadWaveSamples(Wave wave);                                              // Load samples data from wave as a floats array
+    void UnloadWaveSamples(float *samples);                                         // Unload samples data loaded with LoadWaveSamples()
 
     // Music management functions
     Music LoadMusicStream(const char *fileName);                                    // Load music stream from file
@@ -42,7 +44,6 @@
     bool IsMusicPlaying(Music music);                                               // Check if music is playing
     void SetMusicVolume(Music music, float volume);                                 // Set volume for music (1.0 is max level)
     void SetMusicPitch(Music music, float pitch);                                   // Set pitch for a music (1.0 is base level)
-    void SetMusicLoopCount(Music music, int count);                                 // Set music loop count (loop repeats)
     float GetMusicTimeLength(Music music);                                          // Get music time length (in seconds)
     float GetMusicTimePlayed(Music music);                                          // Get current music time played (in seconds)
 
