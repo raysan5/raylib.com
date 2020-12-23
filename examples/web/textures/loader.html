@@ -51,7 +51,13 @@
         </style>
         
         <script type="text/javascript">
-            $(document).ready(function() {
+            $(document).ready(function()
+            {
+                window.addEventListener('keydown', function(e)
+                {
+                    // Prevent SPACE key to scroll page
+                    if ((e.keyCode == 32) && (e.target == document.body)) e.preventDefault();
+                });
 
                 var mainUrl = $(location).attr('href');
                 var name = mainUrl.slice(mainUrl.indexOf('=') + 1);
@@ -68,7 +74,8 @@
 
                 $('#eximage img').attr('src', imgUrl);
 
-                $.get(srcUrl, function(data) { 
+                $.get(srcUrl, function(data)
+                { 
                     $('pre code').text(data);
                     $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
                 }, 'text');
