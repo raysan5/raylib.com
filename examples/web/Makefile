@@ -25,8 +25,7 @@
 
 # Define required raylib variables
 PROJECT_NAME       ?= raylib_examples
-RAYLIB_VERSION     ?= 3.1.0
-RAYLIB_API_VERSION ?= 3
+RAYLIB_VERSION     ?= 3.5.0
 RAYLIB_PATH        ?= C:\GitHub\raylib
 
 # Define default options
@@ -96,6 +95,12 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
         PLATFORM_OS=LINUX
     endif
 endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    UNAMEOS=$(shell uname)
+    ifeq ($(UNAMEOS),Linux)
+        PLATFORM_OS=LINUX
+    endif
+endif
 
 # RAYLIB_PATH adjustment for different platforms.
 # If using GNU make, we can get the full path to the top of the tree. Windows? BSD?
@@ -110,7 +115,10 @@ endif
 # This is not currently used by src/Makefile. Not sure of its origin or usage. Refer to wiki.
 # TODO: update install: target in src/Makefile for RPI, consider relation to LINUX.
 ifeq ($(PLATFORM),PLATFORM_RPI)
-    RAYLIB_PATH       ?= /home/pi/raylib
+    RAYLIB_PATH        ?= /home/pi/raylib
+endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    RAYLIB_PATH        ?= /home/pi/raylib
 endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
@@ -176,6 +184,9 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
         MAKE = make
     endif
+    ifeq ($(PLATFORM_OS),OSX)
+        MAKE = make
+    endif
 endif
 
 # Define compiler flags:
@@ -205,11 +216,6 @@ endif
 # Additional flags for compiler (if desired)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
-    ifeq ($(PLATFORM_OS),WINDOWS)
-        # resource file contains windows executable icon and properties
-        # -Wl,--subsystem,windows hides the console window
-        CFLAGS += $(RAYLIB_PATH)/src/raylib.rc.data -Wl,--subsystem,windows
-    endif
     ifeq ($(PLATFORM_OS),LINUX)
         ifeq ($(RAYLIB_LIBTYPE),STATIC)
             CFLAGS += -D_DEFAULT_SOURCE
@@ -223,6 +229,9 @@ endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
     CFLAGS += -std=gnu99
 endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    CFLAGS += -std=gnu99 -DEGL_NO_X11
+endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # -Os                        # size optimization
     # -O2                        # optimization level 2, if used, also set --memory-init-file 0
@@ -230,12 +239,15 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # -s ALLOW_MEMORY_GROWTH=1   # to allow memory resizing -> WARNING: Audio buffers could FAIL!
     # -s TOTAL_MEMORY=16777216   # to specify heap memory size (default = 16MB)
     # -s USE_PTHREADS=1          # multithreading support
+    # -s WASM=0                  # disable Web Assembly, emitted by default
+    # -s ASYNCIFY                # lets synchronous C/C++ code interact with asynchronous JS
+    # -s FORCE_FILESYSTEM=1      # force filesystem to load/save files data
     # -s ASSERTIONS=1            # enable runtime checks for common memory allocation errors (-O1 and above turn it off)
     # --profiling                # include information for code profiling
     # --memory-init-file 0       # to avoid an external memory initialization code file (.mem)
     # --preload-file resources   # specify a resources folder for data compilation
     # --source-map-base          # allow debugging in browser with source map
-    CFLAGS += -s USE_GLFW=3 -g4 --source-map-base https://www.raylib.com/examples/web/
+    CFLAGS += -s USE_GLFW=3
 
     # NOTE: On PLATFORM_WEB, every example requires its own flags
 
@@ -255,15 +267,17 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     INCLUDE_PATHS += -I/opt/vc/include/interface/vmcs_host/linux
     INCLUDE_PATHS += -I/opt/vc/include/interface/vcos/pthreads
 endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    # DRM required libraries
+    INCLUDE_PATHS += -I/usr/include/libdrm
+endif
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),BSD)
         # Consider -L$(RAYLIB_H_INSTALL_PATH)
         INCLUDE_PATHS += -I/usr/local/include
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-        # Reset everything.
-        # Precedence: immediately local, installed version, raysan5 provided libs -I$(RAYLIB_H_INSTALL_PATH) -I$(RAYLIB_PATH)/release/include
-        INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -isystem. -isystem$(RAYLIB_PATH)/src -isystem$(RAYLIB_PATH)/release/include -isystem$(RAYLIB_PATH)/src/external
+        INCLUDE_PATHS = -I$(RAYLIB_H_INSTALL_PATH) -I. -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
     endif
 endif
 
@@ -271,6 +285,14 @@ endif
 LDFLAGS = -L. -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)/src
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
+    ifeq ($(PLATFORM_OS),WINDOWS)
+        # resource file contains windows executable icon and properties
+        LDFLAGS += $(RAYLIB_PATH)/src/raylib.rc.data
+        # -Wl,--subsystem,windows hides the console window
+        ifeq ($(BUILD_MODE), RELEASE)
+            LDFLAGS += -Wl,--subsystem,windows
+        endif
+    endif
     ifeq ($(PLATFORM_OS),BSD)
         # Consider -L$(RAYLIB_INSTALL_PATH)
         LDFLAGS += -L. -Lsrc -L/usr/local/lib
@@ -278,12 +300,16 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
         # Reset everything.
         # Precedence: immediately local, installed version, raysan5 provided libs
-        LDFLAGS = -L. -L$(RAYLIB_INSTALL_PATH) -L$(RAYLIB_RELEASE_PATH)
+        LDFLAGS = -L. -L$(RAYLIB_INSTALL_PATH) -L$(RAYLIB_RELEASE_PATH) -L$(RAYLIB_PATH)
     endif
 endif
 
 ifeq ($(PLATFORM),PLATFORM_RPI)
     LDFLAGS += -L/opt/vc/lib
+endif
+
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    LDFLAGS += -lGLESv2 -lEGL -ldrm -lgbm
 endif
 
 # Define any libraries required on linking
@@ -318,7 +344,7 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
         # Libraries for OSX 10.9 desktop compiling
         # NOTE: Required packages: libopenal-dev libegl1-mesa-dev
-        LDLIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo 
+        LDLIBS = -lraylib -framework OpenGL -framework Cocoa -framework IOKit -framework CoreAudio -framework CoreVideo
     endif
     ifeq ($(PLATFORM_OS),BSD)
         # Libraries for FreeBSD, OpenBSD, NetBSD, DragonFly desktop compiling
@@ -337,6 +363,11 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
     # Libraries for Raspberry Pi compiling
     # NOTE: Required packages: libasound2-dev (ALSA)
     LDLIBS = -lraylib -lbrcmGLESv2 -lbrcmEGL -lpthread -lrt -lm -lbcm_host -ldl
+endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
+    # Libraries for DRM compiling
+    # NOTE: Required packages: libasound2-dev (ALSA)
+    LDLIBS = -lraylib -lGLESv2 -lEGL -lpthread -lrt -lm -lgbm -ldrm -ldl
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Libraries for web (HTML5) compiling
@@ -366,7 +397,9 @@ CORE = \
     core/core_scissor_test \
     core/core_storage_values \
     core/core_vr_simulator \
-    core/core_loading_thread
+    core/core_loading_thread \
+    core/core_quat_conversion \
+    core/core_window_flags
 
 SHAPES = \
     shapes/shapes_basic_shapes \
@@ -384,7 +417,7 @@ SHAPES = \
     shapes/shapes_draw_ring \
     shapes/shapes_draw_circle_sector \
     shapes/shapes_draw_rectangle_rounded
-    
+
 TEXTURES = \
     textures/textures_logo_raylib \
     textures/textures_mouse_painting \
@@ -402,8 +435,10 @@ TEXTURES = \
     textures/textures_background_scrolling \
     textures/textures_sprite_button \
     textures/textures_sprite_explosion \
-    textures/textures_bunnymark
-    
+    textures/textures_bunnymark \
+    textures/textures_blend_modes \
+    textures/textures_draw_tiled
+
 TEXT = \
     text/text_raylib_fonts \
     text/text_font_spritefont \
@@ -415,7 +450,7 @@ TEXT = \
     text/text_writing_anim \
     text/text_rectangle_bounds \
     text/text_unicode
-    
+
 MODELS = \
     models/models_animation \
     models/models_billboard \
@@ -433,7 +468,7 @@ MODELS = \
     models/models_yaw_pitch_roll \
     models/models_heightmap \
     models/models_waving_cubes
-    
+
 SHADERS = \
     shaders/shaders_model_shader \
     shaders/shaders_shapes_textures \
@@ -447,15 +482,19 @@ SHADERS = \
     shaders/shaders_eratosthenes \
     shaders/shaders_basic_lighting \
     shaders/shaders_fog \
-    shaders/shaders_simple_mask
-    
+    shaders/shaders_simple_mask \
+    shaders/shaders_spotlight \
+    shaders/shaders_hot_reloading \
+    shaders/shaders_rlgl_mesh_instanced \
+    shaders/shaders_multi_sample2d
+
 AUDIO = \
     audio/audio_module_playing \
     audio/audio_music_stream \
     audio/audio_raw_stream \
     audio/audio_sound_loading \
     audio/audio_multichannel_sound
-    
+
 PHYSICS = \
     physics/physics_demo \
     physics/physics_friction \
@@ -566,8 +605,16 @@ core/core_vr_simulator: core/core_vr_simulator.c
     --preload-file core/resources/distortion100.fs@resources/distortion100.fs
 
 # compile [core] example - loading thread
+# NOTE: It requires raylib to be build with threads support
 core/core_loading_thread: core/core_loading_thread.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -static -lpthread -D$(PLATFORM) -s USE_PTHREADS=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s USE_PTHREADS=1
+    
+# compile [core] example - quaternion conversion
+core/core_quat_conversion: core/core_quat_conversion.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+    
+core/core_window_flags: core/core_window_flags.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY
    
 # compile [shapes] example - basic shapes usage (rectangle, circle, ...)
 shapes/shapes_basic_shapes: shapes/shapes_basic_shapes.c
@@ -677,7 +724,7 @@ textures/textures_raw_data: textures/textures_raw_data.c
 # compile [textures] example - texture particles blending
 textures/textures_particles_blending: textures/textures_particles_blending.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file textures/resources/smoke.png@resources/smoke.png
+    --preload-file textures/resources/spark_flame.png@resources/spark_flame.png
 
 textures/textures_npatch_drawing: textures/textures_npatch_drawing.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
@@ -702,6 +749,15 @@ textures/textures_sprite_explosion: textures/textures_sprite_explosion.c
 textures/textures_bunnymark: textures/textures_bunnymark.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file textures/resources/wabbit_alpha.png@resources/wabbit_alpha.png
+    
+textures/textures_blend_modes: textures/textures_blend_modes.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
+    --preload-file textures/resources/cyberpunk_street_background.png@resources/cyberpunk_street_background.png \
+    --preload-file textures/resources/cyberpunk_street_foreground.png@resources/cyberpunk_street_foreground.png
+    
+textures/textures_draw_tiled: textures/textures_draw_tiled.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
+    --preload-file textures/resources/patterns.png@resources/patterns.png
     
 # compile [text] example - raylib fonts
 text/text_raylib_fonts: text/text_raylib_fonts.c
@@ -736,7 +792,7 @@ text/text_font_filters: text/text_font_filters.c
 
 text/text_font_sdf: text/text_font_sdf.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file text/resources/AnonymousPro-Bold.ttf@resources/AnonymousPro-Bold.ttf \
+    --preload-file text/resources/anonymous_pro_bold.ttf@resources/anonymous_pro_bold.ttf \
     --preload-file text/resources/shaders/glsl100/sdf.fs@resources/shaders/glsl100/sdf.fs
     
 # compile [text] example - text formatting
@@ -758,10 +814,10 @@ text/text_unicode: text/text_unicode.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
     --preload-file text/resources/dejavu.fnt@resources/dejavu.fnt \
     --preload-file text/resources/dejavu.png@resources/dejavu.png \
-    --preload-file text/resources/notoCJK.fnt@resources/notoCJK.fnt \
-    --preload-file text/resources/notoCJK.png@resources/notoCJK.png \
-    --preload-file text/resources/emoji.fnt@resources/emoji.fnt \
-    --preload-file text/resources/emoji.png@resources/emoji.png
+    --preload-file text/resources/noto_cjk.fnt@resources/noto_cjk.fnt \
+    --preload-file text/resources/noto_cjk.png@resources/noto_cjk.png \
+    --preload-file text/resources/symbola.fnt@resources/symbola.fnt \
+    --preload-file text/resources/symbola.png@resources/symbola.png
 
 models/models_animation: models/models_animation.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
@@ -825,12 +881,12 @@ models/models_rlgl_solar_system: models/models_rlgl_solar_system.c
 
 # compile [models] example - models skybox
 models/models_skybox: models/models_skybox.c
-ifeq ($(PLATFORM), $(filter $(PLATFORM),PLATFORM_DESKTOP))
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file models/resources/dresden_square.hdr@resources/dresden_square.hdr
-else
-	@echo models_skybox: Example not supported on PLATFORM_ANDROID, PLATFORM_WEB or PLATFORM_RPI
-endif
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 -s FORCE_FILESYSTEM=1 \
+    --preload-file models/resources/dresden_square_2k.hdr@resources/dresden_square_2k.hdr \
+    --preload-file models/resources/shaders/glsl100/skybox.vs@resources/shaders/glsl100/skybox.vs \
+    --preload-file models/resources/shaders/glsl100/skybox.fs@resources/shaders/glsl100/skybox.fs \
+    --preload-file models/resources/shaders/glsl100/cubemap.vs@resources/shaders/glsl100/cubemap.vs \
+    --preload-file models/resources/shaders/glsl100/cubemap.fs@resources/shaders/glsl100/cubemap.fs
 
 # compile [models] example - models yaw pitch roll
 models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
@@ -920,6 +976,22 @@ shaders/shaders_simple_mask: shaders/shaders_simple_mask.c
     --preload-file shaders/resources/plasma.png@resources/plasma.png \
     --preload-file shaders/resources/mask.png@resources/mask.png \
     --preload-file shaders/resources/shaders/glsl100/mask.fs@resources/shaders/glsl100/mask.fs
+    
+shaders/shaders_spotlight: shaders/shaders_spotlight.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
+    --preload-file shaders/resources/raysan.png@resources/raysan.png
+    
+shaders/shaders_hot_reloading: shaders/shaders_hot_reloading.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY -s FORCE_FILESYSTEM=1
+    
+shaders/shaders_rlgl_mesh_instanced: shaders/shaders_rlgl_mesh_instanced.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
+    --preload-file shaders/resources/shaders/glsl100/base_lighting_instanced.vs@resources/shaders/glsl100/base_lighting_instanced.vs \
+    --preload-file shaders/resources/shaders/glsl100/lighting.fs@resources/shaders/glsl100/lighting.fs
+    
+shaders/shaders_multi_sample2d: shaders/shaders_multi_sample2d.c
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
+    --preload-file shaders/resources/shaders/glsl100/color_mix.fs@resources/shaders/glsl100/color_mix.fs
 
 # compile [audio] example - module playing (XM)
 audio/audio_module_playing: audio/audio_module_playing.c
@@ -929,7 +1001,7 @@ audio/audio_module_playing: audio/audio_module_playing.c
 # compile [audio] example - music stream playing (OGG)
 audio/audio_music_stream: audio/audio_music_stream.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file audio/resources/guitar_noodling.ogg@resources/guitar_noodling.ogg
+    --preload-file audio/resources/country.mp3@resources/country.mp3
 
 # compile [audio] example - raw audio streaming
 audio/audio_raw_stream: audio/audio_raw_stream.c
@@ -938,13 +1010,13 @@ audio/audio_raw_stream: audio/audio_raw_stream.c
 # compile [audio] example - sound loading and playing (WAV and OGG)
 audio/audio_sound_loading: audio/audio_sound_loading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file audio/resources/weird.wav@resources/weird.wav \
-    --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
+    --preload-file audio/resources/sound.wav@resources/sound.wav \
+    --preload-file audio/resources/target.ogg@resources/target.ogg
 
 audio/audio_multichannel_sound: audio/audio_multichannel_sound.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
     --preload-file audio/resources/sound.wav@resources/sound.wav \
-    --preload-file audio/resources/tanatana.ogg@resources/tanatana.ogg
+    --preload-file audio/resources/target.ogg@resources/target.ogg
 
 # compile [physac] example - physics demo
 physics/physics_demo: physics/physics_demo.c
@@ -979,7 +1051,8 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
 		del *.o *.exe /s
     endif
     ifeq ($(PLATFORM_OS),LINUX)
-	find -type f -executable | xargs file -i | grep -E 'x-object|x-archive|x-sharedlib|x-executable|x-pie-executable' | rev | cut -d ':' -f 2- | rev | xargs rm -fv
+		find . -type f -executable -delete
+		rm -fv *.o
     endif
     ifeq ($(PLATFORM_OS),OSX)
 		find . -type f -perm +ugo+x -delete
@@ -987,6 +1060,10 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_RPI)
+	find . -type f -executable -delete
+	rm -fv *.o
+endif
+ifeq ($(PLATFORM),PLATFORM_DRM)
 	find . -type f -executable -delete
 	rm -fv *.o
 endif
