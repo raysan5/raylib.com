@@ -15,8 +15,8 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#define NUM_FRAMES  8
-#define NUM_LINES   6
+#define NUM_FRAMES_PER_LINE     5
+#define NUM_LINES               5
 
 //----------------------------------------------------------------------------------
 // Global Variables Definition
@@ -67,13 +67,13 @@ int main(void)
     explosion = LoadTexture("resources/explosion.png");
 
     // Init variables for animation
-    frameWidth = explosion.width/NUM_FRAMES;    // Sprite one frame rectangle width
-    frameHeight = explosion.height/NUM_LINES;   // Sprite one frame rectangle height
+    frameWidth = explosion.width/NUM_FRAMES_PER_LINE;   // Sprite one frame rectangle width
+    frameHeight = explosion.height/NUM_LINES;   		// Sprite one frame rectangle height
 
     frameRec = (Rectangle){ 0, 0, frameWidth, frameHeight };
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void UpdateDrawFrame(void)
         {
             currentFrame++;
 
-            if (currentFrame >= NUM_FRAMES)
+            if (currentFrame >= NUM_FRAMES_PER_LINE)
             {
                 currentFrame = 0;
                 currentLine++;

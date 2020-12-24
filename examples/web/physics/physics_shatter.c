@@ -61,7 +61,7 @@ int main(void)
     body = CreatePhysicsBodyPolygon((Vector2){ screenWidth/2, screenHeight/2 }, GetRandomValue(80, 200), GetRandomValue(3, 8), 10);
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------

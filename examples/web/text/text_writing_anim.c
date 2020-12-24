@@ -40,7 +40,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [text] example - text writing anim");
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -67,7 +67,8 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    framesCounter++;
+    if (IsKeyDown(KEY_SPACE)) framesCounter += 8;
+    else framesCounter++;
 
     if (IsKeyPressed(KEY_ENTER)) framesCounter = 0;
     //----------------------------------------------------------------------------------
@@ -80,7 +81,8 @@ void UpdateDrawFrame(void)
 
         DrawText(TextSubtext(message, 0, framesCounter/10), 210, 160, 20, MAROON);
 
-        DrawText("PRESS [ENTER] to RESTART!", 240, 280, 20, LIGHTGRAY);
+        DrawText("PRESS [ENTER] to RESTART!", 240, 260, 20, LIGHTGRAY);
+        DrawText("PRESS [SPACE] to SPEED UP!", 239, 300, 20, LIGHTGRAY);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

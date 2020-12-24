@@ -54,7 +54,7 @@ int main(void)
     //SetGesturesEnabled(0b0000000000001001);   // Enable only some gestures to be detected
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------

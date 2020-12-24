@@ -48,7 +48,7 @@ int main(void)
     textBox = (Rectangle){ screenWidth/2 - 100, 180, 225, 50 };
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -80,23 +80,33 @@ void UpdateDrawFrame(void)
 
     if (mouseOnText)
     {
+    	// Set the window's cursor to the I-Beam
+        SetMouseCursor(MOUSE_CURSOR_IBEAM);
+
+        // Get char pressed (unicode character) on the queue
         int key = GetCharPressed();
 
-        // NOTE: Only allow keys in range [32..125]
-        if ((key >= 32) && (key <= 125) && (letterCount < MAX_INPUT_CHARS))
+        // Check if more characters have been pressed on the same frame
+        while (key > 0)
         {
-            name[letterCount] = (char)key;
-            letterCount++;
+            // NOTE: Only allow keys in range [32..125]
+            if ((key >= 32) && (key <= 125) && (letterCount < MAX_INPUT_CHARS))
+            {
+                name[letterCount] = (char)key;
+                letterCount++;
+            }
+                
+            key = GetCharPressed();  // Check next character in the queue
         }
 
         if (IsKeyPressed(KEY_BACKSPACE))
         {
             letterCount--;
-            name[letterCount] = '\0';
-
             if (letterCount < 0) letterCount = 0;
+            name[letterCount] = '\0';
         }
     }
+    else if (GetMouseCursor() != MOUSE_CURSOR_DEFAULT) SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
     if (mouseOnText) framesCounter++;
     else framesCounter = 0;
@@ -116,7 +126,7 @@ void UpdateDrawFrame(void)
 
         DrawText(name, textBox.x + 5, textBox.y + 8, 40, MAROON);
 
-        DrawText(FormatText("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
+        DrawText(TextFormat("INPUT CHARS: %i/%i", letterCount, MAX_INPUT_CHARS), 315, 250, 20, DARKGRAY);
 
         if (mouseOnText)
         {
@@ -137,7 +147,7 @@ void UpdateDrawFrame(void)
 bool IsAnyKeyPressed()
 {
     bool keyPressed = false;
-    int key = GetCharPressed();
+    int key = GetKeyPressed();
 
     if ((key >= 32) && (key <= 126)) keyPressed = true;
 

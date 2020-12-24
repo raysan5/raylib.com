@@ -11,6 +11,8 @@
 
 #include "raylib.h"
 
+#include <stdlib.h>
+
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
@@ -66,7 +68,7 @@ int main(void)
     SetCameraMode(camera, CAMERA_FREE); // Set free camera mode
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------

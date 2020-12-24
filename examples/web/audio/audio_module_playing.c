@@ -17,7 +17,7 @@
     #include <emscripten/emscripten.h>
 #endif
 
-#define MAX_CIRCLES 32
+#define MAX_CIRCLES  64
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
@@ -42,10 +42,11 @@ Color colors[14] = { ORANGE, RED, GOLD, LIME, BLUE, VIOLET, BROWN, LIGHTGRAY, PI
 // Creates ome circles for visual effect
 CircleWave circles[MAX_CIRCLES];
 
-Music xm = { 0 };
+Music music = { 0 };
 
 float timePlayed = 0.0f;
 static bool pause = false;
+float pitch = 1.0f;
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -69,16 +70,17 @@ int main(void)
         circles[i].radius = GetRandomValue(10, 40);
         circles[i].position.x = GetRandomValue(circles[i].radius, screenWidth - circles[i].radius);
         circles[i].position.y = GetRandomValue(circles[i].radius, screenHeight - circles[i].radius);
-        circles[i].speed = (float)GetRandomValue(1, 100)/20000.0f;
+        circles[i].speed = (float)GetRandomValue(1, 100)/2000.0f;
         circles[i].color = colors[GetRandomValue(0, 13)];
     }
 
-    xm = LoadMusicStream("resources/mini1111.xm");
+    music = LoadMusicStream("resources/mini1111.xm");
+    music.looping = false;
 
-    PlayMusicStream(xm);            // Play module stream
+    PlayMusicStream(music);
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -92,7 +94,7 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadMusicStream(xm);          // Unload music stream buffers from RAM
+    UnloadMusicStream(music);          // Unload music stream buffers from RAM
 
     CloseAudioDevice();             // Close audio device (music streaming is automatically stopped)
 
@@ -109,13 +111,13 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    UpdateMusicStream(xm);        // Update music buffer with new stream data
+    UpdateMusicStream(music);        // Update music buffer with new stream data
 
     // Restart music playing (stop and play)
     if (IsKeyPressed(KEY_SPACE))
     {
-        StopMusicStream(xm);
-        PlayMusicStream(xm);
+        StopMusicStream(music);
+        PlayMusicStream(music);
     }
 
     // Pause/Resume music playing
@@ -123,12 +125,17 @@ void UpdateDrawFrame(void)
     {
         pause = !pause;
 
-        if (pause) PauseMusicStream(xm);
-        else ResumeMusicStream(xm);
+        if (pause) PauseMusicStream(music);
+        else ResumeMusicStream(music);
     }
 
+    if (IsKeyDown(KEY_DOWN)) pitch -= 0.01f;
+    else if (IsKeyDown(KEY_UP)) pitch += 0.01f;
+        
+    SetMusicPitch(music, pitch);
+
     // Get timePlayed scaled to bar dimensions
-    timePlayed = GetMusicTimePlayed(xm)/GetMusicTimeLength(xm)*(screenWidth - 40);
+    timePlayed = GetMusicTimePlayed(music)/GetMusicTimeLength(music)*(screenWidth - 40);
 
     // Color circles animation
     for (int i = MAX_CIRCLES - 1; (i >= 0) && !pause; i--)
@@ -145,7 +152,7 @@ void UpdateDrawFrame(void)
             circles[i].position.x = GetRandomValue(circles[i].radius, screenWidth - circles[i].radius);
             circles[i].position.y = GetRandomValue(circles[i].radius, screenHeight - circles[i].radius);
             circles[i].color = colors[GetRandomValue(0, 13)];
-            circles[i].speed = (float)GetRandomValue(1, 100)/20000.0f;
+            circles[i].speed = (float)GetRandomValue(1, 100)/2000.0f;
         }
     }
     //----------------------------------------------------------------------------------

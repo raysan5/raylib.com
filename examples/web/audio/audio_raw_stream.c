@@ -2,12 +2,12 @@
 *
 *   raylib [audio] example - Raw audio streaming
 *
-*   NOTE: This example requires OpenAL Soft library installed
-*
 *   This example has been created using raylib 1.6 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
-*   Copyright (c) 2015 Ramon Santamaria (@raysan5)
+*   Example created by Ramon Santamaria (@raysan5) and reviewed by James Hofmann (@triplefox)
+*
+*   Copyright (c) 2015-2019 Ramon Santamaria (@raysan5) and James Hofmann (@triplefox)
 *
 ********************************************************************************************/
 
@@ -69,7 +69,7 @@ int main(void)
     PlayAudioStream(stream);        // Start processing stream buffer (no data loaded currently)
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(30);               // Set our game to run at 30 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText(FormatText("sine frequency: %i",(int)frequency), GetScreenWidth() - 220, 10, 20, RED);
+        DrawText(TextFormat("sine frequency: %i",(int)frequency), GetScreenWidth() - 220, 10, 20, RED);
         DrawText("click mouse button to change frequency", 10, 10, 20, DARKGRAY);
 
         // Draw the current buffer state proportionate to the screen

@@ -50,7 +50,7 @@ int main(void)
     Image parrots = LoadImage("resources/parrots.png"); // Load image in CPU memory (RAM)
 
     // Draw over image using custom font
-    ImageDrawTextEx(&parrots, (Vector2){ 20.0f, 20.0f }, font, "[Parrots font drawing]", (float)font.baseSize, 0.0f, RED);
+    ImageDrawTextEx(&parrots, font, "[Parrots font drawing]", (Vector2){ 20.0f, 20.0f }, (float)font.baseSize, 0.0f, RED);
 
     texture = LoadTextureFromImage(parrots);  // Image converted to texture, uploaded to GPU memory (VRAM)
     UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
@@ -58,7 +58,7 @@ int main(void)
     position = (Vector2){ (float)(screenWidth/2 - texture.width/2), (float)(screenHeight/2 - texture.height/2 - 20) };
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------

@@ -55,7 +55,7 @@ int main()
     camera.type = CAMERA_PERSPECTIVE;
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ void UpdateDrawFrame(void)
                         };
 
                         // Pick a color with a hue depending on cube position for the rainbow color effect
-                        Color cubeColor = ColorFromHSV((Vector3){ (float)(((x + y + z)*18)%360), 0.75f, 0.9f });
+                        Color cubeColor = ColorFromHSV((float)(((x + y + z)*18)%360), 0.75f, 0.9f);
 
                         // Calculate cube size
                         float cubeSize = (2.4f - scale)*blockScale;

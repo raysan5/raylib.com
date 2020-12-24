@@ -69,13 +69,13 @@ void main()
             lightDot += lights[i].color.rgb*NdotL;
 
             float specCo = 0.0;
-            if (NdotL > 0.0) specCo = pow(max(0.0, dot(viewD, reflect(-(light), normal))), 16); // 16 refers to shine
+            if (NdotL > 0.0) specCo = pow(max(0.0, dot(viewD, reflect(-(light), normal))), 16.0); // 16 refers to shine
             specular += specCo;
         }
     }
 
     finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
-    finalColor += texelColor*(ambient/10.0);
+    finalColor += texelColor*(ambient/10.0)*colDiffuse;
     
     // Gamma correction
     finalColor = pow(finalColor, vec4(1.0/2.2));

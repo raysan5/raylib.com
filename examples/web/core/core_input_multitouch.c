@@ -13,6 +13,8 @@
 
 #include "raylib.h"
 
+#define MAX_TOUCH_POINTS 10
+
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
 #endif
@@ -46,7 +48,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - input multitouch");
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -103,7 +105,7 @@ void UpdateDrawFrame(void)
             {
                 // Draw circle and touch index number
                 DrawCircleV(touchPosition, 34, ORANGE);
-                DrawText(FormatText("%d", i), touchPosition.x - 10, touchPosition.y - 70, 40, BLACK);
+                DrawText(TextFormat("%d", i), touchPosition.x - 10, touchPosition.y - 70, 40, BLACK);
             }
         }
 

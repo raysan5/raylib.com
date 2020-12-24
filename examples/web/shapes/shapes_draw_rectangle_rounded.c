@@ -54,7 +54,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [shapes] example - draw rectangle rounded");
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void UpdateDrawFrame(void)
         drawRect = GuiCheckBox((Rectangle){ 640, 380, 20, 20}, "DrawRect", drawRect);
         //------------------------------------------------------------------------------
 
-        DrawText(FormatText("MODE: %s", (segments >= 4)? "MANUAL" : "AUTO"), 640, 280, 10, (segments >= 4)? MAROON : DARKGRAY);
+        DrawText(TextFormat("MODE: %s", (segments >= 4)? "MANUAL" : "AUTO"), 640, 280, 10, (segments >= 4)? MAROON : DARKGRAY);
 
         DrawFPS(10, 10);
 

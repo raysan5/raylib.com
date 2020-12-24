@@ -64,7 +64,7 @@ int main(void)
     fontPosition = (Vector2){ 40, screenHeight/2 - 70 };
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -153,8 +153,8 @@ void UpdateDrawFrame(void)
         //DrawRectangleLines(fontPosition.x, fontPosition.y, textSize.x, textSize.y, RED);
 
         DrawRectangle(0, screenHeight - 80, screenWidth, 80, LIGHTGRAY);
-        DrawText(FormatText("Font size: %02.02f", fontSize), 20, screenHeight - 50, 10, DARKGRAY);
-        DrawText(FormatText("Text size: [%02.02f, %02.02f]", textSize.x, textSize.y), 20, screenHeight - 30, 10, DARKGRAY);
+        DrawText(TextFormat("Font size: %02.02f", fontSize), 20, screenHeight - 50, 10, DARKGRAY);
+        DrawText(TextFormat("Text size: [%02.02f, %02.02f]", textSize.x, textSize.y), 20, screenHeight - 30, 10, DARKGRAY);
         DrawText("CURRENT TEXTURE FILTER:", 250, 400, 20, GRAY);
 
         if (currentFontFilter == 0) DrawText("POINT", 570, 400, 20, BLACK);

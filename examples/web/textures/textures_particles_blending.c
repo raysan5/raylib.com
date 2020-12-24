@@ -63,14 +63,14 @@ int main(void)
         mouseTail[i].color = (Color){ GetRandomValue(0, 255), GetRandomValue(0, 255), GetRandomValue(0, 255), 255 };
         mouseTail[i].alpha = 1.0f;
         mouseTail[i].size = (float)GetRandomValue(1, 30)/20.0f;
-        mouseTail[i].rotation = GetRandomValue(0, 360);
+        mouseTail[i].rotation = (float)GetRandomValue(0, 360);
         mouseTail[i].active = false;
     }
 
-    smoke = LoadTexture("resources/smoke.png");
+    smoke = LoadTexture("resources/spark_flame.png");
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -118,12 +118,12 @@ void UpdateDrawFrame(void)
     {
         if (mouseTail[i].active)
         {
-            mouseTail[i].position.y += gravity;
-            mouseTail[i].alpha -= 0.01f;
+            mouseTail[i].position.y += gravity/2;
+        	mouseTail[i].alpha -= 0.005f;
 
             if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
 
-            mouseTail[i].rotation += 5.0f;
+            mouseTail[i].rotation += 2.0f;
         }
     }
 
@@ -145,9 +145,9 @@ void UpdateDrawFrame(void)
             // Draw active particles
             for (int i = 0; i < MAX_PARTICLES; i++)
             {
-                if (mouseTail[i].active) DrawTexturePro(smoke, (Rectangle){ 0, 0, smoke.width, smoke.height },
+                if (mouseTail[i].active) DrawTexturePro(smoke, (Rectangle){ 0.0f, 0.0f, (float)smoke.width, (float)smoke.height },
                                                        (Rectangle){ mouseTail[i].position.x, mouseTail[i].position.y, smoke.width*mouseTail[i].size, smoke.height*mouseTail[i].size },
-                                                       (Vector2){ smoke.width*mouseTail[i].size/2, smoke.height*mouseTail[i].size/2 }, mouseTail[i].rotation,
+                                                       (Vector2){ (float)(smoke.width*mouseTail[i].size/2.0f), (float)(smoke.height*mouseTail[i].size/2.0f) }, mouseTail[i].rotation,
                                                        Fade(mouseTail[i].color, mouseTail[i].alpha));
             }
 

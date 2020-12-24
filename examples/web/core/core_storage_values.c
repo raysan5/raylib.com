@@ -15,6 +15,12 @@
     #include <emscripten/emscripten.h>
 #endif
 
+// NOTE: Storage positions must start with 0, directly related to file memory layout
+typedef enum {
+    STORAGE_POSITION_SCORE      = 0,
+    STORAGE_POSITION_HISCORE    = 1
+} StorageData;
+
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
@@ -25,9 +31,6 @@ int score = 0;
 int hiscore = 0;
 
 int framesCounter = 0;
-
-// NOTE: Storage positions must start with 0, directly related to file memory layout
-typedef enum { STORAGE_SCORE = 0, STORAGE_HISCORE } StorageData;
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -44,7 +47,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - storage save/load values");
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -76,14 +79,14 @@ void UpdateDrawFrame(void)
 
     if (IsKeyPressed(KEY_ENTER))
     {
-        StorageSaveValue(STORAGE_SCORE, score);
-        StorageSaveValue(STORAGE_HISCORE, hiscore);
+        SaveStorageValue(STORAGE_POSITION_SCORE, score);
+        SaveStorageValue(STORAGE_POSITION_HISCORE, hiscore);
     }
     else if (IsKeyPressed(KEY_SPACE))
     {
         // NOTE: If requested position could not be found, value 0 is returned
-        score = StorageLoadValue(STORAGE_SCORE);
-        hiscore = StorageLoadValue(STORAGE_HISCORE);
+        score = LoadStorageValue(STORAGE_POSITION_SCORE);
+        hiscore = LoadStorageValue(STORAGE_POSITION_HISCORE);
     }
 
     framesCounter++;
@@ -95,10 +98,10 @@ void UpdateDrawFrame(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText(FormatText("SCORE: %i", score), 280, 130, 40, MAROON);
-        DrawText(FormatText("HI-SCORE: %i", hiscore), 210, 200, 50, BLACK);
+        DrawText(TextFormat("SCORE: %i", score), 280, 130, 40, MAROON);
+        DrawText(TextFormat("HI-SCORE: %i", hiscore), 210, 200, 50, BLACK);
 
-        DrawText(FormatText("frames: %i", framesCounter), 10, 10, 20, LIME);
+        DrawText(TextFormat("frames: %i", framesCounter), 10, 10, 20, LIME);
 
         DrawText("Press R to generate random numbers", 220, 40, 20, LIGHTGRAY);
         DrawText("Press ENTER to SAVE values", 250, 310, 20, LIGHTGRAY);

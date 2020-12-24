@@ -68,7 +68,7 @@ int main(void)
     font = GetFontDefault();   // Get default system font
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -142,15 +142,17 @@ void UpdateDrawFrame(void)
 
         DrawRectangleRec(resizer, borderColor);         // Draw the resize box
 
-        // Draw info
+        // Draw bottom info
+        DrawRectangle(0, screenHeight - 54, screenWidth, 54, GRAY);
+        DrawRectangleRec((Rectangle){ 382, screenHeight - 34, 12, 12 }, MAROON);
+
         DrawText("Word Wrap: ", 313, screenHeight-115, 20, BLACK);
         if (wordWrap) DrawText("ON", 447, screenHeight - 115, 20, RED);
         else DrawText("OFF", 447, screenHeight - 115, 20, BLACK);
-        DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 91, 20, GRAY);
+		
+        DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, GRAY);
 
-        DrawRectangle(0, screenHeight - 54, screenWidth, 54, GRAY);
         DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RAYWHITE);
-        DrawRectangleRec((Rectangle){ 382, screenHeight - 34, 12, 12 }, MAROON);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

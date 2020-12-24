@@ -176,14 +176,14 @@ int main(void)
     // NOTE: fontAsian is for asian languages,
     // fontEmoji is the emojis and fontDefault is used for everything else
     fontDefault = LoadFont("resources/dejavu.fnt");
-    fontAsian = LoadFont("resources/notoCJK.fnt");
-    fontEmoji = LoadFont("resources/emoji.fnt");
+    fontAsian = LoadFont("resources/noto_cjk.fnt");
+    fontEmoji = LoadFont("resources/symbola.fnt");
 
     // Set a random set of emojis when starting up
     RandomizeEmoji();
 
 #if defined(PLATFORM_WEB)
-    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
     SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -337,8 +337,7 @@ static void RandomizeEmoji(void)
         emoji[i].index = GetRandomValue(0, 179)*5;
 
         // Generate a random color for this emoji
-        Vector3 hsv = {(start*(i + 1))%360, 0.6f, 0.85f};
-        emoji[i].color = Fade(ColorFromHSV(hsv), 0.8f);
+        emoji[i].color = Fade(ColorFromHSV((float)((start*(i + 1))%360), 0.6f, 0.85f), 0.8f);
 
         // Set a random message for this emoji
         emoji[i].message = GetRandomValue(0, SIZEOF(messages) - 1);
