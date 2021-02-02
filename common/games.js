@@ -22,7 +22,8 @@ $(document).ready(function() {
         'game_wave_collector',
         'game_transmission',
         'game_roomba',
-        'game_repair'];
+        'game_repair',
+        'game_retro_maze_3d'];
 
     var exampleDesc = [
         'arkanoid',
@@ -43,7 +44,8 @@ $(document).ready(function() {
         'Wave Collector',
         'Transmission Mission',
         'Cat vs Roomba',
-        'RE-PAIR'];
+        'RE-PAIR',
+        'RETRO MAZE 3D'];
 
     for (var i = 0; i < exampleName.length; i++)
     {
@@ -53,17 +55,7 @@ $(document).ready(function() {
         
         if (filterType == 'sample') linkTag = '<a class="fancybox fancybox.iframe" href="games/loader.html?name=' + exampleName[i] + '" title="' + exampleDesc[i] + '">';
         else if (filterType == 'game') linkTag = '<a target="_blank" href="games/' + exampleName[i].substring(5) + '.html" title="' + exampleDesc[i] + '">';
-        else if (filterType == 'user')
-        {
-            switch (exampleName[i])
-            {
-                case 'user_super_red_rope': linkTag = '<a target="_blank" href="https://kurnic.itch.io/super-red-rope-puzzles" title="' + exampleDesc[i] + '">'; break;
-                case 'user_taptojamp': linkTag = '<a target="_blank" href="http://marcmde.github.io/TapToJAmp_v2_0/" title="' + exampleDesc[i] + '">'; break;
-                case 'user_funwithsat': linkTag = '<a target="_blank" href="http://marcmde.github.io/FunWithSATCollisions_v_1_0_Browser/" title="' + exampleDesc[i] + '">'; break;
-                default: break;
-            }
-        }
-        
+
         $('#container').append(
             '<div class="mix f' + filterType + '">' + linkTag +
             '<img width="400" height="225" src="../games/img/' + exampleName[i] + '.png"><div class="extext"><p>' + exampleDesc[i] + '</p></div></a>' +
