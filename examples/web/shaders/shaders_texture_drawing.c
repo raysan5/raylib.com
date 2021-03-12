@@ -58,7 +58,7 @@ int main(void)
     UnloadImage(imBlank);
 
     // NOTE: Using GLSL 330 shader version, on OpenGL ES 2.0 use GLSL 100 shader version
-    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/cubes_panning.fs", GLSL_VERSION));
+    shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/cubes_panning.fs", GLSL_VERSION));
 
     timeLoc = GetShaderLocation(shader, "uTime");
     SetShaderValue(shader, timeLoc, &time, UNIFORM_FLOAT);

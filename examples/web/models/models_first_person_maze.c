@@ -63,7 +63,7 @@ int main(void)
     model.materials[0].maps[MAP_DIFFUSE].texture = texture;             // Set map diffuse texture
 
     // Get map image data to be used for collision detection
-    mapPixels = GetImageData(imMap);
+    mapPixels = LoadImageColors(imMap);
     UnloadImage(imMap);             // Unload image from RAM
 
     playerPosition = camera.position;               // Set player position
@@ -85,7 +85,7 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    free(mapPixels);            // Unload color array
+    UnoadImageColors(mapPixels);    // Unload color array
 
     UnloadTexture(cubicmap);    // Unload cubicmap texture
     UnloadTexture(texture);     // Unload map texture

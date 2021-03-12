@@ -82,7 +82,7 @@ void UpdateDrawFrame(void)
         DrawRectangle(screenWidth/2 - 40, boxPositionY, 80, 80, MAROON);
 
         DrawText("Use mouse wheel to move the cube up and down!", 10, 10, 20, GRAY);
-        DrawText(FormatText("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
+        DrawText(TextFormat("Box position Y: %03i", boxPositionY), 10, 40, 20, LIGHTGRAY);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

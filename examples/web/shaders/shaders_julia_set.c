@@ -80,7 +80,7 @@ int main(void)
 
     // Load julia set shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/julia_set.fs", GLSL_VERSION));
+    shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/julia_set.fs", GLSL_VERSION));
 
     // c constant to use in z^2 + c
     c[0] = POINTS_OF_INTEREST[0][0];

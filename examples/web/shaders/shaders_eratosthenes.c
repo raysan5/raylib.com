@@ -62,7 +62,7 @@ int main(void)
 
     // Load Eratosthenes shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader
-    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/eratosthenes.fs", GLSL_VERSION));
+    shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/eratosthenes.fs", GLSL_VERSION));
 
     // Create render texture to render to
     target = LoadRenderTexture(screenWidth, screenHeight);

@@ -75,7 +75,7 @@ int main(void)
     hmd.chromaAbCorrection[3] = 0.0f;       // HMD chromatic aberration correction parameter 3
 
     // Distortion shader (uses device lens distortion and chroma)
-    distortion = LoadShader(0, FormatText("resources/distortion%i.fs", GLSL_VERSION));
+    distortion = LoadShader(0, TextFormat("resources/distortion%i.fs", GLSL_VERSION));
 
     SetVrConfiguration(hmd, distortion);    // Set Vr device parameters for stereo rendering
     // Define the camera to look into our 3d world

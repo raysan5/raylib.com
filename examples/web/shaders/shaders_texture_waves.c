@@ -77,7 +77,7 @@ int main(void)
     texture = LoadTexture("resources/space.png");
 
     // Load shader and setup location points and values
-    shader = LoadShader(0, FormatText("resources/shaders/glsl%i/wave.fs", GLSL_VERSION));
+    shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/wave.fs", GLSL_VERSION));
 
     secondsLoc = GetShaderLocation(shader, "secondes");
     freqXLoc = GetShaderLocation(shader, "freqX");

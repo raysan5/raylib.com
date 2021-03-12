@@ -143,9 +143,9 @@ void UpdateDrawFrame(void)
             default: break;
         }
 
-        Color *pixels = GetImageData(image);        // Get pixel data from image (RGBA 32bit)
+        Color *pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)
         UpdateTexture(texture, pixels);             // Update texture with new image data
-        free(pixels);                               // Unload pixels data from RAM
+        UnloadImageColors(pixels);                  // Unload pixels data from RAM
 
         textureReload = false;
     }
