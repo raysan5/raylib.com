@@ -72,7 +72,7 @@ int main(void)
     shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/grayscale.fs", GLSL_VERSION));
 
     model.materials[0].shader = shader;                     // Set shader effect to 3d model
-    model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Bind texture to model
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture; // Bind texture to model
 
     // Setup orbital camera
     SetCameraMode(camera, CAMERA_ORBITAL);      // Set an orbital camera mode

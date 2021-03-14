@@ -74,7 +74,7 @@ int main(void)
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
     image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-    ImageFormat(&image, UNCOMPRESSED_R8G8B8A8);   // Format image to RGBA 32bit (required for texture update)
+    ImageFormat(&image, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);   // Format image to RGBA 32bit (required for texture update)
     texture = LoadTextureFromImage(image);        // Image converted to texture, GPU memory (VRAM)
 
     for (int i = 0; i < NUM_PROCESSES; i++) selectRecs[i] = (Rectangle){ 40, 50 + 32*i, 150, 30 };

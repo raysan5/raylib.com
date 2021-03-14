@@ -77,9 +77,9 @@ int main(void)
                                TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
 
     // Get some shader loactions
-    shader.locs[LOC_MATRIX_MVP] = GetShaderLocation(shader, "mvp");
-    shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-    shader.locs[LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instance");
+    shader.locs[SHADER_LOC_MATRIX_MVP] = GetShaderLocation(shader, "mvp");
+    shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+    shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocationAttrib(shader, "instance");
 
     // Ambient light level
     int ambientLoc = GetShaderLocation(shader, "ambient");
@@ -89,7 +89,7 @@ int main(void)
 
     Material material = LoadMaterialDefault();
     material.shader = shader;
-    material.maps[MAP_DIFFUSE].color = RED;
+    material.maps[MATERIAL_MAP_DIFFUSE].color = RED;
     
     SetCameraMode(camera, CAMERA_FREE); // Set a free camera mode
 
@@ -105,7 +105,7 @@ int main(void)
 
         // Update the light shader with the camera view position
         float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-        SetShaderValue(shader, shader.locs[LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
+        SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
 
         // Apply per-instance rotations
         for (int i = 0; i < count; i++)

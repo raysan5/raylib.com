@@ -66,7 +66,7 @@ int main(void)
 
     model = LoadModel("resources/models/castle.obj");             // Load model
     texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
-    model.materials[0].maps[MAP_DIFFUSE].texture = texture;       // Set map diffuse texture
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;       // Set map diffuse texture
 
     bounds = MeshBoundingBox(model.meshes[0]);          // Set model bounds
 
@@ -122,7 +122,7 @@ void UpdateDrawFrame(void)
             {
                 UnloadModel(model);                     // Unload previous model
                 model = LoadModel(droppedFiles[0]);     // Load new model
-                model.materials[0].maps[MAP_DIFFUSE].texture = texture; // Set current map diffuse texture
+                model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture; // Set current map diffuse texture
 
                 bounds = MeshBoundingBox(model.meshes[0]);
                 
@@ -133,7 +133,7 @@ void UpdateDrawFrame(void)
                 // Unload current model texture and load new one
                 UnloadTexture(texture);
                 texture = LoadTexture(droppedFiles[0]);
-                model.materials[0].maps[MAP_DIFFUSE].texture = texture;
+                model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
             }
         }
 

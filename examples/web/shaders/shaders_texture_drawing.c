@@ -61,7 +61,7 @@ int main(void)
     shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/cubes_panning.fs", GLSL_VERSION));
 
     timeLoc = GetShaderLocation(shader, "uTime");
-    SetShaderValue(shader, timeLoc, &time, UNIFORM_FLOAT);
+    SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
@@ -94,7 +94,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     time = GetTime();
-    SetShaderValue(shader, timeLoc, &time, UNIFORM_FLOAT);
+    SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
     //----------------------------------------------------------------------------------
 
     // Draw

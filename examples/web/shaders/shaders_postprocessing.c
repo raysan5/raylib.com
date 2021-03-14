@@ -98,7 +98,7 @@ int main(void)
 
     model = LoadModel("resources/models/church.obj");               // Load OBJ model
     texture = LoadTexture("resources/models/church_diffuse.png");   // Load model texture
-    model.materials[0].maps[MAP_DIFFUSE].texture = texture;         // Set model diffuse texture
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;         // Set model diffuse texture
 
     // Load all postpro shaders
     // NOTE 1: All postpro shader use the base vertex shader (DEFAULT_VERTEX_SHADER)

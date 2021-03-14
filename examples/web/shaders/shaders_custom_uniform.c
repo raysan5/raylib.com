@@ -72,7 +72,7 @@ int main(void)
 
     model = LoadModel("resources/models/barracks.obj");               // Load OBJ model
     texture = LoadTexture("resources/models/barracks_diffuse.png");   // Load model texture
-    model.materials[0].maps[MAP_DIFFUSE].texture = texture;           // Set model diffuse texture
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;           // Set model diffuse texture
 
     // Load postprocessing shader
     // NOTE: Defining 0 (NULL) for vertex shader forces usage of internal default vertex shader

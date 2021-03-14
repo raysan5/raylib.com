@@ -43,7 +43,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [textures] example - texture from raw data");
 
     // Load RAW image data (512x512, 32bit RGBA, no file header)
-    Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, UNCOMPRESSED_R8G8B8A8, 0);
+    Image fudesumiRaw = LoadImageRaw("resources/fudesumi.raw", 384, 512, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8, 0);
     fudesumi = LoadTextureFromImage(fudesumiRaw);       // Upload CPU (RAM) image to GPU (VRAM)
     UnloadImage(fudesumiRaw);                           // Unload CPU (RAM) image data
 
@@ -68,7 +68,7 @@ int main(void)
         .data = pixels,             // We can assign pixels directly to data
         .width = width,
         .height = height,
-        .format = UNCOMPRESSED_R8G8B8A8,
+        .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         .mipmaps = 1
     };
 	

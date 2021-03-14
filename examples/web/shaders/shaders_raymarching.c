@@ -86,7 +86,7 @@ int main(void)
     resolutionLoc = GetShaderLocation(shader, "resolution");
 
     float resolution[2] = { screenWidth, screenHeight };
-    SetShaderValue(shader, resolutionLoc, resolution, UNIFORM_VEC2);
+    SetShaderValue(shader, resolutionLoc, resolution, SHADER_UNIFORM_VEC2);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
@@ -128,11 +128,11 @@ void UpdateDrawFrame(void)
     runTime += deltaTime;
 
     // Set shader required uniform values
-    SetShaderValue(shader, viewEyeLoc, cameraPos, UNIFORM_VEC3);
-    SetShaderValue(shader, viewCenterLoc, cameraTarget, UNIFORM_VEC3);
-    SetShaderValue(shader, viewUpLoc, cameraUp, UNIFORM_VEC3);
-    SetShaderValue(shader, deltaTimeLoc, &deltaTime, UNIFORM_FLOAT);
-    SetShaderValue(shader, runTimeLoc, &runTime, UNIFORM_FLOAT);
+    SetShaderValue(shader, viewEyeLoc, cameraPos, SHADER_UNIFORM_VEC3);
+    SetShaderValue(shader, viewCenterLoc, cameraTarget, SHADER_UNIFORM_VEC3);
+    SetShaderValue(shader, viewUpLoc, cameraUp, SHADER_UNIFORM_VEC3);
+    SetShaderValue(shader, deltaTimeLoc, &deltaTime, SHADER_UNIFORM_FLOAT);
+    SetShaderValue(shader, runTimeLoc, &runTime, SHADER_UNIFORM_FLOAT);
     //----------------------------------------------------------------------------------
 
     // Draw

@@ -65,9 +65,9 @@ int main(void)
 
     // Model loading
     model = LoadModel("resources/plane.obj");      // Load OBJ model
-    model.materials[0].maps[MAP_DIFFUSE].texture = LoadTexture("resources/plane_diffuse.png"); // Set map diffuse texture
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = LoadTexture("resources/plane_diffuse.png"); // Set map diffuse texture
 
-    GenTextureMipmaps(&model.materials[0].maps[MAP_DIFFUSE].texture);
+    GenTextureMipmaps(&model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture);
 
     camera.position = (Vector3){ 0.0f, 60.0f, -120.0f };// Camera position perspective
     camera.target = (Vector3){ 0.0f, 12.0f, 0.0f };     // Camera looking at point
