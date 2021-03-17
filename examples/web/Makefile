@@ -987,7 +987,6 @@ shaders/shaders_hot_reloading: shaders/shaders_hot_reloading.c
 
 shaders/shaders_rlgl_mesh_instanced: shaders/shaders_rlgl_mesh_instanced.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
-    --preload-file shaders/resources/texel_checker.png@resources/texel_checker.png \
     --preload-file shaders/resources/shaders/glsl100/lighting.fs@resources/shaders/glsl100/lighting.fs \
     --preload-file shaders/resources/shaders/glsl100/base_lighting_instanced.vs@resources/shaders/glsl100/base_lighting_instanced.vs
 

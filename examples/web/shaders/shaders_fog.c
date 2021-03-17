@@ -69,7 +69,6 @@ void UpdateDrawFrame(void);     // Update and Draw one frame
 //----------------------------------------------------------------------------------
 // Program Main Entry Point
 //----------------------------------------------------------------------------------
-
 int main(void)
 {
     // Initialization

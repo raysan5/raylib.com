@@ -33,6 +33,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
+
 #if defined(PLATFORM_DESKTOP)
     #define GLSL_VERSION            330
 #else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
@@ -61,23 +65,43 @@ typedef struct Star {
     Vector2 vel;
 } Star;
 
+//----------------------------------------------------------------------------------
+// Global Variables Definition
+//----------------------------------------------------------------------------------
+static const int screenWidth = 800;
+static const int screenHeight = 450;
+
+static Texture texRay = { 0 };
+static Star stars[MAX_STARS] = { 0 };
+
+// Use default vert shader
+static Shader shdrSpot = { 0 };
+
+// Get the locations of spots in the shader
+static Spot spots[MAX_SPOTS] = { 0 };
+
+static int frameCounter = 0;
+
+//----------------------------------------------------------------------------------
+// Module Functions Declaration
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void);     // Update and Draw one frame
+
 void UpdateStar(Star *s);
 void ResetStar(Star *s);
 
+//----------------------------------------------------------------------------------
+// Program Main Entry Point
+//----------------------------------------------------------------------------------
 int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
     InitWindow(screenWidth, screenHeight, "raylib - shader spotlight");
     HideCursor();
 
-    Texture texRay = LoadTexture("resources/raysan.png");
+    texRay = LoadTexture("resources/raysan.png");
     
-    Star stars[MAX_STARS] = { 0 };
-
     for (int n = 0; n < MAX_STARS; n++) ResetStar(&stars[n]);
 
     // Progress all the stars on, so they don't all start in the centre
@@ -85,15 +109,11 @@ int main(void)
     {
         for (int n = 0; n < MAX_STARS; n++) UpdateStar(&stars[n]);
     }
-
-    int frameCounter = 0;
-       
+     
     // Use default vert shader
-    Shader shdrSpot = LoadShader(0, TextFormat("resources/shaders/glsl%i/spotlight.fs", GLSL_VERSION));
+    shdrSpot = LoadShader(0, TextFormat("resources/shaders/glsl%i/spotlight.fs", GLSL_VERSION));
     
     // Get the locations of spots in the shader
-    Spot spots[MAX_SPOTS];
-
     for (int i = 0; i < MAX_SPOTS; i++) 
     {
         char posName[32] = "spots[x].pos\0";
@@ -107,14 +127,12 @@ int main(void)
         spots[i].posLoc = GetShaderLocation(shdrSpot, posName);
         spots[i].innerLoc = GetShaderLocation(shdrSpot, innerName);
         spots[i].radiusLoc = GetShaderLocation(shdrSpot, radiusName);
-        
     }
     
     // Tell the shader how wide the screen is so we can have
-    // a pitch black half and a dimly lit half.
-    unsigned int wLoc = GetShaderLocation(shdrSpot, "screenWidth");
+    // a pitch black half and a dimly lit half
     float sw = (float)GetScreenWidth();
-    SetShaderValue(shdrSpot, wLoc, &sw, SHADER_UNIFORM_FLOAT);
+    SetShaderValue(shdrSpot, GetShaderLocation(shdrSpot, "screenWidth"), &sw, SHADER_UNIFORM_FLOAT);
 
     // Randomise the locations and velocities of the spotlights
     // and initialise the shader locations
@@ -130,89 +148,26 @@ int main(void)
             spots[i].vel.y = GetRandomValue(-40, 40)/10.0;
         }
         
-        spots[i].inner = 28 * (i + 1);
-        spots[i].radius = 48 * (i + 1);
+        spots[i].inner = 28*(i + 1);
+        spots[i].radius = 48*(i + 1);
         
         SetShaderValue(shdrSpot, spots[i].posLoc, &spots[i].pos.x, SHADER_UNIFORM_VEC2);
         SetShaderValue(shdrSpot, spots[i].innerLoc, &spots[i].inner, SHADER_UNIFORM_FLOAT);
         SetShaderValue(shdrSpot, spots[i].radiusLoc, &spots[i].radius, SHADER_UNIFORM_FLOAT);
     }
 
-    SetTargetFPS(60);               // Set  to run at 60 frames-per-second
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
+#else
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        frameCounter++;
-
-        // Move the stars, resetting them if the go offscreen
-        for (int n = 0; n < MAX_STARS; n++) UpdateStar(&stars[n]);
-
-        // Update the spots, send them to the shader
-        for (int i = 0; i < MAX_SPOTS; i++)
-        {
-            if (i == 0)
-            {
-                Vector2 mp = GetMousePosition();
-                spots[i].pos.x = mp.x;                    
-                spots[i].pos.y = screenHeight - mp.y;
-            }
-            else
-            {
-                spots[i].pos.x += spots[i].vel.x;                    
-                spots[i].pos.y += spots[i].vel.y;
-                
-                if (spots[i].pos.x < 64) spots[i].vel.x = -spots[i].vel.x;                    
-                if (spots[i].pos.x > (screenWidth - 64)) spots[i].vel.x = -spots[i].vel.x;                    
-                if (spots[i].pos.y < 64) spots[i].vel.y = -spots[i].vel.y;                    
-                if (spots[i].pos.y > (screenHeight - 64)) spots[i].vel.y = -spots[i].vel.y;
-            }
-            
-            SetShaderValue(shdrSpot, spots[i].posLoc, &spots[i].pos.x, SHADER_UNIFORM_VEC2);                
-        }
-            
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
-            ClearBackground(DARKBLUE);
-
-            // Draw stars and bobs
-            for (int n = 0; n < MAX_STARS; n++)
-            {
-                // Single pixel is just too small these days!
-                DrawRectangle(stars[n].pos.x, stars[n].pos.y, 2, 2, WHITE);
-            }
-
-            for (int i = 0; i < 16; i++)
-            {
-                DrawTexture(texRay,
-                    (screenWidth/2.0) + cos((frameCounter + i*8)/51.45f)*(screenWidth/2.2) - 32,
-                    (screenHeight/2.0) + sin((frameCounter + i*8)/17.87f)*(screenHeight/4.2), WHITE);
-            }
-
-            // Draw spot lights
-            BeginShaderMode(shdrSpot);
-                // Instead of a blank rectangle you could render here
-                // a render texture of the full screen used to do screen
-                // scaling (slight adjustment to shader would be required
-                // to actually pay attention to the colour!)
-                DrawRectangle(0, 0, screenWidth, screenHeight, WHITE);
-            EndShaderMode();
-
-            DrawFPS(10, 10);
-            
-            DrawText("Move the mouse!", 10, 30, 20, GREEN);
-            DrawText("Pitch Black", screenWidth*0.2f, screenHeight/2, 20, GREEN);
-            DrawText("Dark", screenWidth*.66f, screenHeight/2, 20, GREEN);
-            
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        UpdateDrawFrame();
     }
+#endif
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
@@ -225,6 +180,80 @@ int main(void)
     return 0;
 }
 
+//----------------------------------------------------------------------------------
+// Module Functions Definitions
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    frameCounter++;
+
+    // Move the stars, resetting them if the go offscreen
+    for (int n = 0; n < MAX_STARS; n++) UpdateStar(&stars[n]);
+
+    // Update the spots, send them to the shader
+    for (int i = 0; i < MAX_SPOTS; i++)
+    {
+        if (i == 0)
+        {
+            Vector2 mp = GetMousePosition();
+            spots[i].pos.x = mp.x;                    
+            spots[i].pos.y = screenHeight - mp.y;
+        }
+        else
+        {
+            spots[i].pos.x += spots[i].vel.x;                    
+            spots[i].pos.y += spots[i].vel.y;
+            
+            if (spots[i].pos.x < 64) spots[i].vel.x = -spots[i].vel.x;                    
+            if (spots[i].pos.x > (screenWidth - 64)) spots[i].vel.x = -spots[i].vel.x;                    
+            if (spots[i].pos.y < 64) spots[i].vel.y = -spots[i].vel.y;                    
+            if (spots[i].pos.y > (screenHeight - 64)) spots[i].vel.y = -spots[i].vel.y;
+        }
+        
+        SetShaderValue(shdrSpot, spots[i].posLoc, &spots[i].pos.x, SHADER_UNIFORM_VEC2);                
+    }
+        
+    // Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+
+        ClearBackground(DARKBLUE);
+
+        // Draw stars and bobs
+        for (int n = 0; n < MAX_STARS; n++)
+        {
+            // Single pixel is just too small these days!
+            DrawRectangle(stars[n].pos.x, stars[n].pos.y, 2, 2, WHITE);
+        }
+
+        for (int i = 0; i < 16; i++)
+        {
+            DrawTexture(texRay,
+                (screenWidth/2.0) + cos((frameCounter + i*8)/51.45f)*(screenWidth/2.2) - 32,
+                (screenHeight/2.0) + sin((frameCounter + i*8)/17.87f)*(screenHeight/4.2), WHITE);
+        }
+
+        // Draw spot lights
+        BeginShaderMode(shdrSpot);
+            // Instead of a blank rectangle you could render here
+            // a render texture of the full screen used to do screen
+            // scaling (slight adjustment to shader would be required
+            // to actually pay attention to the colour!)
+            DrawRectangle(0, 0, screenWidth, screenHeight, WHITE);
+        EndShaderMode();
+
+        DrawFPS(10, 10);
+        
+        DrawText("Move the mouse!", 10, 30, 20, GREEN);
+        DrawText("Pitch Black", screenWidth*0.2f, screenHeight/2, 20, GREEN);
+        DrawText("Dark", screenWidth*.66f, screenHeight/2, 20, GREEN);
+        
+
+    EndDrawing();
+    //----------------------------------------------------------------------------------
+}
 
 void ResetStar(Star *s)
 {
@@ -245,10 +274,7 @@ void UpdateStar(Star *s)
     s->pos = Vector2Add(s->pos, s->vel);
     
     if ((s->pos.x < 0) || (s->pos.x > GetScreenWidth()) ||
-        (s->pos.y < 0) || (s->pos.y > GetScreenHeight()))
-    {
-        ResetStar(s);
-    }
+        (s->pos.y < 0) || (s->pos.y > GetScreenHeight())) ResetStar(s);
 }
 
 

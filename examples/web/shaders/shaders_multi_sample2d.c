@@ -18,67 +18,72 @@
 
 #include "raylib.h"
 
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
+
 #if defined(PLATFORM_DESKTOP)
     #define GLSL_VERSION            330
 #else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
     #define GLSL_VERSION            100
 #endif
 
+//----------------------------------------------------------------------------------
+// Global Variables Definition
+//----------------------------------------------------------------------------------
+const int screenWidth = 800;
+const int screenHeight = 450;
+
+static Texture texRed = { 0 };
+static Texture texBlue = { 0 };
+
+static Shader shader = { 0 };
+static int texBlueLoc = 0;
+static int dividerLoc = 0;
+static float dividerValue = 0.5f;
+
+//----------------------------------------------------------------------------------
+// Module Functions Declaration
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void);     // Update and Draw one frame
+
+//----------------------------------------------------------------------------------
+// Program Main Entry Point
+//----------------------------------------------------------------------------------
 int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
     InitWindow(screenWidth, screenHeight, "raylib - multiple sample2D");
 
     Image imRed = GenImageColor(800, 450, (Color){ 255, 0, 0, 255 });
-    Texture texRed = LoadTextureFromImage(imRed);
+    texRed = LoadTextureFromImage(imRed);
     UnloadImage(imRed);
 
     Image imBlue = GenImageColor(800, 450, (Color){ 0, 0, 255, 255 });
-    Texture texBlue = LoadTextureFromImage(imBlue);
+    texBlue = LoadTextureFromImage(imBlue);
     UnloadImage(imBlue);
 
-    Shader shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/color_mix.fs", GLSL_VERSION));
+    shader = LoadShader(0, TextFormat("resources/shaders/glsl%i/color_mix.fs", GLSL_VERSION));
     
     // Get an additional sampler2D location to be enabled on drawing
-    int texBlueLoc = GetShaderLocation(shader, "texture1");
+    texBlueLoc = GetShaderLocation(shader, "texture1");
+    
+    // Get shader uniform for divider
+    dividerLoc = GetShaderLocation(shader, "divider");
 
-    SetTargetFPS(60);                           // Set our game to run at 60 frames-per-second
+#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
+#else
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
-    while (!WindowShouldClose())                // Detect window close button or ESC key
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // ...
-        //----------------------------------------------------------------------------------
-        
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-        
-            ClearBackground(RAYWHITE);
-
-            BeginShaderMode(shader);
-            
-                // WARNING: Additional samplers are enabled for all draw calls in the batch,
-                // EndShaderMode() forces batch drawing and consequently resets active textures
-                // to let other sampler2D to be activated on consequent drawings (if required)
-                SetShaderValueTexture(shader, texBlueLoc, texBlue);
-            
-                // We are drawing texRed using default sampler2D texture0 but
-                // an additional texture units is enabled for texBlue (sampler2D texture1)
-                DrawTexture(texRed, 0, 0, WHITE);
-                
-            EndShaderMode();
-            
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        UpdateDrawFrame();
     }
+#endif
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
@@ -90,4 +95,45 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
     return 0;
+}
+
+//----------------------------------------------------------------------------------
+// Module Functions Definitions
+//----------------------------------------------------------------------------------
+void UpdateDrawFrame(void)
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    if (IsKeyDown(KEY_RIGHT)) dividerValue += 0.01f;
+    else if (IsKeyDown(KEY_LEFT)) dividerValue -= 0.01f;
+    
+    if (dividerValue < 0.0f) dividerValue = 0.0f;
+    else if (dividerValue > 1.0f) dividerValue = 1.0f;
+    
+    SetShaderValue(shader, dividerLoc, &dividerValue, SHADER_UNIFORM_FLOAT);
+    //----------------------------------------------------------------------------------
+    
+    // Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+    
+        ClearBackground(RAYWHITE);
+
+        BeginShaderMode(shader);
+        
+            // WARNING: Additional samplers are enabled for all draw calls in the batch,
+            // EndShaderMode() forces batch drawing and consequently resets active textures
+            // to let other sampler2D to be activated on consequent drawings (if required)
+            SetShaderValueTexture(shader, texBlueLoc, texBlue);
+        
+            // We are drawing texRed using default sampler2D texture0 but
+            // an additional texture units is enabled for texBlue (sampler2D texture1)
+            DrawTexture(texRed, 0, 0, WHITE);
+            
+        EndShaderMode();
+        
+        DrawText("Use KEY_LEFT/KEY_RIGHT to move texture mixing in shader!", 80, GetScreenHeight() - 40, 20, RAYWHITE);
+        
+    EndDrawing();
+    //----------------------------------------------------------------------------------
 }
