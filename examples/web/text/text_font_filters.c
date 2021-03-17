@@ -59,7 +59,7 @@ int main(void)
 
     fontSize = font.baseSize;
 
-    SetTextureFilter(font.texture, FILTER_POINT);
+    SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
     
     fontPosition = (Vector2){ 40, screenHeight/2 - 70 };
 
@@ -100,18 +100,18 @@ void UpdateDrawFrame(void)
     // Choose font texture filter method
     if (IsKeyPressed(KEY_ONE))
     {
-        SetTextureFilter(font.texture, FILTER_POINT);
+        SetTextureFilter(font.texture, TEXTURE_FILTER_POINT);
         currentFontFilter = 0;
     }
     else if (IsKeyPressed(KEY_TWO))
     {
-        SetTextureFilter(font.texture, FILTER_BILINEAR);
+        SetTextureFilter(font.texture, TEXTURE_FILTER_BILINEAR);
         currentFontFilter = 1;
     }
     else if (IsKeyPressed(KEY_THREE))
     {
         // NOTE: Trilinear filter won't be noticed on 2D drawing
-        SetTextureFilter(font.texture, FILTER_TRILINEAR);
+        SetTextureFilter(font.texture, TEXTURE_FILTER_TRILINEAR);
         currentFontFilter = 2;
     }
 

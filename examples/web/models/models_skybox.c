@@ -55,8 +55,8 @@ int main(void)
 #else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
     skybox.materials[0].shader = LoadShader("resources/shaders/glsl100/skybox.vs", "resources/shaders/glsl100/skybox.fs");
 #endif
-    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "environmentMap"), (int[1]){ MAP_CUBEMAP }, UNIFORM_INT);
-    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "vflipped"), (int[1]){ 1 }, UNIFORM_INT);
+    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "environmentMap"), (int[1]){ MATERIAL_MAP_CUBEMAP }, SHADER_UNIFORM_INT);
+    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "vflipped"), (int[1]){ 1 }, SHADER_UNIFORM_INT);
 
     // Load cubemap shader and setup required shader locations
 #if defined(PLATFORM_DESKTOP)
@@ -64,7 +64,7 @@ int main(void)
 #else   // PLATFORM_RPI, PLATFORM_ANDROID, PLATFORM_WEB
     shdrCubemap = LoadShader("resources/shaders/glsl100/cubemap.vs", "resources/shaders/glsl100/cubemap.fs");
 #endif
-    SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, UNIFORM_INT);
+    SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, SHADER_UNIFORM_INT);
 
     // Load HDR panorama (sphere) texture
     TextCopy(panoFileName, "resources/dresden_square_2k.hdr");
@@ -73,8 +73,8 @@ int main(void)
     // Generate cubemap (texture with 6 quads-cube-mapping) from panorama HDR texture
     // NOTE 1: New texture is generated rendering to texture, shader calculates the sphere->cube coordinates mapping
     // NOTE 2: It seems on some Android devices WebGL, fbo does not properly support a FLOAT-based attachment,
-    // despite texture can be successfully created.. so using UNCOMPRESSED_R8G8B8A8 instead of UNCOMPRESSED_R32G32B32A32
-    skybox.materials[0].maps[MAP_CUBEMAP].texture = GenTextureCubemap(shdrCubemap, panorama, 1024, UNCOMPRESSED_R8G8B8A8);
+    // despite texture can be successfully created.. so using PIXELFORMAT_UNCOMPRESSED_R8G8B8A8 instead of PIXELFORMAT_UNCOMPRESSED_R32G32B32A32
+    skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
 
     UnloadTexture(panorama);    // Texture not required anymore, cubemap already generated
 
@@ -123,12 +123,12 @@ void UpdateDrawFrame(void)
             if (IsFileExtension(droppedFiles[0], ".png;.jpg;.hdr;.bmp;.tga"))
             {
                 // Unload current cubemap texture and load new one
-                UnloadTexture(skybox.materials[0].maps[MAP_CUBEMAP].texture);
+                UnloadTexture(skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture);
                 panorama = LoadTexture(droppedFiles[0]);
                 TextCopy(panoFileName, droppedFiles[0]);
                     
                 // Generate cubemap from panorama texture
-                skybox.materials[0].maps[MAP_CUBEMAP].texture = GenTextureCubemap(shdrCubemap, panorama, 1024, UNCOMPRESSED_R8G8B8A8);
+                skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = GenTextureCubemap(shdrCubemap, panorama, 1024, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
                 UnloadTexture(panorama);
             }
         }

@@ -108,7 +108,7 @@ int main(void)
 
     // ambient light level
     ambientLoc = GetShaderLocation(shader, "ambient");
-    SetShaderValue(shader, ambientLoc, (float[4]){ 0.2f, 0.2f, 0.2f, 1.0f }, UNIFORM_VEC4);
+    SetShaderValue(shader, ambientLoc, (float[4]){ 0.2f, 0.2f, 0.2f, 1.0f }, SHADER_UNIFORM_VEC4);
 
     // All models use the same shader
     modelA.materials[0].shader = shader;
@@ -187,7 +187,7 @@ void UpdateDrawFrame(void)
 
     // Update the light shader with the camera view position
     float cameraPos[3] = { camera.position.x, camera.position.y, camera.position.z };
-    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, UNIFORM_VEC3);
+    SetShaderValue(shader, shader.locs[SHADER_LOC_VECTOR_VIEW], cameraPos, SHADER_UNIFORM_VEC3);
     //----------------------------------------------------------------------------------
 
     // Draw
