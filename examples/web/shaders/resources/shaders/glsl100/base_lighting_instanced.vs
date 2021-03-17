@@ -1,4 +1,3 @@
-
 #version 100
 
 // Input vertex attributes
@@ -61,4 +60,3 @@ void main()
     // Calculate final vertex position
     gl_Position = mvpi*vec4(vertexPosition, 1.0);
 }
-
