@@ -4,7 +4,7 @@
 *
 *   NOTE: Images are loaded in CPU memory (RAM); textures are loaded in GPU memory (VRAM)
 *
-*   This example has been created using raylib 1.4 (www.raylib.com)
+*   This example has been created using raylib 3.5 (www.raylib.com)
 *   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
 *
 *   Copyright (c) 2016 Ramon Santamaria (@raysan5)
@@ -13,7 +13,7 @@
 
 #include "raylib.h"
 
-#include <stdlib.h>     // Required for: free()
+#include <stdlib.h>             // Required for: free()
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -49,13 +49,16 @@ static const char *processText[] = {
     "FLIP HORIZONTAL"
 };
 
-Image image = { 0 };
-Texture2D texture = { 0 };
+static Image imOrigin = { 0 };
+static Texture2D texture = { 0 };
 
-int currentProcess = NONE;
-bool textureReload = false;
+static Image imCopy = { 0 };
 
-Rectangle selectRecs[NUM_PROCESSES] = { 0 };
+static int currentProcess = NONE;
+static bool textureReload = false;
+
+static Rectangle toggleRecs[NUM_PROCESSES] = { 0 };
+int mouseHoverRec = -1;
 
 //----------------------------------------------------------------------------------
 // Module Functions Declaration
@@ -73,11 +76,11 @@ int main(void)
 
     // NOTE: Textures MUST be loaded after Window initialization (OpenGL context is required)
 
-    image = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
-    ImageFormat(&image, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);   // Format image to RGBA 32bit (required for texture update)
-    texture = LoadTextureFromImage(image);        // Image converted to texture, GPU memory (VRAM)
+    imOrigin = LoadImage("resources/parrots.png");   // Loaded in CPU memory (RAM)
+    ImageFormat(&imOrigin, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);   // Format image to RGBA 32bit (required for texture update)
+    texture = LoadTextureFromImage(imOrigin);        // Image converted to texture, GPU memory (VRAM)
 
-    for (int i = 0; i < NUM_PROCESSES; i++) selectRecs[i] = (Rectangle){ 40, 50 + 32*i, 150, 30 };
+    for (int i = 0; i < NUM_PROCESSES; i++) toggleRecs[i] = (Rectangle){ 40.0f, (float)(50 + 32*i), 150.0f, 30.0f };
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
@@ -95,7 +98,8 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     UnloadTexture(texture);       // Unload texture from VRAM
-    UnloadImage(image);           // Unload image from RAM
+    UnloadImage(imOrigin);        // Unload image-origin from RAM
+    UnloadImage(imCopy);          // Unload image-copy from RAM
 
     CloseWindow();                // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
@@ -110,10 +114,29 @@ void UpdateDrawFrame(void)
 {
     // Update
     //----------------------------------------------------------------------------------
-    if (IsKeyPressed(KEY_DOWN))
+    // Mouse toggle group logic
+    for (int i = 0; i < NUM_PROCESSES; i++)
+    {
+        if (CheckCollisionPointRec(GetMousePosition(), toggleRecs[i]))
+        {
+            mouseHoverRec = i;
+
+            if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+            {
+                currentProcess = i;
+                textureReload = true;
+            }
+            break;
+        }
+        else mouseHoverRec = -1;
+    }
+        
+    // Keyboard toggle group logic
+	
+	if (IsKeyPressed(KEY_DOWN))
     {
         currentProcess++;
-        if (currentProcess > 7) currentProcess = 0;
+        if (currentProcess > (NUM_PROCESSES - 1)) currentProcess = 0;
         textureReload = true;
     }
     else if (IsKeyPressed(KEY_UP))
@@ -123,27 +146,28 @@ void UpdateDrawFrame(void)
         textureReload = true;
     }
 
+    // Reload texture when required
     if (textureReload)
     {
-        UnloadImage(image);                         // Unload current image data
-        image = LoadImage("resources/parrots.png"); // Re-load image data
-
+        UnloadImage(imCopy);            // Unload image-copy data
+        imCopy = ImageCopy(imOrigin);      // Restore image-copy from image-origin
+            
         // NOTE: Image processing is a costly CPU process to be done every frame,
         // If image processing is required in a frame-basis, it should be done
         // with a texture and by shaders
         switch (currentProcess)
         {
-            case COLOR_GRAYSCALE: ImageColorGrayscale(&image); break;
-            case COLOR_TINT: ImageColorTint(&image, GREEN); break;
-            case COLOR_INVERT: ImageColorInvert(&image); break;
-            case COLOR_CONTRAST: ImageColorContrast(&image, -40); break;
-            case COLOR_BRIGHTNESS: ImageColorBrightness(&image, -80); break;
-            case FLIP_VERTICAL: ImageFlipVertical(&image); break;
-            case FLIP_HORIZONTAL: ImageFlipHorizontal(&image); break;
+            case COLOR_GRAYSCALE: ImageColorGrayscale(&imCopy); break;
+            case COLOR_TINT: ImageColorTint(&imCopy, GREEN); break;
+            case COLOR_INVERT: ImageColorInvert(&imCopy); break;
+            case COLOR_CONTRAST: ImageColorContrast(&imCopy, -40); break;
+            case COLOR_BRIGHTNESS: ImageColorBrightness(&imCopy, -80); break;
+            case FLIP_VERTICAL: ImageFlipVertical(&imCopy); break;
+            case FLIP_HORIZONTAL: ImageFlipHorizontal(&imCopy); break;
             default: break;
         }
 
-        Color *pixels = LoadImageColors(image);     // Get pixel data from image (RGBA 32bit)
+        Color *pixels = LoadImageColors(imCopy);    // Load pixel data from image (RGBA 32bit)
         UpdateTexture(texture, pixels);             // Update texture with new image data
         UnloadImageColors(pixels);                  // Unload pixels data from RAM
 
@@ -162,18 +186,9 @@ void UpdateDrawFrame(void)
         // Draw rectangles
         for (int i = 0; i < NUM_PROCESSES; i++)
         {
-            if (i == currentProcess)
-            {
-                DrawRectangleRec(selectRecs[i], SKYBLUE);
-                DrawRectangleLines(selectRecs[i].x, selectRecs[i].y, selectRecs[i].width, selectRecs[i].height, BLUE);
-                DrawText(processText[i], selectRecs[i].x + selectRecs[i].width/2 - MeasureText(processText[i], 10)/2, selectRecs[i].y + 11, 10, DARKBLUE);
-            }
-            else
-            {
-                DrawRectangleRec(selectRecs[i], LIGHTGRAY);
-                DrawRectangleLines(selectRecs[i].x, selectRecs[i].y, selectRecs[i].width, selectRecs[i].height, GRAY);
-                DrawText(processText[i], selectRecs[i].x + selectRecs[i].width/2 - MeasureText(processText[i], 10)/2, selectRecs[i].y + 11, 10, DARKGRAY);
-            }
+            DrawRectangleRec(toggleRecs[i], ((i == currentProcess) || (i == mouseHoverRec)) ? SKYBLUE : LIGHTGRAY);
+            DrawRectangleLines((int)toggleRecs[i].x, (int) toggleRecs[i].y, (int) toggleRecs[i].width, (int) toggleRecs[i].height, ((i == currentProcess) || (i == mouseHoverRec)) ? BLUE : GRAY);
+            DrawText( processText[i], (int)( toggleRecs[i].x + toggleRecs[i].width/2 - MeasureText(processText[i], 10)/2), (int) toggleRecs[i].y + 11, 10, ((i == currentProcess) || (i == mouseHoverRec)) ? DARKBLUE : DARKGRAY);
         }
 
         DrawTexture(texture, screenWidth - texture.width - 60, screenHeight/2 - texture.height/2, WHITE);
