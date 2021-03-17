@@ -10,6 +10,7 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include "rlgl.h"
 
 #if defined(PLATFORM_WEB)
     #include <emscripten/emscripten.h>
@@ -144,7 +145,14 @@ void UpdateDrawFrame(void)
         ClearBackground(RAYWHITE);
 
         BeginMode3D(camera);
-            DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, WHITE);
+        
+            // We are inside the cube, we need to disable backface culling!
+            rlDisableBackfaceCulling();
+            rlDisableDepthMask();
+                DrawModel(skybox, (Vector3){0, 0, 0}, 1.0f, WHITE);
+            rlEnableBackfaceCulling();
+            rlEnableDepthMask();
+            
             DrawGrid(10, 1.0f);
         EndMode3D();
 
