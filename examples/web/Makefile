@@ -983,7 +983,8 @@ shaders/shaders_spotlight: shaders/shaders_spotlight.c
     --preload-file shaders/resources/shaders/glsl100/spotlight.fs@resources/shaders/glsl100/spotlight.fs
     
 shaders/shaders_hot_reloading: shaders/shaders_hot_reloading.c
-	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY -s FORCE_FILESYSTEM=1
+	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s FORCE_FILESYSTEM=1 \
+    --preload-file shaders/resources/shaders/glsl100/reload.fs@resources/shaders/glsl100/reload.fs
 
 shaders/shaders_rlgl_mesh_instanced: shaders/shaders_rlgl_mesh_instanced.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) \
