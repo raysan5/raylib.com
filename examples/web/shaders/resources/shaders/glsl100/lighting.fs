@@ -1,3 +1,4 @@
+
 #version 100
 
 precision mediump float;
@@ -68,3 +69,4 @@ void main()
     // Gamma correction
     gl_FragColor = pow(finalColor, vec4(1.0/2.2));
 }
+

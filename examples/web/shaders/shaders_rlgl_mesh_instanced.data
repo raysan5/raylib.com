@@ -1,3 +1,4 @@
+
 #version 100
 
 // Input vertex attributes
@@ -59,7 +60,10 @@ void main()
 
     // Calculate final vertex position
     gl_Position = mvpi*vec4(vertexPosition, 1.0);
-}#version 100
+}
+
+
+#version 100
 
 precision mediump float;
 
@@ -129,3 +133,4 @@ void main()
     // Gamma correction
     gl_FragColor = pow(finalColor, vec4(1.0/2.2));
 }
+
