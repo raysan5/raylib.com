@@ -984,12 +984,12 @@ shaders/shaders_spotlight: shaders/shaders_spotlight.c
     
 shaders/shaders_hot_reloading: shaders/shaders_hot_reloading.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY -s FORCE_FILESYSTEM=1
-    
+
 shaders/shaders_rlgl_mesh_instanced: shaders/shaders_rlgl_mesh_instanced.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
     --preload-file shaders/resources/shaders/glsl100/base_lighting_instanced.vs@resources/shaders/glsl100/base_lighting_instanced.vs \
     --preload-file shaders/resources/shaders/glsl100/lighting.fs@resources/shaders/glsl100/lighting.fs
-    
+
 shaders/shaders_multi_sample2d: shaders/shaders_multi_sample2d.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s ASYNCIFY \
     --preload-file shaders/resources/shaders/glsl100/color_mix.fs@resources/shaders/glsl100/color_mix.fs
