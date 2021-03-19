@@ -891,12 +891,8 @@ models/models_skybox: models/models_skybox.c
 # compile [models] example - models yaw pitch roll
 models/models_yaw_pitch_roll: models/models_yaw_pitch_roll.c
 	$(CC) -o $@$(EXT) $< $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM) -s TOTAL_MEMORY=67108864 \
-    --preload-file models/resources/plane.obj@resources/plane.obj \
-    --preload-file models/resources/plane_diffuse.png@resources/plane_diffuse.png \
-    --preload-file models/resources/plane.png@resources/plane.png \
-    --preload-file models/resources/pitch.png@resources/pitch.png \
-    --preload-file models/resources/background.png@resources/background.png \
-    --preload-file models/resources/angle_gauge.png@resources/angle_gauge.png  
+    --preload-file models/resources/plane/plane.gltf@resources/plane/plane.gltf \
+    --preload-file models/resources/plane/plane_diffuse.png@resources/plane/plane_diffuse.png
      
 # compile [models] example - heightmap loading
 models/models_heightmap: models/models_heightmap.c

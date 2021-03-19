@@ -84,7 +84,7 @@ int main(void)
     camera.target = (Vector3){ 0.0f, 0.5f, 0.0f };
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
     camera.fovy = 45.0f;
-    camera.type = CAMERA_PERSPECTIVE;
+    camera.projection = CAMERA_PERSPECTIVE;
 
     // Load models and texture
     modelA = LoadModelFromMesh(GenMeshTorus(0.4f, 1.0f, 16, 32));
