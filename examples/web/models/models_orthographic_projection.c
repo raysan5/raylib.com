@@ -79,15 +79,15 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     if (IsKeyPressed(KEY_SPACE))
     {
-        if (camera.type == CAMERA_PERSPECTIVE)
+        if (camera.projection == CAMERA_PERSPECTIVE)
         {
             camera.fovy = WIDTH_ORTHOGRAPHIC;
-            camera.type = CAMERA_ORTHOGRAPHIC;
+            camera.projection = CAMERA_ORTHOGRAPHIC;
         }
         else
         {
             camera.fovy = FOVY_PERSPECTIVE;
-            camera.type = CAMERA_PERSPECTIVE;
+            camera.projection = CAMERA_PERSPECTIVE;
         }
     }
     //----------------------------------------------------------------------------------
@@ -120,8 +120,8 @@ void UpdateDrawFrame(void)
 
         DrawText("Press Spacebar to switch camera type", 10, GetScreenHeight() - 30, 20, DARKGRAY);
 
-        if (camera.type == CAMERA_ORTHOGRAPHIC) DrawText("ORTHOGRAPHIC", 10, 40, 20, BLACK);
-        else if (camera.type == CAMERA_PERSPECTIVE) DrawText("PERSPECTIVE", 10, 40, 20, BLACK);
+        if (camera.projection == CAMERA_ORTHOGRAPHIC) DrawText("ORTHOGRAPHIC", 10, 40, 20, BLACK);
+        else if (camera.projection == CAMERA_PERSPECTIVE) DrawText("PERSPECTIVE", 10, 40, 20, BLACK);
 
         DrawFPS(10, 10);
 
