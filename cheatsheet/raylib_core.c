@@ -64,7 +64,7 @@
     void EndBlendMode(void);                                                // End blending mode (reset to default: alpha blending)
     void BeginScissorMode(int x, int y, int width, int height);             // Begin scissor mode (define screen area for following drawing)
     void EndScissorMode(void);                                              // End scissor mode
-    void BeginVrStereoMode(RenderTexture2D target, VrStereoConfig config);  // Begin stereo rendering (requires VR simulator)
+    void BeginVrStereoMode(VrStereoConfig config);                          // Begin stereo rendering (requires VR simulator)
     void EndVrStereoMode(void);                                             // End stereo rendering (requires VR simulator)
 
     // VR stereo config functions for VR simulator
