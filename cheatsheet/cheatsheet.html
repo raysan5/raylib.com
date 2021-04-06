@@ -49,7 +49,6 @@
          }
          .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
          #core pre code{border:10px solid; border-color:#888888; background-color:#dbdbe1; }
-         #shaders pre code{border:10px solid; border-color:#a864d2; background-color:#e0c6f1; }
          #shapes pre code{border:10px solid; border-color:#e66666; background-color:#e9d0d6; }
          #textures pre code{border:10px solid; border-color:#75a06d; background-color:#c3e4bf; }
          #text pre code{border:10px solid; border-color:#52b296; background-color:#b9e9dd; }
@@ -69,7 +68,6 @@
          #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
          #ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
          #pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
-         #pshaders{margin-bottom:-12px; margin-left:12px; color:#a864d2;}
          #paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
          #pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
          #pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
@@ -92,10 +90,6 @@
              $.get('raylib_core.c', function(data) {
                  $('#core pre code').text(data);
                  $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_shaders.c', function(data) {
-                 $('#shaders pre code').text(data);
-                 $('#shaders pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
              $.get('raylib_shapes.c', function(data) {
                  $('#shapes pre code').text(data);
@@ -141,8 +135,6 @@
         <div id="fulldata">
             <p id="pcore">module: core</p>
             <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshaders">module: shaders (rlgl)</p>
-            <div id="shaders"><pre><code class="cpp"></code></pre></div>
             <p id="pshapes">module: shapes</p>
             <div id="shapes"><pre><code class="cpp"></code></pre></div>
             <p id="ptextures">module: textures</p>
