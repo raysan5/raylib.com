@@ -58,12 +58,18 @@
     void EndMode3D(void);                                                   // Ends 3D mode and returns to default 2D orthographic mode
     void BeginTextureMode(RenderTexture2D target);                          // Initializes render texture for drawing
     void EndTextureMode(void);                                              // Ends drawing to render texture
-    void BeginScissorMode(int x, int y, int width, int height);             // Begin scissor mode (define screen area for following drawing)
-    void EndScissorMode(void);                                              // End scissor mode
     void BeginShaderMode(Shader shader);                                    // Begin custom shader drawing
     void EndShaderMode(void);                                               // End custom shader drawing (use default shader)
     void BeginBlendMode(int mode);                                          // Begin blending mode (alpha, additive, multiplied)
     void EndBlendMode(void);                                                // End blending mode (reset to default: alpha blending)
+    void BeginScissorMode(int x, int y, int width, int height);             // Begin scissor mode (define screen area for following drawing)
+    void EndScissorMode(void);                                              // End scissor mode
+    void BeginVrStereoMode(RenderTexture2D target, VrStereoConfig config);  // Begin stereo rendering (requires VR simulator)
+    void EndVrStereoMode(void);                                             // End stereo rendering (requires VR simulator)
+
+    // VR stereo config functions for VR simulator
+    VrStereoConfig LoadVrStereoMode(VrDeviceInfo device);                   // Load VR stereo config for VR simulator device parameters
+    void UnloadVrStereoConfig(VrStereoConfig config);                       // Unload VR stereo config
 
     // Shader management functions
     // NOTE: Shader functionality is not available on OpenGL 1.1
@@ -206,13 +212,4 @@
     void SetCameraMoveControls(int frontKey, int backKey, 
                                int rightKey, int leftKey, 
                                int upKey, int downKey);                     // Set camera move controls (1st person and 3rd person cameras)
-                               
-    // VR Simulator Functions (Module: core)
-    void InitVrSimulator(VrDeviceInfo device);                              // Init VR simulator for selected device parameters
-    void CloseVrSimulator(void);                                            // Close VR simulator for current device
-    bool IsVrSimulatorReady(void);                                          // Detect if VR simulator is ready
-    void UpdateVrTracking(Camera *camera);                                  // Update VR tracking (position and orientation) and camera
-    void BeginVrDrawing(RenderTexture2D target);                            // Begin VR simulator stereo rendering (using provided fbo)
-    void EndVrDrawing(void);                                                // End VR simulator stereo rendering
-    VrStereoConfig GetVrConfig(VrDeviceInfo device);                        // Get stereo rendering configuration parameters
 
