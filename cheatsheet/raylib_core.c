@@ -68,7 +68,7 @@
     void EndVrStereoMode(void);                                             // End stereo rendering (requires VR simulator)
 
     // VR stereo config functions for VR simulator
-    VrStereoConfig LoadVrStereoMode(VrDeviceInfo device);                   // Load VR stereo config for VR simulator device parameters
+    VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device);                   // Load VR stereo config for VR simulator device parameters
     void UnloadVrStereoConfig(VrStereoConfig config);                       // Unload VR stereo config
 
     // Shader management functions
