@@ -27,9 +27,10 @@
     int GetScreenWidth(void);                                               // Get current screen width
     int GetScreenHeight(void);                                              // Get current screen height
     int GetMonitorCount(void);                                              // Get number of connected monitors
+    int GetCurrentMonitor(void);                                            // Get current connected monitor
     Vector2 GetMonitorPosition(int monitor);                                // Get specified monitor position
-    int GetMonitorWidth(int monitor);                                       // Get specified monitor width
-    int GetMonitorHeight(int monitor);                                      // Get specified monitor height
+    int GetMonitorWidth(int monitor);                                       // Get specified monitor width (max available by monitor)
+    int GetMonitorHeight(int monitor);                                      // Get specified monitor height (max available by monitor)
     int GetMonitorPhysicalWidth(int monitor);                               // Get specified monitor physical width in millimetres
     int GetMonitorPhysicalHeight(int monitor);                              // Get specified monitor physical height in millimetres
     int GetMonitorRefreshRate(int monitor);                                 // Get specified monitor refresh rate
@@ -38,16 +39,16 @@
     const char *GetMonitorName(int monitor);                                // Get the human-readable, UTF-8 encoded name of the primary monitor
     void SetClipboardText(const char *text);                                // Set clipboard text content
     const char *GetClipboardText(void);                                     // Get clipboard text content
-            
-    // Cursor-related functions         
+
+    // Cursor-related functions
     void ShowCursor(void);                                                  // Shows cursor
     void HideCursor(void);                                                  // Hides cursor
     bool IsCursorHidden(void);                                              // Check if cursor is not visible
     void EnableCursor(void);                                                // Enables cursor (unlock cursor)
     void DisableCursor(void);                                               // Disables cursor (lock cursor)
     bool IsCursorOnScreen(void);                                            // Check if cursor is on the current screen.
-            
-    // Drawing-related functions            
+
+    // Drawing-related functions
     void ClearBackground(Color color);                                      // Set background color (framebuffer clear color)
     void BeginDrawing(void);                                                // Setup canvas (framebuffer) to start drawing
     void EndDrawing(void);                                                  // End canvas drawing and swap buffers (double buffering)
@@ -72,21 +73,27 @@
     // Timing-related functions
     void SetTargetFPS(int fps);                                             // Set target FPS (maximum)
     int GetFPS(void);                                                       // Returns current FPS
-    float GetFrameTime(void);                                               // Returns time in seconds for last frame drawn
+    float GetFrameTime(void);                                               // Returns time in seconds for last frame drawn (delta time)
     double GetTime(void);                                                   // Returns elapsed time in seconds since InitWindow()
             
     // Misc. functions          
+    int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
+    void TakeScreenshot(const char *fileName);                              // Takes a screenshot of current screen (filename extension defines format)
     void SetConfigFlags(unsigned int flags);                                // Setup init configuration flags (view FLAGS)
             
-    void SetTraceLogLevel(int logType);                                     // Set the current threshold (minimum) log level
-    void SetTraceLogExit(int logType);                                      // Set the exit threshold (minimum) log level
-    void SetTraceLogCallback(TraceLogCallback callback);                    // Set a trace log callback to enable custom logging
-    void TraceLog(int logType, const char *text, ...);                      // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR)
-            
+    void TraceLog(int logLevel, const char *text, ...);                     // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR)
+    void SetTraceLogLevel(int logLevel);                                    // Set the current threshold (minimum) log level
     void *MemAlloc(int size);                                               // Internal memory allocator
+    void *MemRealloc(void *ptr, int size);                                  // Internal memory reallocator
     void MemFree(void *ptr);                                                // Internal memory free
-    void TakeScreenshot(const char *fileName);                              // Takes a screenshot of current screen (saved a .png)
-    int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
+
+    // Set custom callbacks
+    // WARNING: Callbacks setup is intended for advance users
+    void SetTraceLogCallback(TraceLogCallback callback);                    // Set custom trace log
+    void SetLoadFileDataCallback(LoadFileDataCallback callback);            // Set custom file binary data loader
+    void SetSaveFileDataCallback(SaveFileDataCallback callback);            // Set custom file binary data saver
+    void SetLoadFileTextCallback(LoadFileTextCallback callback);            // Set custom file text data loader
+    void SetSaveFileTextCallback(SaveFileTextCallback callback);            // Set custom file text data saver
 
     // Files management functions
     unsigned char *LoadFileData(const char *fileName, unsigned int *bytesRead);     // Load file data as byte array (read)
@@ -98,7 +105,7 @@
     bool FileExists(const char *fileName);                                  // Check if file exists
     bool DirectoryExists(const char *dirPath);                              // Check if a directory path exists
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension (including point: .png, .wav)
-    const char *GetFileExtension(const char *fileName);                     // Get pointer to extension for a filename string (including point: ".png")
+    const char *GetFileExtension(const char *fileName);                     // Get pointer to extension for a filename string (includes dot: ".png")
     const char *GetFileName(const char *filePath);                          // Get pointer to filename for a path string
     const char *GetFileNameWithoutExt(const char *filePath);                // Get filename string without extension (uses static string)
     const char *GetDirectoryPath(const char *filePath);                     // Get full path for a given fileName with path (uses static string)
@@ -121,10 +128,6 @@
 
     void OpenURL(const char *url);                                          // Open URL with default system browser (if available)
 
-    //------------------------------------------------------------------------------------
-    // Input Handling Functions (Module: core)
-    //------------------------------------------------------------------------------------
-
     // Input-related functions: keyboard
     bool IsKeyPressed(int key);                                             // Detect if a key has been pressed once
     bool IsKeyDown(int key);                                                // Detect if a key is being pressed
@@ -132,9 +135,9 @@
     bool IsKeyUp(int key);                                                  // Detect if a key is NOT being pressed
     void SetExitKey(int key);                                               // Set a custom key to exit program (default is ESC)
     int GetKeyPressed(void);                                                // Get key pressed (keycode), call it multiple times for keys queued
-    int GetCharPressed(void);                                               // Get char pressed (unicode), call it multiple times for chars queued 
-                
-    // Input-related functions: gamepads                
+    int GetCharPressed(void);                                               // Get char pressed (unicode), call it multiple times for chars queued
+
+    // Input-related functions: gamepads
     bool IsGamepadAvailable(int gamepad);                                   // Detect if a gamepad is available
     bool IsGamepadName(int gamepad, const char *name);                      // Check gamepad name (if available)
     const char *GetGamepadName(int gamepad);                                // Return gamepad internal name id
@@ -145,8 +148,9 @@
     int GetGamepadButtonPressed(void);                                      // Get the last gamepad button pressed
     int GetGamepadAxisCount(int gamepad);                                   // Return gamepad axis count for a gamepad
     float GetGamepadAxisMovement(int gamepad, int axis);                    // Return axis movement value for a gamepad axis
-                
-    // Input-related functions: mouse               
+    int SetGamepadMappings(const char *mappings);                           // Set internal gamepad mappings (SDL_GameControllerDB)
+
+    // Input-related functions: mouse
     bool IsMouseButtonPressed(int button);                                  // Detect if a mouse button has been pressed once
     bool IsMouseButtonDown(int button);                                     // Detect if a mouse button is being pressed
     bool IsMouseButtonReleased(int button);                                 // Detect if a mouse button has been released once
@@ -158,18 +162,15 @@
     void SetMouseOffset(int offsetX, int offsetY);                          // Set mouse offset
     void SetMouseScale(float scaleX, float scaleY);                         // Set mouse scaling
     float GetMouseWheelMove(void);                                          // Returns mouse wheel movement Y
-    int GetMouseCursor(void);                                               // Returns mouse cursor if (MouseCursor enum)
     void SetMouseCursor(int cursor);                                        // Set mouse cursor
-                
-    // Input-related functions: touch               
+
+    // Input-related functions: touch
     int GetTouchX(void);                                                    // Returns touch position X for touch point 0 (relative to screen size)
     int GetTouchY(void);                                                    // Returns touch position Y for touch point 0 (relative to screen size)
     Vector2 GetTouchPosition(int index);                                    // Returns touch position XY for a touch point index (relative to screen size)
 
-    //------------------------------------------------------------------------------------
     // Gestures and Touch Handling Functions (Module: gestures)
-    //------------------------------------------------------------------------------------
-    void SetGesturesEnabled(unsigned int gestureFlags);                     // Enable a set of gestures using flags
+    void SetGesturesEnabled(unsigned int flags);                            // Enable a set of gestures using flags
     bool IsGestureDetected(int gesture);                                    // Check if a gesture have been detected
     int GetGestureDetected(void);                                           // Get latest detected gesture
     int GetTouchPointsCount(void);                                          // Get touch points count
@@ -179,16 +180,23 @@
     Vector2 GetGesturePinchVector(void);                                    // Get gesture pinch delta
     float GetGesturePinchAngle(void);                                       // Get gesture pinch angle
 
-    //------------------------------------------------------------------------------------
     // Camera System Functions (Module: camera)
-    //------------------------------------------------------------------------------------
     void SetCameraMode(Camera camera, int mode);                            // Set camera mode (multiple camera modes available)
     void UpdateCamera(Camera *camera);                                      // Update camera position for selected mode
-            
+
     void SetCameraPanControl(int keyPan);                                   // Set camera pan key to combine with mouse movement (free camera)
     void SetCameraAltControl(int keyAlt);                                   // Set camera alt key to combine with mouse movement (free camera)
     void SetCameraSmoothZoomControl(int keySmoothZoom);                     // Set camera smooth zoom key to combine with mouse (free camera)
     void SetCameraMoveControls(int frontKey, int backKey, 
                                int rightKey, int leftKey, 
                                int upKey, int downKey);                     // Set camera move controls (1st person and 3rd person cameras)
+                               
+    // VR Simulator Functions (Module: core)
+    void InitVrSimulator(VrDeviceInfo device);                              // Init VR simulator for selected device parameters
+    void CloseVrSimulator(void);                                            // Close VR simulator for current device
+    bool IsVrSimulatorReady(void);                                          // Detect if VR simulator is ready
+    void UpdateVrTracking(Camera *camera);                                  // Update VR tracking (position and orientation) and camera
+    void BeginVrDrawing(RenderTexture2D target);                            // Begin VR simulator stereo rendering (using provided fbo)
+    void EndVrDrawing(void);                                                // End VR simulator stereo rendering
+    VrStereoConfig GetVrConfig(VrDeviceInfo device);                        // Get stereo rendering configuration parameters
 

@@ -36,4 +36,5 @@
     struct AudioStream;     // Raw audio stream type
     
     struct VrDeviceInfo;    // VR device parameters
+    struct VrStereoConfig;  // VR Stereo rendering configuration for simulator
     
