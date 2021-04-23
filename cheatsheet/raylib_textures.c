@@ -103,8 +103,8 @@
     int ColorToInt(Color color);                                                                       // Returns hexadecimal value for a Color
     Vector4 ColorNormalize(Color color);                                                               // Returns Color normalized as float [0..1]
     Color ColorFromNormalized(Vector4 normalized);                                                     // Returns Color from normalized values [0..1]
-    Vector3 ColorToHSV(Color color);                                                                   // Returns HSV values for a Color, hue [0..360], saturation/value [0..1]
-    Color ColorFromHSV(float hue, float saturation, float value);                                      // Returns a Color from HSV values, hue [0..360], saturation/value [0..1]
+    Vector3 ColorToHSV(Color color);                                                                   // Returns HSV values for a Color
+    Color ColorFromHSV(float hue, float saturation, float value);                                      // Returns a Color from HSV values
     Color ColorAlpha(Color color, float alpha);                                                        // Returns color with alpha applied, alpha goes from 0.0f to 1.0f
     Color ColorAlphaBlend(Color dst, Color src, Color tint);                                           // Returns src alpha-blended into dst color with tint
     Color GetColor(int hexValue);                                                                      // Get Color structure from hexadecimal value
