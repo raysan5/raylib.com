@@ -27,6 +27,7 @@
 
     // Mesh loading/unloading functions
     void UploadMesh(Mesh *mesh, bool dynamic);                                                         // Upload vertex data into GPU and provided VAO/VBO ids
+    void UpdateMeshBuffer(Mesh mesh, int index, void *data, int dataSize, int offset);                  // Update mesh vertex data in GPU for a specific buffer index
     void DrawMesh(Mesh mesh, Material material, Matrix transform);                                     // Draw a 3d mesh with material and transform
     void DrawMeshInstanced(Mesh mesh, Material material, Matrix *transforms, int instances);           // Draw multiple mesh instances with material and different transforms
     void UnloadMesh(Mesh mesh);                                                                        // Unload mesh data from CPU and GPU
@@ -47,7 +48,6 @@
     bool IsModelAnimationValid(Model model, ModelAnimation anim);                                      // Check model animation skeleton match
 
     // Mesh generation functions
-    Mesh GenMeshDefault(int vertexCount);                                                              // Generate an empty mesh with vertex: position, texcoords, normals, colors
     Mesh GenMeshPoly(int sides, float radius);                                                         // Generate polygonal mesh
     Mesh GenMeshPlane(float width, float length, int resX, int resZ);                                  // Generate plane mesh (with subdivisions)
     Mesh GenMeshCube(float width, float height, float length);                                         // Generate cuboid mesh
