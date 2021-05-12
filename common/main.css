@@ -55,11 +55,12 @@ h2{font-family: Courier New, Verdana, Arial; font-weight: bold; font-size: 18px;
 	background: linear-gradient(to bottom,  rgba(245,245,245,1) 0%,rgba(224,224,224,1) 100%);
 }
 	
-#social{ width:390px; height:50px; position:relative; float:right; margin-right:8px; margin-top:20px; margin-bottom:20px; }
+#social{ width:440px; height:50px; position:relative; float:right; margin-right:8px; margin-top:20px; margin-bottom:20px; }
 #social a:hover{ background-position: 0 -36px;}
 #youtube{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_youtube.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #handmade{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_handmade.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #twitch{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_twitch.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
+#redbubble{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_redbubble.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #patreon{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_patreon.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #itchio{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_itchio.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
 #reddit{ width:36px; height:36px; float:left; position:relative; background-image: url(img/icon_reddit.png); cursor: pointer; background-repeat:no-repeat; background-position: 0 0;}
