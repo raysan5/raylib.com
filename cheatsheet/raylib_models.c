@@ -60,7 +60,7 @@
     Mesh GenMeshCubicmap(Image cubicmap, Vector3 cubeSize);                                            // Generate cubes-based map mesh from image data
 
     // Mesh manipulation functions
-    BoundingBox MeshBoundingBox(Mesh mesh);                                                            // Compute mesh bounding box limits
+    BoundingBox GetMeshBoundingBox(Mesh mesh);                                                            // Compute mesh bounding box limits
     void MeshTangents(Mesh *mesh);                                                                     // Compute mesh tangents
     void MeshBinormals(Mesh *mesh);                                                                    // Compute mesh binormals
 
