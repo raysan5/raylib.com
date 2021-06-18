@@ -72,7 +72,7 @@ int main(void)
     texture = LoadTexture("resources/models/turret_diffuse.png");   // Load model texture
     tower.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;     // Set model diffuse texture
 
-    towerBBox = MeshBoundingBox(tower.meshes[0]);               // Get mesh bounding box
+    towerBBox = GetMeshBoundingBox(tower.meshes[0]);               // Get mesh bounding box
 
     SetCameraMode(camera, CAMERA_FREE);     // Set a free camera mode
 
