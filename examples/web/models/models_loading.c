@@ -68,7 +68,7 @@ int main(void)
     texture = LoadTexture("resources/models/castle_diffuse.png"); // Load model texture
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;       // Set map diffuse texture
 
-    bounds = MeshBoundingBox(model.meshes[0]);          // Set model bounds
+    bounds = GetMeshBoundingBox(model.meshes[0]);          // Set model bounds
 
     // NOTE: bounds are calculated from the original size of the model,
     // if model is scaled on drawing, bounds must be also scaled
@@ -124,7 +124,7 @@ void UpdateDrawFrame(void)
                 model = LoadModel(droppedFiles[0]);     // Load new model
                 model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture; // Set current map diffuse texture
 
-                bounds = MeshBoundingBox(model.meshes[0]);
+                bounds = GetMeshBoundingBox(model.meshes[0]);
                 
                 // TODO: Move camera position from target enough distance to visualize model properly
             }
