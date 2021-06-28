@@ -72,11 +72,11 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(texture);     // Texture unloading
+    UnloadTexture(texture);         // Texture unloading
 
-    UnloadFont(font);     // Unload custom spritefont
+    UnloadFont(font);               // Unload custom font
 
-    CloseWindow();              // Close window and OpenGL context
+    CloseWindow();                  // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;
@@ -110,7 +110,7 @@ void UpdateDrawFrame(void)
         }
         else DrawTexture(font.texture, screenWidth/2 - font.texture.width/2, 50, BLACK);
 
-        DrawText("PRESS SPACE to SEE USED SPRITEFONT ", 290, 420, 10, DARKGRAY);
+        DrawText("PRESS SPACE to SHOW USED FONT ATLAS", 290, 420, 10, DARKGRAY);
 
     EndDrawing();
     //----------------------------------------------------------------------------------

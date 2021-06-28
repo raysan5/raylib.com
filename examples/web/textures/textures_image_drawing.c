@@ -60,7 +60,7 @@ int main(void)
     // Draw over image using custom font
     ImageDrawTextEx(&parrots, font, "PARROTS & CAT", (Vector2){ 300, 230 }, font.baseSize, -2, WHITE);
 
-    UnloadFont(font); // Unload custom spritefont (already drawn used on image)
+    UnloadFont(font);       // Unload custom font (already drawn used on image)
 
     texture = LoadTextureFromImage(parrots);      // Image converted to texture, uploaded to GPU memory (VRAM)
     UnloadImage(parrots);   // Once image has been converted to texture and uploaded to VRAM, it can be unloaded from RAM
@@ -68,7 +68,7 @@ int main(void)
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 60, 1);
 #else
-    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -80,9 +80,9 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(texture);        // Texture unloading
+    UnloadTexture(texture);         // Texture unloading
 
-    CloseWindow();                // Close window and OpenGL context
+    CloseWindow();                  // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 
     return 0;
