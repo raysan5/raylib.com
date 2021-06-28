@@ -177,7 +177,7 @@ void UpdateDrawFrame(void)
     // NOTE: Saving painted texture to a default named image
     if ((btnSaveMouseHover && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) || IsKeyPressed(KEY_S))
     {
-        Image image = GetTextureData(target.texture);
+        Image image = LoadImageFromTexture(target.texture);
         ImageFlipVertical(&image);
         ExportImage(image, "my_amazing_texture_painting.png");
         UnloadImage(image);
