@@ -114,5 +114,8 @@ h2{font-family: Courier New, Verdana, Arial; font-weight: bold; font-size: 18px;
 #bindings>a>img{ border: 6px solid #888888; transition: all .2s ease; }
 #bindings>a>img:hover{ border: 6px solid #111111; }
 
+#extralibs>a>img{ transition: all .2s ease; }
+#extralibs>a>img:hover{ filter: contrast(200%); }
+
 #raylibtech>a>img{ transition: all .2s ease; }
 #raylibtech>a>img:hover{ filter: contrast(180%); }
