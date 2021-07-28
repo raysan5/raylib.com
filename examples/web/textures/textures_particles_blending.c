@@ -119,7 +119,7 @@ void UpdateDrawFrame(void)
         if (mouseTail[i].active)
         {
             mouseTail[i].position.y += gravity/2;
-        	mouseTail[i].alpha -= 0.005f;
+            mouseTail[i].alpha -= 0.005f;
 
             if (mouseTail[i].alpha <= 0.0f) mouseTail[i].active = false;
 

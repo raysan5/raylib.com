@@ -68,7 +68,7 @@ int main(void)
 
     // Init variables for animation
     frameWidth = explosion.width/NUM_FRAMES_PER_LINE;   // Sprite one frame rectangle width
-    frameHeight = explosion.height/NUM_LINES;   		// Sprite one frame rectangle height
+    frameHeight = explosion.height/NUM_LINES;           // Sprite one frame rectangle height
 
     frameRec = (Rectangle){ 0, 0, frameWidth, frameHeight };
 

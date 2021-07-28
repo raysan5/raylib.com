@@ -112,7 +112,7 @@ void UpdateDrawFrame(void)
     // Update
     //----------------------------------------------------------------------------------
     UpdateCamera(&camera);              // Update camera
-	
+    
     // Load new cubemap texture on drag&drop
     if (IsFileDropped())
     {

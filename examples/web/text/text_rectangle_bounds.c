@@ -149,7 +149,7 @@ void UpdateDrawFrame(void)
         DrawText("Word Wrap: ", 313, screenHeight-115, 20, BLACK);
         if (wordWrap) DrawText("ON", 447, screenHeight - 115, 20, RED);
         else DrawText("OFF", 447, screenHeight - 115, 20, BLACK);
-		
+        
         DrawText("Press [SPACE] to toggle word wrap", 218, screenHeight - 86, 20, GRAY);
 
         DrawText("Click hold & drag the    to resize the container", 155, screenHeight - 38, 20, RAYWHITE);

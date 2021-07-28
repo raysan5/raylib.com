@@ -132,8 +132,8 @@ void UpdateDrawFrame(void)
     }
         
     // Keyboard toggle group logic
-	
-	if (IsKeyPressed(KEY_DOWN))
+    
+    if (IsKeyPressed(KEY_DOWN))
     {
         currentProcess++;
         if (currentProcess > (NUM_PROCESSES - 1)) currentProcess = 0;

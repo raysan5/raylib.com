@@ -80,7 +80,7 @@ void UpdateDrawFrame(void)
 
     if (mouseOnText)
     {
-    	// Set the window's cursor to the I-Beam
+        // Set the window's cursor to the I-Beam
         SetMouseCursor(MOUSE_CURSOR_IBEAM);
 
         // Get char pressed (unicode character) on the queue
