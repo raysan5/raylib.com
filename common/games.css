@@ -4,11 +4,11 @@
 #filter_menu { width: 820px; height: 80px; margin-left: 2px; }
 
 .legendButton { padding:5px 15px; float:left; margin-left:10px; margin-right:10px; margin-bottom:20px; width:150px; text-align:center; }
-#sample { cursor:pointer; background-color:#e1e1e1; color:#5c5a5a; border:3px solid #898888; }
+#classic { cursor:pointer; background-color:#e1e1e1; color:#5c5a5a; border:3px solid #898888; }
 #game { cursor:pointer; background-color:#f0d6d6; color:#c55757; border:3px solid #e66666; }
 #user { cursor:pointer; background-color:#bedce8; color:#417794; border:3px solid #5d9cbd; }
 
-.sample:hover { background-color:#e1e1e1; color:#5c5a5a; border:4px solid #898888; }
+.classic:hover { background-color:#e1e1e1; color:#5c5a5a; border:4px solid #898888; }
 .game:hover { background-color:#f0d6d6; color:#c55757; border:4px solid #e66666; }
 .user:hover { background-color:#bedce8; color:#417794; border:4px solid #5d9cbd; }
 
