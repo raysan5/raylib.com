@@ -53,7 +53,7 @@ $(document).ready(function() {
         
         var linkTag;
         
-        if (filterType == 'classics') linkTag = '<a class="fancybox fancybox.iframe" href="games/loader.html?name=' + exampleName[i] + '" title="' + exampleDesc[i] + '">';
+        if (filterType == 'classic') linkTag = '<a class="fancybox fancybox.iframe" href="games/loader.html?name=' + exampleName[i] + '" title="' + exampleDesc[i] + '">';
         else if (filterType == 'game') linkTag = '<a target="_blank" href="games/' + exampleName[i].substring(5) + '.html" title="' + exampleDesc[i] + '">';
 
         $('#container').append(
