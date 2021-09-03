@@ -27,10 +27,10 @@
 		<style type="text/css">
 			@font-face {
                 font-family: 'grixel_acme_7_wide_xtnd';
-				src: url('../common/font/acme_7_wide_xtnd.eot');
-				src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
-					 url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
-					 url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
+				src: url('../../common/font/acme_7_wide_xtnd.eot');
+				src: url('../../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+					 url('../../common/font/acme_7_wide_xtnd.woff') format('woff'),
+					 url('../../common/font/acme_7_wide_xtnd.ttf') format('truetype');
 				font-weight: normal;
 				font-style: normal;
 				font-size-adjust:0.49;
@@ -66,8 +66,9 @@
                 
                 document.title = "raylib - " + name.replace('_', ' ');
 
-                var codeUrl = 'https://github.com/raysan5/raylib-games/blob/master/classics/src/' + name.substring(9) + '.c';
-                var imageUrl = 'img/' + name + '.png';
+                // Get the file name from game name: classic_snake -> snake
+                var codeUrl = 'https://github.com/raysan5/raylib-games/blob/master/classics/src/' + name.substring(8) + '.c';
+                var imageUrl = '../img/' + name + '.png';
 
                 // #sampledata filling code: canvas sample and image
                 $('#sampledata').append(
@@ -80,13 +81,30 @@
                 Module.canvas = document.getElementById('canvas');
                 Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
             
-                var jsUrl = 'classics/' + name.substring(9) + '.js';
+                var jsUrl = name.substring(8) + '.js';
             
                 // Run emscripten example
                 $.getScript(jsUrl, function(){});
 			});
 		</script>
-        
+        <script type='text/javascript' src="https://cdn.jsdelivr.net/gh/eligrey/FileSaver.js/dist/FileSaver.min.js"> </script>
+        <script type='text/javascript'>
+            function saveFileFromMEMFSToDisk(memoryFSname, localFSname)     // This can be called by C/C++ code
+            {
+                var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                var data = FS.readFile(memoryFSname);
+                var blob;
+
+                if (isSafari) blob = new Blob([data.buffer], { type: "application/octet-stream" });
+                else blob = new Blob([data.buffer], { type: "application/octet-binary" });
+
+                // NOTE: SaveAsDialog is a browser setting. For example, in Google Chrome,
+                // in Settings/Advanced/Downloads section you have a setting:
+                // 'Ask where to save each file before downloading' - which you can set true/false.
+                // If you enable this setting it would always ask you and bring the SaveAsDialog
+                saveAs(blob, localFSname);
+            }
+        </script>
 	</head>
 	
 	<body>
