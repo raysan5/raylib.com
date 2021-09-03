@@ -66,7 +66,7 @@
                 
                 document.title = "raylib - " + name.replace('_', ' ');
 
-                var codeUrl = 'https://github.com/raysan5/raylib-games/blob/master/classics/src/' + name.substring(7) + '.c';
+                var codeUrl = 'https://github.com/raysan5/raylib-games/blob/master/classics/src/' + name.substring(9) + '.c';
                 var imageUrl = 'img/' + name + '.png';
 
                 // #sampledata filling code: canvas sample and image
@@ -80,7 +80,7 @@
                 Module.canvas = document.getElementById('canvas');
                 Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
             
-                var jsUrl = 'classics/' + name.substring(7) + '.js';
+                var jsUrl = 'classics/' + name.substring(9) + '.js';
             
                 // Run emscripten example
                 $.getScript(jsUrl, function(){});
