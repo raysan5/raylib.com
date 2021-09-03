@@ -80,7 +80,7 @@
                 Module.canvas = document.getElementById('canvas');
                 Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
             
-                var jsUrl = 'samples/' + name.substring(7) + '.js';
+                var jsUrl = 'classics/' + name.substring(7) + '.js';
             
                 // Run emscripten example
                 $.getScript(jsUrl, function(){});
