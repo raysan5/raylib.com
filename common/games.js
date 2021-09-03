@@ -4,16 +4,16 @@ $(document).ready(function() {
     $('.fancybox').fancybox();
 
     var exampleName = [ 
-        'classics_arkanoid',
-        'classics_missile_commander',
-        'classics_gorilas',
-        'classics_snake',
-        'classics_asteroids',
-        'classics_asteroids_survival',
-        'classics_pang',
-        'classics_space_invaders',
-        'classics_floppy',
-        'classics_tetris',
+        'classic_arkanoid',
+        'classic_missile_commander',
+        'classic_gorilas',
+        'classic_snake',
+        'classic_asteroids',
+        'classic_asteroids_survival',
+        'classic_pang',
+        'classic_space_invaders',
+        'classic_floppy',
+        'classic_tetris',
         'game_drturtle',
         'game_just_do',
         'game_skully_escape',
@@ -53,7 +53,7 @@ $(document).ready(function() {
         
         var linkTag;
         
-        if (filterType == 'sample') linkTag = '<a class="fancybox fancybox.iframe" href="games/loader.html?name=' + exampleName[i] + '" title="' + exampleDesc[i] + '">';
+        if (filterType == 'classic') linkTag = '<a class="fancybox fancybox.iframe" href="games/loader.html?name=' + exampleName[i] + '" title="' + exampleDesc[i] + '">';
         else if (filterType == 'game') linkTag = '<a target="_blank" href="games/' + exampleName[i].substring(5) + '.html" title="' + exampleDesc[i] + '">';
 
         $('#container').append(
