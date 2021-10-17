@@ -2,28 +2,36 @@
     // Font loading/unloading functions
     Font GetFontDefault(void);                                                                      // Get the default Font
     Font LoadFont(const char *fileName);                                                            // Load font from file into GPU memory (VRAM)
-    Font LoadFontEx(const char *fileName, int fontSize, int *fontChars, int charsCount);            // Load font from file with extended parameters
+    Font LoadFontEx(const char *fileName, int fontSize, int *fontChars, int glyphCount);            // Load font from file with extended parameters
     Font LoadFontFromImage(Image image, Color key, int firstChar);                                  // Load font from Image (XNA style)
-    Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int charsCount); // Load font from memory buffer
-    CharInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int charsCount, int type);      // Load font data for further use
-    Image GenImageFontAtlas(const CharInfo *chars, Rectangle **recs, int charsCount, int fontSize, int padding, int packMethod);      // Generate image font atlas using chars info
-    void UnloadFontData(CharInfo *chars, int charsCount);                                           // Unload font chars info data (RAM)
+    Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount); // Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
+    GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount, int type);      // Load font data for further use
+    Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **recs, int glyphCount, int fontSize, int padding, int packMethod);      // Generate image font atlas using chars info
+    void UnloadFontData(GlyphInfo *chars, int glyphCount);                                          // Unload font chars info data (RAM)
     void UnloadFont(Font font);                                                                     // Unload Font from GPU memory (VRAM)
 
     // Text drawing functions
     void DrawFPS(int posX, int posY);                                                               // Draw current FPS
     void DrawText(const char *text, int posX, int posY, int fontSize, Color color);                 // Draw text (using default font)
-    void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);                // Draw text using font and additional parameters
-    void DrawTextRec(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint);   // Draw text using font inside rectangle limits
-    void DrawTextRecEx(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint,
-                         int selectStart, int selectLength, Color selectTint, Color selectBackTint);    // Draw text using font inside rectangle limits with support for text selection
+    void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);  // Draw text using font and additional parameters
+    void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
     void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint); // Draw one character (codepoint)
 
     // Text misc. functions
     int MeasureText(const char *text, int fontSize);                                                // Measure string width for default font
     Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing);              // Measure string size for Font
-    int GetGlyphIndex(Font font, int codepoint);                                                    // Get index position for a unicode character on font
-            
+    int GetGlyphIndex(Font font, int codepoint);                                                    // Get glyph index position in font for a codepoint (unicode character), fallback to '?' if not found
+    GlyphInfo GetGlyphInfo(Font font, int codepoint);                                               // Get glyph font info data for a codepoint (unicode character), fallback to '?' if not found
+    Rectangle GetGlyphAtlasRec(Font font, int codepoint);                                           // Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found
+
+    // Text codepoints management functions (unicode characters)
+    int *LoadCodepoints(const char *text, int *count);                                              // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
+    void UnloadCodepoints(int *codepoints);                                                         // Unload codepoints data from memory
+    int GetCodepointCount(const char *text);                                                        // Get total number of codepoints in a UTF-8 encoded string
+    int GetCodepoint(const char *text, int *bytesProcessed);                                        // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+    const char *CodepointToUTF8(int codepoint, int *byteSize);                                      // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
+    char *TextCodepointsToUTF8(int *codepoints, int length);                                        // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
+
     // Text strings management functions (no utf8 strings, only byte chars)         
     // NOTE: Some strings allocate memory internally for returned strings, just be careful!         
     int TextCopy(char *dst, const char *src);                                                       // Copy one string to another, returns bytes copied
@@ -41,11 +49,4 @@
     const char *TextToLower(const char *text);                                                      // Get lower case version of provided string
     const char *TextToPascal(const char *text);                                                     // Get Pascal case notation version of provided string
     int TextToInteger(const char *text);                                                            // Get integer value from text (negative values not supported)
-    char *TextToUtf8(int *codepoints, int length);                                                  // Encode text codepoint into utf8 text (memory must be freed!)
-
-    // UTF8 text strings management functions
-    int *GetCodepoints(const char *text, int *count);                                               // Get all codepoints in a string, codepoints count returned by parameters
-    int GetCodepointsCount(const char *text);                                                       // Get total number of characters (codepoints) in a UTF8 encoded string
-    int GetNextCodepoint(const char *text, int *bytesProcessed);                                    // Returns next codepoint in a UTF8 encoded string; 0x3f('?') is returned on failure
-    const char *CodepointToUtf8(int codepoint, int *byteLength);                                    // Encode codepoint into utf8 text (char array length returned as parameter)
 

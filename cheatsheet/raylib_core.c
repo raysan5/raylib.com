@@ -46,26 +46,26 @@
     bool IsCursorHidden(void);                                              // Check if cursor is not visible
     void EnableCursor(void);                                                // Enables cursor (unlock cursor)
     void DisableCursor(void);                                               // Disables cursor (lock cursor)
-    bool IsCursorOnScreen(void);                                            // Check if cursor is on the current screen.
+    bool IsCursorOnScreen(void);                                            // Check if cursor is on the screen
 
     // Drawing-related functions
     void ClearBackground(Color color);                                      // Set background color (framebuffer clear color)
     void BeginDrawing(void);                                                // Setup canvas (framebuffer) to start drawing
     void EndDrawing(void);                                                  // End canvas drawing and swap buffers (double buffering)
-    void BeginMode2D(Camera2D camera);                                      // Initialize 2D mode with custom camera (2D)
+    void BeginMode2D(Camera2D camera);                                      // Begin 2D mode with custom camera (2D)
     void EndMode2D(void);                                                   // Ends 2D mode with custom camera
-    void BeginMode3D(Camera3D camera);                                      // Initializes 3D mode with custom camera (3D)
+    void BeginMode3D(Camera3D camera);                                      // Begin 3D mode with custom camera (3D)
     void EndMode3D(void);                                                   // Ends 3D mode and returns to default 2D orthographic mode
-    void BeginTextureMode(RenderTexture2D target);                          // Initializes render texture for drawing
+    void BeginTextureMode(RenderTexture2D target);                          // Begin drawing to render texture
     void EndTextureMode(void);                                              // Ends drawing to render texture
     void BeginShaderMode(Shader shader);                                    // Begin custom shader drawing
     void EndShaderMode(void);                                               // End custom shader drawing (use default shader)
-    void BeginBlendMode(int mode);                                          // Begin blending mode (alpha, additive, multiplied)
+    void BeginBlendMode(int mode);                                          // Begin blending mode (alpha, additive, multiplied, subtract, custom)
     void EndBlendMode(void);                                                // End blending mode (reset to default: alpha blending)
     void BeginScissorMode(int x, int y, int width, int height);             // Begin scissor mode (define screen area for following drawing)
     void EndScissorMode(void);                                              // End scissor mode
-    void BeginVrStereoMode(VrStereoConfig config);                          // Begin stereo rendering
-    void EndVrStereoMode(void);                                             // End stereo rendering
+    void BeginVrStereoMode(VrStereoConfig config);                          // Begin stereo rendering (requires VR simulator)
+    void EndVrStereoMode(void);                                             // End stereo rendering (requires VR simulator)
 
     // VR stereo config functions for VR simulator
     VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device);                 // Load VR stereo config for VR simulator device parameters
@@ -79,31 +79,32 @@
     int GetShaderLocationAttrib(Shader shader, const char *attribName);     // Get shader attribute location
     void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType);               // Set shader uniform value
     void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count);   // Set shader uniform value vector
-    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);     // Set shader uniform value (matrix 4x4)
+    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);         // Set shader uniform value (matrix 4x4)
     void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // Set shader uniform value for texture (sampler2d)
     void UnloadShader(Shader shader);                                       // Unload shader from GPU memory (VRAM)
 
     // Screen-space-related functions
-    Ray GetMouseRay(Vector2 mousePosition, Camera camera);                  // Returns a ray trace from mouse position
-    Matrix GetCameraMatrix(Camera camera);                                  // Returns camera transform matrix (view matrix)
-    Matrix GetCameraMatrix2D(Camera2D camera);                              // Returns camera 2d transform matrix
-    Vector2 GetWorldToScreen(Vector3 position, Camera camera);              // Returns the screen space position for a 3d world space position
-    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // Returns size position for a 3d world space position
-    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);          // Returns the screen space position for a 2d camera world space position
-    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);          // Returns the world space position for a 2d camera screen space position
+    Ray GetMouseRay(Vector2 mousePosition, Camera camera);                  // Get a ray trace from mouse position
+    Matrix GetCameraMatrix(Camera camera);                                  // Get camera transform matrix (view matrix)
+    Matrix GetCameraMatrix2D(Camera2D camera);                              // Get camera 2d transform matrix
+    Vector2 GetWorldToScreen(Vector3 position, Camera camera);              // Get the screen space position for a 3d world space position
+    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // Get size position for a 3d world space position
+    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);          // Get the screen space position for a 2d camera world space position
+    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);          // Get the world space position for a 2d camera screen space position
 
     // Timing-related functions
     void SetTargetFPS(int fps);                                             // Set target FPS (maximum)
-    int GetFPS(void);                                                       // Returns current FPS
-    float GetFrameTime(void);                                               // Returns time in seconds for last frame drawn (delta time)
-    double GetTime(void);                                                   // Returns elapsed time in seconds since InitWindow()
-            
-    // Misc. functions          
-    int GetRandomValue(int min, int max);                                   // Returns a random value between min and max (both included)
+    int GetFPS(void);                                                       // Get current FPS
+    float GetFrameTime(void);                                               // Get time in seconds for last frame drawn (delta time)
+    double GetTime(void);                                                   // Get elapsed time in seconds since InitWindow()
+
+    // Misc. functions
+    int GetRandomValue(int min, int max);                                   // Get a random value between min and max (both included)
+    void SetRandomSeed(unsigned int seed);                                  // Set the seed for the random number generator
     void TakeScreenshot(const char *fileName);                              // Takes a screenshot of current screen (filename extension defines format)
     void SetConfigFlags(unsigned int flags);                                // Setup init configuration flags (view FLAGS)
-            
-    void TraceLog(int logLevel, const char *text, ...);                     // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR)
+
+    void TraceLog(int logLevel, const char *text, ...);                     // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
     void SetTraceLogLevel(int logLevel);                                    // Set the current threshold (minimum) log level
     void *MemAlloc(int size);                                               // Internal memory allocator
     void *MemRealloc(void *ptr, int size);                                  // Internal memory reallocator
@@ -122,12 +123,12 @@
     void UnloadFileData(unsigned char *data);                               // Unload file data allocated by LoadFileData()
     bool SaveFileData(const char *fileName, void *data, unsigned int bytesToWrite); // Save data to file from byte array (write), returns true on success
     char *LoadFileText(const char *fileName);                               // Load text data from file (read), returns a '\0' terminated string
-    void UnloadFileText(unsigned char *text);                               // Unload file text data allocated by LoadFileText()
+    void UnloadFileText(char *text);                                        // Unload file text data allocated by LoadFileText()
     bool SaveFileText(const char *fileName, char *text);                    // Save text data to file (write), string must be '\0' terminated, returns true on success
     bool FileExists(const char *fileName);                                  // Check if file exists
     bool DirectoryExists(const char *dirPath);                              // Check if a directory path exists
     bool IsFileExtension(const char *fileName, const char *ext);            // Check file extension (including point: .png, .wav)
-    const char *GetFileExtension(const char *fileName);                     // Get pointer to extension for a filename string (includes dot: ".png")
+    const char *GetFileExtension(const char *fileName);                     // Get pointer to extension for a filename string (includes dot: '.png')
     const char *GetFileName(const char *filePath);                          // Get pointer to filename for a path string
     const char *GetFileNameWithoutExt(const char *filePath);                // Get filename string without extension (uses static string)
     const char *GetDirectoryPath(const char *filePath);                     // Get full path for a given fileName with path (uses static string)
@@ -151,65 +152,65 @@
     void OpenURL(const char *url);                                          // Open URL with default system browser (if available)
 
     // Input-related functions: keyboard
-    bool IsKeyPressed(int key);                                             // Detect if a key has been pressed once
-    bool IsKeyDown(int key);                                                // Detect if a key is being pressed
-    bool IsKeyReleased(int key);                                            // Detect if a key has been released once
-    bool IsKeyUp(int key);                                                  // Detect if a key is NOT being pressed
+    bool IsKeyPressed(int key);                                             // Check if a key has been pressed once
+    bool IsKeyDown(int key);                                                // Check if a key is being pressed
+    bool IsKeyReleased(int key);                                            // Check if a key has been released once
+    bool IsKeyUp(int key);                                                  // Check if a key is NOT being pressed
     void SetExitKey(int key);                                               // Set a custom key to exit program (default is ESC)
-    int GetKeyPressed(void);                                                // Get key pressed (keycode), call it multiple times for keys queued
-    int GetCharPressed(void);                                               // Get char pressed (unicode), call it multiple times for chars queued
+    int GetKeyPressed(void);                                                // Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
+    int GetCharPressed(void);                                               // Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
 
     // Input-related functions: gamepads
-    bool IsGamepadAvailable(int gamepad);                                   // Detect if a gamepad is available
+    bool IsGamepadAvailable(int gamepad);                                   // Check if a gamepad is available
     bool IsGamepadName(int gamepad, const char *name);                      // Check gamepad name (if available)
-    const char *GetGamepadName(int gamepad);                                // Return gamepad internal name id
-    bool IsGamepadButtonPressed(int gamepad, int button);                   // Detect if a gamepad button has been pressed once
-    bool IsGamepadButtonDown(int gamepad, int button);                      // Detect if a gamepad button is being pressed
-    bool IsGamepadButtonReleased(int gamepad, int button);                  // Detect if a gamepad button has been released once
-    bool IsGamepadButtonUp(int gamepad, int button);                        // Detect if a gamepad button is NOT being pressed
+    const char *GetGamepadName(int gamepad);                                // Get gamepad internal name id
+    bool IsGamepadButtonPressed(int gamepad, int button);                   // Check if a gamepad button has been pressed once
+    bool IsGamepadButtonDown(int gamepad, int button);                      // Check if a gamepad button is being pressed
+    bool IsGamepadButtonReleased(int gamepad, int button);                  // Check if a gamepad button has been released once
+    bool IsGamepadButtonUp(int gamepad, int button);                        // Check if a gamepad button is NOT being pressed
     int GetGamepadButtonPressed(void);                                      // Get the last gamepad button pressed
-    int GetGamepadAxisCount(int gamepad);                                   // Return gamepad axis count for a gamepad
-    float GetGamepadAxisMovement(int gamepad, int axis);                    // Return axis movement value for a gamepad axis
+    int GetGamepadAxisCount(int gamepad);                                   // Get gamepad axis count for a gamepad
+    float GetGamepadAxisMovement(int gamepad, int axis);                    // Get axis movement value for a gamepad axis
     int SetGamepadMappings(const char *mappings);                           // Set internal gamepad mappings (SDL_GameControllerDB)
 
     // Input-related functions: mouse
-    bool IsMouseButtonPressed(int button);                                  // Detect if a mouse button has been pressed once
-    bool IsMouseButtonDown(int button);                                     // Detect if a mouse button is being pressed
-    bool IsMouseButtonReleased(int button);                                 // Detect if a mouse button has been released once
-    bool IsMouseButtonUp(int button);                                       // Detect if a mouse button is NOT being pressed
-    int GetMouseX(void);                                                    // Returns mouse position X
-    int GetMouseY(void);                                                    // Returns mouse position Y
-    Vector2 GetMousePosition(void);                                         // Returns mouse position XY
+    bool IsMouseButtonPressed(int button);                                  // Check if a mouse button has been pressed once
+    bool IsMouseButtonDown(int button);                                     // Check if a mouse button is being pressed
+    bool IsMouseButtonReleased(int button);                                 // Check if a mouse button has been released once
+    bool IsMouseButtonUp(int button);                                       // Check if a mouse button is NOT being pressed
+    int GetMouseX(void);                                                    // Get mouse position X
+    int GetMouseY(void);                                                    // Get mouse position Y
+    Vector2 GetMousePosition(void);                                         // Get mouse position XY
+    Vector2 GetMouseDelta(void);                                            // Get mouse delta between frames
     void SetMousePosition(int x, int y);                                    // Set mouse position XY
     void SetMouseOffset(int offsetX, int offsetY);                          // Set mouse offset
     void SetMouseScale(float scaleX, float scaleY);                         // Set mouse scaling
-    float GetMouseWheelMove(void);                                          // Returns mouse wheel movement Y
+    float GetMouseWheelMove(void);                                          // Get mouse wheel movement Y
     void SetMouseCursor(int cursor);                                        // Set mouse cursor
 
     // Input-related functions: touch
-    int GetTouchX(void);                                                    // Returns touch position X for touch point 0 (relative to screen size)
-    int GetTouchY(void);                                                    // Returns touch position Y for touch point 0 (relative to screen size)
-    Vector2 GetTouchPosition(int index);                                    // Returns touch position XY for a touch point index (relative to screen size)
+    int GetTouchX(void);                                                    // Get touch position X for touch point 0 (relative to screen size)
+    int GetTouchY(void);                                                    // Get touch position Y for touch point 0 (relative to screen size)
+    Vector2 GetTouchPosition(int index);                                    // Get touch position XY for a touch point index (relative to screen size)
+    int GetTouchPointId(int index);                                         // Get touch point identifier for given index
+    int GetTouchPointCount(void);                                           // Get number of touch points
 
-    // Gestures and Touch Handling Functions (Module: gestures)
+    // Gestures and Touch Handling Functions (Module: rgestures)
     void SetGesturesEnabled(unsigned int flags);                            // Enable a set of gestures using flags
     bool IsGestureDetected(int gesture);                                    // Check if a gesture have been detected
     int GetGestureDetected(void);                                           // Get latest detected gesture
-    int GetTouchPointsCount(void);                                          // Get touch points count
     float GetGestureHoldDuration(void);                                     // Get gesture hold time in milliseconds
     Vector2 GetGestureDragVector(void);                                     // Get gesture drag vector
     float GetGestureDragAngle(void);                                        // Get gesture drag angle
     Vector2 GetGesturePinchVector(void);                                    // Get gesture pinch delta
     float GetGesturePinchAngle(void);                                       // Get gesture pinch angle
 
-    // Camera System Functions (Module: camera)
+    // Camera System Functions (Module: rcamera)
     void SetCameraMode(Camera camera, int mode);                            // Set camera mode (multiple camera modes available)
     void UpdateCamera(Camera *camera);                                      // Update camera position for selected mode
 
     void SetCameraPanControl(int keyPan);                                   // Set camera pan key to combine with mouse movement (free camera)
     void SetCameraAltControl(int keyAlt);                                   // Set camera alt key to combine with mouse movement (free camera)
     void SetCameraSmoothZoomControl(int keySmoothZoom);                     // Set camera smooth zoom key to combine with mouse (free camera)
-    void SetCameraMoveControls(int frontKey, int backKey, 
-                               int rightKey, int leftKey, 
-                               int upKey, int downKey);                     // Set camera move controls (1st person and 3rd person cameras)
+    void SetCameraMoveControls(int keyFront, int keyBack, int keyRight, int keyLeft, int keyUp, int keyDown); // Set camera move controls (1st person and 3rd person cameras)
 

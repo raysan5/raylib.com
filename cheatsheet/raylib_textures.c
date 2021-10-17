@@ -5,6 +5,8 @@
     Image LoadImageRaw(const char *fileName, int width, int height, int format, int headerSize);       // Load image from RAW file data
     Image LoadImageAnim(const char *fileName, int *frames);                                            // Load image sequence from file (frames appended to image.data)
     Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);      // Load image from memory buffer
+    Image LoadImageFromTexture(Texture2D texture);                                                     // Load image from GPU texture data
+    Image LoadImageFromScreen(void);                                                                   // Load image from screen buffer and (screenshot)
     void UnloadImage(Image image);                                                                     // Unload image from CPU memory (RAM)
     bool ExportImage(Image image, const char *fileName);                                               // Export image data to file, returns true on success
     bool ExportImageAsCode(Image image, const char *fileName);                                         // Export image as code file defining an array of bytes, returns true on success
@@ -16,7 +18,6 @@
     Image GenImageGradientRadial(int width, int height, float density, Color inner, Color outer);      // Generate image: radial gradient
     Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);    // Generate image: checked
     Image GenImageWhiteNoise(int width, int height, float factor);                                     // Generate image: white noise
-    Image GenImagePerlinNoise(int width, int height, int offsetX, int offsetY, float scale);           // Generate image: perlin noise
     Image GenImageCellular(int width, int height, int tileSize);                                       // Generate image: cellular algorithm. Bigger tileSize means bigger cells
 
     // Image manipulation functions
@@ -51,6 +52,7 @@
     void UnloadImageColors(Color *colors);                                                             // Unload color data loaded with LoadImageColors()
     void UnloadImagePalette(Color *colors);                                                            // Unload colors palette loaded with LoadImagePalette()
     Rectangle GetImageAlphaBorder(Image image, float threshold);                                       // Get image alpha border rectangle
+    Color GetImageColor(Image image, int x, int y);                                                    // Get image pixel color at (x, y) position
 
     // Image drawing functions
     // NOTE: Image software-rendering functions (CPU)
@@ -79,8 +81,6 @@
     void UnloadRenderTexture(RenderTexture2D target);                                                  // Unload render texture from GPU memory (VRAM)
     void UpdateTexture(Texture2D texture, const void *pixels);                                         // Update GPU texture with new data
     void UpdateTextureRec(Texture2D texture, Rectangle rec, const void *pixels);                       // Update GPU texture rectangle with new data
-    Image GetTextureData(Texture2D texture);                                                           // Get pixel data from GPU texture and return an Image
-    Image GetScreenData(void);                                                                         // Get pixel data from screen buffer and return an Image (screenshot)
 
     // Texture configuration functions
     void GenTextureMipmaps(Texture2D *texture);                                                        // Generate GPU mipmaps for a texture
@@ -107,7 +107,7 @@
     Color ColorFromHSV(float hue, float saturation, float value);                                      // Returns a Color from HSV values, hue [0..360], saturation/value [0..1]
     Color ColorAlpha(Color color, float alpha);                                                        // Returns color with alpha applied, alpha goes from 0.0f to 1.0f
     Color ColorAlphaBlend(Color dst, Color src, Color tint);                                           // Returns src alpha-blended into dst color with tint
-    Color GetColor(int hexValue);                                                                      // Get Color structure from hexadecimal value
+    Color GetColor(unsigned int hexValue);                                                             // Get Color structure from hexadecimal value
     Color GetPixelColor(void *srcPtr, int format);                                                     // Get Color from a source pixel pointer of certain format
     void SetPixelColor(void *dstPtr, Color color, int format);                                         // Set color formatted into destination pixel pointer
     int GetPixelDataSize(int width, int height, int format);                                           // Get pixel data size in bytes for certain format

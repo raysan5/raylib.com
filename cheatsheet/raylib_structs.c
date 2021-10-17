@@ -13,7 +13,7 @@
                             // NOTE: Data stored in GPU memory (VRAM)
     struct RenderTexture;   // RenderTexture type, for texture rendering
     struct NPatchInfo;      // N-Patch layout info
-    struct CharInfo;        // Font character info
+    struct GlyphInfo;       // Font character glyph info
     struct Font;            // Font type, includes texture and chars data
     
     struct Camera;          // Camera type, defines 3d camera position/orientation
@@ -27,7 +27,7 @@
     struct BoneInfo;        // Bone information
     struct ModelAnimation;  // Model animation data (bones and frames)
     struct Ray;             // Ray type (useful for raycast)
-    struct RayHitInfo;      // Raycast hit information
+    struct RayCollision;    // Raycast hit information
     struct BoundingBox;     // Bounding box type for 3d mesh
     
     struct Wave;            // Wave type, defines audio wave data
