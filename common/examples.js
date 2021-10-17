@@ -1,10 +1,11 @@
 $(document).ready(function() {
-    
+
     // Init fancybox
     $('.fancybox').fancybox();
 
-    var exampleName = [ 
+    var exampleName = [
         'core_basic_window',
+        'core_basic_screen_manager',
         'core_input_keys',
         'core_input_mouse',
         'core_input_mouse_wheel',
@@ -28,6 +29,9 @@ $(document).ready(function() {
         'core_loading_thread',
         'core_quat_conversion',
         'core_window_flags',
+        'core_split_screen',
+        'core_smooth_pixelperfect',
+        'core_custom_frame_control',
         'shapes_basic_shapes',
         'shapes_bouncing_ball',
         'shapes_colors_palette',
@@ -84,6 +88,8 @@ $(document).ready(function() {
         'models_mesh_generation',
         'models_mesh_picking',
         'models_loading',
+        'models_loading_vox',
+        'models_loading_gltf',
         'models_orthographic_projection',
         'models_rlgl_solar_system',
         'models_skybox',
@@ -98,6 +104,7 @@ $(document).ready(function() {
         'shaders_raymarching',
         'shaders_texture_drawing',
         'shaders_texture_waves',
+        'shaders_texture_outline',
         'shaders_julia_set',
         'shaders_eratosthenes',
         'shaders_basic_lighting',
@@ -123,10 +130,10 @@ $(document).ready(function() {
         var filterType = exampleName[i].substring(0, exampleName[i].indexOf("_"));
         var exampleBase = exampleName[i].slice(exampleName[i].indexOf('_') + 1);
         var exampleDesc = exampleBase.replace('_', ' ');
-        
+
         $('#container').append(
             '<div class="mix f' + filterType + '">' +
-            '<a class="fancybox fancybox.iframe" href="examples/web/' + filterType + '/' + 'loader.html?name=' + exampleName[i] + '" title="' + exampleDesc + '">' +
+            '<a class="fancybox fancybox.iframe" href="examples/' + filterType + '/' + 'loader.html?name=' + exampleName[i] + '" title="' + exampleDesc + '">' +
             '<img width="400" height="225" src="https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + filterType + '/' + exampleName[i] + '.png"><div class="extext"><p>' + exampleDesc + '</p></div></a>' +
             '</div>');
 
