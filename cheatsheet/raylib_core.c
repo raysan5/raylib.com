@@ -142,13 +142,17 @@
     void ClearDroppedFiles(void);                                           // Clear dropped files paths buffer (free memory)
     long GetFileModTime(const char *fileName);                              // Get file modification time (last write time)
 
+    // Compression/Encoding functionality
     unsigned char *CompressData(unsigned char *data, int dataLength, int *compDataLength);        // Compress data (DEFLATE algorithm)
     unsigned char *DecompressData(unsigned char *compData, int compDataLength, int *dataLength);  // Decompress data (DEFLATE algorithm)
+    char *EncodeDataBase64(const unsigned char *data, int dataLength, int *outputLength);         // Encode data to Base64 string
+    unsigned char *DecodeDataBase64(unsigned char *data, int *outputLength);                      // Decode Base64 string data
 
     // Persistent storage management
     bool SaveStorageValue(unsigned int position, int value);                // Save integer value to storage file (to defined position), returns true on success
     int LoadStorageValue(unsigned int position);                            // Load integer value from storage file (from defined position)
 
+    // Misc.
     void OpenURL(const char *url);                                          // Open URL with default system browser (if available)
 
     // Input-related functions: keyboard
