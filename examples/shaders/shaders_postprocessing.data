@@ -6849,9 +6849,9 @@ void main()
 {
     // Texel color fetching from texture sampler
     vec4 texelColor = texture2D(texture0, fragTexCoord);
-    
+
     // NOTE: Implement here your fragment shader code
-    
+
     gl_FragColor = texelColor*colDiffuse;
 }#version 100
 
@@ -6868,14 +6868,14 @@ uniform mat4 mvp;
 varying vec2 fragTexCoord;
 varying vec4 fragColor;
 
-// NOTE: Add here your custom variables 
+// NOTE: Add here your custom variables
 
 void main()
 {
     // Send vertex attributes to fragment shader
     fragTexCoord = vertexTexCoord;
     fragColor = vertexColor;
-    
+
     // Calculate final vertex position
     gl_Position = mvp*vec4(vertexPosition, 1.0);
 }#version 100
@@ -6945,10 +6945,11 @@ attribute vec2 vertexTexCoord;
 attribute vec3 vertexNormal;
 attribute vec4 vertexColor;
 
-attribute mat4 instance;
+attribute mat4 instanceTransform;
 
 // Input uniform values
 uniform mat4 mvp;
+uniform mat4 matNormal;
 
 // Output vertex attributes (to fragment shader)
 varying vec3 fragPosition;
@@ -6958,43 +6959,16 @@ varying vec3 fragNormal;
 
 // NOTE: Add here your custom variables
 
-// https://github.com/glslify/glsl-inverse
-mat3 inverse(mat3 m)
-{
-  float a00 = m[0][0], a01 = m[0][1], a02 = m[0][2];
-  float a10 = m[1][0], a11 = m[1][1], a12 = m[1][2];
-  float a20 = m[2][0], a21 = m[2][1], a22 = m[2][2];
-
-  float b01 = a22*a11 - a12*a21;
-  float b11 = -a22*a10 + a12*a20;
-  float b21 = a21*a10 - a11*a20;
-
-  float det = a00*b01 + a01*b11 + a02*b21;
-
-  return mat3(b01, (-a22*a01 + a02*a21), (a12*a01 - a02*a11),
-              b11, (a22*a00 - a02*a20), (-a12*a00 + a02*a10),
-              b21, (-a21*a00 + a01*a20), (a11*a00 - a01*a10))/det;
-}
-
-// https://github.com/glslify/glsl-transpose
-mat3 transpose(mat3 m)
-{
-  return mat3(m[0][0], m[1][0], m[2][0],
-              m[0][1], m[1][1], m[2][1],
-              m[0][2], m[1][2], m[2][2]);
-}
-
 void main()
 {
+    // Compute MVP for current instance
+    mat4 mvpi = mvp*instanceTransform;
+
     // Send vertex attributes to fragment shader
-    fragPosition = vec3(instance*vec4(vertexPosition, 1.0));
+    fragPosition = vec3(mvpi*vec4(vertexPosition, 1.0));
     fragTexCoord = vertexTexCoord;
     fragColor = vertexColor;
-
-    mat3 normalMatrix = transpose(inverse(mat3(instance)));
-    fragNormal = normalize(normalMatrix*vertexNormal);
-
-    mat4 mvpi = mvp*instance;
+    fragNormal = normalize(vec3(matNormal*vec4(vertexNormal, 1.0)));
 
     // Calculate final vertex position
     gl_Position = mvpi*vec4(vertexPosition, 1.0);
@@ -7058,14 +7032,14 @@ const float renderHeight = 450.0;
 vec3 offset = vec3(0.0, 1.3846153846, 3.2307692308);
 vec3 weight = vec3(0.2270270270, 0.3162162162, 0.0702702703);
 
-void main() 
-{ 
+void main()
+{
     // Texel color fetching from texture sampler
     vec3 tc = texture2D(texture0, fragTexCoord).rgb*weight.x;
-    
+
     tc += texture2D(texture0, fragTexCoord + vec2(offset.y)/renderWidth, 0.0).rgb*weight.y;
     tc += texture2D(texture0, fragTexCoord - vec2(offset.y)/renderWidth, 0.0).rgb*weight.y;
-    
+
     tc += texture2D(texture0, fragTexCoord + vec2(offset.z)/renderWidth, 0.0).rgb*weight.z;
     tc += texture2D(texture0, fragTexCoord - vec2(offset.z)/renderWidth, 0.0).rgb*weight.z;
 
@@ -7090,10 +7064,10 @@ void main()
     // Texel color fetching from texture sampler
     vec4 texelColor0 = texture2D(texture0, fragTexCoord);
     vec4 texelColor1 = texture2D(texture1, fragTexCoord);
-    
+
     float x = fract(fragTexCoord.s);
     float final = smoothstep(divider - 0.1, divider + 0.1, x);
-    
+
     gl_FragColor = mix(texelColor0, texelColor1, final);
 }
 # version 100
@@ -7116,27 +7090,27 @@ float lumThreshold02 = 0.7;
 float lumThreshold03 = 0.5;
 float lumThreshold04 = 0.3;
 
-void main() 
+void main()
 {
     vec3 tc = vec3(1.0, 1.0, 1.0);
     float lum = length(texture2D(texture0, fragTexCoord).rgb);
 
-    if (lum < lumThreshold01) 
+    if (lum < lumThreshold01)
     {
         if (mod(gl_FragCoord.x + gl_FragCoord.y, 10.0) == 0.0) tc = vec3(0.0, 0.0, 0.0);
-    }  
+    }
 
-    if (lum < lumThreshold02) 
+    if (lum < lumThreshold02)
     {
         if (mod(gl_FragCoord .x - gl_FragCoord .y, 10.0) == 0.0) tc = vec3(0.0, 0.0, 0.0);
-    }  
+    }
 
-    if (lum < lumThreshold03) 
+    if (lum < lumThreshold03)
     {
         if (mod(gl_FragCoord .x + gl_FragCoord .y - hatchOffsetY, 10.0) == 0.0) tc = vec3(0.0, 0.0, 0.0);
-    }  
+    }
 
-    if (lum < lumThreshold04) 
+    if (lum < lumThreshold04)
     {
         if (mod(gl_FragCoord .x - gl_FragCoord .y - hatchOffsetY, 10.0) == 0.0) tc = vec3(0.0, 0.0, 0.0);
     }
@@ -7173,12 +7147,12 @@ vec4 PostFX(sampler2D tex, vec2 uv)
 
     int remX = int(mod(cPos.x, size));
     int remY = int(mod(cPos.y, size));
-    
+
     if (remX == 0 && remY == 0) tlPos = cPos;
-    
+
     vec2 blPos = tlPos;
     blPos.y += (size - 1.0);
-    
+
     if ((remX == remY) || (((int(cPos.x) - int(blPos.x)) == (int(blPos.y) - int(cPos.y)))))
     {
         if (invert == 1) c = vec4(0.2, 0.15, 0.05, 1.0);
@@ -7189,7 +7163,7 @@ vec4 PostFX(sampler2D tex, vec2 uv)
         if (invert == 1) c = texture2D(tex, tlPos * vec2(1.0/renderWidth, 1.0/renderHeight)) * 1.4;
         else c = vec4(0.0, 0.0, 0.0, 1.0);
     }
-    
+
     return c;
 }
 
@@ -7217,21 +7191,21 @@ vec2 VectorRotateTime(vec2 v, float speed)
 {
     float time = uTime*speed;
     float localTime = fract(time);  // The time domain this works on is 1 sec.
-    
+
     if ((localTime >= 0.0) && (localTime < 0.25)) angle = 0.0;
     else if ((localTime >= 0.25) && (localTime < 0.50)) angle = PI/4.0*sin(2.0*PI*localTime - PI/2.0);
     else if ((localTime >= 0.50) && (localTime < 0.75)) angle = PI*0.25;
     else if ((localTime >= 0.75) && (localTime < 1.00)) angle = PI/4.0*sin(2.0*PI*localTime);
-    
+
     // Rotate vector by angle
     v -= 0.5;
     v =  mat2(cos(angle), -sin(angle), sin(angle), cos(angle))*v;
     v += 0.5;
-    
+
     return v;
 }
 
-float Rectangle(in vec2 st, in float size, in float fill) 
+float Rectangle(in vec2 st, in float size, in float fill)
 {
   float roundSize = 0.5 - size/2.0;
   float left = step(roundSize, st.x);
@@ -7243,7 +7217,7 @@ float Rectangle(in vec2 st, in float size, in float fill)
 }
 
 void main()
-{ 
+{
     vec2 fragPos = fragTexCoord;
     fragPos.xy += uTime/9.0;
 
@@ -7252,7 +7226,7 @@ void main()
     vec2 fpos = fract(fragPos);  // Get the fractional coords
 
     fpos = VectorRotateTime(fpos, 0.2);
-    
+
     float alpha = Rectangle(fpos, 0.216, 1.0);
     vec3 color = vec3(0.3, 0.3, 0.3);
 
@@ -7279,7 +7253,7 @@ void main()
 
     // Linearize depth value
     float depth = (2.0*zNear)/(zFar + zNear - z*(zFar - zNear));
-    
+
     // Calculate final fragment color
     gl_FragColor = vec4(depth, depth, depth, 1.0f);
 }#version 100
@@ -7307,13 +7281,13 @@ void main()
     // The following two variables need to be set per eye
     vec2 LensCenter = fragTexCoord.x < 0.5 ? LeftLensCenter : RightLensCenter;
     vec2 ScreenCenter = fragTexCoord.x < 0.5 ? LeftScreenCenter : RightScreenCenter;
-    
+
     // Scales input texture coordinates for distortion: vec2 HmdWarp(vec2 fragTexCoord, vec2 LensCenter)
     vec2 theta = (fragTexCoord - LensCenter)*ScaleIn;   // Scales to [-1, 1]
     float rSq = theta.x*theta.x + theta.y*theta.y;
     vec2 theta1 = theta*(HmdWarpParam.x + HmdWarpParam.y*rSq + HmdWarpParam.z*rSq*rSq + HmdWarpParam.w*rSq*rSq*rSq);
     //vec2 tc = LensCenter + Scale*theta1;
-    
+
     // Detect whether blue texture coordinates are out of range since these will scaled out the furthest
     vec2 thetaBlue = theta1*(ChromaAbParam.z + ChromaAbParam.w*rSq);
     vec2 tcBlue = LensCenter + Scale*thetaBlue;
@@ -7385,7 +7359,7 @@ precision mediump float;
   Each integer is tested to see if it is a prime number.  Primes are colored white.
   Non-primes are colored with a color that indicates the smallest factor which evenly divdes our integer.
 
-  You can change the scale variable to make a larger or smaller grid.  
+  You can change the scale variable to make a larger or smaller grid.
   Total number of integers displayed = scale squared, so scale = 100 tests the first 10,000 integers.
 
   WARNING: If you make scale too large, your GPU may bog down!
@@ -7401,11 +7375,11 @@ vec4 Colorizer(float counter, float maxSize)
 {
     float red = 0.0, green = 0.0, blue = 0.0;
     float normsize = counter/maxSize;
-    
+
     red = smoothstep(0.3, 0.7, normsize);
     green = sin(3.14159*normsize);
     blue = 1.0 - smoothstep(0.0, 0.4, normsize);
-    
+
     return vec4(0.8*red, 0.8*green, 0.8*blue, 1.0);
 }
 
@@ -7415,7 +7389,7 @@ void main()
     float scale = 1000.0; // Makes 100x100 square grid. Change this variable to make a smaller or larger grid.
     float value = scale*floor(fragTexCoord.y*scale) + floor(fragTexCoord.x*scale);  // Group pixels into boxes representing integer values
     int valuei = int(value);
-    
+
     //if ((valuei == 0) || (valuei == 1) || (valuei == 2)) gl_FragColor = vec4(1.0);
     //else
     {
@@ -7457,7 +7431,7 @@ void main()
     vec2 uv = vec2(0.0);
     vec2 xy = 2.0 * fragTexCoord.xy - 1.0;
     float d = length(xy);
-    
+
     if (d < (2.0 - maxFactor))
     {
         d = length(xy * maxFactor);
@@ -7530,7 +7504,7 @@ void main()
         if (lights[i].enabled == 1)
         {
             vec3 light = vec3(0.0);
-            
+
             if (lights[i].type == LIGHT_DIRECTIONAL) light = -normalize(lights[i].target - lights[i].position);
             if (lights[i].type == LIGHT_POINT) light = normalize(lights[i].position - fragPosition);
 
@@ -7545,10 +7519,10 @@ void main()
 
     vec4 finalColor = (texelColor*((colDiffuse + vec4(specular,1))*vec4(lightDot, 1.0)));
     finalColor += texelColor*(ambient/10.0);
-    
+
     // Gamma correction
     finalColor = pow(finalColor, vec4(1.0/2.2));
-    
+
     // Fog calculation
     float dist = length(viewPos - fragPosition);
 
@@ -7586,10 +7560,10 @@ void main()
 {
     // Texel color fetching from texture sampler
     vec4 texelColor = texture2D(texture0, fragTexCoord)*colDiffuse*fragColor;
-    
+
     // Convert texel color to grayscale using NTSC conversion weights
     float gray = dot(texelColor.rgb, vec3(0.299, 0.587, 0.114));
-    
+
     // Calculate final fragment color
     gl_FragColor = vec4(gray, gray, gray, texelColor.a);
 }#version 100
@@ -7646,7 +7620,7 @@ void main()
       We use dot product (z.x * z.x + z.y * z.y) to determine the magnitude (length) squared.
       And once the magnitude squared is > 4, then magnitude > 2 is also true (saves computational power).
     *************************************************************************************************/
-    
+
     // The pixel coordinates are scaled so they are on the mandelbrot scale
     // NOTE: fragTexCoord already comes as normalized screen coordinates but offset must be normalized before scaling and zoom
     vec2 z = vec2((fragTexCoord.x + offset.x/screenDims.x)*2.5/zoom, (fragTexCoord.y + offset.y/screenDims.y)*1.5/zoom);
@@ -7664,10 +7638,10 @@ void main()
     // See http://linas.org/art-gallery/escape/escape.html for more information.
     z = ComplexSquare(z) + c;
     z = ComplexSquare(z) + c;
-    
+
     // This last part smooths the color (again see link above).
     float smoothVal = float(iter) + 1.0 - (log(log(length(z)))/log(2.0));
-    
+
     // Normalize the value so it is between 0 and 1.
     float norm = smoothVal/float(MAX_ITERATIONS);
 
@@ -7730,17 +7704,17 @@ void main()
         if (lights[i].enabled == 1)
         {
             vec3 light = vec3(0.0);
-            
-            if (lights[i].type == LIGHT_DIRECTIONAL) 
+
+            if (lights[i].type == LIGHT_DIRECTIONAL)
             {
                 light = -normalize(lights[i].target - lights[i].position);
             }
-            
-            if (lights[i].type == LIGHT_POINT) 
+
+            if (lights[i].type == LIGHT_POINT)
             {
                 light = normalize(lights[i].position - fragPosition);
             }
-            
+
             float NdotL = max(dot(normal, light), 0.0);
             lightDot += lights[i].color.rgb*NdotL;
 
@@ -7752,7 +7726,7 @@ void main()
 
     vec4 finalColor = (texelColor*((colDiffuse + vec4(specular, 1.0))*vec4(lightDot, 1.0)));
     finalColor += texelColor*(ambient/10.0);
-    
+
     // Gamma correction
     gl_FragColor = pow(finalColor, vec4(1.0/2.2));
 }
@@ -7796,26 +7770,23 @@ uniform vec2 textureSize;
 uniform float outlineSize;
 uniform vec4 outlineColor;
 
-// Output fragment color
-out vec4 finalColor;
-
 void main()
 {
-	vec4 texel = texture2D(texture0, fragTexCoord);   // Get texel color
-	vec2 texelScale = vec2(0.0);
+    vec4 texel = texture2D(texture0, fragTexCoord);   // Get texel color
+    vec2 texelScale = vec2(0.0);
     texelScale.x = outlineSize/textureSize.x;
     texelScale.y = outlineSize/textureSize.y;
 
-	// We sample four corner texels, but only for the alpha channel (this is for the outline)
-	vec4 corners = vec4(0.0);
-	corners.x = texture2D(texture0, fragTexCoord + vec2(texelScale.x, texelScale.y)).a;
-	corners.y = texture2D(texture0, fragTexCoord + vec2(texelScale.x, -texelScale.y)).a;
-	corners.z = texture2D(texture0, fragTexCoord + vec2(-texelScale.x, texelScale.y)).a;
-	corners.w = texture2D(texture0, fragTexCoord + vec2(-texelScale.x, -texelScale.y)).a;
-	
-	float outline = min(dot(corners, vec4(1.0)), 1.0);
-	vec4 color = mix(vec4(0.0), outlineColor, outline);
-	gl_FragColor = mix(color, texel, texel.a);
+    // We sample four corner texels, but only for the alpha channel (this is for the outline)
+    vec4 corners = vec4(0.0);
+    corners.x = texture2D(texture0, fragTexCoord + vec2(texelScale.x, texelScale.y)).a;
+    corners.y = texture2D(texture0, fragTexCoord + vec2(texelScale.x, -texelScale.y)).a;
+    corners.z = texture2D(texture0, fragTexCoord + vec2(-texelScale.x, texelScale.y)).a;
+    corners.w = texture2D(texture0, fragTexCoord + vec2(-texelScale.x, -texelScale.y)).a;
+
+    float outline = min(dot(corners, vec4(1.0)), 1.0);
+    vec4 color = mix(vec4(0.0), outlineColor, outline);
+    gl_FragColor = mix(color, texel, texel.a);
 }#version 100
 
 precision mediump float;
@@ -7838,9 +7809,9 @@ void main()
     // Convert the (normalized) texel color RED component (GB would work, too)
     // to the palette index by scaling up from [0, 1] to [0, 255].
     int index = int(texelColor.r*255.0);
-    
+
     ivec3 color = ivec3(0);
-    
+
     // NOTE: On GLSL 100 we are not allowed to index a uniform array by a variable value,
     // a constantmust be used, so this logic...
     if (index == 0) color = palette[0];
@@ -7869,7 +7840,7 @@ varying vec4 fragColor;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
-// NOTE: Add here your custom variables 
+// NOTE: Add here your custom variables
 
 // NOTE: Render size values must be passed from code
 const float renderWidth = 800.0;
@@ -7878,13 +7849,13 @@ const float renderHeight = 450.0;
 float pixelWidth = 5.0;
 float pixelHeight = 5.0;
 
-void main() 
-{ 
+void main()
+{
     float dx = pixelWidth*(1.0/renderWidth);
     float dy = pixelHeight*(1.0/renderHeight);
-    
+
     vec2 coord = vec2(dx*floor(fragTexCoord.x/dx), dy*floor(fragTexCoord.y/dy));
-    
+
     vec3 tc = texture2D(texture0, coord).rgb;
 
     gl_FragColor = vec4(tc, 1.0);
@@ -7905,16 +7876,16 @@ uniform vec4 colDiffuse;
 float gamma = 0.6;
 float numColors = 8.0;
 
-void main() 
-{ 
+void main()
+{
     vec3 color = texture2D(texture0, fragTexCoord.xy).rgb;
-    
+
     color = pow(color, vec3(gamma, gamma, gamma));
     color = color*numColors;
     color = floor(color);
     color = color/numColors;
     color = pow(color, vec3(1.0/gamma));
-    
+
     gl_FragColor = vec4(color, 1.0);
 }#version 100
 
@@ -7930,18 +7901,18 @@ uniform vec4 colDiffuse;
 
 // NOTE: Add here your custom variables
 
-void main() 
+void main()
 {
     vec3 color = texture2D(texture0, fragTexCoord).rgb;
     vec3 colors[3];
     colors[0] = vec3(0.0, 0.0, 1.0);
     colors[1] = vec3(1.0, 1.0, 0.0);
     colors[2] = vec3(1.0, 0.0, 0.0);
-    
+
     float lum = (color.r + color.g + color.b)/3.0;
 
     vec3 tc = vec3(0.0, 0.0, 0.0);
-    
+
     if (lum < 0.5) tc = mix(colors[0], colors[1], lum/0.5);
     else tc = mix(colors[1], colors[2], (lum - 0.5)/0.5);
 
@@ -7955,7 +7926,7 @@ varying vec2 fragTexCoord;
 varying vec4 fragColor;
 
 uniform vec3 viewEye;
-uniform vec3 viewCenter; 
+uniform vec3 viewCenter;
 uniform float runTime;
 uniform vec2 resolution;
 
@@ -7979,7 +7950,7 @@ uniform vec2 resolution;
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// A list of useful distance function to simple primitives, and an example on how to 
+// A list of useful distance function to simple primitives, and an example on how to
 // do some interesting boolean operations, repetition and displacement.
 //
 // More info here: http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
@@ -8090,7 +8061,7 @@ float sdPryamid4(vec3 p, vec3 h ) // h = { cos a, sin a, height }
 {
     // Tetrahedron = Octahedron - Cube
     float box = sdBox( p - vec3(0,-2.0*h.z,0), vec3(2.0*h.z) );
- 
+
     float d = 0.0;
     d = max( d, abs( dot(p, vec3( -h.x, h.y, 0 )) ));
     d = max( d, abs( dot(p, vec3(  h.x, h.y, 0 )) ));
@@ -8185,7 +8156,7 @@ vec2 map( in vec3 pos )
     res = opU( res, vec2( 0.5*sdTorus( opTwist(pos-vec3(-2.0,0.25, 2.0)),vec2(0.20,0.05)), 46.7 ) );
     res = opU( res, vec2( sdConeSection( pos-vec3( 0.0,0.35,-2.0), 0.15, 0.2, 0.1 ), 13.67 ) );
     res = opU( res, vec2( sdEllipsoid( pos-vec3( 1.0,0.35,-2.0), vec3(0.15, 0.2, 0.05) ), 43.17 ) );
-        
+
     return res;
 }
 
@@ -8193,14 +8164,14 @@ vec2 castRay( in vec3 ro, in vec3 rd )
 {
     float tmin = 0.2;
     float tmax = 30.0;
-   
+
 #if 1
     // bounding volume
     float tp1 = (0.0-ro.y)/rd.y; if( tp1>0.0 ) tmax = min( tmax, tp1 );
     float tp2 = (1.6-ro.y)/rd.y; if( tp2>0.0 ) { if( ro.y>1.6 ) tmin = max( tmin, tp2 );
                                                  else           tmax = min( tmax, tp2 ); }
 #endif
-    
+
     float t = tmin;
     float m = -1.0;
     for( int i=0; i<64; i++ )
@@ -8234,9 +8205,9 @@ float calcSoftshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax )
 vec3 calcNormal( in vec3 pos )
 {
     vec2 e = vec2(1.0,-1.0)*0.5773*0.0005;
-    return normalize( e.xyy*map( pos + e.xyy ).x + 
-                      e.yyx*map( pos + e.yyx ).x + 
-                      e.yxy*map( pos + e.yxy ).x + 
+    return normalize( e.xyy*map( pos + e.xyy ).x +
+                      e.yyx*map( pos + e.yyx ).x +
+                      e.yxy*map( pos + e.yxy ).x +
                       e.xxx*map( pos + e.xxx ).x );
     /*
     vec3 eps = vec3( 0.0005, 0.0, 0.0 );
@@ -8260,7 +8231,7 @@ float calcAO( in vec3 pos, in vec3 nor )
         occ += -(dd-hr)*sca;
         sca *= 0.95;
     }
-    return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
+    return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );
 }
 
 // http://iquilezles.org/www/articles/checkerfiltering/checkerfiltering.htm
@@ -8271,11 +8242,11 @@ float checkersGradBox( in vec2 p )
     // analytical integral (box filter)
     vec2 i = 2.0*(abs(fract((p-0.5*w)*0.5)-0.5)-abs(fract((p+0.5*w)*0.5)-0.5))/w;
     // xor pattern
-    return 0.5 - 0.5*i.x*i.y;                  
+    return 0.5 - 0.5*i.x*i.y;
 }
 
 vec3 render( in vec3 ro, in vec3 rd )
-{ 
+{
     vec3 col = vec3(0.7, 0.9, 1.0) +rd.y*0.8;
     vec2 res = castRay(ro,rd);
     float t = res.x;
@@ -8285,17 +8256,17 @@ vec3 render( in vec3 ro, in vec3 rd )
         vec3 pos = ro + t*rd;
         vec3 nor = calcNormal( pos );
         vec3 ref = reflect( rd, nor );
-        
-        // material        
+
+        // material
         col = 0.45 + 0.35*sin( vec3(0.05,0.08,0.10)*(m-1.0) );
         if( m<1.5 )
         {
-            
+
             float f = checkersGradBox( 5.0*pos.xz );
             col = 0.3 + f*vec3(0.1);
         }
 
-        // lighting        
+        // lighting
         float occ = calcAO( pos, nor );
         vec3  lig = normalize( vec3(cos(-0.4 * runTime), sin(0.7 * runTime), -0.6) );
         vec3  hal = normalize( lig-rd );
@@ -8304,7 +8275,7 @@ vec3 render( in vec3 ro, in vec3 rd )
         float bac = clamp( dot( nor, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-pos.y,0.0,1.0);
         float dom = smoothstep( -0.1, 0.1, ref.y );
         float fre = pow( clamp(1.0+dot(nor,rd),0.0,1.0), 2.0 );
-        
+
         dif *= calcSoftshadow( pos, lig, 0.02, 2.5 );
         dom *= calcSoftshadow( pos, ref, 0.02, 2.5 );
 
@@ -8346,22 +8317,22 @@ void main()
         // pixel coordinates
         vec2 o = vec2(float(m),float(n)) / float(AA) - 0.5;
         vec2 p = (-resolution.xy + 2.0*(gl_FragCoord.xy+o))/resolution.y;
-#else    
+#else
         vec2 p = (-resolution.xy + 2.0*gl_FragCoord.xy)/resolution.y;
 #endif
 
         // RAY: Camera is provided from raylib
         //vec3 ro = vec3( -0.5+3.5*cos(0.1*time + 6.0*mo.x), 1.0 + 2.0*mo.y, 0.5 + 4.0*sin(0.1*time + 6.0*mo.x) );
-        
+
         vec3 ro = viewEye;
         vec3 ta = viewCenter;
-        
+
         // camera-to-world transformation
         mat3 ca = setCamera( ro, ta, 0.0 );
         // ray direction
         vec3 rd = ca * normalize( vec3(p.xy,2.0) );
 
-        // render    
+        // render
         vec3 col = render( ro, rd );
 
         // gamma
@@ -8391,28 +8362,28 @@ uniform float time;             // Total run time (in secods)
 // Draw circle
 vec4 DrawCircle(vec2 fragCoord, vec2 position, float radius, vec3 color)
 {
-	float d = length(position - fragCoord) - radius;
-	float t = clamp(d, 0.0, 1.0);
-	return vec4(color, 1.0 - t);
+    float d = length(position - fragCoord) - radius;
+    float t = clamp(d, 0.0, 1.0);
+    return vec4(color, 1.0 - t);
 }
 
 void main()
 {
-	vec2 fragCoord = gl_FragCoord.xy;
-	vec2 position = vec2(mouse.x, resolution.y - mouse.y);
-	float radius = 40.0;
+    vec2 fragCoord = gl_FragCoord.xy;
+    vec2 position = vec2(mouse.x, resolution.y - mouse.y);
+    float radius = 40.0;
 
     // Draw background layer
     vec4 colorA = vec4(0.2,0.2,0.8, 1.0);
     vec4 colorB = vec4(1.0,0.7,0.2, 1.0);
-	vec4 layer1 = mix(colorA, colorB, abs(sin(time*0.1)));
+    vec4 layer1 = mix(colorA, colorB, abs(sin(time*0.1)));
 
-	// Draw circle layer
-	vec3 color = vec3(0.9, 0.16, 0.21);
-	vec4 layer2 = DrawCircle(fragCoord, position, radius, color);
-	
-	// Blend the two layers
-	gl_FragColor = mix(layer1, layer2, layer2.a);
+    // Draw circle layer
+    vec3 color = vec3(0.9, 0.16, 0.21);
+    vec4 layer2 = DrawCircle(fragCoord, position, radius, color);
+
+    // Blend the two layers
+    gl_FragColor = mix(layer1, layer2, layer2.a);
 }
 #version 100
 
@@ -8453,7 +8424,7 @@ void main()
     // Scanlines method 2
     float globalPos = (fragTexCoord.y + offset) * frequency;
     float wavePos = cos((fract(globalPos) - 0.5)*3.14);
-    
+
     vec4 color = texture2D(texture0, fragTexCoord);
 
     gl_FragColor = mix(vec4(0.0, 0.3, 0.0, 0.0), color, wavePos);
@@ -8472,11 +8443,11 @@ uniform vec4 colDiffuse;
 // NOTE: Add here your custom variables
 vec2 resolution = vec2(800.0, 450.0);
 
-void main() 
+void main()
 {
     float x = 1.0/resolution.x;
     float y = 1.0/resolution.y;
-    
+
     vec4 horizEdge = vec4(0.0);
     horizEdge -= texture2D(texture0, vec2(fragTexCoord.x - x, fragTexCoord.y - y))*1.0;
     horizEdge -= texture2D(texture0, vec2(fragTexCoord.x - x, fragTexCoord.y    ))*2.0;
@@ -8484,7 +8455,7 @@ void main()
     horizEdge += texture2D(texture0, vec2(fragTexCoord.x + x, fragTexCoord.y - y))*1.0;
     horizEdge += texture2D(texture0, vec2(fragTexCoord.x + x, fragTexCoord.y    ))*2.0;
     horizEdge += texture2D(texture0, vec2(fragTexCoord.x + x, fragTexCoord.y + y))*1.0;
-    
+
     vec4 vertEdge = vec4(0.0);
     vertEdge -= texture2D(texture0, vec2(fragTexCoord.x - x, fragTexCoord.y - y))*1.0;
     vertEdge -= texture2D(texture0, vec2(fragTexCoord.x    , fragTexCoord.y - y))*2.0;
@@ -8492,9 +8463,9 @@ void main()
     vertEdge += texture2D(texture0, vec2(fragTexCoord.x - x, fragTexCoord.y + y))*1.0;
     vertEdge += texture2D(texture0, vec2(fragTexCoord.x    , fragTexCoord.y + y))*2.0;
     vertEdge += texture2D(texture0, vec2(fragTexCoord.x + x, fragTexCoord.y + y))*1.0;
-    
+
     vec3 edge = sqrt((horizEdge.rgb*horizEdge.rgb) + (vertEdge.rgb*vertEdge.rgb));
-    
+
     gl_FragColor = vec4(edge, texture2D(texture0, fragTexCoord).a);
 }#version 100
 
@@ -8514,10 +8485,10 @@ uniform float screenWidth;      // Width of the screen
 void main()
 {
     float alpha = 1.0;
-    
+
     // Get the position of the current fragment (screen coordinates!)
     vec2 pos = vec2(gl_FragCoord.x, gl_FragCoord.y);
-    
+
     // Find out which spotlight is nearest
     float d = 65000.0;  // some high value
     int fi = -1;        // found index
@@ -8527,18 +8498,18 @@ void main()
         for (int j = 0; j < MAX_SPOTS; j++)
         {
             float dj = distance(pos, spots[j].pos) - spots[j].radius + spots[i].radius;
-            
-            if (d > dj) 
+
+            if (d > dj)
             {
                 d = dj;
                 fi = i;
             }
         }
     }
-    
+
     // d now equals distance to nearest spot...
     // allowing for the different radii of all spotlights
-    if (fi == 0) 
+    if (fi == 0)
     {
         if (d > spots[0].radius) alpha = 1.0;
         else
@@ -8547,7 +8518,7 @@ void main()
             else alpha = (d - spots[0].inner)/(spots[0].radius - spots[0].inner);
         }
     }
-    else if (fi == 1) 
+    else if (fi == 1)
     {
         if (d > spots[1].radius) alpha = 1.0;
         else
@@ -8556,7 +8527,7 @@ void main()
             else alpha = (d - spots[1].inner)/(spots[1].radius - spots[1].inner);
         }
     }
-    else if (fi == 2) 
+    else if (fi == 2)
     {
         if (d > spots[2].radius) alpha = 1.0;
         else
@@ -8565,8 +8536,8 @@ void main()
             else alpha = (d - spots[2].inner)/(spots[2].radius - spots[2].inner);
         }
     }
-    
-    // Right hand side of screen is dimly lit, 
+
+    // Right hand side of screen is dimly lit,
     // could make the threshold value user definable
     if ((pos.x > screenWidth/2.0) && (alpha > 0.9)) alpha = 0.9;
 
@@ -8601,16 +8572,16 @@ void main()
     vec2 texSize = vec2(renderWidth, renderHeight);
     vec2 tc = fragTexCoord*texSize;
     tc -= center;
-    
+
     float dist = length(tc);
 
-    if (dist < radius) 
+    if (dist < radius)
     {
         float percent = (radius - dist)/radius;
         float theta = percent*percent*angle*8.0;
         float s = sin(theta);
         float c = cos(theta);
-        
+
         tc = vec2(dot(tc, vec2(c, -s)), dot(tc, vec2(s, c)));
     }
 

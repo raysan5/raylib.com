@@ -80,27 +80,19 @@
                     $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
                 }, 'text');
                 
-                // Quick hack for some examples not working on web
-                if (name == "shaders_raymarching")
-                {
-                    $('#eximage').append('<img src="' + imgUrl + '" alt=" ">');
-                }
-                else
-                {
-                    // #eximage filling code: canvas sample and image
-                    $('#eximage').append(
-                    '<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()">' + 
-                        '<img src="' + imgUrl + '" alt=" ">' +
-                    '</canvas>');
-                    
-                    Module.canvas = document.getElementById('canvas');
-                    Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+                // #eximage filling code: canvas sample and image
+                $('#eximage').append(
+                '<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()">' + 
+                    '<img src="' + imgUrl + '" alt=" ">' +
+                '</canvas>');
                 
-                    var jsUrl = name + '.js';
-                
-                    // Run emscripten example
-                    $.getScript(jsUrl, function() {});
-                }
+                Module.canvas = document.getElementById('canvas');
+                Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+            
+                var jsUrl = name + '.js';
+            
+                // Run emscripten example
+                $.getScript(jsUrl, function() {});
             });
         </script>
         <script type='text/javascript' src="https://cdn.jsdelivr.net/gh/eligrey/FileSaver.js/dist/FileSaver.min.js"> </script>
