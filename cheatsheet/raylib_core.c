@@ -166,7 +166,6 @@
 
     // Input-related functions: gamepads
     bool IsGamepadAvailable(int gamepad);                                   // Check if a gamepad is available
-    bool IsGamepadName(int gamepad, const char *name);                      // Check gamepad name (if available)
     const char *GetGamepadName(int gamepad);                                // Get gamepad internal name id
     bool IsGamepadButtonPressed(int gamepad, int button);                   // Check if a gamepad button has been pressed once
     bool IsGamepadButtonDown(int gamepad, int button);                      // Check if a gamepad button is being pressed
