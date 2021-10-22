@@ -12,7 +12,7 @@ attribute mat4 instanceTransform;
 uniform mat4 mvp;
 uniform mat4 matNormal;
 
-// Output vertex attributes
+// Output vertex attributes (to fragment shader)
 varying vec3 fragPosition;
 varying vec2 fragTexCoord;
 varying vec4 fragColor;
