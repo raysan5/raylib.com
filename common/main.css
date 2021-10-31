@@ -28,7 +28,7 @@ h2{font-family: Courier New, Verdana, Arial; font-weight: bold; font-size: 18px;
 
 .header{width:100%; float:left; position:relative; height:128px; font-size:10pt; margin-top:40px; margin-left:10px;}
 .content{font-size:8pt; width:840px; padding:10px; padding-top:30px; float:left; position:relative; padding-bottom:50px;}
-.footer{width:100%; float:left; position:relative; border-top:1px solid black; text-align: right;  height:40px; padding-top:10px;}
+.footer{width:820px; float:left; position:relative; border-top:1px solid black; text-align: right;  height:40px; padding-top:10px;}
 .footer p a{color:#aaaaaa;}
 .footer p a:hover{color:#444;}
 .footer p{ font-size:6pt; color:#aaaaaa; margin-top:-8px; }
