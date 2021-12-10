@@ -34,13 +34,14 @@
                 font-style: normal;
                 font-size-adjust:0.49;
             }
+            p, p a { font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size: medium; text-align: right; }
             #eximage { width: 802px; height: 452px; text-align: center; }
             #eximage img { margin: 0 auto; border: 1px solid; border-color: black; }
             #eximage canvas { position: relative; top: 1px; left: 1px; border: 1px solid red; background: black; }
             pre { width: 802px!important;}
             pre code{ border: 1px solid; border-color:#b0b0b0; height:auto; }
             .exdownbtn{ margin-right: 20px; width:220px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px; 
-                        line-height:30px; text-align: center; border-width:5px;    background-color:#e1e1e1; color:#5c5a5a; 
+                        line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a; 
                         border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;}
             #exdowncode .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
             #exdownexec .exdownbtn:hover{background-color:#bedce8; color:#417794; border:4px solid #5d9cbd;}
@@ -71,6 +72,7 @@
                 // Get example code and image directly from original raylib GitHub and avoid duplicate code to maintain
                 var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
                 var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
+                var linkUrl = 'https://github.com/raysan5/raylib/blob/master/examples/' + type + '/' + name + '.c';
 
                 $('#eximage img').attr('src', imgUrl);
 
@@ -78,6 +80,8 @@
                 { 
                     $('pre code').text(data);
                     $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                    
+                    $('#source_link').attr("href", linkUrl);
                 }, 'text');
                 
                 // #eximage filling code: canvas sample and image
@@ -126,6 +130,8 @@
         <!--<textarea id="output" rows="8"></textarea>-->
         
         <pre><code class="cpp"></code></pre>
+        
+        <p>raylib example <a id="source_link" href="" target="_blank">source code</a></p>
 
         <script type='text/javascript'>
           //var statusElement = document.getElementById('status');
