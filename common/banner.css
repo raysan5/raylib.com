@@ -1,0 +1,91 @@
+.gamejam-2022-banner {
+  background-color: white;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.gamejam-2022-banner * {
+  box-sizing: border-box;
+}
+
+.gamejam-2022-banner .banner-content {
+  width: 835.5px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.gamejam-2022-banner .banner-image {
+  height: 205px;
+  width: auto;
+}
+
+.gamejam-2022-banner .end-cap .big {
+  font-size: 26px;
+}
+
+.gamejam-2022-banner .column {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+}
+
+.gamejam-2022-banner .block:first-child, .gamejam-2022-banner .color-block:first-child {
+  margin-bottom: 5px;
+}
+
+.gamejam-2022-banner .block, .gamejam-2022-banner .color-block {
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 5px;
+  flex-direction: column;
+}
+
+.gamejam-2022-banner .block *, .gamejam-2022-banner .color-block * {
+  text-align: right;
+}
+
+.gamejam-2022-banner .block .big, .gamejam-2022-banner .color-block .big {
+  font-size: 300%;
+}
+
+.gamejam-2022-banner .color-block {
+  
+  border: 6.25px solid #0e0e0e;
+  background-color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.gamejam-2022-banner .color-block.red {
+  border-color: #b50000;
+  color: #b50000;
+}
+
+.gamejam-2022-banner .color-block.wasm {
+  border-color: #654ff0;
+  color: #654ff0;
+}
+
+.gamejam-2022-banner .color-block.green {
+  border-color: green;
+  color: green;
+}
+
+.gamejam-2022-banner .color-block.yellow {
+  border-color: rgb(211, 166, 16);
+  color: rgb(211, 166, 16);
+}
+
+.gamejam-2022-banner .color-block.turquoise {
+  border-color: turquoise;
+  color: turquoise;
+}
