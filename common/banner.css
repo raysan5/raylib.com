@@ -1,8 +1,10 @@
 .gamejam-2022-banner {
+  min-width: 880px;
   background-color: white;
   padding: 1em;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: row;
 }
 
