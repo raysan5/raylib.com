@@ -1,6 +1,6 @@
 
     // Image loading functions
-    // NOTE: This functions do not require GPU access
+    // NOTE: These functions do not require GPU access
     Image LoadImage(const char *fileName);                                                             // Load image from file into CPU memory (RAM)
     Image LoadImageRaw(const char *fileName, int width, int height, int format, int headerSize);       // Load image from RAW file data
     Image LoadImageAnim(const char *fileName, int *frames);                                            // Load image sequence from file (frames appended to image.data)
