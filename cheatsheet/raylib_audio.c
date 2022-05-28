@@ -1,6 +1,6 @@
 
     // Audio device management functions
-    void LoadAudioDevice(void);                                                     // Initialize audio device and context
+    void InitAudioDevice(void);                                                     // Initialize audio device and context
     void CloseAudioDevice(void);                                                    // Close the audio device and context
     bool IsAudioDeviceReady(void);                                                  // Check if audio device has been initialized successfully
     void SetMasterVolume(float volume);                                             // Set master volume (listener)
@@ -50,7 +50,7 @@
     float GetMusicTimePlayed(Music music);                                          // Get current music time played (in seconds)
 
     // AudioStream management functions
-    AudioStream InitAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // Init audio stream (to stream raw audio pcm data)
+    AudioStream LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // Init audio stream (to stream raw audio pcm data)
     void UpdateAudioStream(AudioStream stream, const void *data, int samplesCount); // Update audio stream buffers with data
     void CloseAudioStream(AudioStream stream);                                      // Close audio stream and free memory
     bool IsAudioStreamProcessed(AudioStream stream);                                // Check if any audio stream buffers requires refill
