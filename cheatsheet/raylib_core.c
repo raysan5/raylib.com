@@ -138,8 +138,8 @@
     void ClearDirectoryFiles(void);                                         // Clear directory files paths buffers (free memory)
     bool ChangeDirectory(const char *dir);                                  // Change working directory, return true on success
     bool IsFileDropped(void);                                               // Check if a file has been dropped into window
-    char **GetDroppedFiles(int *count);                                     // Get dropped files names (memory should be freed)
-    void ClearDroppedFiles(void);                                           // Clear dropped files paths buffer (free memory)
+    char **LoadDroppedFiles(int *count);                                     // Get dropped files names (memory should be freed)
+    void UnloadDroppedFiles(void);                                           // Clear dropped files paths buffer (free memory)
     long GetFileModTime(const char *fileName);                              // Get file modification time (last write time)
 
     // Compression/Encoding functionality
