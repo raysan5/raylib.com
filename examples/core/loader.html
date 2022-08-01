@@ -3,12 +3,12 @@
     <head>
         <title>loading...</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        
+
         <meta name="title" content="raylib - example">
         <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming. This a small example of what you can do.">
         <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
         <meta name="viewport" content="width=device-width">
-        
+
         <!-- Open Graph metatags for sharing -->
         <meta property="og:title" content="raylib - example"/>
         <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
@@ -18,7 +18,7 @@
 
         <!-- Add jQuery library -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-        
+
         <!-- hightlight.js - Syntax highlighting for the Web -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
@@ -40,17 +40,17 @@
             #eximage canvas { position: relative; top: 1px; left: 1px; border: 1px solid red; background: black; }
             pre { width: 802px!important;}
             pre code{ border: 1px solid; border-color:#b0b0b0; height:auto; }
-            .exdownbtn{ margin-right: 20px; width:220px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px; 
-                        line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a; 
+            .exdownbtn{ margin-right: 20px; width:220px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px;
+                        line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a;
                         border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;}
             #exdowncode .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
             #exdownexec .exdownbtn:hover{background-color:#bedce8; color:#417794; border:4px solid #5d9cbd;}
-            
+
             .fancybox-wrap fancybox-desktop fancybox-type-iframe fancybox-opened { width: 860px!important;}
             .fancybox-inner { width: 850px!important; }
             .fancybox-iframe { width: 830px!important; }
         </style>
-        
+
         <script type="text/javascript">
             $(document).ready(function()
             {
@@ -59,16 +59,16 @@
                     // Prevent SPACE key to scroll page
                     if ((e.keyCode == 32) && (e.target == document.body)) e.preventDefault();
                 });
-                
+
                 var mainUrl = $(location).attr('href');
                 var name = mainUrl.slice(mainUrl.indexOf('=') + 1);
-                
+
                 document.title = "raylib - " + name.replace('_', ' ');
 
                 var type = name.substring(0, name.indexOf("_"));
                 //var srcUrl = '../../src/' + type + '/' + name + '.c';
                 //var imgUrl = '../' + type + '/' + name + '.png';
-                
+
                 // Get example code and image directly from original raylib GitHub and avoid duplicate code to maintain
                 var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
                 var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
@@ -77,13 +77,13 @@
                 $('#eximage img').attr('src', imgUrl);
 
                 $.get(srcUrl, function(data)
-                { 
+                {
                     $('pre code').text(data);
                     $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
-                    
+
                     $('#source_link').attr("href", linkUrl);
                 }, 'text');
-                
+
                 // Quick hack for some examples not working on web
                 if (name == "example_to_avoid")
                 {
@@ -93,15 +93,15 @@
                 {
                     // #eximage filling code: canvas sample and image
                     $('#eximage').append(
-                    '<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()">' + 
+                    '<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()">' +
                         '<img src="' + imgUrl + '" alt=" ">' +
                     '</canvas>');
-                    
+
                     Module.canvas = document.getElementById('canvas');
                     Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
-                
+
                     var jsUrl = name + '.js';
-                
+
                     // Run emscripten example
                     $.getScript(jsUrl, function() {});
                 }
@@ -126,7 +126,7 @@
             }
         </script>
     </head>
-    
+
     <body>
         <div class="emscripten">
             <progress value="0" max="100" id="progress" hidden=1></progress>
@@ -134,18 +134,18 @@
 
         <!-- Canvas example or image, filled on loading -->
         <div id="eximage"></div>
-        
+
         <!--<textarea id="output" rows="8"></textarea>-->
-        
+
         <pre><code class="cpp"></code></pre>
-        
+
         <p>raylib example <a id="source_link" href="" target="_blank">source code</a></p>
 
         <script type='text/javascript'>
           //var statusElement = document.getElementById('status');
           //var progressElement = document.getElementById('progress');
           //var spinnerElement = document.getElementById('spinner');
-          
+
           var Module = {
             preRun: [],
             postRun: [],
@@ -176,7 +176,7 @@
             },
             canvas: (function() {
               // NOTE: canvas element eventListener is added after appending!
-            
+
               //var canvas = document.getElementById('canvas');
 
               // As a default initial behavior, pop up an alert when webgl context is lost. To make your
@@ -212,9 +212,9 @@
               Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
             }
           };
-          
+
           Module.setStatus('Downloading...');
-          
+
           window.onerror = function(event) {
             // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
             Module.setStatus('Exception thrown, see JavaScript console');
@@ -226,7 +226,7 @@
         </script>
 
         <!--<script async type="text/javascript" src="../examples/web/core_basic_window.js"></script>-->
-        
+
         <!-- Google Analytics tracking code -->
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -240,6 +240,6 @@
         </script>
 
         <!-- prevent arrow keys fromscrolling the loaded game. -->
-        <script src="/common/disable-arrow-scroll.js"></script>        
+        <script src="/common/disable-arrow-scroll.js"></script>
     </body>
 </html>
