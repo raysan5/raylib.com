@@ -14,6 +14,7 @@ $(document).ready(function() {
         'core_input_gestures',
         'core_2d_camera',
         'core_2d_camera_platformer',
+        'core_2d_camera_mouse_zoom',
         'core_3d_camera_mode',
         'core_3d_camera_free',
         'core_3d_camera_first_person',
@@ -30,6 +31,7 @@ $(document).ready(function() {
         'core_quat_conversion',
         'core_window_flags',
         'core_split_screen',
+        'core_window_should_close',
         'core_smooth_pixelperfect',
         'core_custom_frame_control',
         'shapes_basic_shapes',
@@ -47,6 +49,7 @@ $(document).ready(function() {
         'shapes_draw_ring',
         'shapes_draw_circle_sector',
         'shapes_draw_rectangle_rounded',
+        'shapes_top_down_lights',
         'textures_logo_raylib',
         'textures_mouse_painting',
         'textures_rectangle',
@@ -67,6 +70,8 @@ $(document).ready(function() {
         'textures_blend_modes',
         'textures_draw_tiled',
         'textures_polygon',
+        'textures_gif_player',
+        'textures_fog_of_war',
         'text_raylib_fonts',
         'text_font_spritefont',
         'text_font_loading',
@@ -78,6 +83,7 @@ $(document).ready(function() {
         'text_rectangle_bounds',
         'text_unicode',
         'text_draw_3d',
+        'text_codepoints_loading',
         'models_animation',
         'models_billboard',
         'models_box_collisions',
@@ -118,11 +124,7 @@ $(document).ready(function() {
         'audio_raw_stream',
         'audio_sound_loading',
         'audio_multichannel_sound',
-        'physics_demo',
-        'physics_friction',
-        'physics_movement',
-        'physics_restitution',
-        'physics_shatter'];
+        'audio_stream_effects'];
 
     for (var i = 0; i < exampleName.length; i++)
     {
