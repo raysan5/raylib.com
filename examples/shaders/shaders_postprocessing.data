@@ -7921,6 +7921,8 @@ void main()
 
 precision mediump float;
 
+#extension GL_OES_standard_derivatives : enable
+
 // Input vertex attributes (from vertex shader)
 varying vec2 fragTexCoord;
 varying vec4 fragColor;
