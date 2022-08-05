@@ -38,3 +38,5 @@
     struct VrDeviceInfo;    // VR device parameters
     struct VrStereoConfig;  // VR Stereo rendering configuration for simulator
     
+    struct FilePathList;    // File path list
+    
