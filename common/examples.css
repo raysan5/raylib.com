@@ -1,5 +1,6 @@
 #container .mix{ position: relative;  display: none; }
 #container .extext { top: 160px!important; width: 400px!important; }
+#difficulty_level { position: absolute; bottom: 18px; left: 12px; font-size: 24px; }
 
 #filter_menu { width:820px; height:80px; margin-left:15px; }
 
