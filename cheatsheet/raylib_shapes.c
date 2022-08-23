@@ -1,5 +1,3 @@
-
-    // Set texture and rectangle to be used on shapes drawing
     // NOTE: It can be useful when using basic shapes and one single font,
     // defining a font char white rectangle would allow drawing everything in a single draw call
     void SetShapesTexture(Texture2D texture, Rectangle source);       // Set texture and rectangle to be used on shapes drawing
