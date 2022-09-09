@@ -49,14 +49,7 @@
              border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
          }
          .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
-         #core pre code{border:10px solid; border-color:#888888; background-color:#dbdbe1; }
-         #shapes pre code{border:10px solid; border-color:#e66666; background-color:#e9d0d6; }
-         #textures pre code{border:10px solid; border-color:#75a06d; background-color:#c3e4bf; }
-         #text pre code{border:10px solid; border-color:#52b296; background-color:#b9e9dd; }
-         #models pre code{border:10px solid; border-color:#5d9cbd; background-color:#b9d6e8; }
-         #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
-         #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
-         #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
+         #math pre code{border:10px solid; border-color:#c170ff; background-color:#deb3ff; }
          #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
          #header{position:relative; height:110px; width: 1000px;}
          #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
@@ -64,14 +57,7 @@
          #plinks a, #copyright a{color: gray; text-decoration:none;}
          #plinks a:hover{color: black;}
          #version {margin-top: 23px; width:500px;}
-         #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
-         #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
-         #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
-         #ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
-         #pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
-         #paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
-         #pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
-         #pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
+         #pmath{margin-bottom:-12px; margin-left:12px; color:#9d1cff;}
 
          #fullgroup{
              display: grid;
@@ -88,37 +74,9 @@
 
         <script type="text/javascript">
          $(document).ready(function() {
-             $.get('raylib_core.c', function(data) {
-                 $('#core pre code').text(data);
-                 $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_shapes.c', function(data) {
-                 $('#shapes pre code').text(data);
-                 $('#shapes pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_textures.c', function(data) {
-                 $('#textures pre code').text(data);
-                 $('#textures pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_text.c', function(data) {
-                 $('#text pre code').text(data);
-                 $('#text pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_models.c', function(data) {
-                 $('#models pre code').text(data);
-                 $('#models pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_audio.c', function(data) {
-                 $('#audio pre code').text(data);
-                 $('#audio pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_colors.c', function(data) {
-                 $('#colors pre code').text(data);
-                 $('#colors pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_structs.c', function(data) {
-                 $('#structs pre code').text(data);
-                 $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
+             $.get('raylib_math.c', function(data) {
+                 $('#math pre code').text(data);
+                 $('#math pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
          });
         </script>
@@ -134,34 +92,13 @@
         </div>
         <br>
         <div id="fulldata">
-            <p id="pcore">module: rcore</p>
-            <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshapes">module: rshapes</p>
-            <div id="shapes"><pre><code class="cpp"></code></pre></div>
-            <p id="ptextures">module: rtextures</p>
-            <div id="textures"><pre><code class="cpp"></code></pre></div>
-            <p id="ptext">module: rtext</p>
-            <div id="text"><pre><code class="cpp"></code></pre></div>
-            <p id="pmodels">module: rmodels</p>
-            <div id="models"><pre><code class="cpp"></code></pre></div>
-            <p id="paudio">module: raudio</p>
-            <div id="audio"><pre><code class="cpp"></code></pre></div>
-
-            <div id="fullgroup">
-                <div class="leftgroup">
-                    <p id="pstructs">structs</p>
-                    <div id="structs"><pre><code class="cpp"></code></pre></div>
-                </div>
-                <div class="rightgroup">
-                    <p id="pcolors">colors</p>
-                    <div id="colors"><pre><code class="cpp"></code></pre></div>
-                </div>
-            </div>
+            <p id="pmath">module: rmath</p>
+            <div id="math"><pre><code class="cpp"></code></pre></div>
 
             <p>Other cheatsheets</p>
             <ul>
                 <li>
-                    <a href="/cheatsheet/raymath_cheatsheet.html">raymath cheatsheet</a>
+                    <a href="/cheatsheet/cheatsheet.html" id="">raylib cheatsheet</a>
                 </li>
             </ul>
 
@@ -169,7 +106,6 @@
                 <p>raylib quick reference card - Copyright (c) 2013-2022 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
             </div>
         </div>
-
 
 
         <!-- Google Analytics tracking code -->
