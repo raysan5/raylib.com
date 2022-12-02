@@ -87,35 +87,35 @@
 
         <script type="text/javascript">
          $(document).ready(function() {
-             $.get('raylib_core.c', function(data) {
+             $.get('zh/raylib_core.c', function(data) {
                  $('#core pre code').text(data);
                  $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_shapes.c', function(data) {
+             $.get('zh/raylib_shapes.c', function(data) {
                  $('#shapes pre code').text(data);
                  $('#shapes pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_textures.c', function(data) {
+             $.get('zh/raylib_textures.c', function(data) {
                  $('#textures pre code').text(data);
                  $('#textures pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_text.c', function(data) {
+             $.get('zh/raylib_text.c', function(data) {
                  $('#text pre code').text(data);
                  $('#text pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_models.c', function(data) {
+             $.get('zh/raylib_models.c', function(data) {
                  $('#models pre code').text(data);
                  $('#models pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_audio.c', function(data) {
+             $.get('zh/raylib_audio.c', function(data) {
                  $('#audio pre code').text(data);
                  $('#audio pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_colors.c', function(data) {
+             $.get('zh/raylib_colors.c', function(data) {
                  $('#colors pre code').text(data);
                  $('#colors pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
-             $.get('raylib_structs.c', function(data) {
+             $.get('zh/raylib_structs.c', function(data) {
                  $('#structs pre code').text(data);
                  $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
@@ -126,13 +126,16 @@
     <body>
         <div id="header">
             <a id="logo" href="https://www.raylib.com/index.html"></a>
+            <p id="title">以下为raylib所有API接口中文释义</p>
             <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
             <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
-            <p></p>
-            <p id="version">v4.2 quick reference card  [<a id="downpdf" href="https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.2.pdf">download as PDF</a>]</p>
         </div>
         <br>
-        <p>Chinese Translation: <a href="cheatsheet_zh.html">以下为raylib所有API接口中文释义</a></p>
+        <p>此翻译仅做参考与辅助学习, 可能会有点枯燥, 可以去阅读大佬的教程【<a href="https://zhuanlan.zhihu.com/p/526271216">https://zhuanlan.zhihu.com/p/526271216</a>】</p>
+        <p>该翻译稿为非盈利的, 是为了大家更好的学习与享受视频游戏编程的乐趣, 禁止在没有告诉译者的情况下擅自将其用作营利！！！</p>
+        <p>译者邮箱：jinquannice@163.com & macky@starsunion.eu.org</p>
+        <p>本翻译由恒星联盟(starsunion.eu.org)成员Macky和HJQ进行翻译</p>
+        <br>
         <div id="fulldata">
             <p id="pcore">module: rcore</p>
             <div id="core"><pre><code class="cpp"></code></pre></div>
