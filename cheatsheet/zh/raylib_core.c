@@ -20,7 +20,7 @@
     void SetWindowIcon(Image image);                            //设置窗口图标(仅PLATFORM_DESKTOP)
     void SetWindowTitle(const char *title);                     //设置窗口标题(仅限PLATFORM_DESKTOP)
     void SetWindowPosition(int x, int y);                       //在屏幕上设置窗口位置(仅限PLATFORM_DESKTOP)
-    void SetWindowMonitor(int monitor);                         //为当前窗口设置监视器(全屏模式)
+    void SetWindowMonitor(int monitor);                         //为当前窗口设置显示器（硬件设备）(全屏模式)
     void SetWindowMinSize(int width, int height);               //设置窗口最小尺寸(对于FLAG_window_RESIZABLE)
     void SetWindowSize(int width, int height);                  //设置窗口尺寸
     void SetWindowOpacity(float opacity);                       //设置窗口不透明度[0.0f..1.0f](仅限PLATFORM_DESKTOP)
@@ -29,17 +29,17 @@
     int GetScreenHeight(void);                                  //获取当前屏幕高度
     int GetRenderWidth(void);                                   //获取当前渲染宽度(它考虑HiDPI)
     int GetRenderHeight(void);                                  //获取当前渲染高度(它考虑HiDPI)
-    int GetMonitorCount(void);                                  //获取连接的监视器数量
-    int GetCurrentMonitor(void);                                //获取当前连接的监视器
-    Vector2 GetMonitorPosition(int monitor);                    //获取指定的监视器位置
-    int GetMonitorWidth(int monitor);                           //获取指定的监视器宽度(监视器使用的当前视频模式)
-    int GetMonitorHeight(int monitor);                          //获取指定的监视器高度(监视器使用的当前视频模式)
-    int GetMonitorPhysicalWidth(int monitor);                   //获取指定的监视器物理宽度(毫米)
-    int GetMonitorPhysicalHeight(int monitor);                  //获取指定的监视器物理高度(毫米)
-    int GetMonitorRefreshRate(int monitor);                     //获取指定的监视器刷新率
-    Vector2 GetWindowPosition(void);                            //获取监视器上的窗口位置XY
+    int GetMonitorCount(void);                                  //获取连接的显示器（硬件设备）数量
+    int GetCurrentMonitor(void);                                //获取当前连接的显示器（硬件设备）
+    Vector2 GetMonitorPosition(int monitor);                    //获取指定的显示器（硬件设备）位置
+    int GetMonitorWidth(int monitor);                           //获取指定的显示器（硬件设备）宽度(显示器（硬件设备）使用的当前视频模式)
+    int GetMonitorHeight(int monitor);                          //获取指定的显示器（硬件设备）高度(显示器（硬件设备）使用的当前视频模式)
+    int GetMonitorPhysicalWidth(int monitor);                   //获取指定的显示器（硬件设备）物理宽度(毫米)
+    int GetMonitorPhysicalHeight(int monitor);                  //获取指定的显示器（硬件设备）物理高度(毫米)
+    int GetMonitorRefreshRate(int monitor);                     //获取指定的显示器（硬件设备）刷新率
+    Vector2 GetWindowPosition(void);                            //获取显示器（硬件设备）上的窗口位置XY
     Vector2 GetWindowScaleDPI(void);                            //获取窗口比例DPI因子
-    const char*GetMonitorName(int monitor);                     //获取主监视器的可读UTF-8编码名称
+    const char*GetMonitorName(int monitor);                     //获取主显示器（硬件设备）的可读UTF-8编码名称
     void SetClipboardText(const char *text);                    //设置剪贴板文本内容
     const char*GetClipboardText(void);                          //获取剪贴板文本内容
     void EnableEventWaiting(void);                              //启用等待EndDrawing()上的事件, 无自动事件轮询
@@ -51,7 +51,7 @@
     //要避免这种行为并手动控制帧进程, 请在配置中启用。h：支持自定义框架控制
     void SwapScreenBuffer(void);                                //用前缓冲区交换后缓冲区(屏幕绘图)
     void PollInputEvents(void);                                 //注册所有输入事件
-    void WaitTime(双秒);                                         //等待一段时间(停止程序执行)
+    void WaitTime(double 双秒);                                  //等待一段时间(停止程序执行)
     
     //鼠标光标相关功能
     void ShowCursor(void);                                      //显示鼠标光标
@@ -73,7 +73,7 @@
     void EndTextureMode(void);                                  //结束绘制以渲染Texture
     void BeginShaderMode(Shader shader);                        //开始自定义着色器绘图
     void EndShaderMode(void);                                   //结束自定义着色器绘图(使用默认着色器)
-    void BeginBlendMode(int模式);                                //开始混合模式(alpha、加法、乘法、减法、自定义)
+    void BeginBlendMode(int模式);                                //开始混合模式(alpha, 加法, 乘法, 减法, 自定义)
     void EndBlendMode(void);                                    //结束混合模式(重置为默认值：alpha混合)
     void BeginScissorMode(int x, int y, int width, int height); //开始剪式模式(定义下图的屏幕区域)
     void EndScissorMode(void);                                  //末端剪式模式
@@ -97,13 +97,13 @@
     void UnloadShader(Shader shader);   //从GPU内存(VRAM)卸载着色器
     
     //屏幕空间相关功能
-    Ray GetMouseRay(Vector2 mousePosition, 相机相机);       //从鼠标位置获取光线跟踪
-    Matrix GetCameraMatrix(Camera camera);                //获取相机变换矩阵(视图矩阵)
-    Matrix GetCameraMatrix2D(Camera2D相机);                //获取相机二维变换矩阵
-    Vector2 GetWorldToScreen(Vector3位置, 摄像机);          //获取三维世界空间位置的屏幕空间位置
-    Vector2 GetScreenToWorld2D(Vector2位置, Camera2D相机);  //获取2d相机屏幕空间位置的世界空间位置
+    Ray GetMouseRay(Vector2 mousePosition, Camera 相机);        //从鼠标位置获取光线跟踪
+    Matrix GetCameraMatrix(Camera camera);                     //获取相机变换矩阵(视图矩阵)
+    Matrix GetCameraMatrix2D(Camera2D相机);                     //获取相机二维变换矩阵
+    Vector2 GetWorldToScreen(Vector3位置, 摄像机);               //获取三维世界空间位置的屏幕空间位置
+    Vector2 GetScreenToWorld2D(Vector2位置, Camera2D相机);       //获取2d相机屏幕空间位置的世界空间位置
     Vector2 GetWorldToScreenEx(Vector3位置, 摄像机, int宽度, int高度); //获取三维世界空间位置的大小位置
-    Vector2 GetWorldToScreen2D(Vector2位置, Camera2D相机);  //获取2d相机世界空间位置的屏幕空间位置
+    Vector2 GetWorldToScreen2D(Vector2位置, Camera2D相机);       //获取2d相机世界空间位置的屏幕空间位置
     
     //定时相关功能
     void SetTargetFPS(int fps);//设置目标FPS(最大值)
@@ -116,7 +116,7 @@
     void SetRandomSeed(unsigned int种子);           //设置随机数生成器的种子
     void TakeScreenshot(const char *fileName);     //拍摄当前屏幕的屏幕截图(文件扩展名定义格式)
     void SetConfigFlags(unsigned int flag);        //设置初始化配置标志(查看flags)
-    void TraceLog(int logLevel, const char *text, …); //显示跟踪日志消息(log_DEBUG、log_INFO、log_WARNING、log_ERROR…)
+    void TraceLog(int logLevel, const char *text, …); //显示跟踪日志消息(log_DEBUG, log_INFO, log_WARNING, log_ERROR…)
     void SetTraceLogLevel(int logLevel);           //设置当前阈值(最小)日志级别
     void *MemAlloc(int size);                      //内部内存分配器
     void *MemRealloc(void *ptr, int size);         //内部内存重新定位程序
@@ -141,7 +141,7 @@
     bool SaveFileText(const char *fileName, char *text);    //将文本数据保存到文件(写入), 字符串必须以“\0”结尾, 成功时返回true
     bool FileExists(const char *fileName);                  //检查文件是否存在
     bool DirectoryExists(const char *dirPath);              //检查目录路径是否存在
-    bool IsFileExtension(const char *fileName, const char *ext); //检查文件扩展名(包括点：.png、.wav)
+    bool IsFileExtension(const char *fileName, const char *ext); //检查文件扩展名(包括点：.png, .wav)
     int GetFileLength(const char *fileName);                //获取以字节为单位的文件长度(注意：GetFileSize()与windows冲突。小时)
     const char*GetFileExtension(const char *fileName);      //获取指向文件名字符串扩展名的指针(包括点：“.png”)
     const char*GetFileName(const char *filePath);           //获取路径字符串的文件名指针
@@ -180,7 +180,7 @@
     int GetCharPressed(void);                               //获取已按下的字符(unicode), 对已排队的字符多次调用, 当队列为空时返回0
     
     //输入相关功能：Gamepads
-    bool IsGamepad可用(int gamepad);                         //检查游戏机是否可用
+    bool IsGamepadAvailable(int gamepad);                   //检查游戏机是否可用
     const char*GetGamepadName(int gamepad);                 //获取游戏机内部名称id
     bool IsGamepadButtonPressed(intGamepads, int按钮);       //检查游戏机按钮是否已按下一次
     bool IsGamepadButtonDown(intGamepads, int按钮);          //检查是否按下了游戏机按钮
@@ -205,7 +205,7 @@
     void SetMouseScale(float scaleX,float scaleY);         //设置鼠标缩放
     float GetMouseWheelMove(void);                         //获取X或Y的鼠标滚轮移动, 以较大者为准
     Vector2 GetMouseWheelMoveV(void);                      //获取X和Y方向的鼠标滚轮移动
-    void SetMouseCursor(int鼠标光标);                        //设置鼠标光标(原文：Set Mouse Cursor)
+    void SetMouseCursor(int鼠标光标);                        //设置鼠标光标，用于更改屏幕上的光标图像(如：当鼠标放在文本上时会变成另一种图案)
     
     //输入相关功能：触摸
     int GetTouchX(void);                                   //获取触摸点0的触摸位置X(相对于屏幕大小)

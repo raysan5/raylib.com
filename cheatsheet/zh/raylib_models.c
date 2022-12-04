@@ -40,9 +40,9 @@
     void DrawModelWires(Model Model, Vector3位置, float比例, Color color);                            //绘制Model导线(如果设置了Texture)
     void DrawModelWiresEx(Model Model, Vector3位置, Vector3旋转轴, float旋转角度, Vector3比例, Color color); //使用扩展参数绘制Model导线(如果设置了Texture)
     void DrawBoundingBox(BoundingBox框, Color color);                                               //绘制边界框(导线)
-    void DrawBillboard(摄影机, Texture2D texture, Vector3位置, float大小, Color color);                //绘制广告牌Texture
-    void DrawBillboardRec(摄影机, Texture2D texture, Rectangle源, Vector3位置, Vector2大小, Color color); //绘制源定义的公告牌Texture
-    void DrawBillboardPro(摄影机, Texture2D texture, Rectangle源, Vector3位置, Vector3向上, Vector2大小, Vector2原点, float旋转, Color color); //绘制由源和旋转定义的公告牌Texture
+    void DrawBillboard(Camera camera, Texture2D texture, Vector3位置, float大小, Color color);                //绘制广告牌Texture
+    void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle源, Vector3位置, Vector2大小, Color color); //绘制源定义的公告牌Texture
+    void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle源, Vector3位置, Vector3向上, Vector2大小, Vector2原点, float旋转, Color color); //绘制由源和旋转定义的公告牌Texture
     
     //Mesh管理功能
     void UploadMesh(Mesh *mesh, bool dynamic);                                                     //在GPU中上载Mesh顶点数据并提供VAO/VBO ID
@@ -68,14 +68,14 @@
     Mesh GenMeshCubicmap(Image立方体贴图, Vector3立方体大小);                                          //从图像数据生成基于立方体的地图网格
     
     //材料装载/卸载功能
-    Material *加载Materials(const char *fileName, int *materialCount);                             //从Model文件加载材质
+    Material *LoadMaterials(const char *fileName, int *materialCount);                             //从Model文件加载材质
     Material LoadMaterialDefault(void);                                                           //加载默认材质(支持：DIFFUSE, SPECULAR, NORMAL贴图)
     void UnloadMaterial(Material material);                                                       //从GPU内存(VRAM)卸载材料
     void SetMaterialTexture(Material  *material, int mapType, Texture2D texture);                 //为材质贴图类型(material_map_DIFFUSE, material.map_SPECULAR…)设置Texture
     void SetModelMeshMaterial(Model *Model, int meshId, int materialId);                          //设置Mesh的材质
     
     //Model动画加载/卸载功能
-    ModelAnimation  *LoadModelAnimations(const char *fileName, unsigned int *animCount);          //从文件加载Model动画
+    ModelAnimation *LoadModelAnimations(const char *fileName, unsigned int *animCount);          //从文件加载Model动画
     void UpdateModelAnimation(Model Model, ModelAnimation动画, int帧);                             //更新Model动画姿势
     void UnloadModelAnimation(ModelAnimation动画);                                                 //卸载动画数据
     void UnloadModelAnimations(ModelAnimation *动画, unsigned int计数);                             //卸载动画阵列数据

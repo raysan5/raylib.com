@@ -15,14 +15,14 @@
     //文本绘图功能
     void DrawFPS(int posX, int posY);                                                       //绘制当前FPS
     void DrawText(const char *text, int posX, int posY, int fontSize, Color Color);         //绘制文本(使用默认字体)
-    void DrawTextEx(Font Font、const char *文本、Vector2位置、float Font大小、float间距、Color Color);   //使用Font和其他参数绘制文本
-    void DrawTextPro(Font Font、const char *文本、Vector2位置、Vector2原点、float旋转、float Font大小、float间距、Color Color); //使用字体和pro参数绘制文本(旋转)
+    void DrawTextEx(Font Font, const char *文本, Vector2位置, float Font大小, float间距, Color Color);   //使用Font和其他参数绘制文本
+    void DrawTextPro(Font Font, const char *文本, Vector2位置, Vector2原点, float旋转, float Font大小, float间距, Color Color); //使用字体和pro参数绘制文本(旋转)
     void DrawTextCodepoint(Font Font, int代码点, Vector2位置, float Font大小, Color Color);    //绘制一个字符(代码点)
     void DrawTextCodepoints(Font Font, constint *代码点, int计数, Vector2位置, float Font大小, float间距, Color Color); //绘制多个字符(代码点)
     
     //文本字体信息功能
     int MeasureText(const char *text, int fontSize);                                        //测量默认字体font的字符串宽度
-    Vector2 MeasureTextEx(Font、const char *文本、float Font大小、float间距);                    //测量字体的字符串大小
+    Vector2 MeasureTextEx(Font, const char *文本, float Font大小, float间距);                    //测量字体的字符串大小
     int GetGlyphIndex(Font, int代码点);                                                      //获取代码点(unicode字符)Font中的字形索引位置, 回退到“？”如果未找到
     GlyphInfo GetGlyphInfo(Font, int码点);                                                  //获取代码点(unicode字符)的字形字体信息数据, 回退到“？”如果未找到
     Rectangle GetGlyphAtlasRec(Font, int代码点);                                             //获取代码点(unicode字符)字体图集中的字形Rectangle, 回退到“？”如果未找到

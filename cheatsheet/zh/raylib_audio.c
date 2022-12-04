@@ -53,7 +53,7 @@
     float GetMusicTimePlayed(Music music);                          //获取当前播放的音乐时间(秒)
     
     //AudioStream管理功能
-    AudioStream  LoadAudioStream(unsigned int sampleRate、unsigned int sampleSize、unsigned整型通道); //加载音频流(以流式传输原始音频pcm数据)
+    AudioStream  LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned整型通道); //加载音频流(以流式传输原始音频pcm数据)
     void UnloadAudioStream(AudioStream stream);                     //卸载音频流并释放内存
     void UpdateAudioStream(AudioStream音频流, const void *data, int frameCount); //使用数据更新音频流缓冲区
     bool IsAudioStreamProcessed(AudioStream音频流);                  //检查是否有音频流缓冲区需要重新填充
@@ -67,7 +67,7 @@
     void SetAudioStreamPan(AudioStream音频流, float平移);             //设置音频流的平移(0.5居中)
     void SetAudioStreamBufferSizeDefault(int大小);                   //新音频流的默认大小
     void SetAudioStreamCallback(AudioStream音频流, AudioCallback回调); //音频线程回调以请求新数据
-    void AttachAudioStreamProcessor(AudioStream音频流、AudioCallback处理器); //将音频流处理器连接到流
-    void DetachAudioStreamProcessor(AudioStream音频流、AudioCallback处理器); //从流中分离音频流处理器
+    void AttachAudioStreamProcessor(AudioStream音频流, AudioCallback处理器); //将音频流处理器连接到流
+    void DetachAudioStreamProcessor(AudioStream音频流, AudioCallback处理器); //从流中分离音频流处理器
     
     

@@ -23,9 +23,9 @@
     
     //Image处理功能
     Image ImageCopy(Image Image);                                               //创建图像副本(用于变换)
-    Image ImageFrom图像(Image Image, Rectangle记录);                              //从其他图像片段创建图像
+    Image ImageFromImage(Image Image, Rectangle记录);                            //从其他图像片段创建图像
     Image ImageText(const char *text, int fontSize, Color Color);               //从文本创建图像(默认字体)
-    Image ImageTextEx(Font、const char *文本、float Font大小、float间距、颜色色调);      //从文本创建图像(自定义精灵字体)
+    Image ImageTextEx(Font, const char *文本, float Font大小, float间距, 颜色色调);      //从文本创建图像(自定义精灵字体)
     void ImageFormat(Image *Image, int newFormat);                              //将图像数据转换为所需格式
     void ImageToPOT(Image *Image, 颜色填充);                                      //将图像转换为POT(2的幂)
     void ImageCrop(Image *Image, Rectangle裁剪);                                 //将图像裁剪为定义的Rectangle
@@ -75,7 +75,7 @@
     //Texture加载功能
     //注意：这些功能需要GPU访问
     Texture2D LoadTexture(const char *fileName);                                //将Texture从文件加载到GPU内存(VRAM)
-    Texture2D LoadTextureFrom图像(Image Image);                                  //从图像数据加载Texture
+    Texture2D LoadTextureFromImage(Image Image);                                //从图像数据加载Texture
     TextureCubemap LoadTextureCubemap(Image Image, int布局);                     //从图像 Load立方体贴图, 支持多个图像立方体贴图布局
     RenderTexture2D LoadRenderTexture(int宽度, int高度);                          //加载用于渲染的Texture(帧缓冲区)
     void UnloadTexture(Texture2D texture);                                      //从GPU内存(VRAM)卸载Texture
@@ -91,26 +91,26 @@
     //Texture绘制功能
     void DrawTexture(Texture2D texture, int posX, int posY, Color tint);            //绘制Texture2D
     void DrawTextureV(Texture2D texture, Vector2位置, Color tint);                   //绘制位置定义为Vector2的Texture2D
-    void DrawTextureEx(Texture2D texture、Vector2位置、float旋转、float比例、Color tint);  //使用扩展参数绘制Texture2D
+    void DrawTextureEx(Texture2D texture, Vector2位置, float旋转, float比例, Color tint);  //使用扩展参数绘制Texture2D
     void DrawTextureRec(Texture2D texture, Rectangle源, Vector2位置, Color tint);     //绘制由Rectangle 定义的Texture的一部分
-    void DrawTextureQuad(Texture2D texture、Vector2平铺、Vector2偏移、Rectangle四边形、Color tint); //使用平铺和偏移参数绘制Texture四边形
-    void DrawTextureTiled(Texture2D texture、Rectangle源、Rectangle目标、Vector2原点、float旋转、float比例、Color tint); //绘制Texture的一部分(由Rectangle 定义), 旋转并缩放平铺到dest。
-    void DrawTexturePro(Texture2D texture、Rectangle源、Rectangle目标、Vector2原点、float旋转、Color tint); //使用“pro”参数绘制由Rectangle 定义的Texture的一部分
+    void DrawTextureQuad(Texture2D texture, Vector2平铺, Vector2偏移, Rectangle四边形, Color tint); //使用平铺和偏移参数绘制Texture四边形
+    void DrawTextureTiled(Texture2D texture, Rectangle源, Rectangle目标, Vector2原点, float旋转, float比例, Color tint); //绘制Texture的一部分(由Rectangle 定义), 旋转并缩放平铺到dest。
+    void DrawTexturePro(Texture2D texture, Rectangle源, Rectangle目标, Vector2原点, float旋转, Color tint); //使用“pro”参数绘制由Rectangle 定义的Texture的一部分
     void DrawTextureNPatch(Texture2D texture, NPatchInfo NPatchInfo, Rectangle目标, Vector2原点, float旋转, Color tint); //绘制可以很好地拉伸或收缩的Texture(或其一部分)
     void DrawTexturePoly(Texture2D texture, Vector2中心, Vector2 *点, Vector2 *Texture坐标, int pointCount, Color tint); //绘制Texture多边形
     
     //颜色/像素相关功能
-    Color Fade(颜色, float alpha);                            //使用alpha获取颜色, alpha从0.0f变为1.0f
+    Color Fade(Color color, float alpha);                   //使用alpha获取颜色, alpha从0.0f变为1.0f
     int ColorToInt(Color color);                            //获取颜色的十六进制值
     Vector4 ColorNormalize(Color color);                    //获取标准化为float的颜色[0..1]
     Color ColorFromNormalized(Vector4规格化);                 //从规格化值[0..1]获取颜色
-    Vector3 ColorToHSV(Color color);                        //获取颜色、色调[0..360]、饱和度/值[0..1]的HSV值
-    Color ColorFromHSV(float色调、float饱和度、float值);         //从HSV值、色调[0..360]、饱和度/值[0..1]获取颜色
+    Vector3 ColorToHSV(Color color);                        //获取颜色, 色调[0..360], 饱和度/值[0..1]的HSV值
+    Color ColorFromHSV(float色调, float饱和度, float值);         //从HSV值, 色调[0..360], 饱和度/值[0..1]获取颜色
     Color ColorAlpha(Color color, float alpha);             //使用alpha获取颜色, alpha从0.0f变为1.0f
-    Color AlphaBlend(Color dst、Color src、Color tint);       //将src alpha混合到带有色调的dst颜色中
+    Color AlphaBlend(Color dst, Color src, Color tint);       //将src alpha混合到带有色调的dst颜色中
     Color GetColor(unsigned int hexValue);                  //从十六进制值获取颜色struct
     Color GetPixelColor(void *srcPtr, int格式);              //从特定格式的源像素指针获取颜色
     void SetPixelColor(void *dstPtr, Color coloe, int格式);  //设置格式化为目标像素指针的颜色
-    int GetPixelDataSize(int宽度、int高度、int格式);             //获取特定格式的像素数据大小(字节)
+    int GetPixelDataSize(int宽度, int高度, int格式);             //获取特定格式的像素数据大小(字节)
     
     
