@@ -42,6 +42,10 @@
     line-height: 24px;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #ddd;
 }
@@ -163,6 +167,23 @@ h2 {
 
 .downloadButtonInstaller {
     font-size: x-small;
+}
+
+.anchor-link {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    background-image: url(img/anchor_link.svg);
+    background-size: 16px 16px;
+    display: inline-block;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: 0.25s;
+    transform: translateY(4px);
+}
+
+.anchor-link:hover {
+    opacity: 1.0;
 }
 
 ul {
