@@ -30,34 +30,38 @@
     </head>
 
     <body>
+        <script src="common/common.js" defer></script>
+        <div class="header-container">
+            <div class="header">
+                <a id="logo" href="index.html"></a>
+                <div class="nav-container">
+                    <div id="social">
+                        <a id="twitter" href="https://www.twitter.com/raysan5" target="_blank"></a>
+                        <a id="discord" href="https://discord.gg/raylib" target="_blank"></a>
+                        <a id="twitch" href="https://www.twitch.tv/raysan5" target="_blank"></a>
+                        <a id="kofi" href="https://ko-fi.com/raysan5" target="_blank"></a>
+                        <a id="itchio" href="https://raysan5.itch.io" target="_blank"></a>
+                        <a id="handmade" href="https://raylib.handmade.network/" target="_blank"></a>
+                        <a id="reddit" href="https://www.reddit.com/r/raylib/" target="_blank"></a>
+                        <a id="youtube" href="https://www.youtube.com/c/raylib" target="_blank"></a>
+                        <a id="patreon" href="https://www.patreon.com/raylib" target="_blank"></a>
+                        <a id="redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank"></a>
+                        <a id="github" href="https://github.com/raysan5/raylib" target="_blank"></a>
+                    </div>
+                    <div class="menu">
+                        <div id="active">about</div>
+                        <a href="examples.html">examples</a>
+                        <a href="games.html">games</a>
+                        <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
+                        <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="page">
             <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> or <a href="https://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
             <![endif]-->
-
-            <div class="header">
-                <a id="logo" href="index.html"></a>
-                <div id="social">
-                    <a id="twitter" href="https://www.twitter.com/raysan5" target="_blank"></a>
-                    <a id="discord" href="https://discord.gg/raylib" target="_blank"></a>
-                    <a id="twitch" href="https://www.twitch.tv/raysan5" target="_blank"></a>
-                    <a id="kofi" href="https://ko-fi.com/raysan5" target="_blank"></a>
-                    <a id="itchio" href="https://raysan5.itch.io" target="_blank"></a>
-                    <a id="handmade" href="https://raylib.handmade.network/" target="_blank"></a>
-                    <a id="reddit" href="https://www.reddit.com/r/raylib/" target="_blank"></a>
-                    <a id="youtube" href="https://www.youtube.com/c/raylib" target="_blank"></a>
-                    <a id="patreon" href="https://www.patreon.com/raylib" target="_blank"></a>
-                    <a id="redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank"></a>
-                    <a id="github" href="https://github.com/raysan5/raylib" target="_blank"></a>
-                </div>
-                <div class="menu">
-                    <div id="active">about</div>
-                    <a href="examples.html">examples</a>
-                    <a href="games.html">games</a>
-                    <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
-                    <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
-                </div>
-            </div>
 
             <div class="content">
                 <h1>raylib is a simple and easy-to-use library to enjoy videogames programming.</h1>
@@ -67,7 +71,7 @@
                 <br>
                 <p><strong>NOTE for ADVENTURERS:</strong> raylib is a programming library to enjoy videogames programming; no fancy interface, no visual helpers, no gui tools or editors... just coding in pure spartan-programmers way. Are you ready to enjoy coding?</p>
                 <br>
-                <h2>raylib learning resources</h2>
+                <h2 id="learning-resources">raylib learning resources</h2>
                 <br>
                 <p>raylib does not provide the typical API documentation or a big set of tutorials. The library is designed to be minimalistic and be learned just from a cheatsheet with all required functionality and a big collection of examples to see how to use that functionality. <strong>Best way to learn to code is reading code.</strong></p>
                 <br>
@@ -83,7 +87,7 @@
                 </div>
                 <p>Apart from those materials, there are plenty of tutorials created by the amazing raylib community. It's highly recommended to join the friendly <a href="https://discord.gg/raylib" target="_blank">raylib Discord Community</a> to stay up to date of latest raylib news and ask for help when required!</p>
                 <br>
-                <h2>raylib awards</h2>
+                <h2 id="awards">raylib awards</h2>
                 <br>
                 <p>raylib has received several recognitions in the last years. Here there some awards received from <strong>Google</strong> and <strong>Epic Games</strong>.</p>
                 <br>
@@ -95,7 +99,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib supported platforms</h2>
+                <h2 id="platforms">raylib supported platforms</h2>
                 <br>
                 <p>raylib supports multiple target platforms, it has been tested in the following ones but, technically, any platform that supports C language and OpenGL graphics (or similar) can run raylib or it can be very easily ported to.</p>
                 <br>
@@ -112,7 +116,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib language bindings</h2>
+                <h2 id="bindings">raylib language bindings</h2>
                 <br>
                 <p>You can use raylib with multiple programming languages, there are <a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+60 bindings</a>! Here is a list with some of them:</p>
                 <br>
@@ -131,7 +135,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib extra libraries</h2>
+                <h2 id="extra-libraries">raylib extra libraries</h2>
                 <br>
                 <p>raylib can be combined with several extra libraries for additional functionality, some of those libraries are already used internally while others are provided for user integration, most of these libraries are single-file header-only with no external dependencies.</p>
                 <br>
@@ -147,7 +151,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib technologies tools</h2>
+                <h2 id="raylibtech-tools">raylib technologies tools</h2>
                 <br>
                 <p>raylib is the base technology for <a class="simplelink" href="https://www.raylibtech.com" target="_blank">raylib technologies</a> tools development! Several multiplatform tools have been developed using raylib and <a class="simplelink" href="https://github.com/raysan5/raygui" target="_blank">raygui</a>. <a class="simplelink" href="https://raylibtech.itch.io" target="_blank"/>Check them out!</a></p>
                 <br>
@@ -168,7 +172,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib community</h2>
+                <h2 id="community">raylib community</h2>
                 <br>
                 <p>Do you need help with raylib? Do you want to keep updated with latest news? Do you want to show your raylib creations? Join our amazing community of raylib developers! Choose the network you prefer! You are welcome!</p>
                 <br>
@@ -184,7 +188,7 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib contributions</h2>
+                <h2 id="contributions">raylib contributions</h2>
                 <br>
                 <p>I'm working hard on raylib but my resources are limited. If you enjoy raylib and want to help, consider a small donation or contributing to the project on GitHub. Thanks!</p>
                 <br>
@@ -199,30 +203,30 @@
                     </div>
                 </div>
                 <br>
-                <h2>raylib features</h2>
+                <h2 id="features">raylib features</h2>
                 <br>
-                <div class="list">
-                    - <strong>NO external dependencies</strong>, all required libraries included with raylib<br>
-                    - Multiplatform: <strong>Windows, Linux, MacOS, RPI, Android, HTML5... and more!</strong><br>
-                    - Written in plain C code (C99) in PascalCase/camelCase notation<br>
-                    - Hardware accelerated with OpenGL (<strong>1.1, 2.1, 3.3, 4.3 or ES 2.0</strong>)<br>
-                    - <strong>Unique OpenGL abstraction</strong> layer: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/rlgl.h" target="_blank">rlgl</a><br>
-                    - Powerful <strong>Fonts</strong> module (XNA SpriteFonts, BMfonts, TTF, SDF)<br>
-                    - Outstanding texture formats support, including compressed formats (DXT, ETC, ASTC)<br>
-                    - <strong>Full 3d support</strong> for 3d Shapes, Models, Billboards, Heightmaps and more! <br>
-                    - Flexible Materials system, supporting classic maps and <strong>PBR maps</strong><br>
-                    - <strong>Animated 3d models</strong> supported (skeletal bones animation)<br>
-                    - Shaders support, including <strong>Model shaders</strong> and <strong>Postprocessing shaders</strong><br>
-                    - <strong>Powerful math module</strong> for Vector, Matrix and Quaternion operations: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/raymath.h" target="_blank">raymath</a><br>
-                    - Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, XM, MOD)<br>
-                    - <strong>VR stereo rendering</strong> support with configurable HMD device parameters<br>
-                    - Huge examples collection with <a class="simplelink" href="examples.html" target="_blank">+120 code examples</a>!<br>
-                    - Bindings to <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+50 programming languages</a>!<br>
-                    - Free and open source. Check [<a class="simplelink" href="license.html" target="_blank">LICENSE</a>].<br>
-                </div>
+                <ul>
+                    <li><strong>NO external dependencies</strong>, all required libraries included with raylib</li>
+                    <li>Multiplatform: <strong>Windows, Linux, MacOS, RPI, Android, HTML5... and more!</strong></li>
+                    <li>Written in plain C code (C99) in PascalCase/camelCase notation</li>
+                    <li>Hardware accelerated with OpenGL (<strong>1.1, 2.1, 3.3, 4.3 or ES 2.0</strong>)</li>
+                    <li><strong>Unique OpenGL abstraction</strong> layer: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/rlgl.h" target="_blank">rlgl</a></li>
+                    <li>Powerful <strong>Fonts</strong> module (XNA SpriteFonts, BMfonts, TTF, SDF)</li>
+                    <li>Outstanding texture formats support, including compressed formats (DXT, ETC, ASTC)</li>
+                    <li><strong>Full 3d support</strong> for 3d Shapes, Models, Billboards, Heightmaps and more! </li>
+                    <li>Flexible Materials system, supporting classic maps and <strong>PBR maps</strong></li>
+                    <li><strong>Animated 3d models</strong> supported (skeletal bones animation)</li>
+                    <li>Shaders support, including <strong>Model shaders</strong> and <strong>Postprocessing shaders</strong></li>
+                    <li><strong>Powerful math module</strong> for Vector, Matrix and Quaternion operations: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/raymath.h" target="_blank">raymath</a></li>
+                    <li>Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, XM, MOD)</li>
+                    <li><strong>VR stereo rendering</strong> support with configurable HMD device parameters</li>
+                    <li>Huge examples collection with <a class="simplelink" href="examples.html" target="_blank">+120 code examples</a>!</li>
+                    <li>Bindings to <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+50 programming languages</a>!</li>
+                    <li>Free and open source. Check [<a class="simplelink" href="license.html" target="_blank">LICENSE</a>].</li>
+                </ul>
                 <br>
                 <br>
-                <h2>raylib architecture</h2>
+                <h2 id="architecture">raylib architecture</h2>
                 <br>
                 <p>raylib is a highly modular library. Everything is contained within a small number of well defined, specific and self-contained modules, named accordingly to its primary functionality. Note that some of those modules can be used in <strong>standalone mode</strong>, independently of raylib library.</p>
                 <a href="images/raylib_architecture_v4.2.png"><img src="images/raylib_architecture_v4.2.png" title="raylib architecture" alt="raylib architecture" width="800" /></a>

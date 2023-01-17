@@ -4,24 +4,17 @@
 
 #filter_menu { width:820px; height:80px; margin-left:15px; }
 
-.legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; }
-#core { cursor:pointer; background-color:#e1e1e1; color:#5c5a5a; border:5px solid #898888; }
-#shapes { cursor:pointer; background-color:#f0d6d6; color:#c55757; border:5px solid #e66666; }
-#textures { cursor:pointer; background-color:#c8eabf; color:#60815a; border:5px solid #75a06d; }
-#text { cursor:pointer; background-color:#bef0dd; color:#377764; border:5px solid #52b296; }
-#models { cursor:pointer; background-color:#bedce8; color:#417794; border:5px solid #5d9cbd; }
-#shaders { cursor:pointer; background-color:#e2c3f5; color:#a864d2; border:5px solid #a864d2; }
-#audio { cursor:pointer; background-color:#ebddae; color:#8c7539; border:5px solid #d3b157; }
-#physics { cursor:pointer; background-color:#ddffdd; color:#00a820; border:5px solid #00a820; }
+.legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
+#core       { background-color:#e1e1e1; color:#5c5a5a; border:5px solid #898888; }
+#shapes     { background-color:#f0d6d6; color:#c55757; border:5px solid #e66666; }
+#textures   { background-color:#c8eabf; color:#60815a; border:5px solid #75a06d; }
+#text       { background-color:#bef0dd; color:#377764; border:5px solid #52b296; }
+#models     { background-color:#bedce8; color:#417794; border:5px solid #5d9cbd; }
+#shaders    { background-color:#e2c3f5; color:#a864d2; border:5px solid #a864d2; }
+#audio      { background-color:#ebddae; color:#8c7539; border:5px solid #d3b157; }
+#physics    { background-color:#ddffdd; color:#00a820; border:5px solid #00a820; }
 
-#core:hover { border-color:black; }
-#shapes:hover { border-color:black; }
-#textures:hover { border-color:black; }
-#text:hover { border-color:black; }
-#models:hover { border-color:black; }
-#shaders:hover { border-color:black; }
-#audio:hover { border-color:black; }
-#physics:hover { border-color:black; }
+.legendButton:hover { border: 5px solid #000 !important; }
 
 .fcore { border: 1px solid #898888; margin-left: 12px; }
 .fshapes { border: 1px solid #e66666; margin-left: 12px; }

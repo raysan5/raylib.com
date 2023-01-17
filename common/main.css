@@ -18,24 +18,21 @@
 ::-webkit-scrollbar-button:end:increment {
     display: block;
     height: 10px;
-}
-
-::-webkit-scrollbar-button:vertical:increment {
-    background-color: #fff;
+    background-color: #8c8c8c;
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: #bdbdbd;
+    background-color: #c8c8c8;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 50px;
-    background-color: #000000;
+    background-color: #505050;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
     width: 50px;
-    background-color: #000000;
+    background-color: #505050;
 }
 
 * {
@@ -46,7 +43,7 @@
 }
 
 body {
-    background-color: #f5f5f5;
+    background-color: #ddd;
 }
 
 a {
@@ -74,51 +71,78 @@ h2 {
 }
 
 .page {
-    width: 880px;
+    width: min(960px, 100vw);
+    min-height: 100vh;
     margin: 0 auto;
+    padding-top: 128px;
+
+    background-color: #f5f5f5;
+    border: 2px solid #c8c8c8;
+    display: flex;
+    flex-direction: column;
+
+    border-top: none;
+}
+
+.header-container {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+
+    width: max(100%, 960px);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    background-color: white;
+
+    border-bottom: 2px solid #8c8c8c;
+
+    z-index: 100;
 }
 
 .header {
-    width: 100%;
-    float: left;
     position: relative;
+    width: 960px;
     height: 128px;
     font-size: 10pt;
-    margin-top: 40px;
-    margin-left: 10px;
+
+    background-color: #fff;
+
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .content {
     font-size: 8pt;
-    width: 840px;
-    padding: 10px;
+    padding: 32px;
     padding-top: 30px;
     float: left;
     position: relative;
 }
 
 .footer {
-    width: 820px;
-    float: left;
-    position: relative;
-    border-top: 1px solid black;
+    width: 100%;
+    border-top: 1px solid #c8c8c8;
     text-align: right;
     height: 40px;
     padding-top: 10px;
+    background-color: #f5f5f5;
 }
 
 .footer p a {
-    color: #aaaaaa;
+    color: #828282;
+    transition: 0.125s;
 }
 
 .footer p a:hover {
-    color: #444;
+    color: #000;
 }
 
 .footer p {
     font-size: 6pt;
-    color: #aaaaaa;
-    margin-top: -8px;
+    margin-right: 20px;
+    color: #828282;
 }
 
 .simplelink {
@@ -141,8 +165,13 @@ h2 {
     font-size: x-small;
 }
 
-.list,
-.list strong {
+ul {
+    width: fit-content;
+    padding-left: 48px;
+    list-style-position: inside;
+}
+
+li {
     font-family: Courier New, Verdana, Arial !important;
     font-size: medium;
     line-height: 200%;
@@ -157,214 +186,153 @@ h2 {
 }
 
 .menu {
-    width: auto;
-    height: 40px;
-    text-align: right;
-    right: 0px;
-    left: 15px;
+    width: calc(100% - 128px);
+    height: 48px;
+
+    position: absolute;
     bottom: 0px;
-    position: relative;
-    float: left;
-    margin-left: 0px;
-    margin-top: -3px;
-    border-bottom: 1px solid black;
-    overflow: hidden;
+    right: 0px;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    flex-wrap: nowrap;
+
+    background-color: #fff;
 }
 
 .menu a {
-    height: 40px;
+    height: 48px;
     padding: 0px 20px;
-    color: black;
+    color: #505050;
     font-size: 12pt;
+    line-height: 40px;
     float: left;
     position: relative;
-    top: 4px;
-    transition: top 0.1s ease-in-out;
+    transition: 0.125s;
+
+    border-left: 2px solid #0000;
+    border-right: 2px solid #0000;
 }
 
 .menu a:hover {
+    color: #000;
     padding: 0px 20px;
-    top: 0px;
 }
 
 #active {
-    height: 40px;
+    height: 46px;
     padding: 0px 20px;
-    color: #707070;
+    color: #000;
     font-size: 12pt;
+    line-height: 40px;
     float: left;
     position: relative;
-    margin-top: 0px;
+
+    border: 2px solid #c8c8c8;
+    border-bottom: none;
 }
 
 .menu a:hover,
 #active {
-    background: rgb(254, 255, 255);
-    background: linear-gradient(to bottom, rgba(245, 245, 245, 1) 0%, rgba(224, 224, 224, 1) 100%);
+    background: #c8c8c888;
+}
+
+#analytics-banner {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+
+    position: absolute;
+    float: left;
+    bottom: 0px;
+    left: 0px;
+    position: sticky;
+
+    background-color: #ffcb00;
+    border-top: 2px solid #b38e00;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    transition: 0.5s;
+}
+
+#analytics-banner[confirmed="true"] {
+    bottom: -64px;
+    opacity: 0;
+}
+
+#analytics-banner p,
+#analytics-banner p *,
+#analytics-banner button * {
+    font-family: Courier New, Verdana, Arial !important;
+    font-size: large;
+}
+
+#analytics-banner button {
+    min-height: 40px;
+    width: fit-content;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 32px;
+    margin-right: 32px;
+    border: 0px;
+    background-color: #fff5;
+    border: 2px solid #b38e00;
+    transition: 0.125s;
+    word-wrap: unset;
+}
+
+#analytics-banner button:hover {
+    background-color: #fff8;
+    cursor: pointer;
+}
+
+#analytics-banner p {
+    margin-left: 32px;
 }
 
 #social {
-    width: 440px;
-    height: 50px;
-    position: relative;
+    width: fit-content;
+    height: fit-content;
     float: right;
     margin-right: 8px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+}
+
+#social a {
+    margin-left: 4px;
+    width: 36px;
+    height: 36px;
+    background-color: #f5f5f5;
+    background-repeat: none;
+    background-position: 0px 0px;
+    cursor: pointer;
 }
 
 #social a:hover {
-    background-position: 0 -36px;
+    background-position: 0px -36px;
 }
 
-#youtube {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_youtube.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#handmade {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_handmade.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#twitch {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_twitch.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#redbubble {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_redbubble.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#patreon {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_patreon.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#itchio {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_itchio.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#reddit {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_reddit.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#freenode {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_freenode_irc.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#gitter {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_gitter.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#twitter {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_twitter.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#github {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_github.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#kofi {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_kofi.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-#discord {
-    width: 36px;
-    height: 36px;
-    float: left;
-    position: relative;
-    background-image: url(img/icon_discord.png);
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-}
-
-.list {
-    margin-top: 10px;
-    margin-left: 30px;
-    display: inline-block;
-}
+#youtube    { background-image: url(img/icon_youtube.png);      }
+#handmade   { background-image: url(img/icon_handmade.png);     }
+#twitch     { background-image: url(img/icon_twitch.png);       }
+#redbubble  { background-image: url(img/icon_redbubble.png);    }
+#patreon    { background-image: url(img/icon_patreon.png);      }
+#itchio     { background-image: url(img/icon_itchio.png);       }
+#reddit     { background-image: url(img/icon_reddit.png);       }
+#freenode   { background-image: url(img/icon_freenode_irc.png); }
+#gitter     { background-image: url(img/icon_gitter.png);       }
+#twitter    { background-image: url(img/icon_twitter.png);      }
+#github     { background-image: url(img/icon_github.png);       }
+#kofi       { background-image: url(img/icon_kofi.png);         }
+#discord    { background-image: url(img/icon_discord.png);      }
 
 #licensebox {
     width: 808px;
@@ -594,6 +562,7 @@ h2 {
 #itchioframe {
     display: block;
     text-align: center;
+    overflow: auto;
 }
 
 .icon {
