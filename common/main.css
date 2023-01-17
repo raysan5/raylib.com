@@ -35,6 +35,10 @@
     background-color: #505050;
 }
 
+:root {
+    --content-width: 840px;
+}
+
 * {
     padding: 0px;
     margin: 0px;
@@ -76,7 +80,7 @@ h2 {
 }
 
 .page {
-    width: min(960px, 100vw);
+    width: min(var(--content-width), 100vw);
     min-height: 100vh;
     margin: 0 auto;
     padding-top: 128px;
@@ -94,7 +98,7 @@ h2 {
     top: 0px;
     left: 0px;
 
-    width: max(100%, 960px);
+    width: max(100%, var(--content-width));
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -108,7 +112,7 @@ h2 {
 
 .header {
     position: relative;
-    width: 960px;
+    width: var(--content-width);
     height: 128px;
     font-size: 10pt;
 
@@ -120,7 +124,6 @@ h2 {
 
 .content {
     font-size: 8pt;
-    padding: 32px;
     padding-top: 30px;
     float: left;
     position: relative;
@@ -249,7 +252,7 @@ li {
     padding: 0px 20px;
     color: #000;
     font-size: 12pt;
-    line-height: 40px;
+    line-height: 36px;
     float: left;
     position: relative;
 
@@ -279,6 +282,7 @@ li {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 
     transition: 0.5s;
 }
@@ -338,7 +342,7 @@ li {
     width: fit-content;
     height: fit-content;
     float: right;
-    margin-right: 8px;
+    margin-right: 0px;
     margin-top: 8px;
     display: flex;
     flex-direction: row;
