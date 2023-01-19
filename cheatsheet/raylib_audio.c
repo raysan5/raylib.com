@@ -1,4 +1,3 @@
-
     // Audio device management functions
     void InitAudioDevice(void);                                     // Initialize audio device and context
     void CloseAudioDevice(void);                                    // Close the audio device and context

@@ -1,4 +1,3 @@
-
     // Font loading/unloading functions
     Font GetFontDefault(void);                                                            // Get the default Font
     Font LoadFont(const char *fileName);                                                  // Load font from file into GPU memory (VRAM)
@@ -27,12 +26,12 @@
     Rectangle GetGlyphAtlasRec(Font font, int codepoint);                                 // Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found
 
     // Text codepoints management functions (unicode characters)
-    int *LoadCodepoints(const char *text, int *count);                                    // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
-    void UnloadCodepoints(int *codepoints);                                               // Unload codepoints data from memory
-    int GetCodepointCount(const char *text);                                              // Get total number of codepoints in a UTF-8 encoded string
-    int GetCodepoint(const char *text, int *bytesProcessed);                              // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
-    const char *CodepointToUTF8(int codepoint, int *byteSize);                            // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
-    char *TextCodepointsToUTF8(const int *codepoints, int length);                        // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
+    int *LoadCodepoints(const char *text, int *count);              // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
+    void UnloadCodepoints(int *codepoints);                         // Unload codepoints data from memory
+    int GetCodepointCount(const char *text);                        // Get total number of codepoints in a UTF-8 encoded string
+    int GetCodepoint(const char *text, int *bytesProcessed);        // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+    const char *CodepointToUTF8(int codepoint, int *byteSize);      // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
+    char *TextCodepointsToUTF8(const int *codepoints, int length);  // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
 
     // Text strings management functions (no UTF-8 strings, only byte chars)
     // NOTE: Some strings allocate memory internally for returned strings, just be careful!
@@ -47,8 +46,8 @@
     const char **TextSplit(const char *text, char delimiter, int *count);                 // Split text into multiple strings
     void TextAppend(char *text, const char *append, int *position);                       // Append text at specific position and move cursor!
     int TextFindIndex(const char *text, const char *find);                                // Find first text occurrence within a string
-    const char *TextToUpper(const char *text);                                            // Get upper case version of provided string
-    const char *TextToLower(const char *text);                                            // Get lower case version of provided string
-    const char *TextToPascal(const char *text);                                           // Get Pascal case notation version of provided string
-    int TextToInteger(const char *text);                                                  // Get integer value from text (negative values not supported)
+    const char *TextToUpper(const char *text);                      // Get upper case version of provided string
+    const char *TextToLower(const char *text);                      // Get lower case version of provided string
+    const char *TextToPascal(const char *text);                     // Get Pascal case notation version of provided string
+    int TextToInteger(const char *text);                            // Get integer value from text (negative values not supported)
 
