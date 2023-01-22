@@ -79,6 +79,14 @@ h2 {
     line-height: 24px;
 }
 
+h2::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 144px;
+    margin: -144px 0px 0px;
+}
+
 .page {
     width: min(var(--content-width), 100vw);
     min-height: fit-content;
