@@ -81,7 +81,7 @@ h2 {
 
 .page {
     width: min(var(--content-width), 100vw);
-    min-height: 100vh;
+    min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
 
