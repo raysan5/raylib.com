@@ -618,6 +618,7 @@ li {
 
 @media only screen and (max-width: 600px) {
 
+    /* general layout changes for mobile */
     ul {
         padding-left: 8px;
     }
@@ -631,6 +632,10 @@ li {
 
     .architecture-image-container img {
         width: 100%;
+    }
+
+    #itchioframe iframe {
+        max-width: calc(100vw - 20px);
     }
 
 }
