@@ -638,4 +638,31 @@ li {
         max-width: calc(100vw - 20px);
     }
 
+    /* fixes menu + scrolling for mobile */
+    .header {
+        display: flex;
+        width: 100vw;
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .header::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
+    
+    .header-container {
+        width: 100vw;
+    }
+
+    .menu {
+        width: 712px; /* this width is currently based on the websites normal menu */
+        right: unset;
+    }
+
+    #logo {
+        flex-direction: column; 
+        flex-shrink: 0;
+    }
+
+
+
 }
