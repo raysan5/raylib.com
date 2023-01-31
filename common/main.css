@@ -615,3 +615,22 @@ li {
 #raylibtech>a>img:hover {
     filter: contrast(180%);
 }
+
+@media only screen and (max-width: 600px) {
+
+    ul {
+        padding-left: 8px;
+    }
+
+    #platforms, #bindings, #extralibs, #raylibtech {
+        text-align: center;
+    }
+    .content {
+        padding: 30px 10px 0;
+    }
+
+    .architecture-image-container img {
+        width: 100%;
+    }
+
+}
