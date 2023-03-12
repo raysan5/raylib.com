@@ -121,8 +121,7 @@ $(document).ready(function() {
         '⭐️☆☆☆#audio_module_playing', 
         '⭐️☆☆☆#audio_music_stream', 
         '⭐️⭐️⭐️☆#audio_raw_stream', 
-        '⭐️☆☆☆#audio_sound_loading', 
-        '⭐️☆☆☆#audio_multichannel_sound'];  
+        '⭐️☆☆☆#audio_sound_loading'];  
 
     for (var i = 0; i < exampleData.length; i++)
     {
