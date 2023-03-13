@@ -71,6 +71,7 @@ $(document).ready(function() {
         '⭐️☆☆☆#textures_polygon', 
         '⭐️⭐️⭐️☆#textures_fog_of_war', 
         '⭐️⭐️⭐️☆#textures_gif_player', 
+        '⭐️⭐️⭐️☆#textures_textured_curve', 
         '⭐️☆☆☆#text_raylib_fonts', 
         '⭐️☆☆☆#text_font_spritefont', 
         '⭐️⭐️☆☆#text_font_filters', 
@@ -94,12 +95,14 @@ $(document).ready(function() {
         '⭐️☆☆☆#models_loading', 
         '⭐️☆☆☆#models_loading_gltf', 
         '⭐️☆☆☆#models_loading_vox', 
+        '⭐️⭐️☆☆#models_loading_m3d', 
         '⭐️☆☆☆#models_orthographic_projection', 
         '⭐️⭐️⭐️⭐️#models_rlgl_solar_system', 
         '⭐️⭐️☆☆#models_yaw_pitch_roll', 
         '⭐️⭐️⭐️☆#models_waving_cubes', 
         '⭐️☆☆☆#models_heightmap', 
         '⭐️⭐️☆☆#models_skybox', 
+        '⭐️⭐️☆☆#models_draw_cube_texture', 
         '⭐️⭐️⭐️⭐️#shaders_basic_lighting', 
         '⭐️⭐️☆☆#shaders_model_shader', 
         '⭐️⭐️☆☆#shaders_shapes_textures', 
@@ -118,10 +121,14 @@ $(document).ready(function() {
         '⭐️⭐️⭐️⭐️#shaders_mesh_instancing', 
         '⭐️⭐️☆☆#shaders_multi_sample2d', 
         '⭐️⭐️☆☆#shaders_spotlight', 
+        '⭐️⭐️☆☆#shaders_write_depth', 
+        '⭐️⭐️⭐️⭐️#shaders_hybrid_render', 
         '⭐️☆☆☆#audio_module_playing', 
         '⭐️☆☆☆#audio_music_stream', 
         '⭐️⭐️⭐️☆#audio_raw_stream', 
-        '⭐️☆☆☆#audio_sound_loading'];  
+        '⭐️☆☆☆#audio_sound_loading',
+        '⭐️⭐️⭐️⭐️#audio_stream_effect',
+        '⭐️⭐️⭐️⭐️#audio_mixed_processor'];
 
     for (var i = 0; i < exampleData.length; i++)
     {
