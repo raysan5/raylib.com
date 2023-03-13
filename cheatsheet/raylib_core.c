@@ -17,7 +17,8 @@
     void MaximizeWindow(void);                                  // Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
     void MinimizeWindow(void);                                  // Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
     void RestoreWindow(void);                                   // Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
-    void SetWindowIcon(Image image);                            // Set icon for window (only PLATFORM_DESKTOP)
+    void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
+    void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
     void SetWindowTitle(const char *title);                     // Set title for window (only PLATFORM_DESKTOP)
     void SetWindowPosition(int x, int y);                       // Set window position on screen (only PLATFORM_DESKTOP)
     void SetWindowMonitor(int monitor);                         // Set monitor for the current window (fullscreen mode)
@@ -47,7 +48,7 @@
 
     // Custom frame control functions
     // NOTE: Those functions are intended for advance users that want full control over the frame processing
-    // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timming + PollInputEvents()
+    // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
     // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
     void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
     void PollInputEvents(void);                                 // Register all input events
@@ -88,6 +89,7 @@
     // NOTE: Shader functionality is not available on OpenGL 1.1
     Shader LoadShader(const char *vsFileName, const char *fsFileName);   // Load shader from files and bind default locations
     Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode); // Load shader from code strings and bind default locations
+    bool IsShaderReady(Shader shader);                                   // Check if a shader is ready
     int GetShaderLocation(Shader shader, const char *uniformName);       // Get shader uniform location
     int GetShaderLocationAttrib(Shader shader, const char *attribName);  // Get shader attribute location
     void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType);               // Set shader uniform value
@@ -119,8 +121,8 @@
 
     void TraceLog(int logLevel, const char *text, ...);         // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
     void SetTraceLogLevel(int logLevel);                        // Set the current threshold (minimum) log level
-    void *MemAlloc(int size);                                   // Internal memory allocator
-    void *MemRealloc(void *ptr, int size);                      // Internal memory reallocator
+    void *MemAlloc(unsigned int size);                          // Internal memory allocator
+    void *MemRealloc(void *ptr, unsigned int size);             // Internal memory reallocator
     void MemFree(void *ptr);                                    // Internal memory free
 
     void OpenURL(const char *url);                              // Open URL with default system browser (if available)
@@ -137,7 +139,7 @@
     unsigned char *LoadFileData(const char *fileName, unsigned int *bytesRead);       // Load file data as byte array (read)
     void UnloadFileData(unsigned char *data);                   // Unload file data allocated by LoadFileData()
     bool SaveFileData(const char *fileName, void *data, unsigned int bytesToWrite);   // Save data to file from byte array (write), returns true on success
-    bool ExportDataAsCode(const char *data, unsigned int size, const char *fileName); // Export data to code (.h), returns true on success
+    bool ExportDataAsCode(const unsigned char *data, unsigned int size, const char *fileName); // Export data to code (.h), returns true on success
     char *LoadFileText(const char *fileName);                   // Load text data from file (read), returns a '\0' terminated string
     void UnloadFileText(char *text);                            // Unload file text data allocated by LoadFileText()
     bool SaveFileText(const char *fileName, char *text);        // Save text data to file (write), string must be '\0' terminated, returns true on success
@@ -231,11 +233,6 @@
     //------------------------------------------------------------------------------------
     // Camera System Functions (Module: rcamera)
     //------------------------------------------------------------------------------------
-    void SetCameraMode(Camera camera, int mode);      // Set camera mode (multiple camera modes available)
-    void UpdateCamera(Camera *camera);                // Update camera position for selected mode
-
-    void SetCameraPanControl(int keyPan);             // Set camera pan key to combine with mouse movement (free camera)
-    void SetCameraAltControl(int keyAlt);             // Set camera alt key to combine with mouse movement (free camera)
-    void SetCameraSmoothZoomControl(int keySmoothZoom); // Set camera smooth zoom key to combine with mouse (free camera)
-    void SetCameraMoveControls(int keyFront, int keyBack, int keyRight, int keyLeft, int keyUp, int keyDown); // Set camera move controls (1st person and 3rd person cameras)
+    void UpdateCamera(Camera *camera, int mode);      // Update camera position for selected mode
+    void UpdateCameraPro(Camera *camera, Vector3 movement, Vector3 rotation, float zoom); // Update camera movement/rotation
 

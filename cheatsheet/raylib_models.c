@@ -8,8 +8,6 @@
     void DrawCubeV(Vector3 position, Vector3 size, Color color);                                       // Draw cube (Vector version)
     void DrawCubeWires(Vector3 position, float width, float height, float length, Color color);        // Draw cube wires
     void DrawCubeWiresV(Vector3 position, Vector3 size, Color color);                                  // Draw cube wires (Vector version)
-    void DrawCubeTexture(Texture2D texture, Vector3 position, float width, float height, float length, Color color); // Draw cube textured
-    void DrawCubeTextureRec(Texture2D texture, Rectangle source, Vector3 position, float width, float height, float length, Color color); // Draw cube with a region of a texture
     void DrawSphere(Vector3 centerPos, float radius, Color color);                                     // Draw sphere
     void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color);            // Draw sphere with extended parameters
     void DrawSphereWires(Vector3 centerPos, float radius, int rings, int slices, Color color);         // Draw sphere wires
@@ -17,6 +15,8 @@
     void DrawCylinderEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color); // Draw a cylinder with base at startPos and top at endPos
     void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color); // Draw a cylinder/cone wires
     void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color); // Draw a cylinder wires with base at startPos and top at endPos
+    void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color); // Draw a capsule with the center of its sphere caps at startPos and endPos
+    void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color); // Draw capsule wireframe with the center of its sphere caps at startPos and endPos
     void DrawPlane(Vector3 centerPos, Vector2 size, Color color);                                      // Draw a plane XZ
     void DrawRay(Ray ray, Color color);                                                                // Draw a ray line
     void DrawGrid(int slices, float spacing);                                                          // Draw a grid (centered at (0, 0, 0))
@@ -28,16 +28,16 @@
     // Model management functions
     Model LoadModel(const char *fileName);                                                // Load model from files (meshes and materials)
     Model LoadModelFromMesh(Mesh mesh);                                                   // Load model from generated mesh (default material)
+    bool IsModelReady(Model model);                                                       // Check if a model is ready
     void UnloadModel(Model model);                                                        // Unload model (including meshes) from memory (RAM and/or VRAM)
-    void UnloadModelKeepMeshes(Model model);                                              // Unload model (but not meshes) from memory (RAM and/or VRAM)
     BoundingBox GetModelBoundingBox(Model model);                                         // Compute model bounding box limits (considers all meshes)
 
     // Model drawing functions
-    void DrawModel(Model model, Vector3 position, float scale, Color tint);                           // Draw a model (with texture if set)
+    void DrawModel(Model model, Vector3 position, float scale, Color tint);               // Draw a model (with texture if set)
     void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // Draw a model with extended parameters
-    void DrawModelWires(Model model, Vector3 position, float scale, Color tint);                      // Draw a model wires (with texture if set)
+    void DrawModelWires(Model model, Vector3 position, float scale, Color tint);          // Draw a model wires (with texture if set)
     void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // Draw a model wires (with texture if set) with extended parameters
-    void DrawBoundingBox(BoundingBox box, Color color);                                               // Draw bounding box (wires)
+    void DrawBoundingBox(BoundingBox box, Color color);                                   // Draw bounding box (wires)
     void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, float size, Color tint);   // Draw a billboard texture
     void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector2 size, Color tint); // Draw a billboard texture defined by source
     void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint); // Draw a billboard texture defined by source and rotation
@@ -68,6 +68,7 @@
     // Material loading/unloading functions
     Material *LoadMaterials(const char *fileName, int *materialCount);                    // Load materials from model file
     Material LoadMaterialDefault(void);                                                   // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
+    bool IsMaterialReady(Material material);                                              // Check if a material is ready
     void UnloadMaterial(Material material);                                               // Unload material from GPU memory (VRAM)
     void SetMaterialTexture(Material *material, int mapType, Texture2D texture);          // Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...)
     void SetModelMeshMaterial(Model *model, int meshId, int materialId);                  // Set material for a mesh

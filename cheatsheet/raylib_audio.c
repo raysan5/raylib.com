@@ -7,8 +7,10 @@
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                            // Load wave data from file
     Wave LoadWaveFromMemory(const char *fileType, const unsigned char *fileData, int dataSize); // Load wave from memory buffer, fileType refers to extension: i.e. '.wav'
+    bool IsWaveReady(Wave wave);                                    // Checks if wave data is ready
     Sound LoadSound(const char *fileName);                          // Load sound from file
     Sound LoadSoundFromWave(Wave wave);                             // Load sound from wave data
+    bool IsSoundReady(Sound sound);                                 // Checks if a sound is ready
     void UpdateSound(Sound sound, const void *data, int sampleCount); // Update sound buffer with new data
     void UnloadWave(Wave wave);                                     // Unload wave data
     void UnloadSound(Sound sound);                                  // Unload sound
@@ -20,9 +22,6 @@
     void StopSound(Sound sound);                                    // Stop playing a sound
     void PauseSound(Sound sound);                                   // Pause a sound
     void ResumeSound(Sound sound);                                  // Resume a paused sound
-    void PlaySoundMulti(Sound sound);                               // Play a sound (using multichannel buffer pool)
-    void StopSoundMulti(void);                                      // Stop any sound playing (using multichannel buffer pool)
-    int GetSoundsPlaying(void);                                     // Get number of sounds playing in the multichannel
     bool IsSoundPlaying(Sound sound);                               // Check if a sound is currently playing
     void SetSoundVolume(Sound sound, float volume);                 // Set volume for a sound (1.0 is max level)
     void SetSoundPitch(Sound sound, float pitch);                   // Set pitch for a sound (1.0 is base level)
@@ -36,6 +35,7 @@
     // Music management functions
     Music LoadMusicStream(const char *fileName);                    // Load music stream from file
     Music LoadMusicStreamFromMemory(const char *fileType, const unsigned char *data, int dataSize); // Load music stream from data
+    bool IsMusicReady(Music music);                                 // Checks if a music stream is ready
     void UnloadMusicStream(Music music);                            // Unload music stream
     void PlayMusicStream(Music music);                              // Start music playing
     bool IsMusicStreamPlaying(Music music);                         // Check if music is playing
@@ -52,6 +52,7 @@
 
     // AudioStream management functions
     AudioStream LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // Load audio stream (to stream raw audio pcm data)
+    bool IsAudioStreamReady(AudioStream stream);                    // Checks if an audio stream is ready
     void UnloadAudioStream(AudioStream stream);                     // Unload audio stream and free memory
     void UpdateAudioStream(AudioStream stream, const void *data, int frameCount); // Update audio stream buffers with data
     bool IsAudioStreamProcessed(AudioStream stream);                // Check if any audio stream buffers requires refill
@@ -68,4 +69,7 @@
 
     void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Attach audio stream processor to stream
     void DetachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Detach audio stream processor from stream
+
+    void AttachAudioMixedProcessor(AudioCallback processor); // Attach audio stream processor to the entire audio pipeline
+    void DetachAudioMixedProcessor(AudioCallback processor); // Detach audio stream processor from the entire audio pipeline
 

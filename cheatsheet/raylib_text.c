@@ -4,6 +4,7 @@
     Font LoadFontEx(const char *fileName, int fontSize, int *fontChars, int glyphCount);  // Load font from file with extended parameters, use NULL for fontChars and 0 for glyphCount to load the default character set
     Font LoadFontFromImage(Image image, Color key, int firstChar);                        // Load font from Image (XNA style)
     Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount); // Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
+    bool IsFontReady(Font font);                                                          // Check if a font is ready
     GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSize, int *fontChars, int glyphCount, int type); // Load font data for further use
     Image GenImageFontAtlas(const GlyphInfo *chars, Rectangle **recs, int glyphCount, int fontSize, int padding, int packMethod); // Generate image font atlas using chars info
     void UnloadFontData(GlyphInfo *chars, int glyphCount);                                // Unload font chars info data (RAM)
@@ -26,12 +27,15 @@
     Rectangle GetGlyphAtlasRec(Font font, int codepoint);                                 // Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found
 
     // Text codepoints management functions (unicode characters)
-    int *LoadCodepoints(const char *text, int *count);              // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
-    void UnloadCodepoints(int *codepoints);                         // Unload codepoints data from memory
-    int GetCodepointCount(const char *text);                        // Get total number of codepoints in a UTF-8 encoded string
-    int GetCodepoint(const char *text, int *bytesProcessed);        // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
-    const char *CodepointToUTF8(int codepoint, int *byteSize);      // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
-    char *TextCodepointsToUTF8(const int *codepoints, int length);  // Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
+    char *LoadUTF8(const int *codepoints, int length);                // Load UTF-8 text encoded from codepoints array
+    void UnloadUTF8(char *text);                                      // Unload UTF-8 text encoded from codepoints array
+    int *LoadCodepoints(const char *text, int *count);                // Load all codepoints from a UTF-8 text string, codepoints count returned by parameter
+    void UnloadCodepoints(int *codepoints);                           // Unload codepoints data from memory
+    int GetCodepointCount(const char *text);                          // Get total number of codepoints in a UTF-8 encoded string
+    int GetCodepoint(const char *text, int *codepointSize);           // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+    int GetCodepointNext(const char *text, int *codepointSize);       // Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+    int GetCodepointPrevious(const char *text, int *codepointSize);   // Get previous codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+    const char *CodepointToUTF8(int codepoint, int *utf8Size);        // Encode one codepoint into UTF-8 byte array (array length returned as parameter)
 
     // Text strings management functions (no UTF-8 strings, only byte chars)
     // NOTE: Some strings allocate memory internally for returned strings, just be careful!
