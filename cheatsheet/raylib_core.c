@@ -1,4 +1,5 @@
 
+
     // Window-related functions
     void InitWindow(int width, int height, const char *title);  // Initialize window and OpenGL context
     bool WindowShouldClose(void);                               // Check if KEY_ESCAPE pressed or Close icon pressed

@@ -1,3 +1,4 @@
+
     // Image loading functions
     // NOTE: These functions do not require GPU access
     Image LoadImage(const char *fileName);                                                             // Load image from file into CPU memory (RAM)
