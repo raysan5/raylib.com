@@ -16,6 +16,7 @@
     Image GenImageColor(int width, int height, Color color);                                           // Generate image: plain color
     Image GenImageGradientLinear(int width, int height, int direction, Color start, Color end);        // Generate image: linear gradient, direction in degrees [0..360], 0=Vertical gradient
     Image GenImageGradientRadial(int width, int height, float density, Color inner, Color outer);      // Generate image: radial gradient
+    Image GenImageGradientSquare(int width, int height, float density, Color inner, Color outer);      // Generate image: square gradient
     Image GenImageChecked(int width, int height, int checksX, int checksY, Color col1, Color col2);    // Generate image: checked
     Image GenImageWhiteNoise(int width, int height, float factor);                                     // Generate image: white noise
     Image GenImagePerlinNoise(int width, int height, int offsetX, int offsetY, float scale);           // Generate image: perlin noise
