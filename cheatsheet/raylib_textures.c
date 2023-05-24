@@ -43,6 +43,7 @@
     void ImageDither(Image *image, int rBpp, int gBpp, int bBpp, int aBpp);                            // Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
     void ImageFlipVertical(Image *image);                                                              // Flip image vertically
     void ImageFlipHorizontal(Image *image);                                                            // Flip image horizontally
+    void ImageRotate(Image *image, int degrees);                                                       // Rotate image by input angle in degrees (-359 to 359) 
     void ImageRotateCW(Image *image);                                                                  // Rotate image clockwise 90deg
     void ImageRotateCCW(Image *image);                                                                 // Rotate image counter-clockwise 90deg
     void ImageColorTint(Image *image, Color color);                                                    // Modify image color: tint
