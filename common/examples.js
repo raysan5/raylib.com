@@ -3,157 +3,230 @@ $(document).ready(function() {
     // Init fancybox
     $('.fancybox').fancybox();
 
-    var exampleData = [
-        '⭐️☆☆☆#core_basic_window', 
-        '⭐️☆☆☆#core_input_keys', 
-        '⭐️☆☆☆#core_input_mouse', 
-        '⭐️☆☆☆#core_input_mouse_wheel', 
-        '⭐️☆☆☆#core_input_gamepad', 
-        '⭐️☆☆☆#core_input_multitouch', 
-        '⭐️⭐️☆☆#core_input_gestures', 
-        '⭐️⭐️☆☆#core_2d_camera', 
-        '⭐️⭐️☆☆#core_2d_camera_mouse_zoom', 
-        '⭐️⭐️⭐️☆#core_2d_camera_platformer', 
-        '⭐️☆☆☆#core_3d_camera_mode', 
-        '⭐️☆☆☆#core_3d_camera_free', 
-        '⭐️⭐️☆☆#core_3d_camera_first_person', 
-        '⭐️⭐️☆☆#core_3d_picking', 
-        '⭐️⭐️☆☆#core_world_screen', 
-        '⭐️⭐️⭐️☆#core_custom_logging', 
-        '⭐️⭐️⭐️☆#core_window_flags', 
-        '⭐️⭐️☆☆#core_window_letterbox', 
-        '⭐️☆☆☆#core_window_should_close', 
-        '⭐️⭐️☆☆#core_drop_files', 
-        '⭐️☆☆☆#core_random_values', 
-        '⭐️⭐️☆☆#core_storage_values', 
-        '⭐️⭐️⭐️☆#core_vr_simulator', 
-        '⭐️⭐️⭐️☆#core_loading_thread', 
-        '⭐️☆☆☆#core_scissor_test', 
-        '⭐️☆☆☆#core_basic_screen_manager', 
-        '⭐️⭐️⭐️⭐️#core_custom_frame_control', 
-        '⭐️⭐️⭐️☆#core_smooth_pixelperfect', 
-        '⭐️⭐️⭐️⭐️#core_split_screen',
-        '⭐️☆☆☆#shapes_basic_shapes', 
-        '⭐️☆☆☆#shapes_bouncing_ball', 
-        '⭐️⭐️☆☆#shapes_colors_palette', 
-        '⭐️☆☆☆#shapes_logo_raylib', 
-        '⭐️⭐️☆☆#shapes_logo_raylib_anim', 
-        '⭐️⭐️☆☆#shapes_rectangle_scaling', 
-        '⭐️☆☆☆#shapes_lines_bezier', 
-        '⭐️⭐️☆☆#shapes_collision_area', 
-        '⭐️⭐️☆☆#shapes_following_eyes', 
-        '⭐️⭐️☆☆#shapes_easings_ball_anim', 
-        '⭐️⭐️☆☆#shapes_easings_box_anim', 
-        '⭐️⭐️⭐️☆#shapes_easings_rectangle_array', 
-        '⭐️⭐️⭐️☆#shapes_draw_ring', 
-        '⭐️⭐️⭐️☆#shapes_draw_circle_sector', 
-        '⭐️⭐️⭐️☆#shapes_draw_rectangle_rounded', 
-        '⭐️⭐️⭐️⭐️#shapes_top_down_lights', 
-        '⭐️☆☆☆#textures_logo_raylib', 
-        '⭐️⭐️⭐️☆#textures_srcrec_dstrec', 
-        '⭐️⭐️☆☆#textures_image_drawing', 
-        '⭐️⭐️☆☆#textures_image_generation', 
-        '⭐️☆☆☆#textures_image_loading', 
-        '⭐️⭐️⭐️☆#textures_image_processing', 
-        '⭐️⭐️☆☆#textures_image_text', 
-        '⭐️☆☆☆#textures_to_image', 
-        '⭐️⭐️⭐️☆#textures_raw_data', 
-        '⭐️☆☆☆#textures_particles_blending', 
-        '⭐️⭐️⭐️☆#textures_npatch_drawing', 
-        '⭐️☆☆☆#textures_background_scrolling', 
-        '⭐️⭐️☆☆#textures_sprite_anim', 
-        '⭐️⭐️☆☆#textures_sprite_button', 
-        '⭐️⭐️☆☆#textures_sprite_explosion', 
-        '⭐️⭐️⭐️☆#textures_bunnymark', 
-        '⭐️⭐️⭐️☆#textures_mouse_painting', 
-        '⭐️☆☆☆#textures_blend_modes', 
-        '⭐️⭐️⭐️☆#textures_draw_tiled', 
-        '⭐️☆☆☆#textures_polygon', 
-        '⭐️⭐️⭐️☆#textures_fog_of_war', 
-        '⭐️⭐️⭐️☆#textures_gif_player', 
-        '⭐️⭐️⭐️☆#textures_textured_curve', 
-        '⭐️☆☆☆#text_raylib_fonts', 
-        '⭐️☆☆☆#text_font_spritefont', 
-        '⭐️⭐️☆☆#text_font_filters', 
-        '⭐️☆☆☆#text_font_loading', 
-        '⭐️⭐️⭐️☆#text_font_sdf', 
-        '⭐️☆☆☆#text_format_text', 
-        '⭐️⭐️☆☆#text_input_box', 
-        '⭐️⭐️☆☆#text_writing_anim', 
-        '⭐️⭐️⭐️⭐️#text_rectangle_bounds', 
-        '⭐️⭐️⭐️⭐️#text_unicode', 
-        '⭐️⭐️⭐️⭐️#text_draw_3d', 
-        '⭐️⭐️⭐️☆#text_codepoints_loading', 
-        '⭐️⭐️☆☆#models_animation', 
-        '⭐️⭐️⭐️☆#models_billboard', 
-        '⭐️☆☆☆#models_box_collisions', 
-        '⭐️⭐️☆☆#models_cubicmap', 
-        '⭐️⭐️☆☆#models_first_person_maze', 
-        '⭐️☆☆☆#models_geometric_shapes', 
-        '⭐️⭐️☆☆#models_mesh_generation', 
-        '⭐️⭐️⭐️☆#models_mesh_picking', 
-        '⭐️☆☆☆#models_loading', 
-        '⭐️☆☆☆#models_loading_gltf', 
-        '⭐️☆☆☆#models_loading_vox', 
-        '⭐️⭐️☆☆#models_loading_m3d', 
-        '⭐️☆☆☆#models_orthographic_projection', 
-        '⭐️⭐️⭐️⭐️#models_rlgl_solar_system', 
-        '⭐️⭐️☆☆#models_yaw_pitch_roll', 
-        '⭐️⭐️⭐️☆#models_waving_cubes', 
-        '⭐️☆☆☆#models_heightmap', 
-        '⭐️⭐️☆☆#models_skybox', 
-        '⭐️⭐️☆☆#models_draw_cube_texture', 
-        '⭐️⭐️⭐️⭐️#shaders_basic_lighting', 
-        '⭐️⭐️☆☆#shaders_model_shader', 
-        '⭐️⭐️☆☆#shaders_shapes_textures', 
-        '⭐️⭐️☆☆#shaders_custom_uniform', 
-        '⭐️⭐️⭐️☆#shaders_postprocessing', 
-        '⭐️⭐️⭐️☆#shaders_palette_switch', 
-        '⭐️⭐️⭐️⭐️#shaders_raymarching', 
-        '⭐️⭐️☆☆#shaders_texture_drawing', 
-        '⭐️⭐️⭐️☆#shaders_texture_outline', 
-        '⭐️⭐️☆☆#shaders_texture_waves', 
-        '⭐️⭐️⭐️☆#shaders_julia_set', 
-        '⭐️⭐️⭐️☆#shaders_eratosthenes', 
-        '⭐️⭐️⭐️☆#shaders_fog', 
-        '⭐️⭐️☆☆#shaders_simple_mask', 
-        '⭐️⭐️⭐️☆#shaders_hot_reloading', 
-        '⭐️⭐️⭐️⭐️#shaders_mesh_instancing', 
-        '⭐️⭐️☆☆#shaders_multi_sample2d', 
-        '⭐️⭐️☆☆#shaders_spotlight', 
-        '⭐️⭐️☆☆#shaders_write_depth', 
-        '⭐️⭐️⭐️⭐️#shaders_hybrid_render', 
-        '⭐️☆☆☆#audio_module_playing', 
-        '⭐️☆☆☆#audio_music_stream', 
-        '⭐️⭐️⭐️☆#audio_raw_stream', 
-        '⭐️☆☆☆#audio_sound_loading',
-        '⭐️⭐️⭐️⭐️#audio_stream_effects',
-        '⭐️⭐️⭐️⭐️#audio_mixed_processor'];
+	function exampleEntry(difficulty, module, base) {
+		return {difficulty, module, base, name: module + '_' + base }
+	}
 
+	function findExampleByName(examples, targetName) {
+		for (var example of examples) {
+			if (example.name == targetName) {
+				return example
+			}
+		}
+	}
+
+	function findExampleIndexByName(examples, targetName) {
+		return examples.findIndex(example => example.name == targetName)
+	}
+
+	function applyByFunctionFilter(functionName) {
+		var filterText = functionName.toLowerCase()
+		if (filterText === "") {
+			$('#container').mixItUp('filter', exampleDivs);
+			$('#occurences_counter').hide();
+			return
+		}
+		$('#occurences_counter').show();
+
+		var occurences = 0;
+		const filteredExamples = []
+		for (var functionName in functionUsages) {
+			if (!functionName.toLowerCase().includes(filterText)) continue;
+			console.log(functionName)
+
+			occurences += functionUsages[functionName].length
+			for (var usage of functionUsages[functionName]) {
+				const exampleIndex = findExampleIndexByName(exampleData, usage.exampleName)
+				if (!filteredExamples.includes(exampleIndex)) {
+					filteredExamples.push(exampleIndex)
+					console.log(usage)
+				}
+			}
+		}
+
+		const filteredDivs = filteredExamples.map(index => exampleDivs[index]);
+		$('#container').mixItUp('filter', filteredDivs);
+		$('#occurences_counter').text(`Occurences: ${occurences} (${filteredExamples.length} examples)`);
+	}
+
+    var exampleData = [
+		exampleEntry('⭐️☆☆☆'   , 'core'    , 'basic_window'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'input_keys'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'input_mouse'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'input_mouse_wheel'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'input_gamepad'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'input_multitouch'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , 'input_gestures'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , '2d_camera'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , '2d_camera_mouse_zoom'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , '2d_camera_platformer'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , '3d_camera_mode'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , '3d_camera_free'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , '3d_camera_first_person'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , '3d_picking'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , 'world_screen'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'custom_logging'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'window_flags'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , 'window_letterbox'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'window_should_close'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , 'drop_files'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'random_values'),
+        exampleEntry('⭐️⭐️☆☆'  , 'core'    , 'storage_values'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'vr_simulator'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'loading_thread'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'scissor_test'),
+        exampleEntry('⭐️☆☆☆'   , 'core'    , 'basic_screen_manager'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'core'    , 'custom_frame_control'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'smooth_pixelperfect'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'core'    , 'split_screen'),
+        exampleEntry('⭐️☆☆☆'   , 'shapes'  , 'basic_shapes'),
+        exampleEntry('⭐️☆☆☆'   , 'shapes'  , 'bouncing_ball'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'colors_palette'),
+        exampleEntry('⭐️☆☆☆'   , 'shapes'  , 'logo_raylib'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'logo_raylib_anim'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'rectangle_scaling'),
+        exampleEntry('⭐️☆☆☆'   , 'shapes'  , 'lines_bezier'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'collision_area'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'following_eyes'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'easings_ball_anim'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shapes'  , 'easings_box_anim'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'easings_rectangle_array'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'draw_ring'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'draw_circle_sector'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'draw_rectangle_rounded'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'shapes'  , 'top_down_lights'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'logo_raylib'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'srcrec_dstrec'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'image_drawing'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'image_generation'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'image_loading'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'image_processing'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'image_text'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'to_image'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'raw_data'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'particles_blending'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'npatch_drawing'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'background_scrolling'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'sprite_anim'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'sprite_button'),
+        exampleEntry('⭐️⭐️☆☆'  , 'textures', 'sprite_explosion'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'bunnymark'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'mouse_painting'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'blend_modes'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'draw_tiled'),
+        exampleEntry('⭐️☆☆☆'   , 'textures', 'polygon'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'fog_of_war'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'gif_player'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'textured_curve'),
+        exampleEntry('⭐️☆☆☆'   , 'text'    , 'raylib_fonts'),
+        exampleEntry('⭐️☆☆☆'   , 'text'    , 'font_spritefont'),
+        exampleEntry('⭐️⭐️☆☆'  , 'text'    , 'font_filters'),
+        exampleEntry('⭐️☆☆☆'   , 'text'    , 'font_loading'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'text'    , 'font_sdf'),
+        exampleEntry('⭐️☆☆☆'   , 'text'    , 'format_text'),
+        exampleEntry('⭐️⭐️☆☆'  , 'text'    , 'input_box'),
+        exampleEntry('⭐️⭐️☆☆'  , 'text'    , 'writing_anim'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'text'    , 'rectangle_bounds'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'text'    , 'unicode'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'text'    , 'draw_3d'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'text'    , 'codepoints_loading'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'animation'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'models'  , 'billboard'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'box_collisions'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'cubicmap'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'first_person_maze'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'geometric_shapes'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'mesh_generation'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'models'  , 'mesh_picking'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'loading'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'loading_gltf'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'loading_vox'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'loading_m3d'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'orthographic_projection'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'models'  , 'rlgl_solar_system'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'yaw_pitch_roll'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'models'  , 'waving_cubes'),
+        exampleEntry('⭐️☆☆☆'   , 'models'  , 'heightmap'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'skybox'),
+        exampleEntry('⭐️⭐️☆☆'  , 'models'  , 'draw_cube_texture'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'shaders' , 'basic_lighting'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'model_shader'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'shapes_textures'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'custom_uniform'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'postprocessing'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'palette_switch'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'shaders' , 'raymarching'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'texture_drawing'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'texture_outline'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'texture_waves'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'julia_set'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'eratosthenes'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'fog'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'simple_mask'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'shaders' , 'hot_reloading'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'shaders' , 'mesh_instancing'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'multi_sample2d'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'spotlight'),
+        exampleEntry('⭐️⭐️☆☆'  , 'shaders' , 'write_depth'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'shaders' , 'hybrid_render'),
+        exampleEntry('⭐️☆☆☆'   , 'audio'   , 'module_playing'),
+        exampleEntry('⭐️☆☆☆'   , 'audio'   , 'music_stream'),
+        exampleEntry('⭐️⭐️⭐️☆' , 'audio'   , 'raw_stream'),
+        exampleEntry('⭐️☆☆☆'   , 'audio'   , 'sound_loading'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'audio'   , 'stream_effects'),
+        exampleEntry('⭐️⭐️⭐️⭐️', 'audio'   , 'mixed_processor')];
+
+	var exampleDivs = []
     for (var i = 0; i < exampleData.length; i++)
     {
-        var difficulty = exampleData[i].substring(0, exampleData[i].indexOf('#'));
-        var exampleName = exampleData[i].substring(exampleData[i].indexOf('#') + 1);
-        var exampleBase = exampleName.slice(exampleName.indexOf('_') + 1);
-        var exampleDesc = exampleBase.replace('_', ' ');
-        var filterType = exampleName.substring(0, exampleName.indexOf("_"));
+		var difficulty = exampleData[i].difficulty
+        var module = exampleData[i].module;
+        var name = exampleData[i].name;
+        var description = exampleData[i].base.replaceAll('_', ' ');
 
-        $('#container').append(
-            '<div class="mix f' + filterType + '">' +
-                '<a class="fancybox fancybox.iframe" href="examples/' + filterType + '/' + 'loader.html?name=' + exampleName + '" title="' + exampleDesc + '">' +
-                '<img width="400" height="225" src="https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + filterType + '/' + exampleName + '.png"><div class="extext"><p>' + exampleDesc + '</p></div></a>' +
-                '<div id="difficulty_level">' + difficulty + '</div>' +
-            '</div>');
+		var previewImageURL = `https://raw.githubusercontent.com/raysan5/raylib/master/examples/${module}/${name}.png`
+		var exampleLoaderURL = `examples/${module}/loader.html?name=${name}`;
 
+        const exampleDiv = $(
+            `<div class="mix f${module}">` +
+                `<a class="fancybox fancybox.iframe" href="${exampleLoaderURL}" title="${description}">` +
+                `<img width="400" height="225" src="${previewImageURL}"><div class="extext"><p>${description}</p></div></a>` +
+                `<div id="difficulty_level">${difficulty}</div>` +
+            '</div>')[0];
+
+		exampleDivs.push(exampleDiv);
+
+		$('#container').append(exampleDiv);
         $('#container a .extext').hide();
     }
+
+	const filterFunctionInput = $('#filter_function input');
+
+	var functionUsages = {}
+	$.getJSON('examples/function_usages.json', function(functionUsagesData) {
+		// Filter out function usages of examples, which don't have a page
+		for (var functionName in functionUsagesData) {
+			functionUsages[functionName] = functionUsagesData[functionName].filter(usage => findExampleByName(exampleData, usage.exampleName))
+		}
+
+		// While the JSON file was loaded, user could have entered text.
+		// So apply filter, if it not empty
+		if (filterFunctionInput !== '') {
+			applyByFunctionFilter(filterFunctionInput.val())
+		}
+
+		// From now listen for input update events
+		filterFunctionInput.on('input', function(event) {
+			applyByFunctionFilter(event.target.value)
+		});
+	})
 
     // Instantiate MixItUp:
 	$('#container').mixItUp();
 
-    $("#container a").hover(
-        function(){ $(this).find(".extext").show(); },
-        function(){ $(this).find(".extext").hide(); });
+    $('#container a').hover(
+        function(){ $(this).find('.extext').show(); },
+        function(){ $(this).find('.extext').hide(); });
 /*
     $("#container a img").hover(
         function() { $(this).stop().animate({ opacity:0.6 }, 200, "easeOutQuad" ); },
