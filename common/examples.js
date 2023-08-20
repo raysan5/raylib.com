@@ -213,9 +213,9 @@ $(document).ready(function() {
 		}
 
 		// From now listen for input update events
-		filterFunctionInput.on('input', function(event) {
+		filterFunctionInput.on("input", $.debounce(200, function(event) {
 			applyByFunctionFilter(event.target.value)
-		});
+		}));
 	})
 
     // Instantiate MixItUp:
