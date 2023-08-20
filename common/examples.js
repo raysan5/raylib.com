@@ -32,14 +32,12 @@ $(document).ready(function() {
 		const filteredExamples = []
 		for (var functionName in functionUsages) {
 			if (!functionName.toLowerCase().includes(filterText)) continue;
-			console.log(functionName)
 
 			occurences += functionUsages[functionName].length
 			for (var usage of functionUsages[functionName]) {
 				const exampleIndex = findExampleIndexByName(exampleData, usage.exampleName)
 				if (!filteredExamples.includes(exampleIndex)) {
 					filteredExamples.push(exampleIndex)
-					console.log(usage)
 				}
 			}
 		}
@@ -177,8 +175,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️⭐️⭐️', 'audio'   , 'mixed_processor')];
 
 	var exampleDivs = []
-    for (var i = 0; i < exampleData.length; i++)
-    {
+    for (var i = 0; i < exampleData.length; i++) {
 		var difficulty = exampleData[i].difficulty
         var module = exampleData[i].module;
         var name = exampleData[i].name;
