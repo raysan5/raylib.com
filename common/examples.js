@@ -23,19 +23,17 @@ $(document).ready(function() {
 		var filterText = functionName.toLowerCase()
 		if (filterText === "") {
 			$('#container').mixItUp('filter', exampleDivs);
-			$('#occurences_counter').hide();
+			$('#matches_counter').hide();
 			return
 		}
-		$('#occurences_counter').show();
+		$('#matches_counter').show();
 
-		var occurences = 0;
 		const filteredExamples = []
 		for (var functionName in functionUsages) {
 			if (!functionName.toLowerCase().includes(filterText)) continue;
 
-			occurences += functionUsages[functionName].length
 			for (var usage of functionUsages[functionName]) {
-				const exampleIndex = findExampleIndexByName(exampleData, usage.exampleName)
+				const exampleIndex = findExampleIndexByName(exampleData, usage)
 				if (!filteredExamples.includes(exampleIndex)) {
 					filteredExamples.push(exampleIndex)
 				}
@@ -44,7 +42,7 @@ $(document).ready(function() {
 
 		const filteredDivs = filteredExamples.map(index => exampleDivs[index]);
 		$('#container').mixItUp('filter', filteredDivs);
-		$('#occurences_counter').text(`Occurences: ${occurences} (${filteredExamples.length} examples)`);
+		$('#matches_counter').text(`Found ${filteredExamples.length} examples`);
 	}
 
     var exampleData = [
@@ -203,7 +201,7 @@ $(document).ready(function() {
 	$.getJSON('examples/function_usages.json', function(functionUsagesData) {
 		// Filter out function usages of examples, which don't have a page
 		for (var functionName in functionUsagesData) {
-			functionUsages[functionName] = functionUsagesData[functionName].filter(usage => findExampleByName(exampleData, usage.exampleName))
+			functionUsages[functionName] = functionUsagesData[functionName].filter(usage => findExampleByName(exampleData, usage))
 		}
 
 		// While the JSON file was loaded, user could have entered text.
@@ -213,9 +211,9 @@ $(document).ready(function() {
 		}
 
 		// From now listen for input update events
-		filterFunctionInput.on("input", $.debounce(200, function(event) {
+		filterFunctionInput.on("input", function(event) {
 			applyByFunctionFilter(event.target.value)
-		}));
+		});
 	})
 
     // Instantiate MixItUp:

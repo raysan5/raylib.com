@@ -4,7 +4,8 @@
 
 #filter_menu { width:820px; height:80px; margin-left:15px; }
 #filter_function_label { margin-top: 2rem; }
-#filter_function { display: block; margin-left:15px; margin-bottom: 2rem; }
+#filter_function { display: block; height: 1rem; margin-left:15px; margin-bottom: 2rem; }
+#matches_counter { display: inline; margin-bottom: 2rem; }
 
 .legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
 #core       { background-color:#e1e1e1; color:#5c5a5a; border:5px solid #898888; }
