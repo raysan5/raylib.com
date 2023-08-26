@@ -255,7 +255,7 @@ static int OutputFunctionUsagesJSON(char *output, FunctionInfo *functions, int f
 }
 
 int main(int argc, char **argv)
-{// Maximum number of functions to parse
+{
     if (argc != 4) {
         printf("Usage: %s <raylib-src-dir> <examples-dir> <output-file>\n", argv[0]);
         return -1;
