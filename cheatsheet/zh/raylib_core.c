@@ -65,15 +65,15 @@
     void ClearBackground(Color color);                          //设置背景色(帧缓冲区透明色)
     void BeginDrawing(void);                                    //设置画布(帧缓冲区)以开始绘制
     void EndDrawing(void);                                      //结束画布绘制和交换缓冲区(双缓冲)
-    void BeginMode2D(Camera2D相机);                              //使用自定义相机开始2D模式(2D)
+    void BeginMode2D(Camera2D camera);                              //使用自定义相机开始2D模式(2D)
     void EndMode2D(void);                                       //使用自定义相机结束2D模式
-    void BeginMode3D(Camera3D相机);                              //使用自定义相机开始3D模式(3D)
+    void BeginMode3D(Camera3D camera);                              //使用自定义相机开始3D模式(3D)
     void EndMode3D(void);                                       //结束三维模式并返回默认的二维正交模式
-    void BeginTextureMode(RenderTexture2D目标);                  //开始绘制以渲染Texture
+    void BeginTextureMode(RenderTexture2D camera);                  //开始绘制以渲染Texture
     void EndTextureMode(void);                                  //结束绘制以渲染Texture
     void BeginShaderMode(Shader shader);                        //开始自定义着色器绘图
     void EndShaderMode(void);                                   //结束自定义着色器绘图(使用默认着色器)
-    void BeginBlendMode(int模式);                                //开始混合模式(alpha, 加法, 乘法, 减法, 自定义)
+    void BeginBlendMode(int mode);                                //开始混合模式(alpha, 加法, 乘法, 减法, 自定义)
     void EndBlendMode(void);                                    //结束混合模式(重置为默认值：alpha混合)
     void BeginScissorMode(int x, int y, int width, int height); //开始剪式模式(定义下图的屏幕区域)
     void EndScissorMode(void);                                  //末端剪式模式
@@ -97,13 +97,13 @@
     void UnloadShader(Shader shader);   //从GPU内存(VRAM)卸载着色器
     
     //屏幕空间相关功能
-    Ray GetMouseRay(Vector2 mousePosition, Camera 相机);        //从鼠标位置获取光线跟踪
+    Ray GetMouseRay(Vector2 mousePosition, Camera camera);        //从鼠标位置获取光线跟踪
     Matrix GetCameraMatrix(Camera camera);                     //获取相机变换矩阵(视图矩阵)
     Matrix GetCameraMatrix2D(Camera2D相机);                     //获取相机二维变换矩阵
-    Vector2 GetWorldToScreen(Vector3位置, 摄像机);               //获取三维世界空间位置的屏幕空间位置
-    Vector2 GetScreenToWorld2D(Vector2位置, Camera2D相机);       //获取2d相机屏幕空间位置的世界空间位置
-    Vector2 GetWorldToScreenEx(Vector3位置, 摄像机, int宽度, int高度); //获取三维世界空间位置的大小位置
-    Vector2 GetWorldToScreen2D(Vector2位置, Camera2D相机);       //获取2d相机世界空间位置的屏幕空间位置
+    Vector2 GetWorldToScreen(Vector3 position/*坐标*/, Camera camera);               //获取三维世界空间位置的屏幕空间位置
+    Vector2 GetScreenToWorld2D(Vector2 position/*坐标*/, Camera2D相机);       //获取2d相机屏幕空间位置的世界空间位置
+    Vector2 GetWorldToScreenEx(Vector3 position/*坐标*/,  Camera camera, int宽度, int高度); //获取三维世界空间位置的大小位置
+    Vector2 GetWorldToScreen2D(Vector2 position/*坐标*/, Camera2D相机);       //获取2d相机世界空间位置的屏幕空间位置
     
     //定时相关功能
     void SetTargetFPS(int fps);//设置目标FPS(最大值)
@@ -113,7 +113,7 @@
     
     //其他。功能
     int GetRandomValue(int最小值, int最大值);         //获取最小值和最大值之间的随机值(包括两者)
-    void SetRandomSeed(unsigned int种子);           //设置随机数生成器的种子
+    void SetRandomSeed(unsigned int seed);           //设置随机数生成器的种子
     void TakeScreenshot(const char *fileName);     //拍摄当前屏幕的屏幕截图(文件扩展名定义格式)
     void SetConfigFlags(unsigned int flag);        //设置初始化配置标志(查看flags)
     void TraceLog(int logLevel, const char *text, …); //显示跟踪日志消息(log_DEBUG, log_INFO, log_WARNING, log_ERROR…)
@@ -124,7 +124,7 @@
     void OpenURL(const char*url);                  //使用默认系统浏览器打开URL(如果可用)
     
     //设置自定义回调
-    //警告：回调设置适用于高级用户
+    //警告：回调（callback）设置适用于高级用户
     void SetTraceLogCallback(TraceLogCallback回调); //设置自定义跟踪日志
     void SetLoadFileDataCallback(LoadFileData回调); //设置自定义文件二进制数据加载器
     void SetSaveFileDataCallback(SaveFileData回调); //设置自定义文件二进制数据保护程序
@@ -154,7 +154,7 @@
     bool IsPathFile(const char *path);                      //检查给定路径是文件还是目录
     FilePathList LoadDirectoryFiles(const char *dirPath);   //加载目录文件路径
     FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdir); //使用扩展筛选和递归目录扫描加载目录文件路径
-    void UnloadDirectoryFiles(FilePathList文件);             //卸载文件路径
+    void UnloadDirectoryFiles(FilePathList files);             //卸载文件路径
     bool IsFileDropped(void);                               //检查文件是否已放入窗口
     FilePathList LoadDroppedFiles(void);                    //加载删除的文件路径
     void UnloadDroppedFiles(FilePathList files);            //卸载删除的文件路径
@@ -167,12 +167,12 @@
     unsigned char *DecodeDataBase64(const unsigned char *data, int *outputSize);                   //解码Base64字符串数据, 内存必须为MemFree()
     
     //------------------------------------------------------------------------------------
-    //输入处理功能(模块：核心)
+    //输入处理功能(模块：key)
     //------------------------------------------------------------------------------------
     
     //输入相关功能：键盘
-    bool IsKeyPressed(int键);                                //检查是否按下了一次键
-    bool IsKeyDown(int键);                                   //检查是否按下了键
+    bool IsKeyPressed(int key );                                //检查是否按下了一次键
+    bool IsKeyDown(int key);                                   //检查是否按下了键
     bool IsKeyReleased(int key);                            //检查按键是否已释放一次
     bool IsKeyUp(int key);                                  //检查是否未按下按键
     void SetExitKey(int key);                               //设置自定义键以退出程序(默认为ESC)
@@ -205,7 +205,7 @@
     void SetMouseScale(float scaleX,float scaleY);         //设置鼠标缩放
     float GetMouseWheelMove(void);                         //获取X或Y的鼠标滚轮移动, 以较大者为准
     Vector2 GetMouseWheelMoveV(void);                      //获取X和Y方向的鼠标滚轮移动
-    void SetMouseCursor(int鼠标光标);                        //设置鼠标光标，用于更改屏幕上的光标图像(如：当鼠标放在文本上时会变成另一种图案)
+    void SetMouseCursor(int 鼠标光标);                     //设置鼠标光标，用于更改屏幕上的光标图像(如：当鼠标放在文本上时会变成另一种图案)
     
     //输入相关功能：触摸
     int GetTouchX(void);                                   //获取触摸点0的触摸位置X(相对于屏幕大小)
@@ -218,7 +218,7 @@
     //手势和触摸处理功能(模块：手势)
     //------------------------------------------------------------------------------------
     void SetGesturesEnabled(unsigned int flag);            //使用标志启用一组手势
-    bool IsGestureDetected(int手势);                        //检查是否检测到手势
+    bool IsGestureDetected(int gesture);                    //检查是否检测到手势
     int GetGestureDetected(void);                          //获取最新检测到的手势
     float GetGestureHoldDuration(void);                    //获取手势保持时间(毫秒)
     Vector2 GetGestureDragVector(void);                    //获取手势拖动矢量
@@ -226,13 +226,11 @@
     Vector2 GetGesturePinchVector(void);                   //获取手势捏三角
     float GetGesturePinchAngle(void);                      //获取手势捏角
     
+   //------------------------------------------------------------------------------------
+    //摄像头系统功能（模块：rcamera）
     //------------------------------------------------------------------------------------
-    //摄像头系统功能(模块：rcamera)
-    //------------------------------------------------------------------------------------
-    void SetCameraMode(Camera camera, int mode);           //设置相机模式(多种相机模式可用)
-    void UpdateCamera(Camera*camera);                      //更新所选模式的相机位置
-    void SetCameraPanControl(int keyPan);                  //设置相机平移键以与鼠标移动相结合(自由相机)
-    void SetCameraAltControl(int keyAlt);                  //设置相机alt键以与鼠标移动相结合(自由相机)
-    void SetCameraSmoothZoomControl(int keySmoothZoom);    //设置相机平滑缩放键以与鼠标结合(自由相机)
-    void SetCameraMoveControls(int keyFront, int keyBack, int keyRight, int keyLeft, int key Up, int keyDown); //设置摄像机移动控制(第一人称和第三人称摄像机)
+    void UpdateCamera(Camera*Camera，int mode);              //更新所选模式的相机位置,mode参数需要填入一个raylib自带的预制摄像机模式，这会让使用摄像机变得更加方便
+    void UpdateCameraPro(Camera* camera，Vector3 movement，Vector2 rotation/*旋转*/，float zoom/*缩放大小*/)                                  //更新相机移动/旋转
+
+
     
