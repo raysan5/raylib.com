@@ -48,10 +48,10 @@
     //自定义框架控制功能
     //注：这些功能适用于希望完全控制帧处理的高级用户
     //默认情况下, EndDrawing()完成以下任务：绘制所有内容+SwapScreenBuffer()+管理帧计时+PollInputEvents()
-    //要避免这种行为并手动控制帧进程, 请在配置中启用。h：支持自定义框架控制
+    //要避免这种行为并手动控制帧进程, 请在config.h中启用：SUPPORT_CUSTOM_FRAME_CONTROL
     void SwapScreenBuffer(void);                                //用前缓冲区交换后缓冲区(屏幕绘图)
     void PollInputEvents(void);                                 //注册所有输入事件
-    void WaitTime(double 双秒);                                  //等待一段时间(停止程序执行)
+    void WaitTime(double second);                                  //等待一段时间(停止程序执行)
     
     //鼠标光标相关功能
     void ShowCursor(void);                                      //显示鼠标光标
@@ -99,11 +99,11 @@
     //屏幕空间相关功能
     Ray GetMouseRay(Vector2 mousePosition, Camera camera);        //从鼠标位置获取光线跟踪
     Matrix GetCameraMatrix(Camera camera);                     //获取相机变换矩阵(视图矩阵)
-    Matrix GetCameraMatrix2D(Camera2D相机);                     //获取相机二维变换矩阵
+    Matrix GetCameraMatrix2D(Camera2D camera);                     //获取相机二维变换矩阵
     Vector2 GetWorldToScreen(Vector3 position/*坐标*/, Camera camera);               //获取三维世界空间位置的屏幕空间位置
-    Vector2 GetScreenToWorld2D(Vector2 position/*坐标*/, Camera2D相机);       //获取2d相机屏幕空间位置的世界空间位置
+    Vector2 GetScreenToWorld2D(Vector2 position/*坐标*/, Camera2D camera);       //获取2d相机屏幕空间位置的世界空间位置
     Vector2 GetWorldToScreenEx(Vector3 position/*坐标*/,  Camera camera, int宽度, int高度); //获取三维世界空间位置的大小位置
-    Vector2 GetWorldToScreen2D(Vector2 position/*坐标*/, Camera2D相机);       //获取2d相机世界空间位置的屏幕空间位置
+    Vector2 GetWorldToScreen2D(Vector2 position/*坐标*/, Camera2D camera);       //获取2d相机世界空间位置的屏幕空间位置
     
     //定时相关功能
     void SetTargetFPS(int fps);//设置目标FPS(最大值)
