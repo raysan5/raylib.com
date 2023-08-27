@@ -28,12 +28,12 @@
     bool IsSoundPlaying(Sound sound);                               //检查当前是否正在播放音频
     void SetSoundVolume(Sound sound, float音量);                     //设置音频音量(1.0为最大音量)
     void SetSoundPitch(Sound sound, float音调);                      //设置音频的音调(1.0为基本音量)
-    void SetSoundPan(Sound sound, float浮盘);                        //为音频设置平移(0.5为中心)
+    void SetSoundPan(Sound sound, float pan);                        //为音频设置平移(0.5为中心)
     Wave WaveCopy(Wave wave);                                       //将波复制到新波
     void WaveCrop(Wave *Wave, int initSample, int finalSample);     //将波裁剪到定义的采样范围
     void WaveFormat(Wave *Wave, int sampleRate, int sampleSize, int通道); //将波数据转换为所需格式
     float *LoadWaveSamples(Wave wave);                              //将波采样数据加载为32位float数据数组
-    void UnloadWaveSamples(float *样本);                             //卸载使用加载WaveSamples()加载的样本数据
+    void UnloadWaveSamples(float *样本/*sample*/);                             //卸载使用加载WaveSamples()加载的样本数据
     
     //Music管理功能
     Music LoadMusicStream(const char *fileName);                    //从文件加载音乐流
@@ -45,10 +45,10 @@
     void StopMusicStream(Music music);                              //停止音乐播放
     void PauseMusicStream(Music music);                             //暂停音乐播放
     void ResumeMusicStream(Music music);                            //继续播放暂停的音乐
-    void SeekMusicStream(Music music, float位置);                    //将音乐搜索到某个位置(以秒为单位)
+    void SeekMusicStream(Music music, float 位置);                    //将音乐搜索到某个位置，我猜测应该是类似于进度条定位(以秒为单位)
     void SetMusicVolume(Music music, float音量);                     //设置音乐音量(1.0为最大音量)
     void SetMusicPitch(Music music, float音高);                      //设置音乐的音高(1.0为基本级别)
-    void SetMusicPan(Music music, 浮盘);                             //为音乐设置平移(0.5为中心)
+    void SetMusicPan(Music music, float pan);                             //为音乐设置平移(0.5为中心)
     float GetMusicTimeLength(Music music);                          //获取音乐时间长度(秒)
     float GetMusicTimePlayed(Music music);                          //获取当前播放的音乐时间(秒)
     
@@ -65,7 +65,7 @@
     void SetAudioStreamVolume(AudioStream音频流, float音量);          //设置音频流的音量(1.0为最大音量)
     void SetAudioStreamPitch(AudioStream音频流, float音调);           //设置音频流的音调(1.0为基本级别)
     void SetAudioStreamPan(AudioStream音频流, float平移);             //设置音频流的平移(0.5居中)
-    void SetAudioStreamBufferSizeDefault(int大小);                   //新音频流的默认大小
+    void SetAudioStreamBufferSizeDefault(int 大小);                   //新音频流的默认大小
     void SetAudioStreamCallback(AudioStream音频流, AudioCallback回调); //音频线程回调以请求新数据
     void AttachAudioStreamProcessor(AudioStream音频流, AudioCallback处理器); //将音频流处理器连接到流
     void DetachAudioStreamProcessor(AudioStream音频流, AudioCallback处理器); //从流中分离音频流处理器
