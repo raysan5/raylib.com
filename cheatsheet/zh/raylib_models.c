@@ -11,7 +11,7 @@
     void DrawCubeWires(Vector3位置, float宽度, float高度, float长度, Color color);                      //绘制立方体线
     void DrawCubeWiresV(Vector3位置, Vector3大小, Color color);                                       //绘制立方体线(矢量版本)
     void DrawCubeTexture(Texture2D texture, Vector3位置, float宽度, float高度, float长度, Color color);  //绘制立方体Texture
-    void DrawCubeTextureRec(Texture2D texture, Rectangle源, Vector3位置, float宽度, float高度, float长度, Color color); //使用Texture区域绘制立方体
+    void DrawCubeTextureRec(Texture2D texture, Rectangle source, Vector3位置, float宽度, float高度, float长度, Color color); //使用Texture区域绘制立方体
     void DrawSphere(Vector3 centerPos, float半径, Color color);                                      //绘制球体
     void DrawSphereEx(Vector3 centerPos, float半径, int rings,int slices, Color color);              //使用扩展参数绘制球体
     void DrawSphereWires(Vector3 centerPos, float半径, int rings,int slices, Color color);           //绘制球体导线
@@ -21,7 +21,7 @@
     void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color Color); //绘制圆柱体导线, 底部位于startPos, 顶部位于endPos
     void DrawPlane(Vector3 centerPos, Vector2大小, Color color);                                     //绘制平面XZ
     void DrawRay(Ray ray, Color color);                                                             //绘制光线线
-    void DrawGrid(int slices, float间距);                                                            //绘制Mesh(以(0, 0, 0)为中心)
+    void DrawGrid(int slices, float 间距);                                                            //绘制Mesh(以(0, 0, 0)为中心)
     
     //------------------------------------------------------------------------------------
     //Model 3d加载和绘图功能(模块：Model)
@@ -46,7 +46,7 @@
     
     //Mesh管理功能
     void UploadMesh(Mesh *mesh, bool dynamic);                                                     //在GPU中上载Mesh顶点数据并提供VAO/VBO ID
-    void UpdateMeshBuffer(Mesh mesh, int索引, const void *data, int dataSize, int偏移量);            //为特定缓冲区索引更新GPU中的Mesh顶点数据
+    void UpdateMeshBuffer(Mesh mesh, int 索引/*index*/, const void *data, int dataSize, int 偏移量);            //为特定缓冲区索引更新GPU中的Mesh顶点数据
     void UnloadMesh(Mesh mesh);                                                                    //从CPU和GPU卸载Mesh数据
     void DrawMesh(Mesh mesh, Material material, Matrix transform);                                 //使用材质和变换绘制三维网格
     void DrawMeshInstanced(Mesh mesh, Material material, const Matrix *transforms, int instances); //使用材质和不同变换绘制多个Mesh实例
@@ -64,8 +64,8 @@
     Mesh GenMeshCone(float半径, float高度, int slices);                                              //生成圆锥体/棱锥体网格
     Mesh GenMeshTorus(float半径, float大小, int radSeg, int边);                                       //生成圆环体网格
     Mesh GenMeshKnot(float半径, float大小, int radSeg, int边);                                       //生成三叶结网格
-    Mesh GenMeshHeightmap(Image高度贴图, Vector3大小);                                               //从图像数据生成高度图网格
-    Mesh GenMeshCubicmap(Image立方体贴图, Vector3立方体大小);                                          //从图像数据生成基于立方体的地图网格
+    Mesh GenMeshHeightmap(Image 高度贴图, Vector3大小);                                               //从图像数据生成高度图网格
+    Mesh GenMeshCubicmap(Image 立方体贴图, Vector3 立方体大小);                                                  //从图像数据生成基于立方体的地图网格
     
     //材料装载/卸载功能
     Material *LoadMaterials(const char *fileName, int *materialCount);                             //从Model文件加载材质
@@ -76,17 +76,17 @@
     
     //Model动画加载/卸载功能
     ModelAnimation *LoadModelAnimations(const char *fileName, unsigned int *animCount);          //从文件加载Model动画
-    void UpdateModelAnimation(Model Model, ModelAnimation动画, int帧);                             //更新Model动画姿势
-    void UnloadModelAnimation(ModelAnimation动画);                                                 //卸载动画数据
+    void UpdateModelAnimation(Model Model, ModelAnimation 动画, int帧);                             //更新Model动画姿势
+    void UnloadModelAnimation(ModelAnimation 动画);                                                 //卸载动画数据
     void UnloadModelAnimations(ModelAnimation *动画, unsigned int计数);                             //卸载动画阵列数据
-    bool IsModelAnimationValid(Model Model, Model动画动画);                                         //检查Model动画骨架匹配
+    bool IsModelAnimationValid(Model Model, ModelAnimation 动画);                                         //检查Model动画骨架匹配
     
     //碰撞检测功能
     bool CheckCollisionSpheres(Vector3中心1, float半径1, Vector3中心2, float半径2);                  //检查两个球体之间的碰撞
     bool CheckCollisionBoxes(BoundingBox box1, BoundingBox box2);                                //检查两个边界框之间的碰撞
-    bool CheckCollisionBoxSphere(BoundingBox框, Vector3中心, float半径);                           //检查长方体和球体之间的碰撞
+    bool CheckCollisionBoxSphere(BoundingBox box, Vector3中心, float半径);                           //检查长方体和球体之间的碰撞
     RayCollision GetRayCollisionSphere(Ray ray, Vector3中心, float半径);                           //获取光线和球体之间的碰撞信息
-    RayCollision GetRayCollisionBox(Ray ray, BoundingBox框);                                      //获取光线和长方体之间的碰撞信息
+    RayCollision GetRayCollisionBox(Ray ray, BoundingBox box);                                      //获取光线和长方体之间的碰撞信息
     RayCollision GetRayCollisionMesh(Ray ray, Mesh mesh, Matrix transform);                      //获取光线和Mesh之间的碰撞信息
     RayCollision GetRayCollisionTriangle(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3);           //获取光线和三角形之间的碰撞信息
     RayCollision GetRayCollisionQuad(Ray ray, Vector3 p1, Vector3 p2, Vector3 p3, Vector3 p4);   //获取光线和四边形之间的碰撞信息
