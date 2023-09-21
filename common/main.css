@@ -582,6 +582,19 @@ li {
     margin-right: 2px;
 }
 
+a#game-template {
+    margin: 0 auto; 
+    border: 6px solid #888888; 
+    transition: all .2s ease; 
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+a#game-template:hover {
+    border: 6px solid #111111;
+    background-color: white;
+}
+
 #platforms>a>img {
     border: 6px solid #888888;
     transition: all .2s ease;
