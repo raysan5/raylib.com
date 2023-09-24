@@ -1,4 +1,4 @@
-    // 흰색 배경 위에서의 환상적인 시각적 효과를 위한 커스텀 raylib 색상 팔레트
+    // 흰색 배경 위에서의 환상적인 시각적 효과를 위한 사용자 정의 raylib 색상 팔레트
     #define LIGHTGRAY  (Color){ 200, 200, 200, 255 }   // 밝은 회색
     #define GRAY       (Color){ 130, 130, 130, 255 }   // 회색
     #define DARKGRAY   (Color){ 80, 80, 80, 255 }      // 진한 회색
