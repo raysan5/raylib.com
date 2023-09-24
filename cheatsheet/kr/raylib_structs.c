@@ -32,7 +32,7 @@
     struct Sound;                  // 소리
     struct Music;                  // 음악, 오디오 스트림, 10초 이상의 모든 음악은 실행될 수 있음
 
-    struct VrDeviceInfo;           // Vr기기정보, 헤드 마운드 디스플레이 장치 매개변수
+    struct VrDeviceInfo;           // VR기기정보, 헤드 마운드 디스플레이 장치 매개변수
     struct VrStereoConfig;         // VR스트레오설정, 시뮬레이터를 위한 VR 스테레오 렌더링 설정
 
     struct FilePathList;           // 파일 경로의 동적 배열
