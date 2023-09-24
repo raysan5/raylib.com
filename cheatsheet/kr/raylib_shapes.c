@@ -3,7 +3,7 @@
     // defining a font char white rectangle would allow drawing everything in a single draw call
     void SetShapesTexture(Texture2D texture, Rectangle source);       // Set texture and rectangle to be used on shapes drawing
 
-    // Basic shapes drawing functions
+    // 기본 도형을 그리는 함수들
     void DrawPixel(int posX, int posY, Color color);                                                   // Draw a pixel
     void DrawPixelV(Vector2 position, Color color);                                                    // Draw a pixel (Vector version)
     void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);                // Draw a line
@@ -42,15 +42,15 @@
     void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);          // Draw a polygon outline of n sides
     void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color); // Draw a polygon outline of n sides with extended parameters
 
-    // Basic shapes collision detection functions
-    bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // Check collision between two rectangles
-    bool CheckCollisionCircles(Vector2 center1, float radius1, Vector2 center2, float radius2);        // Check collision between two circles
-    bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec);                         // Check collision between circle and rectangle
-    bool CheckCollisionPointRec(Vector2 point, Rectangle rec);                                         // Check if point is inside rectangle
-    bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius);                       // Check if point is inside circle
-    bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3);               // Check if point is inside a triangle
-    bool CheckCollisionPointPoly(Vector2 point, Vector2 *points, int pointCount);                      // Check if point is within a polygon described by array of vertices
-    bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2 *collisionPoint); // Check the collision between two lines defined by two points each, returns collision point by reference
+    // 기본 도형에 대한 충돌 감지 함수들
+    bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // 두 직사각형 사이의 충돌을 감지한다
+    bool CheckCollisionCircles(Vector2 center1, float radius1, Vector2 center2, float radius2);        // 두 원 사이의 충돌을 감지한다
+    bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec);                         // 원과 직사각형 사이의 충돌을 감지한다
+    bool CheckCollisionPointRec(Vector2 point, Rectangle rec);                                         // 주어진 점이 직사각형 내부에 있는지 확인한다
+    bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius);                       // 주어진 점이 원의 내부에 있는지 확인한다
+    bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3);               // 주어진 점이 삼각형 내부에 있는지 확인한다
+    bool CheckCollisionPointPoly(Vector2 point, Vector2 *points, int pointCount);                      // 주어진 점이 꼭짓점 배열로 정의된 다각형 내부에 있는지 확인한다
+    bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2 *collisionPoint); // 시작점과 끝점으로 정의된 두 선분이 서로 만나는지 확인하고, 서로 만난다면 교점을 반환한다
     bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);                // Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
-    Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // Get collision rectangle for two rectangles collision
+    Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // 두 직사각형이 겹치는 영역에 해당하는 직사각형을 반환한다
 
