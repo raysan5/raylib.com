@@ -1,37 +1,37 @@
 
     // NOTE: It can be useful when using basic shapes and one single font,
     // defining a font char white rectangle would allow drawing everything in a single draw call
-    void SetShapesTexture(Texture2D texture, Rectangle source);       // Set texture and rectangle to be used on shapes drawing
+    void SetShapesTexture(Texture2D texture, Rectangle source);       // 도형을 그릴 때 사용할 텍스처의 영역을 설정한다
 
     // 기본 도형을 그리는 함수들
-    void DrawPixel(int posX, int posY, Color color);                                                   // Draw a pixel
-    void DrawPixelV(Vector2 position, Color color);                                                    // Draw a pixel (Vector version)
+    void DrawPixel(int posX, int posY, Color color);                                                   // 픽셀을 찍는다
+    void DrawPixelV(Vector2 position, Color color);                                                    // 픽셀을 찍는다 (벡터 버전)
     void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);                // 선분을 그린다
-    void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                     // Draw a line (Vector version)
+    void DrawLineV(Vector2 startPos, Vector2 endPos, Color color);                                     // 선분을 그린다 (벡터 버전)
     void DrawLineEx(Vector2 startPos, Vector2 endPos, float thick, Color color);                       // 주어진 두께를 가진 선분을 그린다
     void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                   // Draw a line using cubic-bezier curves in-out
     void DrawLineBezierQuad(Vector2 startPos, Vector2 endPos, Vector2 controlPos, float thick, Color color); // Draw line using quadratic bezier curves with a control point
     void DrawLineBezierCubic(Vector2 startPos, Vector2 endPos, Vector2 startControlPos, Vector2 endControlPos, float thick, Color color); // Draw line using cubic bezier curves with 2 control points
     void DrawLineStrip(Vector2 *points, int pointCount, Color color);                                  // Draw lines sequence
     void DrawCircle(int centerX, int centerY, float radius, Color color);                              // 주어진 색상으로 채워진 원을 그린다
-    void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);      // Draw a piece of a circle
-    void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // Draw circle sector outline
+    void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);      // 부채꼴을 그린다
+    void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // 부채꼴의 테두리를 그린다
     void DrawCircleGradient(int centerX, int centerY, float radius, Color color1, Color color2);       // 선형 그라데이션으로 채워진 원을 그린다
     void DrawCircleV(Vector2 center, float radius, Color color);                                       // Draw a color-filled circle (Vector version)
-    void DrawCircleLines(int centerX, int centerY, float radius, Color color);                         // 원의 테두리를 그린다
+    void DrawCircleLines(int centerX, int centerY, float radius, Color color);                         // Draw circle outline
     void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);             // 주어진 색상으로 채워진 타원을 그린다
     void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, Color color);        // 타원의 테두리를 그린다
     void DrawRing(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color); // Draw ring
     void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);    // Draw ring outline
     void DrawRectangle(int posX, int posY, int width, int height, Color color);                        // 주어진 색상으로 채워진 직사각형을 그린다
     void DrawRectangleV(Vector2 position, Vector2 size, Color color);                                  // 주어진 색상으로 채워진 직사각형을 그린다 (벡터 버전)
-    void DrawRectangleRec(Rectangle rec, Color color);                                                 // Draw a color-filled rectangle
-    void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                 // Draw a color-filled rectangle with pro parameters
+    void DrawRectangleRec(Rectangle rec, Color color);                                                 // 주어진 색상으로 채워진 직사각형을 그린다 (직사각형 구조체 버전)
+    void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                 // 색상, 원점, 그리고 회전 각도 등의 추가적인 매개 변수로 직사각형을 그린다
     void DrawRectangleGradientV(int posX, int posY, int width, int height, Color color1, Color color2);// 가로 방향의 선형 그라데이션으로 채워진 원을 그린다
     void DrawRectangleGradientH(int posX, int posY, int width, int height, Color color1, Color color2);// 세로 방향의 선형 그라데이션으로 채워진 원을 그린다
     void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, Color col4);       // Draw a gradient-filled rectangle with custom vertex colors
     void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                   // 직사각형의 테두리를 그린다
-    void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);                            // Draw rectangle outline with extended parameters
+    void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);                            // 색상과 선 굵기 등의 추가적인 매개 변수로 직사각형을 그린다
     void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // 모서리가 둥근 직사각형을 그린다
     void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color); // 모서리가 둥근 직사각형의 테두리를 그린다
     void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // Draw a color-filled triangle (vertex in counter-clockwise order!)
