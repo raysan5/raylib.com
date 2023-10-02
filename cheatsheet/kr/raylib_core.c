@@ -1,9 +1,9 @@
 
 
     // 게임 창과 관련된 함수
-    void InitWindow(int width, int height, const char *title);  // Initialize window and OpenGL context
-    bool WindowShouldClose(void);                               // Check if KEY_ESCAPE pressed or Close icon pressed
-    void CloseWindow(void);                                     // Close window and unload OpenGL context
+    void InitWindow(int width, int height, const char *title);  // 게임 창과 OpenGL 컨텍스트 (context)를 초기화한다
+    bool WindowShouldClose(void);                               // 게임 종료 키 (기본값은 KEY_ESCAPE) 또는 창 닫기 버튼이 눌렸는지 확인한다 
+    void CloseWindow(void);                                     // 게임 창과 OpenGL 컨텍스트에 할당된 메모리를 해제한다
     bool IsWindowReady(void);                                   // Check if window has been initialized successfully
     bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
     bool IsWindowHidden(void);                                  // Check if window is currently hidden (only PLATFORM_DESKTOP)
@@ -56,9 +56,9 @@
     void WaitTime(double seconds);                              // Wait for some time (halt program execution)
 
     // Cursor-related functions
-    void ShowCursor(void);                                      // Shows cursor
-    void HideCursor(void);                                      // Hides cursor
-    bool IsCursorHidden(void);                                  // Check if cursor is not visible
+    void ShowCursor(void);                                      // 마우스 커서를 보여준다
+    void HideCursor(void);                                      // 마우스 커서를 숨긴다
+    bool IsCursorHidden(void);                                  // 마우스 커서가 숨겨진 상태인지 확인한다
     void EnableCursor(void);                                    // Enables cursor (unlock cursor)
     void DisableCursor(void);                                   // Disables cursor (lock cursor)
     bool IsCursorOnScreen(void);                                // Check if cursor is on the screen

@@ -1,4 +1,4 @@
-    // 흰색 배경 위에서의 환상적인 시각적 효과를 위한 사용자 정의 raylib 색상 팔레트
+    // 흰색 배경 위에서의 환상적인 시각적 효과를 위해 만들어진 raylib 색상 팔레트
     #define LIGHTGRAY  (Color){ 200, 200, 200, 255 }   // 밝은 회색
     #define GRAY       (Color){ 130, 130, 130, 255 }   // 회색
     #define DARKGRAY   (Color){ 80, 80, 80, 255 }      // 진한 회색
@@ -24,5 +24,5 @@
     #define WHITE      (Color){ 255, 255, 255, 255 }   // 흰색
     #define BLACK      (Color){ 0, 0, 0, 255 }         // 검정색
     #define BLANK      (Color){ 0, 0, 0, 0 }           // 검정색 (투명)
-    #define MAGENTA    (Color){ 255, 0, 255, 255 }     // 마젠타
+    #define MAGENTA    (Color){ 255, 0, 255, 255 }     // 자홍색
     #define RAYWHITE   (Color){ 245, 245, 245, 255 }   // raylib 전용 색상 (raylib 로고)
