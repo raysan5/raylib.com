@@ -1,6 +1,6 @@
 
 
-    // Window-related functions
+    // 게임 창과 관련된 함수
     void InitWindow(int width, int height, const char *title);  // Initialize window and OpenGL context
     bool WindowShouldClose(void);                               // Check if KEY_ESCAPE pressed or Close icon pressed
     void CloseWindow(void);                                     // Close window and unload OpenGL context

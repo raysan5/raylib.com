@@ -3,7 +3,7 @@
     // defining a font char white rectangle would allow drawing everything in a single draw call
     void SetShapesTexture(Texture2D texture, Rectangle source);       // 도형을 그릴 때 사용할 텍스처의 영역을 설정한다
 
-    // 기본 도형을 그리는 함수들
+    // 기본 도형을 그리는 함수
     void DrawPixel(int posX, int posY, Color color);                                                   // 픽셀을 찍는다
     void DrawPixelV(Vector2 position, Color color);                                                    // 픽셀을 찍는다 (벡터 버전)
     void DrawLine(int startPosX, int startPosY, int endPosX, int endPosY, Color color);                // 선분을 그린다
@@ -34,12 +34,12 @@
     void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);                            // 색상과 선 굵기 등의 추가적인 매개 변수로 직사각형을 그린다
     void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // 모서리가 둥근 직사각형을 그린다
     void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, float lineThick, Color color); // 모서리가 둥근 직사각형의 테두리를 그린다
-    void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // 주어진 색상으로 채워진 삼각형을 그린다 (꼭짓점은 반시계 방향으로 입력)
-    void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                           // 삼각형의 테두리를 그린다 (꼭짓점은 반시계 방향으로 입력)
+    void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // 주어진 색상으로 채워진 삼각형을 그린다 (꼭짓점 배열은 반시계 방향으로 정렬할 것!)
+    void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                           // 삼각형의 테두리를 그린다 (꼭짓점 배열은 반시계 방향으로 정렬할 것!)
     void DrawTriangleFan(Vector2 *points, int pointCount, Color color);                                // Draw a triangle fan defined by points (first vertex is the center)
     void DrawTriangleStrip(Vector2 *points, int pointCount, Color color);                              // Draw a triangle strip defined by points
-    void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);               // 주어진 변의 개수 [sides]를 가진 정다각형을 그린다 (벡터 버전)
-    void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);          // 주어진 변의 개수 [sides]를 가진 정다각형의 테두리를 그린다
+    void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);               // 주어진 변의 개수를 가진 정다각형을 그린다 (벡터 버전)
+    void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);          // 주어진 변의 개수를 가진 정다각형의 테두리를 그린다
     void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color); // 색상과 선 굵기 등의 추가적인 매개 변수로 정다각형의 테두리를 그린다
 
     // 기본 도형에 대한 충돌 감지 함수들
