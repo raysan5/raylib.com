@@ -1,8 +1,13 @@
-main
+header, main
 {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+header
+{
+    margin-bottom: 20px;
 }
 
 .searches
@@ -30,7 +35,7 @@ main
     height:128px;
     float:left;
     position:relative;
-    background-image:url(../common/img/raylib_logo.png);
+    background-image:url(raylib_logo.png);
 }
 
 #header{position:relative; height:110px; width: 1000px;}
@@ -38,6 +43,8 @@ main
 #plinks{color: gray;}
 #plinks a, #copyright a{color: gray; text-decoration:none;}
 #plinks a:hover{color: black;}
+#downpdf{text-decoration: none;color:#aaaaaa;}
+#downpdf:hover{color:#444;}
 #version {margin-top: 23px; width:500px;}
 
 .searches > input
