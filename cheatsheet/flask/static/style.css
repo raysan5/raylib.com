@@ -1,0 +1,86 @@
+main
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.searches
+{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4%;
+}
+
+.searches, .results
+{
+    margin: 1%;
+}
+
+#buttons
+{
+    margin: auto;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+#logo
+{
+    width:128px;
+    height:128px;
+    float:left;
+    position:relative;
+    background-image:url(../common/img/raylib_logo.png);
+}
+
+#header{position:relative; height:110px; width: 1000px;}
+#title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
+#plinks{color: gray;}
+#plinks a, #copyright a{color: gray; text-decoration:none;}
+#plinks a:hover{color: black;}
+#version {margin-top: 23px; width:500px;}
+
+.searches > input
+{
+    flex: 50%;
+}
+
+.btn-bd-primary
+{
+    --bs-btn-color: #712cf9;
+    --bs-btn-border-color: #712cf9;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #712cf9;
+    --bs-btn-hover-border-color: #712cf9;
+    --bs-btn-focus-shadow-rgb: 108,117,125;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #712cf9;
+    --bs-btn-active-border-color: #712cf9;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #712cf9;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #712cf9;
+    --bs-gradient: none;
+}
+
+.table-violet 
+{
+    --bs-table-color: #000;
+    --bs-table-bg: #d4c0fd;
+    border-color: #1e0255;
+}
+
+.filter 
+{
+    display: none;
+}
+
+.show
+{
+    display: table-row;
+}
+
+.hljs-keyword
+{
+    color: rgb(223, 140, 109);
+}
