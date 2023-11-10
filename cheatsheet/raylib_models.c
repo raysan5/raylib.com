@@ -1,4 +1,3 @@
-
     // Basic geometric 3D shapes drawing functions
     void DrawLine3D(Vector3 startPos, Vector3 endPos, Color color);                                    // Draw a line in 3D world space
     void DrawPoint3D(Vector3 position, Color color);                                                   // Draw a point in 3D space, actually a small line
@@ -75,10 +74,10 @@
     void SetModelMeshMaterial(Model *model, int meshId, int materialId);                  // Set material for a mesh
 
     // Model animations loading/unloading functions
-    ModelAnimation *LoadModelAnimations(const char *fileName, unsigned int *animCount);   // Load model animations from file
+    ModelAnimation *LoadModelAnimations(const char *fileName, int *animCount);            // Load model animations from file
     void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);               // Update model animation pose
     void UnloadModelAnimation(ModelAnimation anim);                                       // Unload animation data
-    void UnloadModelAnimations(ModelAnimation *animations, unsigned int count);           // Unload animation array data
+    void UnloadModelAnimations(ModelAnimation *animations, int animCount);                // Unload animation array data
     bool IsModelAnimationValid(Model model, ModelAnimation anim);                         // Check model animation skeleton match
 
     // Collision detection functions

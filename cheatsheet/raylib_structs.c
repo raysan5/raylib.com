@@ -36,3 +36,6 @@
     struct VrStereoConfig;         // VrStereoConfig, VR stereo rendering configuration for simulator
 
     struct FilePathList;           // File path list
+
+    struct AutomationEvent;        // Automation event
+    struct AutomationEventList;    // Automation event list
