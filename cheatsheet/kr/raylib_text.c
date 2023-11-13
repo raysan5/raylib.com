@@ -43,11 +43,11 @@
     int TextCopy(char *dst, const char *src);                                             // 하나의 문자열을 다른 문자열에 복사한다, 복사된 바이트를 반환한다
     bool TextIsEqual(const char *text1, const char *text2);                               // 두 문자열이 같은지 확인한다
     unsigned int TextLength(const char *text);                                            // 문자의 길이를 얻는다, 끝의 '\0'를 확인한다
-    const char *TextFormat(const char *text, ...);                                        // 문자 서식 with variables (sprintf() style)
+    const char *TextFormat(const char *text, ...);                                        // 문자열 형식을 지정해 텍스트를 생성한다 (sprintf() 스타일)
     const char *TextSubtext(const char *text, int position, int length);                  // 입력받은 인덱스를 이용해 문자열의 일부를 얻는다
     char *TextReplace(char *text, const char *replace, const char *by);                   // 문자열의 문자를 바꾼다 (경고: 동적 할당을 해제해야 합니다!)
     char *TextInsert(const char *text, const char *insert, int position);                 // 입력받은 위치에 문자를 삽입한다 (경고: 동적 할당을 해제해야 합니다!)
-    const char *TextJoin(const char **textList, int count, const char *delimiter);        // Join text strings with delimiter
+    const char *TextJoin(const char **textList, int count, const char *delimiter);        // 구문자로 텍스트 문자열을 결합한다
     const char **TextSplit(const char *text, char delimiter, int *count);                 // 문자열을 여러 개의 문자열로 나눈다
     void TextAppend(char *text, const char *append, int *position);                       // 특정한 위치에 문자를 추가하고 커서를 이동한다
     int TextFindIndex(const char *text, const char *find);                                // 문자열 내에서 찾고 있는 문자의 위치를 찾는다
