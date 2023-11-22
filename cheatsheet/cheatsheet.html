@@ -19,8 +19,7 @@
         <meta property="og:site_name" content="raylib"/>
         <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet"/>
 
-        <!-- Add jQuery library -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+
 
         <!-- hightlight.js - Syntax highlighting for the Web -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
@@ -87,40 +86,29 @@
         </style>
 
         <script type="text/javascript">
-         $(document).ready(function() {
-             $.get('raylib_core.c', function(data) {
-                 $('#core pre code').text(data);
-                 $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_shapes.c', function(data) {
-                 $('#shapes pre code').text(data);
-                 $('#shapes pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_textures.c', function(data) {
-                 $('#textures pre code').text(data);
-                 $('#textures pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_text.c', function(data) {
-                 $('#text pre code').text(data);
-                 $('#text pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_models.c', function(data) {
-                 $('#models pre code').text(data);
-                 $('#models pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_audio.c', function(data) {
-                 $('#audio pre code').text(data);
-                 $('#audio pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_colors.c', function(data) {
-                 $('#colors pre code').text(data);
-                 $('#colors pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_structs.c', function(data) {
-                 $('#structs pre code').text(data);
-                 $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-         });
+         document.addEventListener('DOMContentLoaded', function() {
+            function addModule(url, targetSelector) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector(targetSelector).innerHTML = data;
+                        document.querySelectorAll(targetSelector).forEach(function(e) {
+                            hljs.highlightBlock(e);
+                        });
+                    })
+                    .catch(error => console.error('Could not get ' + url, error));
+            }
+
+            addModule('raylib_core.c', '#core pre code');
+            addModule('raylib_shapes.c', '#shapes pre code');
+            addModule('raylib_textures.c', '#textures pre code');
+            addModule('raylib_text.c', '#text pre code');
+            addModule('raylib_models.c', '#models pre code');
+            addModule('raylib_audio.c', '#audio pre code');
+            addModule('raylib_colors.c', '#colors pre code');
+            addModule('raylib_structs.c', '#structs pre code');
+        });
+
         </script>
     </head>
 
