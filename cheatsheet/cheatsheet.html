@@ -19,8 +19,6 @@
         <meta property="og:site_name" content="raylib"/>
         <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet"/>
 
-
-
         <!-- hightlight.js - Syntax highlighting for the Web -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
@@ -56,6 +54,7 @@
          #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
          #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
          #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
+
          #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
          #header{position:relative; height:110px; max-width: 1000px;}
          #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
@@ -85,6 +84,24 @@
          #downpdf:hover{color:#444;}
 
          #fulldata p a {color:#0eefff; text-decoration: none;}
+
+        /* for the tired programmers at night */
+        .darkmode{background-color:#1e1e1e; color:#e1e1e1;}
+        .darkmode a{color:#e1e1e1;}
+        .darkmode #header{background-color:#1e1e1e; color:#e1e1e1;}
+        .darkmode #title{color:#e1e1e1;}
+        .darkmode #plinks{color:#e1e1e1;}
+        .darkmode #plinks a{color:#e1e1e1;}
+        .darkmode #plinks a:hover{color:#e1e1e1;}
+        .darkmode #version{color:#e1e1e1;}
+        .darkmode #pcore{color:#e1e1e1;}
+        .darkmode #pshapes{color:#e1e1e1;}
+        .darkmode #ptextures{color:#e1e1e1;}
+        .darkmode #ptext{color:#e1e1e1;}
+        .darkmode #pmodels{color:#e1e1e1;}
+        .darkmode #paudio{color:#e1e1e1;}
+        .darkmode #pstructs{color:#e1e1e1;}
+        .darkmode #pcolors{color:#e1e1e1;}
 
          @media screen and (max-width: 1550px) {
             #fullgroup {
@@ -120,6 +137,10 @@
             addModule('raylib_colors.c', '#colors pre code');
             addModule('raylib_structs.c', '#structs pre code');
         });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("darkmode");
+        }
 
         </script>
     </head>
