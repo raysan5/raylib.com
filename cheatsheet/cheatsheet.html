@@ -84,6 +84,15 @@
 
          #downpdf{text-decoration: none;color:#aaaaaa;}
          #downpdf:hover{color:#444;}
+
+         @media print {
+             #fulldata { max-width:100%; }
+             #fulldata > div             { page-break-inside:avoid;   }
+             #fulldata > div:first-child { page-break-inside:initial; }
+             pre { white-space:pre-wrap; }
+             #fullgroup { display:block; }
+             #logo { content:url(../common/img/raylib_logo.png); }
+         }
         </style>
 
         <script type="text/javascript">
@@ -135,27 +144,43 @@
         <br>
         <p>Chinese Translation: <a href="cheatsheet_zh.html">以下为raylib所有API接口中文释义</a></p>
         <div id="fulldata">
-            <p id="pcore">module: rcore</p>
-            <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshapes">module: rshapes</p>
-            <div id="shapes"><pre><code class="cpp"></code></pre></div>
-            <p id="ptextures">module: rtextures</p>
-            <div id="textures"><pre><code class="cpp"></code></pre></div>
-            <p id="ptext">module: rtext</p>
-            <div id="text"><pre><code class="cpp"></code></pre></div>
-            <p id="pmodels">module: rmodels</p>
-            <div id="models"><pre><code class="cpp"></code></pre></div>
-            <p id="paudio">module: raudio</p>
-            <div id="audio"><pre><code class="cpp"></code></pre></div>
+            <div id="core">
+                <p id="pcore">module: rcore</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
+            <div id="shapes">
+                <p id="pshapes">module: rshapes</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
+            <div id="textures">
+                <p id="ptextures">module: rtextures</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
+            <div id="text">
+                <p id="ptext">module: rtext</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
+            <div id="models">
+                <p id="pmodels">module: rmodels</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
+            <div id="audio">
+                <p id="paudio">module: raudio</p>
+                <pre><code class="cpp"></code></pre>
+            </div>
 
             <div id="fullgroup">
                 <div class="leftgroup">
-                    <p id="pstructs">structs</p>
-                    <div id="structs"><pre><code class="cpp"></code></pre></div>
+                    <div id="structs">
+                        <p id="pstructs">structs</p>
+                        <pre><code class="cpp"></code></pre>
+                    </div>
                 </div>
                 <div class="rightgroup">
-                    <p id="pcolors">colors</p>
-                    <div id="colors"><pre><code class="cpp"></code></pre></div>
+                    <div id="colors">
+                        <p id="pcolors">colors</p>
+                        <pre><code class="cpp"></code></pre>
+                    </div>
                 </div>
             </div>
 
