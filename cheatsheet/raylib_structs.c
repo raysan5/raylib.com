@@ -19,7 +19,7 @@
     struct Shader;                 // Shader
     struct MaterialMap;            // MaterialMap
     struct Material;               // Material, includes shader and maps
-    struct Transform;              // Transform, vectex transformation data
+    struct Transform;              // Transform, vertex transformation data
     struct BoneInfo;               // Bone, skeletal animation bone
     struct Model;                  // Model, meshes, materials and animation data
     struct ModelAnimation;         // ModelAnimation
