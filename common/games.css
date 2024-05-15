@@ -22,19 +22,25 @@
     display: flex;
     justify-content: center;
     width: max-content;
-    /* width: 820px; */
+    align-items: center;
     height: 80px;
+    gap: 10px;
     margin-inline: auto;
 }
 
 .legendButton {
+    --button-width-mobile: fit-content;
+    --button-width-desktop: 150px;
+    
+    display: flex;
     padding: 5px 15px;
-    float: left;
-    margin-left: 10px;
-    margin-right: 10px;
+    justify-content: center;    
     margin-bottom: 20px;
-    width: 150px;
+    width: var(--button-width-desktop);
     text-align: center;
+    @media screen and (width <= 400px) {
+        width: var(--button-width-mobile);
+    }
 }
 
 #classic {

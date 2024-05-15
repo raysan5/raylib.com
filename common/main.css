@@ -655,8 +655,8 @@ a#game-template:hover {
 .back-to-top-arrow{
     display: none;
     position: fixed;
-    bottom: 20px;
-    right: 50px;
+    bottom: 100px;
+    right: 30px;
     z-index: 20;
     padding: 20px;
     border-radius: 50%;
