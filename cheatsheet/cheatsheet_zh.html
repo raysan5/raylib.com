@@ -1,154 +1,362 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>raylib - cheatsheet</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <meta name="title" content="raylib - cheatsheet">
-        <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming. Don't miss latest functions added to raylib... check raylib cheatsheet">
-        <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
-        <meta name="viewport" content="width=device-width">
+    <title>raylib - cheatsheet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <!-- Open Graph metatags for sharing -->
-        <meta property="og:title" content="raylib - cheatsheet"/>
-        <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
-        <meta property="og:url" content="https://www.raylib.com" />
-        <meta property="og:site_name" content="raylib"/>
-        <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet"/>
+    <meta name="title" content="raylib - cheatsheet">
+    <meta name="description"
+        content="raylib is a simple and easy-to-use library to enjoy videogames programming. Don't miss latest functions added to raylib... check raylib cheatsheet">
+    <meta name="keywords"
+        content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
+    <meta name="viewport" content="width=device-width">
 
-        <!-- Add jQuery library -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- Open Graph metatags for sharing -->
+    <meta property="og:title" content="raylib - cheatsheet" />
+    <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png" />
+    <meta property="og:url" content="https://www.raylib.com" />
+    <meta property="og:site_name" content="raylib" />
+    <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet" />
 
-        <!-- hightlight.js - Syntax highlighting for the Web -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-        <style type="text/css">
-         @font-face {
-             font-family: 'grixel_acme_7_wide_xtnd';
-             src: url('../common/font/acme_7_wide_xtnd.eot');
-             src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
-             url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
-             url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
-             font-weight: normal;
-             font-style: normal;
-             font-size-adjust:0.49;
-         }
-         body{background-color:#f5f5f5;}
-         #fulldata{width: 1315px!important;}
-         .eximage img{margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
-         p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
-         pre code{font-family: Courier New; font-size:12px; width: auto!important; border: 1px solid; border-color:#b0b0b0; width:758px; height:auto; }
-         .exdownbtn{
-             width:250px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px;
-             line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a;
-             border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
-         }
-         .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
-         #core pre code{border:10px solid; border-color:#888888; background-color:#dbdbe1; }
-         #shapes pre code{border:10px solid; border-color:#e66666; background-color:#e9d0d6; }
-         #textures pre code{border:10px solid; border-color:#75a06d; background-color:#c3e4bf; }
-         #text pre code{border:10px solid; border-color:#52b296; background-color:#b9e9dd; }
-         #models pre code{border:10px solid; border-color:#5d9cbd; background-color:#b9d6e8; }
-         #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
-         #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
-         #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
-         #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-         #header{position:relative; height:110px; width: 1000px;}
-         #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
-         #plinks{color: gray;}
-         #plinks a, #copyright a{color: gray; text-decoration:none;}
-         #plinks a:hover{color: black;}
-         #version {margin-top: 23px; width:500px;}
-         #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
-         #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
-         #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
-         #ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
-         #pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
-         #paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
-         #pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
-         #pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
+    <!-- hightlight.js - Syntax highlighting for the Web -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
 
-         #fullgroup{
-             display: grid;
-             grid-column-gap: 20px;
-             grid-template-columns: auto auto;
-         }
+    <style type="text/css">
+        @font-face {
+            font-family: 'grixel_acme_7_wide_xtnd';
+            src: url('../common/font/acme_7_wide_xtnd.eot');
+            src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+                url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
+                url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-size-adjust: 0.49;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f5f5f5;
+        }
 
-         #copyright p{color:#8b8b8b; font-size:10px}
-         #copyright a:hover{color:black;}
+        #fulldata {
+            width: 1315px !important;
+        }
 
-         #downpdf{text-decoration: none;color:#aaaaaa;}
-         #downpdf:hover{color:#444;}
-        </style>
+        .eximage img {
+            margin: 0 auto;
+            border: 1px solid;
+            border-color: black;
+            width: 770px;
+            height: auto;
+        }
 
-        <script type="text/javascript">
-         $(document).ready(function() {
-             $.get('zh/raylib_core.c', function(data) {
-                 $('#core pre code').text(data);
-                 $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_shapes.c', function(data) {
-                 $('#shapes pre code').text(data);
-                 $('#shapes pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_textures.c', function(data) {
-                 $('#textures pre code').text(data);
-                 $('#textures pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_text.c', function(data) {
-                 $('#text pre code').text(data);
-                 $('#text pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_models.c', function(data) {
-                 $('#models pre code').text(data);
-                 $('#models pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_audio.c', function(data) {
-                 $('#audio pre code').text(data);
-                 $('#audio pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_colors.c', function(data) {
-                 $('#colors pre code').text(data);
-                 $('#colors pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('zh/raylib_structs.c', function(data) {
-                 $('#structs pre code').text(data);
-                 $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-         });
-        </script>
-    </head>
+        p {
+            font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+            font-size: 13px;
+            line-height: 24px;
+        }
 
-    <body>
-        <div id="header">
-            <a id="logo" href="../index.html"></a>
-            <p id="title">以下为raylib所有API接口中文释义</p>
-            <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
-            <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
+        pre code {
+            font-family: Courier New;
+            font-size: 12px;
+            width: auto !important;
+            border: 1px solid;
+            border-color: #b0b0b0;
+            width: 758px;
+            height: auto;
+        }
+        .back-to-top-arrow{
+            display: flex;
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            z-index: 20;
+            padding: 20px;
+            border-radius: 50%;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            /* backdrop-filter: blur(3px); */
+        }
+        .back-to-top-arrow:hover{
+            cursor: pointer;
+        }
+        .exdownbtn {
+            width: 250px;
+            height: 30px;
+            float: left;
+            position: relative;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 30px;
+            text-align: center;
+            border-width: 5px;
+            background-color: #e1e1e1;
+            color: #5c5a5a;
+            border: 4px solid #898888;
+            font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+        }
+
+        .exdownbtn:hover {
+            background-color: #f0d6d6;
+            color: #c55757;
+            border: 4px solid #e66666;
+        }
+
+        #core pre code {
+            border: 10px solid;
+            border-color: #888888;
+            background-color: #dbdbe1;
+        }
+
+        #shapes pre code {
+            border: 10px solid;
+            border-color: #e66666;
+            background-color: #e9d0d6;
+        }
+
+        #textures pre code {
+            border: 10px solid;
+            border-color: #75a06d;
+            background-color: #c3e4bf;
+        }
+
+        #text pre code {
+            border: 10px solid;
+            border-color: #52b296;
+            background-color: #b9e9dd;
+        }
+
+        #models pre code {
+            border: 10px solid;
+            border-color: #5d9cbd;
+            background-color: #b9d6e8;
+        }
+
+        #audio pre code {
+            border: 10px solid;
+            border-color: #d3b157;
+            background-color: #e5d7ae;
+        }
+
+        #structs pre code {
+            border: 10px solid;
+            border-color: #d2c9c6;
+            background-color: #f8f8ff;
+        }
+
+        #colors pre code {
+            border: 10px solid;
+            border-color: #c6d2c6;
+            background-color: #e9f1f2;
+        }
+
+        #logo {
+            width: 128px;
+            height: 128px;
+            float: left;
+            position: relative;
+            background-image: url(../common/img/raylib_logo.png);
+        }
+
+        #header {
+            position: relative;
+            height: 110px;
+            width: 1000px;
+        }
+
+        #title,
+        #plinks,
+        #version {
+            position: relative;
+            float: left;
+            margin: 0px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        #plinks {
+            color: gray;
+        }
+
+        #plinks a,
+        #copyright a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        #plinks a:hover {
+            color: black;
+        }
+
+        #version {
+            margin-top: 23px;
+            width: 500px;
+        }
+
+        #pcore {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #5c5a5a;
+        }
+
+        #pshapes {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #c55757;
+        }
+
+        #ptextures {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #60815a;
+        }
+
+        #ptext {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #377764;
+        }
+
+        #pmodels {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #417794;
+        }
+
+        #paudio {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #8c7539;
+        }
+
+        #pstructs {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #bcbccd;
+        }
+
+        #pcolors {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #bcbccd;
+        }
+
+        #fullgroup {
+            display: grid;
+            grid-column-gap: 20px;
+            grid-template-columns: auto auto;
+        }
+
+        #copyright p {
+            color: #8b8b8b;
+            font-size: 10px
+        }
+
+        #copyright a:hover {
+            color: black;
+        }
+
+        #downpdf {
+            text-decoration: none;
+            color: #aaaaaa;
+        }
+
+        #downpdf:hover {
+            color: #444;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get('zh/raylib_core.c', function (data) {
+                $('#core pre code').text(data);
+                $('#core pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_shapes.c', function (data) {
+                $('#shapes pre code').text(data);
+                $('#shapes pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_textures.c', function (data) {
+                $('#textures pre code').text(data);
+                $('#textures pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_text.c', function (data) {
+                $('#text pre code').text(data);
+                $('#text pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_models.c', function (data) {
+                $('#models pre code').text(data);
+                $('#models pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_audio.c', function (data) {
+                $('#audio pre code').text(data);
+                $('#audio pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_colors.c', function (data) {
+                $('#colors pre code').text(data);
+                $('#colors pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+            $.get('zh/raylib_structs.c', function (data) {
+                $('#structs pre code').text(data);
+                $('#structs pre code').each(function (i, e) { hljs.highlightBlock(e) });
+            }, 'text');
+        });
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <a id="logo" href="../index.html"></a>
+        <p id="title">以下为raylib所有API接口中文释义</p>
+        <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
+        <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a
+                href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a
+                href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
+    </div>
+    <br>
+    <p>此翻译仅做参考与辅助学习, 可能会有点枯燥, 可以去阅读大佬的教程【<a
+            href="https://zhuanlan.zhihu.com/p/526271216">https://zhuanlan.zhihu.com/p/526271216</a>】</p>
+    <p>该翻译稿为非盈利的, 是为了大家更好的学习与享受视频游戏编程的乐趣,若要用于营利，请在获取作者以及译者的同意的前提下进行</p>
+    <p>译者邮箱：jinquannice@163.com &
+        macky@starsunion.eu.org，修改的话还可以fork此仓库https://github.com/raysan5/raylib.com/tree/master/cheatsheet/zh进行修改并发送拉取请求
+    </p>
+    <p>本翻译由恒星联盟(starsunion.eu.org)成员Macky和HJQ进行翻译</p>
+    <br>
+    <div id="fulldata">
+        <p id="pcore">module: rcore</p>
+        <div id="core">
+            <pre><code class="cpp"></code></pre>
         </div>
-        <br>
-        <p>此翻译仅做参考与辅助学习, 可能会有点枯燥, 可以去阅读大佬的教程【<a href="https://zhuanlan.zhihu.com/p/526271216">https://zhuanlan.zhihu.com/p/526271216</a>】</p>
-        <p>该翻译稿为非盈利的, 是为了大家更好的学习与享受视频游戏编程的乐趣,若要用于营利，请在获取作者以及译者的同意的前提下进行</p>
-        <p>译者邮箱：jinquannice@163.com & macky@starsunion.eu.org，修改的话还可以fork此仓库https://github.com/raysan5/raylib.com/tree/master/cheatsheet/zh进行修改并发送拉取请求</p>
-        <p>本翻译由恒星联盟(starsunion.eu.org)成员Macky和HJQ进行翻译</p>
-        <br>
-        <div id="fulldata">
-            <p id="pcore">module: rcore</p>
-            <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshapes">module: rshapes</p>
-            <div id="shapes"><pre><code class="cpp"></code></pre></div>
-            <p id="ptextures">module: rtextures</p>
-            <div id="textures"><pre><code class="cpp"></code></pre></div>
-            <p id="ptext">module: rtext</p>
-            <div id="text"><pre><code class="cpp"></code></pre></div>
-            <p id="pmodels">module: rmodels</p>
-            <div id="models"><pre><code class="cpp"></code></pre></div>
-            <p id="paudio">module: raudio</p>
-            <div id="audio"><pre><code class="cpp"></code></pre></div>
+        <p id="pshapes">module: rshapes</p>
+        <div id="shapes">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="ptextures">module: rtextures</p>
+        <div id="textures">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="ptext">module: rtext</p>
+        <div id="text">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="pmodels">module: rmodels</p>
+        <div id="models">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="paudio">module: raudio</p>
+        <div id="audio">
+            <pre><code class="cpp"></code></pre>
+        </div>
 
             <div id="fullgroup">
                 <div class="leftgroup">

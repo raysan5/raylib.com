@@ -1,90 +1,371 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>raylib - cheatsheet</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <meta name="title" content="raylib - cheatsheet">
-        <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming. Don't miss latest functions added to raylib... check raylib cheatsheet">
-        <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
-        <meta name="viewport" content="width=device-width">
+    <title>raylib - cheatsheet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-        <!-- Open Graph metatags for sharing -->
-        <meta property="og:title" content="raylib - cheatsheet"/>
-        <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
-        <meta property="og:url" content="https://www.raylib.com" />
-        <meta property="og:site_name" content="raylib"/>
-        <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet"/>
+    <meta name="title" content="raylib - cheatsheet">
+    <meta name="description"
+        content="raylib is a simple and easy-to-use library to enjoy videogames programming. Don't miss latest functions added to raylib... check raylib cheatsheet">
+    <meta name="keywords"
+        content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
+    <meta name="viewport" content="width=device-width">
 
-        <!-- hightlight.js - Syntax highlighting for the Web -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+    <!-- Open Graph metatags for sharing -->
+    <meta property="og:title" content="raylib - cheatsheet" />
+    <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png" />
+    <meta property="og:url" content="https://www.raylib.com" />
+    <meta property="og:site_name" content="raylib" />
+    <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet" />
 
-        <style type="text/css">
-         @font-face {
-             font-family: 'grixel_acme_7_wide_xtnd';
-             src: url('../common/font/acme_7_wide_xtnd.eot');
-             src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
-             url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
-             url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
-             font-weight: normal;
-             font-style: normal;
-             font-size-adjust:0.49;
-         }
-         body{background-color:#f5f5f5;}
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <!-- hightlight.js - Syntax highlighting for the Web -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
 
-         .eximage img{margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
-         p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
-         a{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
-         pre code{font-family: Courier New; font-size:12px; width: auto!important; border: 1px solid; border-color:#b0b0b0; width:758px; height:auto; }
-         .exdownbtn{
-             width:250px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px;
-             line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a;
-             border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
-         }
-         .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
-         #core pre code{border:10px solid; border-color:#888888; background-color:#dbdbe1; }
-         #shapes pre code{border:10px solid; border-color:#e66666; background-color:#e9d0d6; }
-         #textures pre code{border:10px solid; border-color:#75a06d; background-color:#c3e4bf; }
-         #text pre code{border:10px solid; border-color:#52b296; background-color:#b9e9dd; }
-         #models pre code{border:10px solid; border-color:#5d9cbd; background-color:#b9d6e8; }
-         #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
-         #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
-         #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
+    <style type="text/css">
+        @font-face {
+            font-family: 'grixel_acme_7_wide_xtnd';
+            src: url('../common/font/acme_7_wide_xtnd.eot');
+            src: url('../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+                url('../common/font/acme_7_wide_xtnd.woff') format('woff'),
+                url('../common/font/acme_7_wide_xtnd.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-size-adjust: 0.49;
+        }
 
-         #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-         #header{position:relative; height:110px; max-width: 1000px;}
-         #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
-         #plinks{color: gray;}
-         #plinks a, #copyright a{color: gray; text-decoration:none;}
-         #plinks a:hover{color: black;}
-         #version {margin-top: 23px; max-width:500px;}
-         #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
-         #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
-         #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
-         #ptext{margin-bottom:-12px; margin-left:12px; color:#377764;}
-         #pmodels{margin-bottom:-12px; margin-left:12px; color:#417794;}
-         #paudio{margin-bottom:-12px; margin-left:12px; color:#8c7539;}
-         #pstructs{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
-         #pcolors{margin-bottom:-12px; margin-left:12px; color:#bcbccd;}
+        html {
+            scroll-behavior: smooth;
+        }
 
-         #fullgroup{
-             display: grid;
-             grid-column-gap: 20px;
-             grid-template-columns: auto auto;
-         }
+        body {
+            background-color: #f5f5f5;
+        }
 
-         #copyright p{color:#8b8b8b; font-size:10px}
-         #copyright a:hover{color:black;}
+        /* #fulldata {
+            width: 1315px !important;
+        } */
 
-         #downpdf{text-decoration: none;color:#aaaaaa;}
-         #downpdf:hover{color:#444;}
+        .eximage img {
+            margin: 0 auto;
+            border: 1px solid;
+            border-color: black;
+            width: 770px;
+            height: auto;
+        }
 
-         #fulldata p a {color:#0eefff; text-decoration: none;}
+        p {
+            font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+            font-size: 13px;
+            line-height: 24px;
+        }
 
+        a {
+            font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+            font-size: 13px;
+            line-height: 24px;
+        }
+
+        pre code {
+            font-family: Courier New;
+            font-size: 12px;
+            max-width: 100%;
+            /* width: auto !important; */
+            border: 1px solid;
+            border-color: #b0b0b0;
+            /* width: 758px; */
+            /* height: auto; */
+        }
+
+        .exdownbtn {
+            width: 250px;
+            height: 30px;
+            float: left;
+            position: relative;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 30px;
+            text-align: center;
+            border-width: 5px;
+            background-color: #e1e1e1;
+            color: #5c5a5a;
+            border: 4px solid #898888;
+            font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;
+        }
+
+        .exdownbtn:hover {
+            background-color: #f0d6d6;
+            color: #c55757;
+            border: 4px solid #e66666;
+        }
+
+        #core pre code {
+            border: 10px solid;
+            border-color: #888888;
+            background-color: #dbdbe1;
+        }
+
+        #shapes pre code {
+            border: 10px solid;
+            border-color: #e66666;
+            background-color: #e9d0d6;
+        }
+
+        #textures pre code {
+            border: 10px solid;
+            border-color: #75a06d;
+            background-color: #c3e4bf;
+        }
+
+        #text pre code {
+            border: 10px solid;
+            border-color: #52b296;
+            background-color: #b9e9dd;
+        }
+
+        #models pre code {
+            border: 10px solid;
+            border-color: #5d9cbd;
+            background-color: #b9d6e8;
+        }
+
+        #audio pre code {
+            border: 10px solid;
+            border-color: #d3b157;
+            background-color: #e5d7ae;
+        }
+
+        #structs pre code {
+            border: 10px solid;
+            border-color: #d2c9c6;
+            background-color: #f8f8ff;
+        }
+
+        #colors pre code {
+            border: 10px solid;
+            border-color: #c6d2c6;
+            background-color: #e9f1f2;
+        }
+
+        #logo {
+            width: 128px;
+            height: 128px;
+            float: left;
+            position: relative;
+            background-image: url(../common/img/raylib_logo.png);
+        }
+
+        #header {
+            position: relative;
+            height: 110px;
+            max-width: 1000px;
+        }
+
+        #title,
+        #plinks,
+        #version {
+            position: relative;
+            float: left;
+            margin: 0px;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        #plinks {
+            color: gray;
+        }
+
+        #plinks a,
+        #copyright a {
+            color: gray;
+            text-decoration: none;
+        }
+
+        #plinks a:hover {
+            color: black;
+        }
+
+        #version {
+            margin-top: 23px;
+            /* width: 500px; */
+        }
+
+        #pcore {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #5c5a5a;
+        }
+
+        #pshapes {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #c55757;
+        }
+
+        #ptextures {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #60815a;
+        }
+
+        #ptext {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #377764;
+        }
+
+        #pmodels {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #417794;
+        }
+
+        #paudio {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #8c7539;
+        }
+
+        #pstructs {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #bcbccd;
+        }
+
+        #pcolors {
+            margin-bottom: -12px;
+            margin-left: 12px;
+            color: #bcbccd;
+        }
+
+        #fullgroup {
+            display: grid;
+            grid-column-gap: 20px;
+            grid-template-columns: auto auto;
+        }
+
+        #copyright p {
+            color: #8b8b8b;
+            font-size: 10px
+        }
+
+        #copyright a:hover {
+            color: black;
+        }
+
+        #downpdf {
+            text-decoration: none;
+            color: #aaaaaa;
+        }
+
+        #downpdf:hover {
+            color: #444;
+        }
+
+        .back-to-top-arrow {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 50px;
+            z-index: 20;
+            padding: 20px;
+            border-radius: 50%;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top-arrow:hover {
+            cursor: pointer;
+        }
+        
+        #cheatsheet-navigation-menu {
+            --mobile-breaking-point: 600px;
+            display: flex;
+            position: fixed;
+            flex-direction: column;
+            z-index: 20;
+            top: 224px;
+            right: 210px;
+            width: 180px;
+            outline: 4px solid black;
+            background-color: white;
+            padding-block: 20px;
+            gap: 10px;
+            overflow: hidden;
+            transition: right 0.4s;
+            .modules-title {
+                font-family: sans-serif;
+                font-size: 1.2rem;
+                padding-left: 20px;
+                font-weight: bold;
+                margin: 0;
+            }
+            @media screen and (width <= 600px) {
+                
+                width: 160px;
+                top: unset;
+                bottom: 0px;       
+                .cheatsheet-menu-option a {
+                    font-size: 0.7rem;
+                }         
+            }
+        }
+
+        
+
+        #cheatsheet-navigation-menu ul {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .cheatsheet-menu-option {
+            list-style: none;
+        }
+
+        .cheatsheet-menu-option:hover a, .cheatsheet-menu-option:focus-visible a{
+            color: #FF8743;
+
+        }
+
+        .cheatsheet-menu-option:hover, .cheatsheet-menu-option:focus-visible {
+            background-color: #444;
+            cursor: pointer;
+        }
+
+        .cheatsheet-menu-option a {
+            color: #444;
+            display: flex;
+            text-decoration: none;
+            padding-left: 40px;
+            padding-block: 5px;
+            height: 100%;
+            width: 100%;
+        }
+
+        #cheatsheet-navigation-menu a:visited,
+        #cheatsheet-navigation-menu a:active {
+            text-decoration: none;
+            color: none;
+        }
+        @media screen and (width <= 1500px) {
+            #cheatsheet-navigation-menu{
+                right: 10px;
+            }
+        }
+        @media print{
+            #cheatsheet-navigation-menu{
+                display: none;
+            }
+        }
         /* for the tired programmers at night */
         .darkmode{background-color:#1e1e1e; color:#e1e1e1;}
         .darkmode a{color:#e1e1e1;}
@@ -112,10 +393,10 @@
                 overflow-x: auto;
             }
          }
-        </style>
+    </style>
 
-        <script type="text/javascript">
-         document.addEventListener('DOMContentLoaded', function() {
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
             function addModule(url, targetSelector) {
                 fetch(url)
                     .then(response => response.text())
@@ -137,56 +418,127 @@
             addModule('raylib_colors.c', '#colors pre code');
             addModule('raylib_structs.c', '#structs pre code');
         });
+        //this is under construction, so I commented it out. It'll be used for the go to section menu so that sections get highlighted when you
+        //scroll to them. -Gilbert Matos 5/12/2024 
+        //const sectionElements = []
+        //let liElements = []
+        //let currentIndex = 0;
+        // window.addEventListener("load", () => {
+        //     liElements = Array.from(document.querySelectorAll("cheatsheet-menu-option"))
+        //     // console.log(liElements[0].getAttribute("data-intersecting"));
+        //     sectionElements.push(document.querySelector("#pcore"),
+        //         document.querySelector("#pshapes"),
+        //         document.querySelector("#ptextures"),
+        //         document.querySelector("#ptext"),
+        //         document.querySelector("#pmodels"),
+        //         document.querySelector("#paudio"),                
+        //         document.querySelector("#pstructs"),
+        //         document.querySelector("#pcolors"))
 
+        //     const observer = new IntersectionObserver((entries) => {
+        //         entries.forEach((entry, entryIndex) => {
+        //             const index = sectionElements.indexOf(entry.target);
+        //             console.log(index)
+        //             if (entry.isIntersecting) {
+        //                 console.log(entry)
+        //                 // liElements[index].setAttribute("data-intersecting", "true");
+        //             } else {
+        //                 // liElements[index].setAttribute("data-intersecting", "false");
+        //             }
+
+        //         })
+        //     })
+        //     sectionElements.forEach((element) => {
+        //         observer.observe(element)
+        //     })
+        // });
         function toggleDarkMode() {
             document.body.classList.toggle("darkmode");
         }
 
-        </script>
-    </head>
+    </script>
+</head>
 
-    <body>
-        <div id="header">
-            <a id="logo" href="../index.html"></a>
-            <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
-            <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
-            <p></p>
-            <p id="version">v5.0 quick reference card  [<a id="downpdf" href="https://www.raylib.com/cheatsheet/raylib_cheatsheet_v5.0.pdf">download as PDF</a>]</p>
+<body>
+    <div id="cheatsheet-navigation-menu">
+        <div class="modules-title">Modules</div>
+        <ul>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#pcore">rcore</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#pshapes">rshapes</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#ptextures">rtextures</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#ptext">rtext</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#pmodels">rmodels</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#paudio">raudio</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#pstructs">structs</a></li>
+            <li data-intersecting="false" class="cheatsheet-menu-option"><a href="#pcolors">colors</a></li>
+        </ul>
+    </div>
+    <a href="#" class="back-to-top-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+            <path
+                d="M22.2064 10.1687L12.8314 0.793739C12.653 0.623038 12.4428 0.489228 12.2126 0.399989C11.7561 0.212455 11.2441 0.212455 10.7876 0.399989C10.5574 0.489228 10.3472 0.623038 10.1689 0.793739L0.793854 10.1687C0.619031 10.3436 0.480355 10.5511 0.385742 10.7795C0.291129 11.0079 0.242432 11.2528 0.242432 11.5C0.242432 11.9993 0.440784 12.4782 0.793854 12.8312C1.14692 13.1843 1.62579 13.3827 2.1251 13.3827C2.62442 13.3827 3.10328 13.1843 3.45635 12.8312L9.6251 6.64374V20.875C9.6251 21.3723 9.82265 21.8492 10.1743 22.2008C10.5259 22.5524 11.0028 22.75 11.5001 22.75C11.9974 22.75 12.4743 22.5524 12.8259 22.2008C13.1776 21.8492 13.3751 21.3723 13.3751 20.875V6.64374L19.5439 12.8312C19.7182 13.007 19.9255 13.1465 20.154 13.2417C20.3825 13.3369 20.6276 13.3859 20.8751 13.3859C21.1226 13.3859 21.3677 13.3369 21.5962 13.2417C21.8247 13.1465 22.032 13.007 22.2064 12.8312C22.3821 12.6569 22.5216 12.4496 22.6168 12.2211C22.712 11.9926 22.761 11.7475 22.761 11.5C22.761 11.2525 22.712 11.0074 22.6168 10.7789C22.5216 10.5504 22.3821 10.343 22.2064 10.1687Z"
+                fill="black" />
+        </svg>
+    </a>
+    <div id="header">
+        <a id="logo" href="../index.html"></a>
+        <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
+        <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a
+                href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a
+                href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
+        <p></p>
+        <p id="version">v5.0 quick reference card [<a id="downpdf"
+                href="https://www.raylib.com/cheatsheet/raylib_cheatsheet_v5.0.pdf">download as PDF</a>]</p>
+    </div>
+    <br>
+    <p>Chinese Translation: <a href="cheatsheet_zh.html">以下为raylib所有API接口中文释义</a></p>
+    <div id="fulldata">
+        <p id="pcore">module: rcore</p>
+        <div id="core">
+            <pre><code class="cpp"></code></pre>
         </div>
-        <br>
-        <p>Chinese Translation: <a href="cheatsheet_zh.html">以下为raylib所有API接口中文释义</a></p>
-        <div id="fulldata">
-            <p id="pcore">module: rcore <a href="#pcore">→</a></p>
-            <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshapes">module: rshapes <a href="#pshapes">→</a></p>
-            <div id="shapes"><pre><code class="cpp"></code></pre></div>
-            <p id="ptextures">module: rtextures <a href="#ptextures">→</a></p>
-            <div id="textures"><pre><code class="cpp"></code></pre></div>
-            <p id="ptext">module: rtext <a href="#ptext">→</a></p>
-            <div id="text"><pre><code class="cpp"></code></pre></div>
-            <p id="pmodels">module: rmodels <a href="#pmodels">→</a></p>
-            <div id="models"><pre><code class="cpp"></code></pre></div>
-            <p id="paudio">module: raudio <a href="#paudio">→</a></p>
-            <div id="audio"><pre><code class="cpp"></code></pre></div>
+        <p id="pshapes">module: rshapes</p>
+        <div id="shapes">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="ptextures">module: rtextures</p>
+        <div id="textures">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="ptext">module: rtext</p>
+        <div id="text">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="pmodels">module: rmodels</p>
+        <div id="models">
+            <pre><code class="cpp"></code></pre>
+        </div>
+        <p id="paudio">module: raudio</p>
+        <div id="audio">
+            <pre><code class="cpp"></code></pre>
+        </div>
 
-            <div id="fullgroup">
-                <div class="leftgroup">
-                    <p id="pstructs">structs</p>
-                    <div id="structs"><pre><code class="cpp"></code></pre></div>
-                </div>
-                <div class="rightgroup">
-                    <p id="pcolors">colors</p>
-                    <div id="colors"><pre><code class="cpp"></code></pre></div>
+        <div id="fullgroup">
+            <div class="leftgroup">
+                <p id="pstructs">structs</p>
+                <div id="structs">
+                    <pre><code class="cpp"></code></pre>
                 </div>
             </div>
+            <div class="rightgroup">
+                <p id="pcolors">colors</p>
+                <div id="colors">
+                    <pre><code class="cpp"></code></pre>
+                </div>
+            </div>
+        </div>
 
-            <p>Other cheatsheets</p>
-            <ul>
-                <li>
-                    <a href="/cheatsheet/raymath_cheatsheet.html">raymath cheatsheet</a>
-                </li>
-            </ul>
-
+        <p>Other cheatsheets</p>
+        <ul>
+            <li>
+                <a href="/cheatsheet/raymath_cheatsheet.html">raymath cheatsheet</a>
+            </li>
+        </ul>
             <div id="copyright">
                 <p>raylib quick reference card - Copyright (c) 2013-2024 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
             </div>

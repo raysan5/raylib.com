@@ -1,3 +1,4 @@
+
 window.addEventListener("DOMContentLoaded", () => {
   var clickedInCanvas = false;
   var warning = document.createElement("div");

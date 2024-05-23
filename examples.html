@@ -1,124 +1,156 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>raylib - examples</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <meta name="title" content="raylib - examples">
-        <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming. Check the full set of raylib examples">
-        <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
-        <meta name="viewport" content="width=device-width">
+    <title>raylib - examples</title>
 
-        <!-- Open Graph metatags for sharing -->
-        <meta property="og:title" content="raylib - examples"/>
-        <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
-        <meta property="og:image:alt" content="raylib,a simple and easy-to-use library to enjoy videogames programming." />
-        <meta property="og:url" content="https://www.raylib.com" />
-        <meta property="og:site_name" content="raylib"/>
-        <meta property="og:description" content="Check the full set of raylib examples... they are amazing!"/>
+    <meta name="title" content="raylib - examples">
+    <meta name="description"
+        content="raylib is a simple and easy-to-use library to enjoy videogames programming. Check the full set of raylib examples">
+    <meta name="keywords"
+        content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
+    <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" type="text/css" href="common/main.css">
-        <link rel="icon" href="favicon.ico" />
+    <!-- Open Graph metatags for sharing -->
+    <meta property="og:title" content="raylib - examples" />
+    <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png" />
+    <meta property="og:image:alt" content="raylib,a simple and easy-to-use library to enjoy videogames programming." />
+    <meta property="og:url" content="https://www.raylib.com" />
+    <meta property="og:site_name" content="raylib" />
+    <meta property="og:description" content="Check the full set of raylib examples... they are amazing!" />
 
-        <link rel="stylesheet" type="text/css" href="common/examples.css">
+    <link rel="stylesheet" type="text/css" href="common/main.css">
+    <link rel="icon" href="favicon.ico" />
 
-        <!-- NOTE: JavaScript code added at the end of body! -->
+    <link rel="stylesheet" type="text/css" href="common/examples.css">
 
-        <!-- Enabling HTML5 tags for older IE browsers -->
-        <!--[if lt IE 9]>
+    <!-- NOTE: JavaScript code added at the end of body! -->
+
+    <!-- Enabling HTML5 tags for older IE browsers -->
+    <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <![endif]-->
-    </head>
+</head>
 
-    <body>
-        <div class="header-container">
-            <div class="header">
-                <a id="logo" href="index.html"></a>
-                <div class="nav-container">
-                    <div id="social">
-                        <a id="twitter" href="https://www.twitter.com/raysan5" target="_blank"></a>
-                        <a id="discord" href="https://discord.gg/raylib" target="_blank"></a>
-                        <a id="twitch" href="https://www.twitch.tv/raysan5" target="_blank"></a>
-                        <a id="kofi" href="https://ko-fi.com/raysan5" target="_blank"></a>
-                        <a id="itchio" href="https://raysan5.itch.io" target="_blank"></a>
-                        <a id="handmade" href="https://raylib.handmade.network/" target="_blank"></a>
-                        <a id="reddit" href="https://www.reddit.com/r/raylib/" target="_blank"></a>
-                        <a id="youtube" href="https://www.youtube.com/c/raylib" target="_blank"></a>
-                        <a id="patreon" href="https://www.patreon.com/raylib" target="_blank"></a>
-                        <a id="redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank"></a>
-                        <a id="github" href="https://github.com/raysan5/raylib" target="_blank"></a>
-                    </div>
-                    <div class="menu">
-                        <a href="index.html">about</a>
-                        <div id="active">examples</div>
-                        <a href="games.html">games</a>
-                        <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
-                        <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
-                    </div>
+<body>
+
+    <a href="#" class="back-to-top-arrow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+            <path
+                d="M22.2064 10.1687L12.8314 0.793739C12.653 0.623038 12.4428 0.489228 12.2126 0.399989C11.7561 0.212455 11.2441 0.212455 10.7876 0.399989C10.5574 0.489228 10.3472 0.623038 10.1689 0.793739L0.793854 10.1687C0.619031 10.3436 0.480355 10.5511 0.385742 10.7795C0.291129 11.0079 0.242432 11.2528 0.242432 11.5C0.242432 11.9993 0.440784 12.4782 0.793854 12.8312C1.14692 13.1843 1.62579 13.3827 2.1251 13.3827C2.62442 13.3827 3.10328 13.1843 3.45635 12.8312L9.6251 6.64374V20.875C9.6251 21.3723 9.82265 21.8492 10.1743 22.2008C10.5259 22.5524 11.0028 22.75 11.5001 22.75C11.9974 22.75 12.4743 22.5524 12.8259 22.2008C13.1776 21.8492 13.3751 21.3723 13.3751 20.875V6.64374L19.5439 12.8312C19.7182 13.007 19.9255 13.1465 20.154 13.2417C20.3825 13.3369 20.6276 13.3859 20.8751 13.3859C21.1226 13.3859 21.3677 13.3369 21.5962 13.2417C21.8247 13.1465 22.032 13.007 22.2064 12.8312C22.3821 12.6569 22.5216 12.4496 22.6168 12.2211C22.712 11.9926 22.761 11.7475 22.761 11.5C22.761 11.2525 22.712 11.0074 22.6168 10.7789C22.5216 10.5504 22.3821 10.343 22.2064 10.1687Z"
+                fill="black" />
+        </svg>
+    </a>
+    <div class="header-container">
+        <div class="header">
+            <a id="logo" href="index.html"></a>
+            <div class="nav-container">
+                <div id="social">
+                    <a id="twitter" href="https://www.twitter.com/raysan5" target="_blank"></a>
+                    <a id="discord" href="https://discord.gg/raylib" target="_blank"></a>
+                    <a id="twitch" href="https://www.twitch.tv/raysan5" target="_blank"></a>
+                    <a id="kofi" href="https://ko-fi.com/raysan5" target="_blank"></a>
+                    <a id="itchio" href="https://raysan5.itch.io" target="_blank"></a>
+                    <a id="handmade" href="https://raylib.handmade.network/" target="_blank"></a>
+                    <a id="reddit" href="https://www.reddit.com/r/raylib/" target="_blank"></a>
+                    <a id="youtube" href="https://www.youtube.com/c/raylib" target="_blank"></a>
+                    <a id="patreon" href="https://www.patreon.com/raylib" target="_blank"></a>
+                    <a id="redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank"></a>
+                    <a id="github" href="https://github.com/raysan5/raylib" target="_blank"></a>
+                </div>
+                <div class="menu">
+                    <a href="index.html">about</a>
+                    <div id="active">examples</div>
+                    <a href="games.html">games</a>
+                    <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
+                    <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
                 </div>
             </div>
         </div>
-        <div class="page">
-            <!--[if lt IE 7]>
+        <button id="hamburger-button"></button>
+    </div>
+    <div class="nav-mobile-container" data-open="false">
+        <div id="mobile-title-bar">
+            <div id="mobile-logo">
+                <img src="common\img\raylib_logo.png" alt="">
+            </div>
+            <button id="mobile-close-button"></button>
+        </div>
+        <nav class="mobile-menu">
+            <a id="mobile-about " href="index.html">about</a>
+            <a id="mobile-examples" class="mobile-active">examples</a>
+            <a id="mobile-games" href="games.html">games</a>
+            <a id="mobile-cheatsheet" href="cheatsheet/cheatsheet.html">cheatsheet</a>
+            <a id="mobile-wiki" href="https://github.com/raysan5/raylib/wiki" target="_blank">wiki</a>
+        </nav>
+        <div id="mobile-social"></div>
+    </div>
+    <div class="page">
+        <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> or <a href="https://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
             <![endif]-->
 
-            <div class="content">
-                <p>raylib examples are organized by colors depending on the raylib module they focus.</p>
-                <p>Click on the module to filter examples:</p>
-                <br>
+        <div class="content">
+            <p>raylib examples are organized by colors depending on the raylib module they focus.</p>
+            <p id="modules-title-legend">Click on the module to filter examples:</p>
+            <br>
 
-                <!--<div class="filter legendButton" data-filter="all">ALL</div> -->
-                <div id="filter_menu">
-                    <div class="filter legendButton" id="core" data-filter=".fcore">core</div>
-                    <div class="filter legendButton" id="shapes" data-filter=".fshapes">shapes</div>
-                    <div class="filter legendButton" id="textures" data-filter=".ftextures">textures</div>
-                    <div class="filter legendButton" id="text" data-filter=".ftext">text</div>
-                    <div class="filter legendButton" id="models" data-filter=".fmodels">models</div>
-                    <div class="filter legendButton" id="shaders" data-filter=".fshaders">shaders</div>
-                    <div class="filter legendButton" id="audio" data-filter=".faudio">audio</div>
-                </div>
-
-                <p id="filter_function_label">Or filter by used functions in the example:</p>
-                <div id="filter_function">
-                    <input></input>
-                    <p id="matches_counter"></p>
-                </div>
-                
-                <p>raylib examples are rated by complexity with stars. One star (⭐️☆☆☆) for the basic examples and four stars (⭐⭐️⭐️⭐) for the most complex ones.</p>
-                <br>
-
-                <!-- Items container, filled when loading -->
-                <div id="container"></div>
-
+            <!--<div class="filter legendButton" data-filter="all">ALL</div> -->
+            <div id="filter_menu">
+                <div class="filter legendButton" id="core" data-filter=".fcore"><span>core</span></div>
+                <div class="filter legendButton" id="shapes" data-filter=".fshapes"><span>shapes</span></div>
+                <div class="filter legendButton" id="textures" data-filter=".ftextures"><span>textures</span></div>
+                <div class="filter legendButton" id="text" data-filter=".ftext"><span>text</span></div>
+                <div class="filter legendButton" id="models" data-filter=".fmodels"><span>models</span></div>
+                <div class="filter legendButton" id="shaders" data-filter=".fshaders"><span>shaders</span></div>
+                <div class="filter legendButton" id="audio" data-filter=".faudio"><span>audio</span></div>
             </div>
 
-            <div class="footer">
-                <p>Webpage hosted in <a href="https://github.com/raysan5/raylib.com">GitHub</a>, for issues and improvements <a href="https://github.com/raysan5/raylib.com">check it out</a>!</p>
+            <p id="filter_function_label">Or filter by used functions in the example:</p>
+            <div id="filter_function">
+                <input placeholder="example name" aria-label="search for example project">
+                <p id="matches_counter"></p>
             </div>
+
+            <p>raylib examples are rated by complexity with stars. One star (⭐️☆☆☆) for the basic examples and four
+                stars (⭐⭐️⭐️⭐) for the most complex ones.</p>
+            <br>
+
+            <!-- Items container, filled when loading -->
+            <div id="container"></div>
 
         </div>
+        <br class="break-before-footing-spacing">
+        <div class="footer">
+            <p>Webpage hosted in <a href="https://github.com/raysan5/raylib.com">GitHub</a>, for issues and improvements
+                <a href="https://github.com/raysan5/raylib.com">check it out</a>!</p>
+        </div>
 
-        <!-- Add jQuery library -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+    </div>
 
-        <!-- Add jQuery easing plugin -->
-        <script src="common/libs/jquery.easing.1.3.js"></script>
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-        <!-- Add fancyBox main JS and CSS files -->
-        <script src="common/libs/fancybox/jquery.fancybox.js"></script>
-        <link rel="stylesheet" type="text/css" href="common/libs/fancybox/jquery.fancybox.css" media="screen" />
+    <!-- Add jQuery easing plugin -->
+    <script src="common/libs/jquery.easing.1.3.js"></script>
 
-        <!-- Add Button helper -->
-        <link rel="stylesheet" type="text/css" href="common/libs/fancybox/helpers/jquery.fancybox-buttons.css" />
-        <script src="common/libs/fancybox/helpers/jquery.fancybox-buttons.js"></script>
+    <!-- Add fancyBox main JS and CSS files -->
+    <script src="common/libs/fancybox/jquery.fancybox.js"></script>
+    <link rel="stylesheet" type="text/css" href="common/libs/fancybox/jquery.fancybox.css" media="screen" />
 
-        <!-- Add jQuery Mix-It Up plugin -->
-        <script src="common/libs/jquery.mixitup.min.js"></script>
+    <!-- Add Button helper -->
+    <link rel="stylesheet" type="text/css" href="common/libs/fancybox/helpers/jquery.fancybox-buttons.css" />
+    <script src="common/libs/fancybox/helpers/jquery.fancybox-buttons.js"></script>
 
-        <!-- Add own script code -->
-        <script src="common/examples.js"></script>
-    </body>
+    <!-- Add jQuery Mix-It Up plugin -->
+    <script src="common/libs/jquery.mixitup.min.js"></script>
+
+    <!-- Add own script code -->
+    <script src="common/examples.js"></script>
+    <script src="ui_manager.js"></script>
+</body>
+
 </html>
