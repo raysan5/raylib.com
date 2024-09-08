@@ -629,6 +629,16 @@ a#game-template:hover {
     filter: contrast(180%);
 }
 
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+}
+
 @media only screen and (max-width: 600px) {
 
     /* general layout changes for mobile */
@@ -675,7 +685,6 @@ a#game-template:hover {
         flex-direction: column; 
         flex-shrink: 0;
     }
-
 
 
 }
