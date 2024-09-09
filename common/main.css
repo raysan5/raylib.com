@@ -264,7 +264,7 @@ li {
     position: relative;
 
     border: 2px solid #c8c8c8;
-    border-bottom: none;
+    border-bottom-color: #5050;
 }
 
 .menu a:hover,
