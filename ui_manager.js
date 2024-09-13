@@ -18,12 +18,12 @@ function toggleGoToTopButton()
         if (window.scrollY <= 200)
         {
             goToTopButton.style.display = "none"; 
-            // goToTopButton.classList.remove("spring-anim-class");
+            goToTopButton.classList.remove("spring-anim-class");
         }
         else
         {
             goToTopButton.style.display = "flex";
-            // goToTopButton.classList.add("spring-anim-class");
+            goToTopButton.classList.add("spring-anim-class");
         }
     }
 }
