@@ -264,7 +264,7 @@ li {
     position: relative;
 
     border: 2px solid #c8c8c8;
-    border-bottom: none;
+    border-bottom-color: #5050;
 }
 
 .menu a:hover,
@@ -717,8 +717,9 @@ a#game-template:hover {
         flex-direction: column; 
         flex-shrink: 0;
     }
+
     /* This is where the logic for the mobile navbar will be */
-    /* .nav-container{
+    /* .nav-container {
         display: none;
     } */
 }
