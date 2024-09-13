@@ -639,6 +639,26 @@ a#game-template:hover {
   height: 100%;
 }
 
+/* GotoTopButton css */
+.go-to-top-button{
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right:5dvw;
+    z-index: 100;
+    padding: 20px;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.go-to-top-button:hover{
+    cursor: pointer;
+}
+@media  print{
+    .back-to-top-arrow{
+        display: none;
+    } 
+}
 @media only screen and (max-width: 600px) {
 
     /* general layout changes for mobile */
@@ -685,6 +705,6 @@ a#game-template:hover {
         flex-direction: column; 
         flex-shrink: 0;
     }
-
+    
 
 }
