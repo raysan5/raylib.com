@@ -264,7 +264,7 @@ li {
     position: relative;
 
     border: 2px solid #c8c8c8;
-    border-bottom: none;
+    border-bottom-color: #5050;
 }
 
 .menu a:hover,
@@ -679,11 +679,7 @@ a#game-template:hover {
         background-color: #111111;
     }
 }
-@media only screen and (width > 730px){
-    #hamburger-button{
-        display: none;        
-    }    
-}
+@media only screen and (width>730px){#hamburger-button{display:none}}
 
 @media only screen and (max-width: 730px) {
 
