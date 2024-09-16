@@ -42,7 +42,7 @@ If you are using raylib and you enjoy it, please, [let me know][raysan5].
 license
 -------
 
-raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
+raylib is licensed under an unmodified zlib/libpng license, which is an OSI-certified, BSD-like license that allows static linking with closed source software. Check [LICENSE](LICENSE.md) for further details.
 
 [raysan5]: mailto:ray@raylib.com "Ramon Santamaria - Ray San"
 
