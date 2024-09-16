@@ -66,8 +66,8 @@
             <![endif]-->
 
             <div class="content">
-                <p>raylib examples are organized by colors depending on the raylib module they focus.</p>
-                <p>Click on the module to filter examples:</p>
+                <p>raylib examples are organized by colors depending on the raylib module they focus on.</p>
+                <p class="filter_centered_label">Click on the module to filter examples:</p>
                 <br>
 
                 <!--<div class="filter legendButton" data-filter="all">ALL</div> -->
@@ -83,7 +83,7 @@
 
                 <p id="filter_function_label">Or filter by used functions in the example:</p>
                 <div id="filter_function">
-                    <input></input>
+                    <input id="filter-input-element" placeholder="e.i function name">
                     <p id="matches_counter"></p>
                 </div>
                 
@@ -120,5 +120,7 @@
 
         <!-- Add own script code -->
         <script src="common/examples.js"></script>
+        <!-- This file will handle the GoToTopButton and the mobile menu (in the future) -->
+        <script src="ui_manager.js"></script>
     </body>
 </html>
