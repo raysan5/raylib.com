@@ -47,7 +47,7 @@
 }
 
 html {
-    scroll-behavior: smooth;    
+    scroll-behavior: smooth;
 }
 
 body {
@@ -88,8 +88,7 @@ h2::before {
 }
 
 .page {
-    max-width: var(--content-width); 
-    /* width: 100%; */
+    width: min(var(--content-width), 100vw);
     min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
@@ -102,16 +101,19 @@ h2::before {
 }
 
 .header-container {
-    /* width: max(100%, var(--content-width)); */
-    width: 100dvw;
     position: fixed;
-    /* top: 0px;
-    left: 0px; */
+    top: 0px;
+    left: 0px;
+
+    width: max(100%, var(--content-width));
     display: flex;
     flex-direction: row;
     justify-content: center;
+
     background-color: white;
+
     border-bottom: 2px solid #8c8c8c;
+
     z-index: 100;
 }
 
@@ -128,11 +130,9 @@ h2::before {
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
     font-size: 8pt;
     padding-top: 30px;
-    /* float: left; */
+    float: left;
     position: relative;
 }
 
@@ -264,7 +264,7 @@ li {
     position: relative;
 
     border: 2px solid #c8c8c8;
-    border-bottom-color: #5050;
+    border-bottom: none;
 }
 
 .menu a:hover,
@@ -639,49 +639,7 @@ a#game-template:hover {
   height: 100%;
 }
 
-/* GotoTopButton css */
-@keyframes springAnim{
-    0%{transform:scale(0)}
-    30%{transform:scale(1.8)}
-    50%{transform:scale(.9)}
-    100%{transform:scale(1)}
-}
-.spring-anim-class{animation:springAnim .6s forwards}
-.go-to-top-button{
-    display: none;
-    position: fixed;
-    bottom: 100px;
-    right:5dvw;
-    z-index: 100;
-    padding: 20px;
-    border-radius: 50%;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-.go-to-top-button:hover{cursor:pointer}
-@media print{.back-to-top-arrow{display:none}}
-/* Mobile Menu */
-.nav-mobile-container{display:none}
-#hamburger-button{    
-    --max-button-size: 60px;
-    display: flex;
-    margin-left: auto;
-    margin-right: 5%;
-    position: relative;
-    max-height: var(--max-button-size);
-    max-width: var(--max-button-size);
-    border: none;
-    background-color: transparent;
-    padding: 10px;
-    &:hover{
-        cursor: pointer;
-        color: white;
-        background-color: #111111;
-    }
-}
-@media only screen and (width>730px){#hamburger-button{display:none}}
-
-@media only screen and (max-width: 730px) {
+@media only screen and (max-width: 600px) {
 
     /* general layout changes for mobile */
     ul {
@@ -707,7 +665,6 @@ a#game-template:hover {
     .header {
         display: flex;
         width: 100vw;
-        align-items: center;
         -ms-overflow-style: none;  /* Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
@@ -728,82 +685,6 @@ a#game-template:hover {
         flex-direction: column; 
         flex-shrink: 0;
     }
-    /* Mobile menu css logic */
-    .nav-container{
-        display: none;
-    }
-    #hamburger-button{
-        display: flex;    
-        background-color: transparent;
-    }
-    
-    .nav-mobile-container[data-open="true"] {
-        display: flex;
-        position: fixed;   
-        top: 0;
-        left: 0;
-        flex-direction: column;
-        width: 100%;  
-        height: 100%;
-        z-index: 200;
-        background-color: white;
-    }
-    #mobile-title-bar{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-inline: 20px;
-    }
-    #mobile-close-button{
-        --button-size: 40px;
-        display: flex;
-        width: var(--button-size);
-        height: var(--button-size);
-        border: none;
-        background-color: transparent;
-        margin-right: 2%;
-        padding: 5px;
-        &:hover{cursor:pointer}
-    }
-    #mobile-social{
-        display: flex;
-        position: relative;
-        flex-wrap: wrap;
-        margin-inline-start: 25px;
-        margin-top: 60px;
-        width: 60%;
-        height: fit-content;
-        --icons-size: 36px;
-        gap: 10px;
-        a{
-            display: flex;
-            width: var(--icons-size);
-            height: var(--icons-size);
-            img{
-                position: absolute;
-                clip: rect(0px, var(--icons-size), var(--icons-size), 0px);
-            }            
-        }       
-    }
 
-    .header-container{
-        
-        align-items: center;
-        min-width: 210px;
-    }
-    .mobile-menu{
-        display: flex;
-        flex-direction: column;
-        > a{
-            padding-inline-start: 20px;
-            padding-block: 20px;
-            &:not(.mobile-active){color:#5c5a5a}
-        }
-        
-    }
-    .mobile-active{
-        color: rgb(0, 0, 0);
-        border-block: 2px solid #5c5a5a;
-        background-color: #cecece;
-    }
+
 }

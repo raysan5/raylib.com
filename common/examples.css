@@ -1,25 +1,10 @@
-#container{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 10px;
-    @media screen and (width <= 730px){
-        max-width: var(--content-width);     
-        overflow-x: hidden;
-    }
-}
 #container .mix{ position: relative;  display: none; }
 #container .extext { top: 160px!important; width: 400px!important; }
 #difficulty_level { position: absolute; bottom: 18px; left: 12px; font-size: 24px; }
-#filter-input-element{
-     padding-left: 10px; padding-block: 5px; color: rgb(0, 0, 0); 
 
-    }
-.filter_centered_label { margin-inline: auto; text-align: center; margin-top: 1rem; }
-#filter_menu{display:flex;flex-wrap:wrap;justify-content:center}
-#filter_function_label { margin-inline: auto; text-align: center; margin-top: 1rem; }
-#filter_function { display: flex; margin-inline: auto; flex-direction: column; margin-bottom: 2rem; }
+#filter_menu { width:820px; height:80px; margin-left:15px; }
+#filter_function_label { margin-top: 2rem; }
+#filter_function { display: block; height: 1rem; margin-left:15px; margin-bottom: 2rem; }
 #matches_counter { display: inline; margin-bottom: 2rem; }
 
 .legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
@@ -34,13 +19,13 @@
 
 .legendButton:hover { border: 5px solid #000 !important; }
 
-.fcore { border: 1px solid #898888;  }
-.fshapes { border: 1px solid #e66666;}
-.ftextures { border: 1px solid #75a06d; }
-.ftext { border: 1px solid #52b296; }
-.fmodels { border: 1px solid #5d9cbd;}
-.fshaders { border: 1px solid #a864d2;  }
-.faudio { border: 1px solid #d3b157; }
+.fcore { border: 1px solid #898888; margin-left: 12px; }
+.fshapes { border: 1px solid #e66666; margin-left: 12px; }
+.ftextures { border: 1px solid #75a06d; margin-left: 12px; }
+.ftext { border: 1px solid #52b296; margin-left: 12px; }
+.fmodels { border: 1px solid #5d9cbd; margin-left: 12px; }
+.fshaders { border: 1px solid #a864d2; margin-left: 12px; }
+.faudio { border: 1px solid #d3b157; margin-left: 12px; }
 .fphysics { border: 1px solid #00a820; margin-left: 12px; }
 
 .fcore p { color:#5c5a5a!important; }
