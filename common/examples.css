@@ -13,16 +13,16 @@
 #container .extext { top: 160px!important; width: 400px!important; }
 #difficulty_level { position: absolute; bottom: 18px; left: 12px; font-size: 24px; }
 #filter-input-element{
-     padding-left: 10px; padding-block: 5px; color: rgb(0, 0, 0); 
-
-    }
+    padding-left: 10px; padding-block: 5px; color: rgb(0, 0, 0); max-width: 300px;
+    
+}
 .filter_centered_label { margin-inline: auto; text-align: center; margin-top: 1rem; }
-#filter_menu{display:flex;flex-wrap:wrap;justify-content:center}
+#filter_menu{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
 #filter_function_label { margin-inline: auto; text-align: center; margin-top: 1rem; }
 #filter_function { display: flex; margin-inline: auto; flex-direction: column; margin-bottom: 2rem; }
 #matches_counter { display: inline; margin-bottom: 2rem; }
 
-.legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
+.legendButton{width:84px;height:78px;text-align:right;line-height:130px;cursor:pointer;transition:.125s}
 #core       { background-color:#e1e1e1; color:#5c5a5a; border:5px solid #898888; }
 #shapes     { background-color:#f0d6d6; color:#c55757; border:5px solid #e66666; }
 #textures   { background-color:#c8eabf; color:#60815a; border:5px solid #75a06d; }
@@ -85,3 +85,4 @@
 #container .fphysics a:hover img { margin: -10px; opacity: 0.3; }
 
 #container .extext { position:absolute; top:140px; width:320px; text-align: center; display: none; }
+

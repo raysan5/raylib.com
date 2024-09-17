@@ -19,7 +19,7 @@ body.insertAdjacentHTML("afterbegin", htmlGoToTopButton)
 const currentPage = window.location.pathname 
 let mobileActive = "" 
 const activeMobileElement = {
-    aboutInactive: `<a id="mobile-about" href="index.html" >about</a>`,
+    aboutInactive: `<a id="mobile-about" href="/" >about</a>`,
     examplesInactive: `<a id="mobile-examples" href="examples.html">examples</a>`,
     gamesInactive: `<a id="mobile-games" href="games.html">games</a>`,
 
@@ -30,23 +30,20 @@ const activeMobileElement = {
     examples: ``, 
     games: ``, 
     setPage(page){
-        switch(page){
-            case "/index.html":
-                 this.about = this.activeAbout
-                 this.games = this.gamesInactive
-                 this.examples = this.examplesInactive
-            break;
-            case "/examples.html":
-                this.about = this.aboutInactive
-                this.games = this.gamesInactive
-                this.examples = this.activeExamples
-            break;
-            case "/games.html":
+        if(page.includes("examples")){
+            this.about = this.aboutInactive
+            this.games = this.gamesInactive
+            this.examples = this.activeExamples
+        }
+        else if(page.includes("games")){ 
                 this.about = this.aboutInactive
                 this.games = this.activeGames
                 this.examples = this.examplesInactive
-            break;
-        }
+        }else {
+            this.about = this.activeAbout
+            this.games = this.gamesInactive
+            this.examples = this.examplesInactive
+        }    
     }
 }
 activeMobileElement.setPage(currentPage)
