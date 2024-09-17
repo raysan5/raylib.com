@@ -94,7 +94,6 @@ h2::before {
 
 .page {
     max-width: var(--content-width); 
-    /* width: 100%; */
     min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
@@ -132,14 +131,7 @@ h2::before {
     overflow-y: hidden;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    font-size: 8pt;
-    padding-top: 30px;
-    /* float: left; */
-    position: relative;
-}
+.content{display:flex;flex-direction:column;font-size:8pt;padding-top:30px;position:relative}
 
 .footer {
     width: 100%;
@@ -840,8 +832,7 @@ a#game-template:hover {
     .mobile-active{
         color: rgb(0, 0, 0);
         border-block: 2px solid #5c5a5a;
-        background-color: #cecece;
-    
+        background-color: #cecece;    
     }
 }
 /* Thi class is for keep the window from scrolling when the mobile menu is open */
@@ -849,6 +840,6 @@ a#game-template:hover {
 @media only screen and (width > 850px){
     #hamburger-button{
         display: none;   
-        --mobile-menu-is-open: "false"
+        --mobile-menu-is-open: "false";
     }    
 }
