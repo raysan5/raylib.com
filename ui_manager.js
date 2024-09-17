@@ -91,13 +91,12 @@ mobileSocialsContainer.insertAdjacentHTML("beforeend",
 );
 function enableHamburgerNavBar(){
     mobileNavBar.setAttribute("data-open", "true");
-    body.style.height = "100%"
-    body.style.overflowY = "hidden"
+    body.classList.add("body-styling")
+    body.style.setProperty("--mobile-menu-is-open", "true")
 }
 function disableHamburgerNavBar(){    
     mobileNavBar.setAttribute("data-open", "false");
-    body.style.height = "unset"
-    body.style.overflowY = "unset"
+    body.classList.remove("body-styling")
 }
 
 const goToTopButton = document.querySelector(".go-to-top-button");

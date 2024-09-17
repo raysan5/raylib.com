@@ -49,10 +49,15 @@
 html {
     scroll-behavior: smooth;    
 }
-
+.body-styling{
+    height: 100%;
+    overflow-y: hidden;
+    
+}
 body {
     /* background-color: #ddd; */
     background-color: #f5f5f5;
+    --mobile-menu-is-open: "false";
 }
 
 a {
@@ -679,11 +684,7 @@ a#game-template:hover {
         background-color: #111111;
     }
 }
-@media only screen and (width > 730px){
-    #hamburger-button{
-        display: none;        
-    }    
-}
+
 
 @media only screen and (max-width: 730px) {
 
@@ -811,4 +812,12 @@ a#game-template:hover {
         border-block: 2px solid #5c5a5a;
         background-color: #cecece;
     }
+}
+/* Thi class is for keep the window from scrolling when the mobile menu is open */
+
+@media only screen and (width > 730px){
+    #hamburger-button{
+        display: none;   
+        --mobile-menu-is-open: "false"
+    }    
 }
