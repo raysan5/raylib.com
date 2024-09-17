@@ -99,7 +99,7 @@ function disableHamburgerNavBar(){
     body.classList.remove("body-styling")
 }
 window.addEventListener("resize", (e)=>{
-    if(window.innerWidth > 730){
+    if(window.innerWidth > 850){
         mobileNavBar.setAttribute("data-open", "false");
         body.classList.remove("body-styling")
         
