@@ -50,7 +50,7 @@ html {
     scroll-behavior: smooth;    
 }
 .body-styling{
-    height: 100%;
+    min-height: 100dvh;
     overflow-y: hidden;
     
 }
@@ -663,10 +663,28 @@ a#game-template:hover {
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
-.go-to-top-button:hover{cursor:pointer}
-@media print{.back-to-top-arrow{display:none}}
+.go-to-top-button:hover{cursor:pointer;}
+@media print{.back-to-top-arrow{display:none;}}
 /* Mobile Menu */
-.nav-mobile-container{display:none}
+/* mobile menu animation */
+@keyframes slide-in-nav-mobile{
+    from{
+        translate: -20px 0;
+        opacity: 0;
+    }
+    to{
+        translate: 0 0;
+        opacity: 1;
+    }
+    
+}
+.nav-mobile-container{
+    display:none;  
+    /* translate: -20px 0; */
+    animation-name: slide-in-nav-mobile;
+    animation-duration: 0.3s;
+
+}
 #hamburger-button{    
     --max-button-size: 60px;
     display: flex;
@@ -678,6 +696,7 @@ a#game-template:hover {
     border: none;
     background-color: transparent;
     padding: 10px;
+    transition: background-color 0.3s ease;
     &:hover{
         cursor: pointer;
         color: white;
@@ -686,7 +705,7 @@ a#game-template:hover {
 }
 
 
-@media only screen and (max-width: 730px) {
+@media only screen and (max-width: 850px) {
 
     /* general layout changes for mobile */
     ul {
@@ -753,6 +772,7 @@ a#game-template:hover {
         z-index: 200;
         overflow-y: scroll;
         background-color: white;
+        
     }
     #mobile-title-bar{
         display: flex;
@@ -788,7 +808,12 @@ a#game-template:hover {
             img{
                 position: absolute;
                 clip: rect(0px, var(--icons-size), var(--icons-size), 0px);
-            }            
+            }   
+            &:hover{
+                outline: black 2px solid;
+                scale: 1.1;
+                transition: scale 0.3s ease;
+            }         
         }       
     }
 
@@ -803,7 +828,12 @@ a#game-template:hover {
         > a{
             padding-inline-start: 20px;
             padding-block: 20px;
-            &:not(.mobile-active){color:#5c5a5a}
+            &:not(.mobile-active){color:#5c5a5a;}
+            &:hover{
+                color: black;
+                background-color:#cecece;
+            }
+            transition: all 0.2s ease;
         }
         
     }
@@ -811,11 +841,12 @@ a#game-template:hover {
         color: rgb(0, 0, 0);
         border-block: 2px solid #5c5a5a;
         background-color: #cecece;
+    
     }
 }
 /* Thi class is for keep the window from scrolling when the mobile menu is open */
 
-@media only screen and (width > 730px){
+@media only screen and (width > 850px){
     #hamburger-button{
         display: none;   
         --mobile-menu-is-open: "false"

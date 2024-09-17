@@ -98,7 +98,13 @@ function disableHamburgerNavBar(){
     mobileNavBar.setAttribute("data-open", "false");
     body.classList.remove("body-styling")
 }
-
+window.addEventListener("resize", (e)=>{
+    if(window.innerWidth > 730){
+        mobileNavBar.setAttribute("data-open", "false");
+        body.classList.remove("body-styling")
+        
+    }
+})
 const goToTopButton = document.querySelector(".go-to-top-button");
 window.addEventListener("scroll", toggleGoToTopButton);
 function toggleGoToTopButton()
