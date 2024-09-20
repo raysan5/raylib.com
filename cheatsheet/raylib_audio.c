@@ -3,6 +3,7 @@
     void CloseAudioDevice(void);                                    // Close the audio device and context
     bool IsAudioDeviceReady(void);                                  // Check if audio device has been initialized successfully
     void SetMasterVolume(float volume);                             // Set master volume (listener)
+    float GetMasterVolume(void);                                    // Get master volume (listener)
 
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                            // Load wave data from file
@@ -10,10 +11,12 @@
     bool IsWaveReady(Wave wave);                                    // Checks if wave data is ready
     Sound LoadSound(const char *fileName);                          // Load sound from file
     Sound LoadSoundFromWave(Wave wave);                             // Load sound from wave data
+    Sound LoadSoundAlias(Sound source);                             // Create a new sound that shares the same sample data as the source sound, does not own the sound data
     bool IsSoundReady(Sound sound);                                 // Checks if a sound is ready
     void UpdateSound(Sound sound, const void *data, int sampleCount); // Update sound buffer with new data
     void UnloadWave(Wave wave);                                     // Unload wave data
     void UnloadSound(Sound sound);                                  // Unload sound
+    void UnloadSoundAlias(Sound alias);                             // Unload a sound alias (does not deallocate sample data)
     bool ExportWave(Wave wave, const char *fileName);               // Export wave data to file, returns true on success
     bool ExportWaveAsCode(Wave wave, const char *fileName);         // Export wave sample data to code (.h), returns true on success
 
@@ -65,11 +68,11 @@
     void SetAudioStreamPitch(AudioStream stream, float pitch);      // Set pitch for audio stream (1.0 is base level)
     void SetAudioStreamPan(AudioStream stream, float pan);          // Set pan for audio stream (0.5 is centered)
     void SetAudioStreamBufferSizeDefault(int size);                 // Default size for new audio streams
-    void SetAudioStreamCallback(AudioStream stream, AudioCallback callback);  // Audio thread callback to request new data
+    void SetAudioStreamCallback(AudioStream stream, AudioCallback callback); // Audio thread callback to request new data
 
-    void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Attach audio stream processor to stream
+    void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Attach audio stream processor to stream, receives the samples as <float>s
     void DetachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Detach audio stream processor from stream
 
-    void AttachAudioMixedProcessor(AudioCallback processor); // Attach audio stream processor to the entire audio pipeline
+    void AttachAudioMixedProcessor(AudioCallback processor); // Attach audio stream processor to the entire audio pipeline, receives the samples as <float>s
     void DetachAudioMixedProcessor(AudioCallback processor); // Detach audio stream processor from the entire audio pipeline
 

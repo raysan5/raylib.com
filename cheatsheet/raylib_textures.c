@@ -1,8 +1,8 @@
-
     // Image loading functions
     // NOTE: These functions do not require GPU access
     Image LoadImage(const char *fileName);                                                             // Load image from file into CPU memory (RAM)
     Image LoadImageRaw(const char *fileName, int width, int height, int format, int headerSize);       // Load image from RAW file data
+    Image LoadImageSvg(const char *fileNameOrString, int width, int height);                           // Load image from SVG file data or string with specified size
     Image LoadImageAnim(const char *fileName, int *frames);                                            // Load image sequence from file (frames appended to image.data)
     Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);      // Load image from memory buffer, fileType refers to extension: i.e. '.png'
     Image LoadImageFromTexture(Texture2D texture);                                                     // Load image from GPU texture data
@@ -10,6 +10,7 @@
     bool IsImageReady(Image image);                                                                    // Check if an image is ready
     void UnloadImage(Image image);                                                                     // Unload image from CPU memory (RAM)
     bool ExportImage(Image image, const char *fileName);                                               // Export image data to file, returns true on success
+    unsigned char *ExportImageToMemory(Image image, const char *fileType, int *fileSize);              // Export image to memory buffer
     bool ExportImageAsCode(Image image, const char *fileName);                                         // Export image as code file defining an array of bytes, returns true on success
 
     // Image generation functions
@@ -43,7 +44,7 @@
     void ImageDither(Image *image, int rBpp, int gBpp, int bBpp, int aBpp);                            // Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
     void ImageFlipVertical(Image *image);                                                              // Flip image vertically
     void ImageFlipHorizontal(Image *image);                                                            // Flip image horizontally
-    void ImageRotate(Image *image, int degrees);                                                       // Rotate image by input angle in degrees (-359 to 359) 
+    void ImageRotate(Image *image, int degrees);                                                       // Rotate image by input angle in degrees (-359 to 359)
     void ImageRotateCW(Image *image);                                                                  // Rotate image clockwise 90deg
     void ImageRotateCCW(Image *image);                                                                 // Rotate image counter-clockwise 90deg
     void ImageColorTint(Image *image, Color color);                                                    // Modify image color: tint
@@ -86,7 +87,7 @@
     RenderTexture2D LoadRenderTexture(int width, int height);                                          // Load texture for rendering (framebuffer)
     bool IsTextureReady(Texture2D texture);                                                            // Check if a texture is ready
     void UnloadTexture(Texture2D texture);                                                             // Unload texture from GPU memory (VRAM)
-    bool IsRenderTextureReady(RenderTexture2D target);                                                       // Check if a render texture is ready
+    bool IsRenderTextureReady(RenderTexture2D target);                                                 // Check if a render texture is ready
     void UnloadRenderTexture(RenderTexture2D target);                                                  // Unload render texture from GPU memory (VRAM)
     void UpdateTexture(Texture2D texture, const void *pixels);                                         // Update GPU texture with new data
     void UpdateTextureRec(Texture2D texture, Rectangle rec, const void *pixels);                       // Update GPU texture rectangle with new data

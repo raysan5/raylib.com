@@ -1,9 +1,8 @@
 
-
     // Window-related functions
     void InitWindow(int width, int height, const char *title);  // Initialize window and OpenGL context
-    bool WindowShouldClose(void);                               // Check if KEY_ESCAPE pressed or Close icon pressed
     void CloseWindow(void);                                     // Close window and unload OpenGL context
+    bool WindowShouldClose(void);                               // Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)
     bool IsWindowReady(void);                                   // Check if window has been initialized successfully
     bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
     bool IsWindowHidden(void);                                  // Check if window is currently hidden (only PLATFORM_DESKTOP)
@@ -15,17 +14,20 @@
     void SetWindowState(unsigned int flags);                    // Set window configuration state using flags (only PLATFORM_DESKTOP)
     void ClearWindowState(unsigned int flags);                  // Clear window configuration state flags
     void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
+    void ToggleBorderlessWindowed(void);                        // Toggle window state: borderless windowed (only PLATFORM_DESKTOP)
     void MaximizeWindow(void);                                  // Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
     void MinimizeWindow(void);                                  // Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
     void RestoreWindow(void);                                   // Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
     void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
     void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
-    void SetWindowTitle(const char *title);                     // Set title for window (only PLATFORM_DESKTOP)
+    void SetWindowTitle(const char *title);                     // Set title for window (only PLATFORM_DESKTOP and PLATFORM_WEB)
     void SetWindowPosition(int x, int y);                       // Set window position on screen (only PLATFORM_DESKTOP)
-    void SetWindowMonitor(int monitor);                         // Set monitor for the current window (fullscreen mode)
+    void SetWindowMonitor(int monitor);                         // Set monitor for the current window
     void SetWindowMinSize(int width, int height);               // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
+    void SetWindowMaxSize(int width, int height);               // Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE)
     void SetWindowSize(int width, int height);                  // Set window dimensions
     void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
+    void SetWindowFocused(void);                                // Set window focused (only PLATFORM_DESKTOP)
     void *GetWindowHandle(void);                                // Get native window handle
     int GetScreenWidth(void);                                   // Get current screen width
     int GetScreenHeight(void);                                  // Get current screen height
@@ -41,19 +43,11 @@
     int GetMonitorRefreshRate(int monitor);                     // Get specified monitor refresh rate
     Vector2 GetWindowPosition(void);                            // Get window position XY on monitor
     Vector2 GetWindowScaleDPI(void);                            // Get window scale DPI factor
-    const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the primary monitor
+    const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the specified monitor
     void SetClipboardText(const char *text);                    // Set clipboard text content
     const char *GetClipboardText(void);                         // Get clipboard text content
     void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
     void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
-
-    // Custom frame control functions
-    // NOTE: Those functions are intended for advance users that want full control over the frame processing
-    // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
-    // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
-    void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
-    void PollInputEvents(void);                                 // Register all input events
-    void WaitTime(double seconds);                              // Wait for some time (halt program execution)
 
     // Cursor-related functions
     void ShowCursor(void);                                      // Shows cursor
@@ -110,23 +104,36 @@
 
     // Timing-related functions
     void SetTargetFPS(int fps);                                 // Set target FPS (maximum)
-    int GetFPS(void);                                           // Get current FPS
     float GetFrameTime(void);                                   // Get time in seconds for last frame drawn (delta time)
     double GetTime(void);                                       // Get elapsed time in seconds since InitWindow()
+    int GetFPS(void);                                           // Get current FPS
+
+    // Custom frame control functions
+    // NOTE: Those functions are intended for advance users that want full control over the frame processing
+    // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
+    // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
+    void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
+    void PollInputEvents(void);                                 // Register all input events
+    void WaitTime(double seconds);                              // Wait for some time (halt program execution)
+
+    // Random values generation functions
+    void SetRandomSeed(unsigned int seed);                      // Set the seed for the random number generator
+    int GetRandomValue(int min, int max);                       // Get a random value between min and max (both included)
+    int *LoadRandomSequence(unsigned int count, int min, int max); // Load random values sequence, no values repeated
+    void UnloadRandomSequence(int *sequence);                   // Unload random values sequence
 
     // Misc. functions
-    int GetRandomValue(int min, int max);                       // Get a random value between min and max (both included)
-    void SetRandomSeed(unsigned int seed);                      // Set the seed for the random number generator
     void TakeScreenshot(const char *fileName);                  // Takes a screenshot of current screen (filename extension defines format)
     void SetConfigFlags(unsigned int flags);                    // Setup init configuration flags (view FLAGS)
+    void OpenURL(const char *url);                              // Open URL with default system browser (if available)
 
+    // NOTE: Following functions implemented in module [utils]
+    //------------------------------------------------------------------
     void TraceLog(int logLevel, const char *text, ...);         // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
     void SetTraceLogLevel(int logLevel);                        // Set the current threshold (minimum) log level
     void *MemAlloc(unsigned int size);                          // Internal memory allocator
     void *MemRealloc(void *ptr, unsigned int size);             // Internal memory reallocator
     void MemFree(void *ptr);                                    // Internal memory free
-
-    void OpenURL(const char *url);                              // Open URL with default system browser (if available)
 
     // Set custom callbacks
     // WARNING: Callbacks setup is intended for advance users
@@ -137,13 +144,16 @@
     void SetSaveFileTextCallback(SaveFileTextCallback callback); // Set custom file text data saver
 
     // Files management functions
-    unsigned char *LoadFileData(const char *fileName, unsigned int *bytesRead);       // Load file data as byte array (read)
+    unsigned char *LoadFileData(const char *fileName, int *dataSize); // Load file data as byte array (read)
     void UnloadFileData(unsigned char *data);                   // Unload file data allocated by LoadFileData()
-    bool SaveFileData(const char *fileName, void *data, unsigned int bytesToWrite);   // Save data to file from byte array (write), returns true on success
-    bool ExportDataAsCode(const unsigned char *data, unsigned int size, const char *fileName); // Export data to code (.h), returns true on success
+    bool SaveFileData(const char *fileName, void *data, int dataSize); // Save data to file from byte array (write), returns true on success
+    bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); // Export data to code (.h), returns true on success
     char *LoadFileText(const char *fileName);                   // Load text data from file (read), returns a '\0' terminated string
     void UnloadFileText(char *text);                            // Unload file text data allocated by LoadFileText()
     bool SaveFileText(const char *fileName, char *text);        // Save text data to file (write), string must be '\0' terminated, returns true on success
+    //------------------------------------------------------------------
+
+    // File system functions
     bool FileExists(const char *fileName);                      // Check if file exists
     bool DirectoryExists(const char *dirPath);                  // Check if a directory path exists
     bool IsFileExtension(const char *fileName, const char *ext); // Check file extension (including point: .png, .wav)
@@ -154,7 +164,7 @@
     const char *GetDirectoryPath(const char *filePath);         // Get full path for a given fileName with path (uses static string)
     const char *GetPrevDirectoryPath(const char *dirPath);      // Get previous directory path for a given path (uses static string)
     const char *GetWorkingDirectory(void);                      // Get current working directory (uses static string)
-    const char *GetApplicationDirectory(void);                  // Get the directory if the running application (uses static string)
+    const char *GetApplicationDirectory(void);                  // Get the directory of the running application (uses static string)
     bool ChangeDirectory(const char *dir);                      // Change working directory, return true on success
     bool IsPathFile(const char *path);                          // Check if a given path is a file or a directory
     FilePathList LoadDirectoryFiles(const char *dirPath);       // Load directory filepaths
@@ -171,18 +181,29 @@
     char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string, memory must be MemFree()
     unsigned char *DecodeDataBase64(const unsigned char *data, int *outputSize);                    // Decode Base64 string data, memory must be MemFree()
 
+    // Automation events functionality
+    AutomationEventList LoadAutomationEventList(const char *fileName);                // Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
+    void UnloadAutomationEventList(AutomationEventList *list);                        // Unload automation events list from file
+    bool ExportAutomationEventList(AutomationEventList list, const char *fileName);   // Export automation events list as text file
+    void SetAutomationEventList(AutomationEventList *list);                           // Set automation event list to record to
+    void SetAutomationEventBaseFrame(int frame);                                      // Set automation event internal base frame to start recording
+    void StartAutomationEventRecording(void);                                         // Start recording automation events (AutomationEventList must be set)
+    void StopAutomationEventRecording(void);                                          // Stop recording automation events
+    void PlayAutomationEvent(AutomationEvent event);                                  // Play a recorded automation event
+
     //------------------------------------------------------------------------------------
     // Input Handling Functions (Module: core)
     //------------------------------------------------------------------------------------
 
     // Input-related functions: keyboard
     bool IsKeyPressed(int key);                             // Check if a key has been pressed once
+    bool IsKeyPressedRepeat(int key);                       // Check if a key has been pressed again (Only PLATFORM_DESKTOP)
     bool IsKeyDown(int key);                                // Check if a key is being pressed
     bool IsKeyReleased(int key);                            // Check if a key has been released once
     bool IsKeyUp(int key);                                  // Check if a key is NOT being pressed
-    void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
     int GetKeyPressed(void);                                // Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
     int GetCharPressed(void);                               // Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
+    void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
 
     // Input-related functions: gamepads
     bool IsGamepadAvailable(int gamepad);                   // Check if a gamepad is available
@@ -223,7 +244,7 @@
     // Gestures and Touch Handling Functions (Module: rgestures)
     //------------------------------------------------------------------------------------
     void SetGesturesEnabled(unsigned int flags);      // Enable a set of gestures using flags
-    bool IsGestureDetected(int gesture);              // Check if a gesture have been detected
+    bool IsGestureDetected(unsigned int gesture);     // Check if a gesture have been detected
     int GetGestureDetected(void);                     // Get latest detected gesture
     float GetGestureHoldDuration(void);               // Get gesture hold time in milliseconds
     Vector2 GetGestureDragVector(void);               // Get gesture drag vector

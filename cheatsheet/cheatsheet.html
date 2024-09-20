@@ -19,9 +19,6 @@
         <meta property="og:site_name" content="raylib"/>
         <meta property="og:description" content="Don't miss latest functions added to raylib... check raylib cheatsheet"/>
 
-        <!-- Add jQuery library -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-
         <!-- hightlight.js - Syntax highlighting for the Web -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/docco.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
@@ -38,7 +35,7 @@
              font-size-adjust:0.49;
          }
          body{background-color:#f5f5f5;}
-         #fulldata{width: 1315px!important;}
+
          .eximage img{margin: 0 auto; border: 1px solid; border-color: black; width:770px; height:auto;}
          p{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
          a{font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size:13px; line-height:24px;}
@@ -57,13 +54,14 @@
          #audio pre code{border:10px solid; border-color:#d3b157; background-color:#e5d7ae; }
          #structs pre code{border:10px solid; border-color:#d2c9c6; background-color:#f8f8ff;}
          #colors pre code{border:10px solid; border-color:#c6d2c6; background-color:#e9f1f2;}
+
          #logo{width:128px; height:128px; float:left; position:relative; background-image:url(../common/img/raylib_logo.png);}
-         #header{position:relative; height:110px; width: 1000px;}
+         #header{position:relative; height:110px; max-width: 1000px;}
          #title, #plinks, #version{position:relative; float:left; margin:0px; margin-left:10px; margin-top:10px;}
          #plinks{color: gray;}
          #plinks a, #copyright a{color: gray; text-decoration:none;}
          #plinks a:hover{color: black;}
-         #version {margin-top: 23px; width:500px;}
+         #version {margin-top: 23px; max-width:500px;}
          #pcore{margin-bottom:-12px; margin-left:12px; color:#5c5a5a;}
          #pshapes{margin-bottom:-12px; margin-left:12px; color:#c55757;}
          #ptextures{margin-bottom:-12px; margin-left:12px; color:#60815a;}
@@ -84,43 +82,66 @@
 
          #downpdf{text-decoration: none;color:#aaaaaa;}
          #downpdf:hover{color:#444;}
+
+         #fulldata p a {color:#0eefff; text-decoration: none;}
+
+        /* for the tired programmers at night */
+        .darkmode{background-color:#1e1e1e; color:#e1e1e1;}
+        .darkmode a{color:#e1e1e1;}
+        .darkmode #header{background-color:#1e1e1e; color:#e1e1e1;}
+        .darkmode #title{color:#e1e1e1;}
+        .darkmode #plinks{color:#e1e1e1;}
+        .darkmode #plinks a{color:#e1e1e1;}
+        .darkmode #plinks a:hover{color:#e1e1e1;}
+        .darkmode #version{color:#e1e1e1;}
+        .darkmode #pcore{color:#e1e1e1;}
+        .darkmode #pshapes{color:#e1e1e1;}
+        .darkmode #ptextures{color:#e1e1e1;}
+        .darkmode #ptext{color:#e1e1e1;}
+        .darkmode #pmodels{color:#e1e1e1;}
+        .darkmode #paudio{color:#e1e1e1;}
+        .darkmode #pstructs{color:#e1e1e1;}
+        .darkmode #pcolors{color:#e1e1e1;}
+
+         @media screen and (max-width: 1550px) {
+            #fullgroup {
+                grid-template-columns: auto;
+            }
+
+            .leftgroup, .rightgroup {
+                overflow-x: auto;
+            }
+         }
         </style>
 
         <script type="text/javascript">
-         $(document).ready(function() {
-             $.get('raylib_core.c', function(data) {
-                 $('#core pre code').text(data);
-                 $('#core pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_shapes.c', function(data) {
-                 $('#shapes pre code').text(data);
-                 $('#shapes pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_textures.c', function(data) {
-                 $('#textures pre code').text(data);
-                 $('#textures pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_text.c', function(data) {
-                 $('#text pre code').text(data);
-                 $('#text pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_models.c', function(data) {
-                 $('#models pre code').text(data);
-                 $('#models pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_audio.c', function(data) {
-                 $('#audio pre code').text(data);
-                 $('#audio pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_colors.c', function(data) {
-                 $('#colors pre code').text(data);
-                 $('#colors pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-             $.get('raylib_structs.c', function(data) {
-                 $('#structs pre code').text(data);
-                 $('#structs pre code').each(function(i, e) {hljs.highlightBlock(e)});
-             }, 'text');
-         });
+         document.addEventListener('DOMContentLoaded', function() {
+            function addModule(url, targetSelector) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(data => {
+                        document.querySelector(targetSelector).innerHTML = data;
+                        document.querySelectorAll(targetSelector).forEach(function(e) {
+                            hljs.highlightBlock(e);
+                        });
+                    })
+                    .catch(error => console.error('Could not get ' + url, error));
+            }
+
+            addModule('raylib_core.c', '#core pre code');
+            addModule('raylib_shapes.c', '#shapes pre code');
+            addModule('raylib_textures.c', '#textures pre code');
+            addModule('raylib_text.c', '#text pre code');
+            addModule('raylib_models.c', '#models pre code');
+            addModule('raylib_audio.c', '#audio pre code');
+            addModule('raylib_colors.c', '#colors pre code');
+            addModule('raylib_structs.c', '#structs pre code');
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("darkmode");
+        }
+
         </script>
     </head>
 
@@ -130,23 +151,23 @@
             <p id="title">A simple and easy-to-use library to enjoy videogames programming</p>
             <p id="plinks">[<a href="https://discord.gg/raylib">raylib Discord server</a>][<a href="https://github.com/raysan5/raylib">github.com/raysan5/raylib</a>][<a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h">raylib.h</a>]</p>
             <p></p>
-            <p id="version">v4.5 quick reference card  [<a id="downpdf" href="https://www.raylib.com/cheatsheet/raylib_cheatsheet_v4.5.pdf">download as PDF</a>]</p>
+            <p id="version">v5.0 quick reference card  [<a id="downpdf" href="https://www.raylib.com/cheatsheet/raylib_cheatsheet_v5.0.pdf">download as PDF</a>]</p>
         </div>
         <br>
         <p>Chinese Translation: <a href="cheatsheet_zh.html">以下为raylib所有API接口中文释义</a></p>
         <p>Korean Translation: <a href="cheatsheet_kr.html">raylib API 레퍼런스 한국어 번역</a></p>
         <div id="fulldata">
-            <p id="pcore">module: rcore</p>
+            <p id="pcore">module: rcore <a href="#pcore">→</a></p>
             <div id="core"><pre><code class="cpp"></code></pre></div>
-            <p id="pshapes">module: rshapes</p>
+            <p id="pshapes">module: rshapes <a href="#pshapes">→</a></p>
             <div id="shapes"><pre><code class="cpp"></code></pre></div>
-            <p id="ptextures">module: rtextures</p>
+            <p id="ptextures">module: rtextures <a href="#ptextures">→</a></p>
             <div id="textures"><pre><code class="cpp"></code></pre></div>
-            <p id="ptext">module: rtext</p>
+            <p id="ptext">module: rtext <a href="#ptext">→</a></p>
             <div id="text"><pre><code class="cpp"></code></pre></div>
-            <p id="pmodels">module: rmodels</p>
+            <p id="pmodels">module: rmodels <a href="#pmodels">→</a></p>
             <div id="models"><pre><code class="cpp"></code></pre></div>
-            <p id="paudio">module: raudio</p>
+            <p id="paudio">module: raudio <a href="#paudio">→</a></p>
             <div id="audio"><pre><code class="cpp"></code></pre></div>
 
             <div id="fullgroup">
@@ -168,7 +189,7 @@
             </ul>
 
             <div id="copyright">
-                <p>raylib quick reference card - Copyright (c) 2013-2023 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
+                <p>raylib quick reference card - Copyright (c) 2013-2024 Ramon Santamaria (<a href="https://www.twitter.com/raysan5">@raysan5</a>)</p>
             </div>
         </div>
     </body>
