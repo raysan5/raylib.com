@@ -1,6 +1,6 @@
 
     // Utils math
-    float Clamp(float value, float min, float max);                             // Function specifiers definition Defines and Macros Get float vector for Matrix Get float vector for Vector3 Types and Structures Definition Vector2 type Vector3 type Vector4 type Quaternion type Matrix type (OpenGL style 4x4 - right handed, column major) NOTE: Helper types to be used instead of array return types for *ToFloat functions Clamp float value
+    float Clamp(float value, float min, float max);                             // Clamp float value
     float Lerp(float start, float end, float amount);                           // Calculate linear interpolation between two floats
     float Normalize(float value, float start, float end);                       // Normalize input value within input range
     float Remap(float value, float inputStart, float inputEnd, float outputStart, float outputEnd); // Remap input value within input range to output range
