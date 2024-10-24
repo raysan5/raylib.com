@@ -19,8 +19,8 @@ $(document).ready(function() {
 		return examples.findIndex(example => example.name == targetName)
 	}
 
-	function applyByFunctionFilter(functionName) {
-		var filterText = functionName.toLowerCase()
+	function applyByFunctionFilter(searchString) {
+		var filterText = searchString.toLowerCase()
 		if (filterText === "") {
 			$('#container').mixItUp('filter', exampleDivs);
 			$('#matches_counter').hide();
@@ -28,21 +28,30 @@ $(document).ready(function() {
 		}
 		$('#matches_counter').show();
 
-		const filteredExamples = []
+		// using a set to avoid duplicates
+		const filteredExampleIndexes = new Set();
+
 		for (var functionName in functionUsages) {
 			if (!functionName.toLowerCase().includes(filterText)) continue;
 
 			for (var usage of functionUsages[functionName]) {
-				const exampleIndex = findExampleIndexByName(exampleData, usage)
-				if (!filteredExamples.includes(exampleIndex)) {
-					filteredExamples.push(exampleIndex)
-				}
+				const exampleIndex = findExampleIndexByName(exampleData, usage);
+				filteredExampleIndexes.add(exampleIndex);
 			}
 		}
 
-		const filteredDivs = filteredExamples.map(index => exampleDivs[index]);
+		// check all functions and all tags for any match
+		for (var functionName in examplesTags) {
+			const matchingTags = examplesTags[functionName].filter(tagItem => tagItem.includes(filterText));
+			if (matchingTags.length > 0) {
+				const exampleIndex = findExampleIndexByName(exampleData, functionName);
+				filteredExampleIndexes.add(exampleIndex);
+			}
+		}
+
+		const filteredDivs = Array.from(filteredExampleIndexes).map(index => exampleDivs[index]);
 		$('#container').mixItUp('filter', filteredDivs);
-		$('#matches_counter').text(`Found ${filteredExamples.length} examples`);
+		$('#matches_counter').text(`Found ${filteredExampleIndexes.size} examples`);
 	}
 
     var exampleData = [
@@ -206,7 +215,23 @@ $(document).ready(function() {
 
 	const filterFunctionInput = $('#filter_function input');
 
-	var functionUsages = {}
+    var examplesTags = {};
+    $.getJSON('examples/examples_tags.json', function(examplesTagsData) {
+        // Filter out function usages of examples, which don't have a page
+        for (var functionName in examplesTagsData) {
+            if (findExampleByName(exampleData, functionName)) {
+                examplesTags[functionName] = examplesTagsData[functionName];
+            }
+        }
+
+        // do not handle input processing as we will pigyback (add to) the filterFunctionInput
+    })
+    .fail(function(jqXHR, textStatus, error) {
+        const err = textStatus + ". " + error;
+        console.error("Error loading examples_tags.json: " + err);
+    });
+
+	var functionUsages = {};
 	$.getJSON('examples/function_usages.json', function(functionUsagesData) {
 		// Filter out function usages of examples, which don't have a page
 		for (var functionName in functionUsagesData) {
@@ -224,6 +249,10 @@ $(document).ready(function() {
 			applyByFunctionFilter(event.target.value)
 		});
 	})
+    .fail(function(jqXHR, textStatus, error) {
+        const err = textStatus + ". " + error;
+        console.error("Error loading function_usages.json: " + err);
+    });
 
     // Instantiate MixItUp:
 	$('#container').mixItUp();
