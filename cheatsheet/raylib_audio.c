@@ -1,3 +1,4 @@
+
     // Audio device management functions
     void InitAudioDevice(void);                                     // Initialize audio device and context
     void CloseAudioDevice(void);                                    // Close the audio device and context
@@ -8,11 +9,11 @@
     // Wave/Sound loading/unloading functions
     Wave LoadWave(const char *fileName);                            // Load wave data from file
     Wave LoadWaveFromMemory(const char *fileType, const unsigned char *fileData, int dataSize); // Load wave from memory buffer, fileType refers to extension: i.e. '.wav'
-    bool IsWaveReady(Wave wave);                                    // Checks if wave data is ready
+    bool IsWaveValid(Wave wave);                                    // Checks if wave data is valid (data loaded and parameters)
     Sound LoadSound(const char *fileName);                          // Load sound from file
     Sound LoadSoundFromWave(Wave wave);                             // Load sound from wave data
     Sound LoadSoundAlias(Sound source);                             // Create a new sound that shares the same sample data as the source sound, does not own the sound data
-    bool IsSoundReady(Sound sound);                                 // Checks if a sound is ready
+    bool IsSoundValid(Sound sound);                                 // Checks if a sound is valid (data loaded and buffers initialized)
     void UpdateSound(Sound sound, const void *data, int sampleCount); // Update sound buffer with new data
     void UnloadWave(Wave wave);                                     // Unload wave data
     void UnloadSound(Sound sound);                                  // Unload sound
@@ -30,7 +31,7 @@
     void SetSoundPitch(Sound sound, float pitch);                   // Set pitch for a sound (1.0 is base level)
     void SetSoundPan(Sound sound, float pan);                       // Set pan for a sound (0.5 is center)
     Wave WaveCopy(Wave wave);                                       // Copy a wave to a new wave
-    void WaveCrop(Wave *wave, int initSample, int finalSample);     // Crop a wave to defined samples range
+    void WaveCrop(Wave *wave, int initFrame, int finalFrame);       // Crop a wave to defined frames range
     void WaveFormat(Wave *wave, int sampleRate, int sampleSize, int channels); // Convert wave data to desired format
     float *LoadWaveSamples(Wave wave);                              // Load samples data from wave as a 32bit float data array
     void UnloadWaveSamples(float *samples);                         // Unload samples data loaded with LoadWaveSamples()
@@ -38,7 +39,7 @@
     // Music management functions
     Music LoadMusicStream(const char *fileName);                    // Load music stream from file
     Music LoadMusicStreamFromMemory(const char *fileType, const unsigned char *data, int dataSize); // Load music stream from data
-    bool IsMusicReady(Music music);                                 // Checks if a music stream is ready
+    bool IsMusicValid(Music music);                                 // Checks if a music stream is valid (context and buffers initialized)
     void UnloadMusicStream(Music music);                            // Unload music stream
     void PlayMusicStream(Music music);                              // Start music playing
     bool IsMusicStreamPlaying(Music music);                         // Check if music is playing
@@ -55,7 +56,7 @@
 
     // AudioStream management functions
     AudioStream LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // Load audio stream (to stream raw audio pcm data)
-    bool IsAudioStreamReady(AudioStream stream);                    // Checks if an audio stream is ready
+    bool IsAudioStreamValid(AudioStream stream);                    // Checks if an audio stream is valid (buffers initialized)
     void UnloadAudioStream(AudioStream stream);                     // Unload audio stream and free memory
     void UpdateAudioStream(AudioStream stream, const void *data, int frameCount); // Update audio stream buffers with data
     bool IsAudioStreamProcessed(AudioStream stream);                // Check if any audio stream buffers requires refill
@@ -70,9 +71,9 @@
     void SetAudioStreamBufferSizeDefault(int size);                 // Default size for new audio streams
     void SetAudioStreamCallback(AudioStream stream, AudioCallback callback); // Audio thread callback to request new data
 
-    void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Attach audio stream processor to stream, receives the samples as <float>s
+    void AttachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Attach audio stream processor to stream, receives the samples as 'float'
     void DetachAudioStreamProcessor(AudioStream stream, AudioCallback processor); // Detach audio stream processor from stream
 
-    void AttachAudioMixedProcessor(AudioCallback processor); // Attach audio stream processor to the entire audio pipeline, receives the samples as <float>s
+    void AttachAudioMixedProcessor(AudioCallback processor); // Attach audio stream processor to the entire audio pipeline, receives the samples as 'float'
     void DetachAudioMixedProcessor(AudioCallback processor); // Detach audio stream processor from the entire audio pipeline
 

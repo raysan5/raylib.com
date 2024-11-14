@@ -1,9 +1,10 @@
+
     // Basic geometric 3D shapes drawing functions
     void DrawLine3D(Vector3 startPos, Vector3 endPos, Color color);                                    // Draw a line in 3D world space
     void DrawPoint3D(Vector3 position, Color color);                                                   // Draw a point in 3D space, actually a small line
     void DrawCircle3D(Vector3 center, float radius, Vector3 rotationAxis, float rotationAngle, Color color); // Draw a circle in 3D world space
     void DrawTriangle3D(Vector3 v1, Vector3 v2, Vector3 v3, Color color);                              // Draw a color-filled triangle (vertex in counter-clockwise order!)
-    void DrawTriangleStrip3D(Vector3 *points, int pointCount, Color color);                            // Draw a triangle strip defined by points
+    void DrawTriangleStrip3D(const Vector3 *points, int pointCount, Color color);                      // Draw a triangle strip defined by points
     void DrawCube(Vector3 position, float width, float height, float length, Color color);             // Draw cube
     void DrawCubeV(Vector3 position, Vector3 size, Color color);                                       // Draw cube (Vector version)
     void DrawCubeWires(Vector3 position, float width, float height, float length, Color color);        // Draw cube wires
@@ -28,7 +29,7 @@
     // Model management functions
     Model LoadModel(const char *fileName);                                                // Load model from files (meshes and materials)
     Model LoadModelFromMesh(Mesh mesh);                                                   // Load model from generated mesh (default material)
-    bool IsModelReady(Model model);                                                       // Check if a model is ready
+    bool IsModelValid(Model model);                                                       // Check if a model is valid (loaded in GPU, VAO/VBOs)
     void UnloadModel(Model model);                                                        // Unload model (including meshes) from memory (RAM and/or VRAM)
     BoundingBox GetModelBoundingBox(Model model);                                         // Compute model bounding box limits (considers all meshes)
 
@@ -37,8 +38,10 @@
     void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // Draw a model with extended parameters
     void DrawModelWires(Model model, Vector3 position, float scale, Color tint);          // Draw a model wires (with texture if set)
     void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // Draw a model wires (with texture if set) with extended parameters
+    void DrawModelPoints(Model model, Vector3 position, float scale, Color tint); // Draw a model as points
+    void DrawModelPointsEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // Draw a model as points with extended parameters
     void DrawBoundingBox(BoundingBox box, Color color);                                   // Draw bounding box (wires)
-    void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, float size, Color tint);   // Draw a billboard texture
+    void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, float scale, Color tint);   // Draw a billboard texture
     void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector2 size, Color tint); // Draw a billboard texture defined by source
     void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint); // Draw a billboard texture defined by source and rotation
 
@@ -48,9 +51,10 @@
     void UnloadMesh(Mesh mesh);                                                           // Unload mesh data from CPU and GPU
     void DrawMesh(Mesh mesh, Material material, Matrix transform);                        // Draw a 3d mesh with material and transform
     void DrawMeshInstanced(Mesh mesh, Material material, const Matrix *transforms, int instances); // Draw multiple mesh instances with material and different transforms
-    bool ExportMesh(Mesh mesh, const char *fileName);                                     // Export mesh data to file, returns true on success
     BoundingBox GetMeshBoundingBox(Mesh mesh);                                            // Compute mesh bounding box limits
     void GenMeshTangents(Mesh *mesh);                                                     // Compute mesh tangents
+    bool ExportMesh(Mesh mesh, const char *fileName);                                     // Export mesh data to file, returns true on success
+    bool ExportMeshAsCode(Mesh mesh, const char *fileName);                               // Export mesh as code file (.h) defining multiple arrays of vertex attributes
 
     // Mesh generation functions
     Mesh GenMeshPoly(int sides, float radius);                                            // Generate polygonal mesh
@@ -68,14 +72,15 @@
     // Material loading/unloading functions
     Material *LoadMaterials(const char *fileName, int *materialCount);                    // Load materials from model file
     Material LoadMaterialDefault(void);                                                   // Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
-    bool IsMaterialReady(Material material);                                              // Check if a material is ready
+    bool IsMaterialValid(Material material);                                              // Check if a material is valid (shader assigned, map textures loaded in GPU)
     void UnloadMaterial(Material material);                                               // Unload material from GPU memory (VRAM)
     void SetMaterialTexture(Material *material, int mapType, Texture2D texture);          // Set texture for a material map type (MATERIAL_MAP_DIFFUSE, MATERIAL_MAP_SPECULAR...)
     void SetModelMeshMaterial(Model *model, int meshId, int materialId);                  // Set material for a mesh
 
     // Model animations loading/unloading functions
     ModelAnimation *LoadModelAnimations(const char *fileName, int *animCount);            // Load model animations from file
-    void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);               // Update model animation pose
+    void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);               // Update model animation pose (CPU)
+    void UpdateModelAnimationBones(Model model, ModelAnimation anim, int frame);          // Update model animation mesh bone matrices (GPU skinning)
     void UnloadModelAnimation(ModelAnimation anim);                                       // Unload animation data
     void UnloadModelAnimations(ModelAnimation *animations, int animCount);                // Unload animation array data
     bool IsModelAnimationValid(Model model, ModelAnimation anim);                         // Check model animation skeleton match

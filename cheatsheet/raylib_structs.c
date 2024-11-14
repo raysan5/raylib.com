@@ -12,17 +12,17 @@
     struct GlyphInfo;              // GlyphInfo, font characters glyphs info
     struct Font;                   // Font, font texture and GlyphInfo array data
 
+    struct Camera2D;               // Camera2D, defines position/orientation in 2d space
     struct Camera3D;               // Camera, defines position/orientation in 3d space
 
-    struct Camera2D;               // Camera2D, defines position/orientation in 2d space
-    struct Mesh;                   // Mesh, vertex data and vao/vbo
     struct Shader;                 // Shader
     struct MaterialMap;            // MaterialMap
     struct Material;               // Material, includes shader and maps
-    struct Transform;              // Transform, vertex transformation data
-    struct BoneInfo;               // Bone, skeletal animation bone
+    struct Mesh;                   // Mesh, vertex data and vao/vbo
     struct Model;                  // Model, meshes, materials and animation data
     struct ModelAnimation;         // ModelAnimation
+    struct Transform;              // Transform, vertex transformation data
+    struct BoneInfo;               // Bone, skeletal animation bone
     struct Ray;                    // Ray, ray for raycasting
     struct RayCollision;           // RayCollision, ray hit information
     struct BoundingBox;            // BoundingBox
