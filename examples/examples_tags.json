@@ -1,0 +1,5 @@
+{
+	"core_basic_window": ["window"],
+	"core_basic_screen_manager": ["screen", "scene"],
+	"core_2d_camera": ["2d", "camera", "zoom"]
+}
