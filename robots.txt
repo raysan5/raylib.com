@@ -1,3 +1,0 @@
-# robotstxt.org/
-
-Sitemap: https://raylib.com/sitemap.xml
