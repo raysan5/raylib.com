@@ -1,0 +1,28 @@
+0 0 Design Game Pilars
+1 0 Design Quest Design
+2 0 Design Boss Design
+3 0 Design Tutorial Design
+4 0 Design RTS Balancing
+5 1 Production Production Plan
+6 1 Production Tech Design Doc.
+7 1 Production Art Bible
+8 1 Production Audio Bible
+9 1 Production QA Workflow
+10 1 Production Available Licenses
+11 2 Coding Quest Manager
+12 2 Coding Dialog System
+13 2 Coding Particle System
+14 2 Coding Random map Gen.
+15 2 Coding Minimaps
+16 2 Coding Fog of War
+17 2 Coding Group movement
+18 2 Coding Camera Transitions
+19 2 Coding Split Screen
+20 2 Coding Sprite Order & Cam.
+21 2 Coding Audio & Music Manage.
+22 2 Coding Video Player
+23 2 Coding Assets ZIP Manage.
+24 3 Building Static code analysis
+25 3 Building Branching Policies
+26 3 Building Automated CI + CD
+27 3 Building Installer

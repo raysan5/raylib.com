@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9
+            https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+<url>
+  <loc>https://www.raylib.com/</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://www.raylib.com/index.html</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.raylib.com/examples.html</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.raylib.com/games.html</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.raylib.com/cheatsheet/cheatsheet.html</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://www.raylib.com/license.html</loc>
+  <lastmod>2021-11-01T09:05:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+</urlset>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>loading...</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <meta name="title" content="raylib - example">
+        <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming. This a small example of what you can do.">
+        <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
+        <meta name="viewport" content="width=device-width">
+        
+        <!-- Open Graph metatags for sharing -->
+        <meta property="og:title" content="raylib - example"/>
+        <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
+        <meta property="og:url" content="https://www.raylib.com" />
+        <meta property="og:site_name" content="raylib"/>
+        <meta property="og:description" content="This is a small example of what you can do with raylib"/>
+
+        <!-- Add jQuery library -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+        
+        <!-- hightlight.js - Syntax highlighting for the Web -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+
+        <style type="text/css">
+            @font-face {
+                font-family: 'grixel_acme_7_wide_xtnd';
+                src: url('../../common/font/acme_7_wide_xtnd.eot');
+                src: url('../../common/font/acme_7_wide_xtnd.eot?#iefix') format('embedded-opentype'),
+                     url('../../common/font/acme_7_wide_xtnd.woff') format('woff'),
+                     url('../../common/font/acme_7_wide_xtnd.ttf') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+                font-size-adjust:0.49;
+            }
+            p, p a { font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial; font-size: medium; text-align: right; }
+            #eximage { width: 802px; height: 452px; text-align: center; }
+            #eximage img { margin: 0 auto; border: 1px solid; border-color: black; }
+            #eximage canvas { position: relative; top: 1px; left: 1px; border: 1px solid red; background: black; }
+            pre { width: 802px!important;}
+            pre code{ border: 1px solid; border-color:#b0b0b0; height:auto; }
+            .exdownbtn{ margin-right: 20px; width:220px; height:30px; float:left; position: relative; cursor:pointer; font-weight:bold; font-size:10px; 
+                        line-height:30px; text-align: center; border-width:5px; background-color:#e1e1e1; color:#5c5a5a; 
+                        border:4px solid #898888; font-family: grixel_acme_7_wide_xtnd, Courier New, Verdana, Arial;}
+            #exdowncode .exdownbtn:hover{background-color:#f0d6d6; color:#c55757; border:4px solid #e66666;}
+            #exdownexec .exdownbtn:hover{background-color:#bedce8; color:#417794; border:4px solid #5d9cbd;}
+            
+            .fancybox-wrap fancybox-desktop fancybox-type-iframe fancybox-opened { width: 860px!important;}
+            .fancybox-inner { width: 850px!important; }
+            .fancybox-iframe { width: 830px!important; }
+        </style>
+        
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                window.addEventListener('keydown', function(e)
+                {
+                    // Prevent SPACE key to scroll page
+                    if ((e.keyCode == 32) && (e.target == document.body)) e.preventDefault();
+                });
+                
+                var mainUrl = $(location).attr('href');
+                var name = mainUrl.slice(mainUrl.indexOf('=') + 1);
+                
+                document.title = "raylib - " + name.replace('_', ' ');
+
+                var type = name.substring(0, name.indexOf("_"));
+                //var srcUrl = '../../src/' + type + '/' + name + '.c';
+                //var imgUrl = '../' + type + '/' + name + '.png';
+                
+                // Get example code and image directly from original raylib GitHub and avoid duplicate code to maintain
+                var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
+                var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
+                var linkUrl = 'https://github.com/raysan5/raylib/blob/master/examples/' + type + '/' + name + '.c';
+
+                $('#eximage img').attr('src', imgUrl);
+
+                $.get(srcUrl, function(data)
+                { 
+                    $('pre code').text(data);
+                    $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                    
+                    $('#source_link').attr("href", linkUrl);
+                }, 'text');
+                
+                // Quick hack for some examples not working on web
+                if (name == "example_to_avoid")
+                {
+                    $('#eximage').append('<img src="' + imgUrl + '" alt=" ">');
+                }
+                else
+                {
+                    // #eximage filling code: canvas sample and image
+                    $('#eximage').append(
+                    '<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()">' + 
+                        '<img src="' + imgUrl + '" alt=" ">' +
+                    '</canvas>');
+                    
+                    Module.canvas = document.getElementById('canvas');
+                    Module.canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+                
+                    var jsUrl = name + '.js';
+                
+                    // Run emscripten example
+                    $.getScript(jsUrl, function() {});
+                }
+            });
+        </script>
+        <script type='text/javascript' src="https://cdn.jsdelivr.net/gh/eligrey/FileSaver.js/dist/FileSaver.min.js"> </script>
+        <script type='text/javascript'>
+            function saveFileFromMEMFSToDisk(memoryFSname, localFSname)     // This can be called by C/C++ code
+            {
+                var isSafari = false; // Not supported, navigator.userAgent access is being restricted
+                var data = FS.readFile(memoryFSname);
+                var blob;
+
+                if (isSafari) blob = new Blob([data.buffer], { type: "application/octet-stream" });
+                else blob = new Blob([data.buffer], { type: "application/octet-binary" });
+
+                // NOTE: SaveAsDialog is a browser setting. For example, in Google Chrome,
+                // in Settings/Advanced/Downloads section you have a setting:
+                // 'Ask where to save each file before downloading' - which you can set true/false.
+                // If you enable this setting it would always ask you and bring the SaveAsDialog
+                saveAs(blob, localFSname);
+            }
+        </script>
+    </head>
+    
+    <body>
+        <div class="emscripten">
+            <progress value="0" max="100" id="progress" hidden=1></progress>
+        </div>
+
+        <!-- Canvas example or image, filled on loading -->
+        <div id="eximage"></div>
+        
+        <!--<textarea id="output" rows="8"></textarea>-->
+        
+        <pre><code class="cpp"></code></pre>
+        
+        <p>raylib example <a id="source_link" href="" target="_blank">source code</a></p>
+
+        <script type='text/javascript'>
+          //var statusElement = document.getElementById('status');
+          //var progressElement = document.getElementById('progress');
+          //var spinnerElement = document.getElementById('spinner');
+          
+          var Module = {
+            preRun: [],
+            postRun: [],
+            print: (function() {
+              var element = document.getElementById('output');
+              if (element) element.value = ''; // clear browser cache
+              return function(text) {
+                text = Array.prototype.slice.call(arguments).join(' ');
+                // These replacements are necessary if you render to raw HTML
+                //text = text.replace(/&/g, "&amp;");
+                //text = text.replace(/</g, "&lt;");
+                //text = text.replace(/>/g, "&gt;");
+                //text = text.replace('\n', '<br>', 'g');
+                console.log(text);
+                if (element) {
+                  element.value += text + "\n";
+                  element.scrollTop = element.scrollHeight; // focus on bottom
+                }
+              };
+            })(),
+            printErr: function(text) {
+              text = Array.prototype.slice.call(arguments).join(' ');
+              if (0) { // XXX disabled for safety typeof dump == 'function') {
+                dump(text + '\n'); // fast, straight to the real console
+              } else {
+                console.error(text);
+              }
+            },
+            canvas: (function() {
+              // NOTE: canvas element eventListener is added after appending!
+            
+              //var canvas = document.getElementById('canvas');
+
+              // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+              // application robust, you may want to override this behavior before shipping!
+              // See https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+              //canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+              //return canvas;
+            })(),
+            setStatus: function(text) {
+              if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+              if (text === Module.setStatus.text) return;
+              var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+              var now = Date.now();
+              if (m && now - Date.now() < 30) return; // if this is a progress update, skip it if too soon
+              if (m) {
+                text = m[1];
+                //progressElement.value = parseInt(m[2])*100;
+                //progressElement.max = parseInt(m[4])*100;
+                //progressElement.hidden = false;
+                //spinnerElement.hidden = false;
+              } else {
+                //progressElement.value = null;
+                //progressElement.max = null;
+                //progressElement.hidden = true;
+                //if (!text) spinnerElement.style.display = 'none';
+              }
+              //statusElement.innerHTML = text;
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+              this.totalDependencies = Math.max(this.totalDependencies, left);
+              Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+            }
+          };
+          
+          Module.setStatus('Downloading...');
+          
+          window.onerror = function(event) {
+            // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+            Module.setStatus('Exception thrown, see JavaScript console');
+            //spinnerElement.style.display = 'none';
+            Module.setStatus = function(text) {
+              if (text) Module.printErr('[post-exception status] ' + text);
+            };
+          };
+        </script>
+
+        <!--<script async type="text/javascript" src="../examples/web/core_basic_window.js"></script>-->
+        
+        <!-- prevent arrow keys fromscrolling the loaded game. -->
+        <script src="/common/disable-arrow-scroll.js"></script>             
+    </body>
+</html>

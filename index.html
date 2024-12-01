@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <title>raylib | A simple and easy-to-use library to enjoy videogames programming</title>
+
+        <meta name="title" content="raylib | A simple and easy-to-use library to enjoy videogames programming">
+        <meta name="description" content="raylib is a simple and easy-to-use library to enjoy videogames programming.">
+        <meta name="keywords" content="raylib, videogames, programming, C, C++, library, learn, study, simple, easy, free, open source, raysan">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- metatags for sharing -->
+        <meta property="og:title" content="raylib"/>
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:alt" content="raylib,a simple and easy-to-use library to enjoy videogames programming." />
+        <meta property="og:image" content="https://www.raylib.com/common/img/raylib_logo_card.png"/>
+        <meta property="og:url" content="https://www.raylib.com" />
+        <meta property="og:site_name" content="raylib"/>
+        <meta property="og:description" content="raylib is a simple and easy-to-use library to enjoy videogames programming."/>
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@raysan5" />
+        <meta name="twitter:title" content="raylib" />
+        <meta name="twitter:description" content="raylib is a simple and easy-to-use library to enjoy videogames programming." />
+        <meta name="twitter:image" content="https://www.raylib.com/common/img/raylib_logo_card.png" />
+        <meta name="twitter:image:alt" content="raylib,a simple and easy-to-use library to enjoy videogames programming.">
+        <meta name="twitter:url" content="https://www.raylib.com" />
+        
+        <link rel="stylesheet" href="common/main.css">
+        <link rel="shortcut icon" href="favicon.ico" />
+    </head>
+
+    <body>
+        <div class="header-container">
+            <div class="header">
+                <a id="logo" href="index.html"></a>
+                <div class="nav-container">
+                    <div id="social">
+                        <a id="discord" href="https://discord.gg/raylib" target="_blank"></a>
+                        <a id="bluesky" href="https://bsky.app/profile/raysan5.bsky.social" target="_blank"></a>
+                        <a id="twitter" href="https://www.twitter.com/raysan5" target="_blank"></a>
+                        <a id="twitch" href="https://www.twitch.tv/raysan5" target="_blank"></a>
+                        <a id="kofi" href="https://ko-fi.com/raysan5" target="_blank"></a>
+                        <a id="itchio" href="https://raysan5.itch.io" target="_blank"></a>
+                        <a id="handmade" href="https://raylib.handmade.network/" target="_blank"></a>
+                        <a id="reddit" href="https://www.reddit.com/r/raylib/" target="_blank"></a>
+                        <a id="youtube" href="https://www.youtube.com/c/raylib" target="_blank"></a>
+                        <a id="patreon" href="https://www.patreon.com/raylib" target="_blank"></a>
+                        <a id="redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank"></a>
+                        <a id="github" href="https://github.com/raysan5/raylib" target="_blank"></a>
+                    </div>
+                    <div class="menu">
+                        <div id="active">about</div>
+                        <a href="examples.html">examples</a>
+                        <a href="games.html">games</a>
+                        <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
+                        <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page">
+            <!--[if lt IE 7]>
+                <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> or <a href="https://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+            <![endif]-->
+
+            <div class="content">
+                <h1>raylib is a simple and easy-to-use library to enjoy videogames programming.</h1>
+                <br>
+                <div class="video-container">
+                <iframe class="video" src="https://www.youtube.com/embed/GdlGE-eDlzg?si=CCFNbsNxQkpWWoN1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <br>
+                <br>
+                <h1>get the raylib Windows Installer to install raylib in seconds:</h1>
+                <br>
+                <div id="itchioframe"><iframe frameborder="0" src="https://itch.io/embed/85331?bg_color=f5f5f5" width="640" height="170"></iframe></div>
+                <br>
+                <p><strong>NOTE for ADVENTURERS:</strong> raylib is a programming library to enjoy videogames programming; no fancy interface, no visual helpers, no gui tools or editors... just coding in pure spartan-programmers way. Are you ready to enjoy coding?</p>
+                <br>
+                <h2 id="contributions"><a class="anchor-link" href="#contributions"></a>support raylib project!</h2>
+                <br>
+                <p>If you enjoy raylib and want to help, consider supporting the project with a donation! Thank you very much! ❤️</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="bindings" style="margin: 0 auto;">
+                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JB5CMEX9HXFKY&currency_code=EUR&source=url" target="_blank"><img class="icon" src="images/contribute/paypal.png" title="PayPal" alt="PayPal donation" width="84" height="84"/></a>
+                        <a href="https://github.com/sponsors/raysan5" target="_blank"><img class="icon" src="images/contribute/github.png" title="GitHub" alt="raylib GitHub Sponsors" width="84" height="84"/></a>
+                        <a href="https://www.patreon.com/raylib" target="_blank"><img class="icon" src="images/contribute/patreon.png" title="Patreon" alt="Patreon contributor" width="84" height="84"/></a>
+                        <a href="https://ko-fi.com/raysan" target="_blank"><img class="icon" src="images/contribute/kofi.png" title="Ko-fi" alt="Ko-fi donation" width="84" height="84"/></a>
+                        <a href="https://raysan5.itch.io/raylib" target="_blank"><img class="icon" src="images/contribute/itchio.png" title="itch.io" alt="raylib on itch.io" width="84" height="84"/></a>
+                        <a href="https://www.redbubble.com/shop/ap/78130012" target="_blank"><img class="icon" src="images/contribute/redbubble.png" title="redbubble" alt="raylib on redbubble" width="84" height="84"/></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="learning-resources"><a class="anchor-link" href="#learning-resources"></a>raylib learning resources</h2>
+                <br>
+                <p>raylib does not provide the typical API documentation or a big set of tutorials. The library is designed to be minimalistic and be learned just from a cheatsheet with all required functionality and a big collection of examples to see how to use that functionality. <strong>Best way to learn to code is reading code.</strong></p>
+                <br>
+                <div style="display: flex;">
+                    <div id="platforms" style="margin: 0 auto;">
+                        <a href="https://www.raylib.com/cheatsheet/cheatsheet.html" target="_blank"><img class="icon" src="images/learning/cheatsheet.png" title="raylib cheatsheet" alt="raylib cheatsheet" width="112" height="112"/></a>
+                        <a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h" target="_blank"><img class="icon" src="images/learning/header.png" title="raylib header" alt="raylib header" width="112" height="112"/></a>
+                        <a href="https://github.com/raysan5/raylib/blob/master/FAQ.md" target="_blank"><img class="icon" src="images/learning/faq.png" title="raylib FAQ" alt="raylib FAQ" width="112" height="112"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki" target="_blank"><img class="icon" src="images/learning/wiki.png" title="raylib Wiki" alt="raylib Wiki" width="112" height="112"/></a>
+                        <a href="https://github.com/raysan5/raylib/tree/master/examples" target="_blank"><img class="icon" src="images/learning/examples.png" title="raylib examples" alt="raylib examples" width="112" height="112"/></a>
+                        <a href="https://github.com/raysan5/raylib-games" target="_blank"><img class="icon" src="images/learning/games.png" title="raylib games" alt="raylib games" width="112" height="112"/></a>
+                    </div>
+                </div>
+                <p>Overwhelmed by the options? Maybe the raylib game template is a good place for you to start! It provides some structure and a Makefile that are quick and easy to pick up and use.</p>
+                <div style="display: flex;">
+                    <a href="https://github.com/raysan5/raylib-game-template" id="game-template">
+                        Try the raylib-game-template
+                    </a>
+                </div>
+                <p>Apart from those materials, there are plenty of tutorials created by the amazing raylib community. It's highly recommended to join the friendly <a class="simplelink" href="https://discord.gg/raylib" target="_blank">raylib Discord Community</a> to stay up to date of latest raylib news and ask for help when required!</p>
+                <br>
+                <h2 id="awards"><a class="anchor-link" href="#awards"></a>raylib awards</h2>
+                <br>
+                <p>raylib has received several recognitions in the last years. Here are some awards received from <strong>Google</strong> and <strong>Epic Games</strong>.</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="platforms" style="margin: 0 auto;">
+                        <a href="https://opensource.googleblog.com/2019/04/google-open-source-peer-bonus-winners.html"><img src="images/Google_Open_Source_2019.png" title="raylib Google Open Source Peer Bonus - 2019" alt="raylib Google Open Source Peer Bonus - 2019" width="220" /></a>
+                        <a href="https://www.unrealengine.com/en-US/blog/epic-megagrants-fall-2020-update"><img src="images/Epic_MegaGrants_2020.png" title="raylib Epic MegaGrant Recipient - Fall 2020" alt="raylib Epic MegaGrant Recipient - Fall 2020" width="220" /></a>
+                        <a href="https://opensource.googleblog.com/2021/04/announcing-first-group-of-google-open-source-peer-bonus-winners.html"><img src="images/Google_Open_Source_2021.png" title="raylib Google Open Source Peer Bonus - 2021" alt="raylib Google Open Source Peer Bonus - 2021" width="220" /></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="supported-platforms"><a class="anchor-link" href="#supported-platforms"></a>raylib supported platforms</h2>
+                <br>
+                <p>raylib supports multiple target platforms, it has been tested in the following ones but, technically, any platform that supports C language and OpenGL graphics (or similar) can run raylib or it can be very easily ported to.</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="platforms" style="margin: 0 auto;">
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-Windows" target="_blank"><img class="icon" src="images/platforms/windows.png" title="windows" alt="windows platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux" target="_blank"><img class="icon" src="images/platforms/linux.png" title="linux" alt="linux platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-macOS" target="_blank"><img class="icon" src="images/platforms/macos.png" title="macos" alt="macos platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-FreeBSD" target="_blank"><img class="icon" src="images/platforms/freebsd.png" title="freebsd" alt="freebsd platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-Raspberry-Pi" target="_blank"><img class="icon" src="images/platforms/rpi_native.png" title="raspberry pi" alt="raspberrypi platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-on-Raspberry-Pi" target="_blank"><img class="icon" src="images/platforms/rpi_desktop.png" title="raspberry pi desktop" alt="raspberrypi desktop platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-for-Android" target="_blank"><img class="icon" src="images/platforms/android.png" title="android" alt="android platform" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/wiki/Working-for-Web-(HTML5)" target="_blank"><img class="icon" src="images/platforms/html5.png" title="html5 (web)" alt="html5 platform" width="84" height="84"/></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="bindings"><a class="anchor-link" href="#bindings"></a>raylib language bindings</h2>
+                <br>
+                <p>You can use raylib with multiple programming languages, there are <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+60 bindings</a>! Here is a list with some of them:</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="bindings" style="margin: 0 auto;">
+                        <!--<a href="#"><img src="images/bindings/bind_cpp.png" title="windows" style="margin-right:8px;" alt="cpp raylib binding" width="84" height="84"/></a>-->
+                        <a href="https://github.com/ChrisDill/Raylib-cs" target="_blank"><img class="icon" src="images/bindings/bind_csharp.png" title="raylib-cs" alt="c-sharp raylib binding" width="84" height="84"/></a>
+                        <a href="https://github.com/gen2brain/raylib-go" target="_blank"><img class="icon" src="images/bindings/bind_go.png" title="raylib-go" alt="go raylib binding" width="84" height="84"/></a>
+                        <a href="https://github.com/tsnake41/raylib-lua" target="_blank"><img class="icon" src="images/bindings/bind_lua.png" title="raylib-lua" alt="lua raylib binding" width="84" height="84"/></a>
+                        <a href="https://electronstudio.github.io/raylib-python-cffi/" target="_blank"><img class="icon" src="images/bindings/bind_python.png" title="raylib-py" alt="python raylib binding" width="84" height="84"/></a>
+                        <a href="https://github.com/deltaphc/raylib-rs" target="_blank"><img class="icon" src="images/bindings/bind_rust.png" title="raylib-rs" alt="rust raylib binding" width="84" height="84"/></a>
+                        <a href="https://github.com/Not-Nik/raylib-zig" target="_blank"><img class="icon" src="images/bindings/bind_zig.png" title="raylib-zig" alt="zig raylib binding" width="84" height="84"/></a>
+                        
+                        <a href="https://github.com/odin-lang/Odin/tree/master/vendor/raylib" target="_blank"><img class="icon" src="images/bindings/bind_odin.png" title="raylib-odin" alt="odin raylib binding" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank"><img class="icon" src="images/bindings/bind_more.png" title="more..." alt="more raylib bindings" width="84" height="84"/></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="extra-libraries"><a class="anchor-link" href="#extra-libraries"></a>raylib extra libraries</h2>
+                <br>
+                <p>raylib can be combined with several extra libraries for additional functionality, some of those libraries are already used internally while others are provided for user integration, most of these libraries are single-file header-only with no external dependencies.</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="extralibs" style="margin: 0 auto;">
+                        <a href="https://github.com/raysan5/raylib/blob/master/src/rlgl.h" target="_blank"><img class="icon" src="images/extralibs/rlgl_128x128.png" title="rlgl" alt="OpenGL abstraction layer" width="128" height="128"/></a>
+                        <a href="https://github.com/raysan5/raylib/blob/master/src/raymath.h" target="_blank"><img class="icon" src="images/extralibs/raymath_128x128.png" title="raymath" alt="3D math library" width="128" height="128"/></a>
+                        <a href="https://github.com/raysan5/raudio" target="_blank"><img class="icon" src="images/extralibs/raudio_128x128.png" title="raudio" alt="miniaudio wrapper" width="128" height="128"/></a>
+                        <a href="https://github.com/raysan5/raygui" target="_blank"><img class="icon" src="images/extralibs/raygui_128x128.png" title="raygui" alt="immediate-mode gui library" width="128" height="128"/></a>
+                        <a href="https://github.com/raysan5/rpng" target="_blank"><img class="icon" src="images/extralibs/rpng_128x128.png" title="rpng" alt="png chunks editor" width="128" height="128"/></a>
+                        <a href="https://github.com/raysan5/rres" target="_blank"><img class="icon" src="images/extralibs/rres_128x128.png" title="rres" alt="resources packer" width="128" height="128"/></a>
+                        <!--<a href="https://github.com/raysan5/raylib/blob/master/src/extras/rmem.h" target="_blank"><img class="icon" src="images/extralibs/rmem_128x128.png" title="rpng" alt="custom memory pool" width="100" height="100"/></a>-->
+                    </div>
+                </div>
+                <br>
+                <h2 id="raylibtech-tools"><a class="anchor-link" href="#raylibtech-tools"></a>raylib technologies tools</h2>
+                <br>
+                <p>raylib is the base technology for <a class="simplelink" href="https://www.raylibtech.com" target="_blank">raylib technologies</a> tools development! Several multiplatform tools have been developed using raylib and <a class="simplelink" href="https://github.com/raysan5/raygui" target="_blank">raygui</a>. <a class="simplelink" href="https://raylibtech.itch.io" target="_blank"/>Check them out!</a></p>
+                <br>
+                <div style="display: flex;">
+                    <div id="raylibtech" style="margin: 0 auto;">
+                        <a href="https://raylibtech.itch.io/rfxgen" target="_blank"><img class="icon" src="images/raylibtech/rfxgen_128x128.png" title="rFXGen" alt="fx sounds generator" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rtexviewer" target="_blank"><img class="icon" src="images/raylibtech/rtexviewer_128x128.png" title="rTexViewer" alt="textures viewer and formats conversor" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rtexpacker" target="_blank"><img class="icon" src="images/raylibtech/rtexpacker_128x128.png" title="rTexPacker" alt="textures packer and atlas generator" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/riconpacker" target="_blank"><img class="icon" src="images/raylibtech/riconpacker_128x128.png" title="rIconPacker" alt="icons packer and extractor" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rimageshield" target="_blank"><img class="icon" src="images/raylibtech/rimageshield_128x128.png" title="rImageShield" alt="embed messages into images" width="128" height="128"/></a>
+                    <div id="raylibtech" style="margin: 0 auto;">
+                    </div>
+                        <a href="https://raylibtech.itch.io/rquizzer" target="_blank"><img class="icon" src="images/raylibtech/rquizzer_128x128.png" title="rQuizzer" alt="quizzer tool" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rguistyler" target="_blank"><img class="icon" src="images/raylibtech/rguistyler_128x128.png" title="rGuiStyler" alt="raygui styles editor" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rguilayout" target="_blank"><img class="icon" src="images/raylibtech/rguilayout_128x128.png" title="rGuiLayout" alt="raygui layout editor" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rguiicons" target="_blank"><img class="icon" src="images/raylibtech/rguiicons_128x128.png" title="rGuiIcons" alt="raygui icons editor" width="128" height="128"/></a>
+                        <a href="https://raylibtech.itch.io/rrespacker" target="_blank"><img class="icon" src="images/raylibtech/rrespacker_128x128.png" title="rrespacker" alt="rres resource packer" width="128" height="128"/></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="community"><a class="anchor-link" href="#community"></a>raylib community</h2>
+                <br>
+                <p>Do you need help with raylib? Do you want to keep updated with latest news? Do you want to show your raylib creations? Join our amazing community of raylib developers! Choose the network you prefer! You are welcome!</p>
+                <br>
+                <div style="display: flex;">
+                    <div id="bindings" style="margin: 0 auto;">
+                        <a href="https://discord.gg/raylib" target="_blank"><img class="icon" src="images/networks/discord.png" title="raylib Discord" alt="raylib discord server" width="84" height="84"/></a>
+                        <a href="https://www.twitch.tv/raysan5" target="_blank"><img class="icon" src="images/networks/twitch.png" title="raylib Twitch" alt="raylib twitch channel" width="84" height="84"/></a>
+                        <a href="https://www.twitter.com/raysan5" target="_blank"><img class="icon" src="images/networks/twitter.png" title="raysan5 Twitter" alt="raylib creator twitter" width="84" height="84"/></a>
+                        <a href="https://www.reddit.com/r/raylib/" target="_blank"><img class="icon" src="images/networks/reddit.png" title="raylib Reddit" alt="raylib reddit channel" width="84" height="84"/></a>
+                        <a href="https://www.youtube.com/c/raylib" target="_blank"><img class="icon" src="images/networks/youtube.png" title="raylib YouTube" alt="raylib youtube channel" width="84" height="84"/></a>
+                        <a href="https://raylib.handmade.network/" target="_blank"><img class="icon" src="images/networks/hmn.png" title="raylib HMN" alt="raylib handmade.network project" width="84" height="84"/></a>
+                        <a href="https://github.com/raysan5/raylib" target="_blank"><img class="icon" src="images/contribute/github.png" title="GitHub" alt="raylib on GitHub" width="84" height="84"/></a>
+                    </div>
+                </div>
+                <br>
+                <h2 id="features"><a class="anchor-link" href="#features"></a>raylib features</h2>
+                <br>
+                <ul>
+                    <li><strong>NO external dependencies</strong>, all required libraries included with raylib</li>
+                    <li>Multiplatform: <strong>Windows, Linux, MacOS, RPI, Android, HTML5... and more!</strong></li>
+                    <li>Written in plain C code (C99) using PascalCase/camelCase notation</li>
+                    <li>Hardware accelerated with OpenGL (<strong>1.1, 2.1, 3.3, 4.3 or ES 2.0</strong>)</li>
+                    <li><strong>Unique OpenGL abstraction</strong> layer: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/rlgl.h" target="_blank">rlgl</a></li>
+                    <li>Powerful <strong>Fonts</strong> module (SpriteFonts, BMfonts, TTF, SDF)</li>
+                    <li>Multiple texture formats support, including compressed formats (DXT, ETC, ASTC)</li>
+                    <li><strong>Full 3d support</strong> for 3d Shapes, Models, Billboards, Heightmaps and more! </li>
+                    <li>Flexible Materials system, supporting classic maps and <strong>PBR maps</strong></li>
+                    <li><strong>Animated 3d models</strong> supported (skeletal bones animation)</li>
+                    <li>Shaders support, including <strong>Model shaders</strong> and <strong>Postprocessing shaders</strong></li>
+                    <li><strong>Powerful math module</strong> for Vector, Matrix and Quaternion operations: <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/src/raymath.h" target="_blank">raymath</a></li>
+                    <li>Audio loading and playing with streaming support (WAV, OGG, MP3, FLAC, XM, MOD)</li>
+                    <li><strong>VR stereo rendering</strong> support with configurable HMD device parameters</li>
+                    <li>Huge examples collection with <a class="simplelink" href="examples.html" target="_blank">+120 code examples</a>!</li>
+                    <li>Bindings to <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+60 programming languages</a>!</li>
+                    <li>Free and open source. Check [<a class="simplelink" href="license.html" target="_blank">LICENSE</a>].</li>
+                </ul>
+                <br>
+                <br>
+                <h2 id="architecture"><a class="anchor-link" href="#architecture"></a>raylib architecture</h2>
+                <br>
+                <p>raylib is a highly modular library. Everything is contained within a small number of well defined, specific and self-contained modules, named accordingly to its primary functionality. Note that some of those modules can be used in <strong>standalone mode</strong>, independently of raylib library.</p>
+                <a class="architecture-image-container" href="images/raylib_architecture_v5.5.png" target="_blank"><img src="images/raylib_architecture_v5.5.png" title="raylib architecture" alt="raylib architecture" width="800" /></a>
+                <br>
+            </div>
+
+            <div class="footer">
+                <p>Webpage hosted in <a href="https://github.com/raysan5/raylib.com">GitHub</a>, for issues and improvements <a href="https://github.com/raysan5/raylib.com">check it out</a>!</p>
+            </div>
+
+        </div>
+        <go-to-top-button></go-to-top-button>
+    </body>
+    <script src="ui_manager.js"></script>
+</html>

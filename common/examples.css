@@ -1,0 +1,72 @@
+#container .mix{ position: relative;  display: none; }
+#container .extext { top: 160px!important; width: 400px!important; }
+#difficulty_level { position: absolute; bottom: 18px; left: 12px; font-size: 24px; }
+
+#filter_menu { width:820px; height:80px; margin-left:15px; }
+#filter_function_label { margin-top: 2rem; }
+#filter_function { display: block; height: 1rem; margin-left:15px; margin-bottom: 2rem; }
+#matches_counter { display: inline; margin-bottom: 2rem; }
+
+.legendButton { float:left; margin-right:8px; margin-bottom:20px; width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
+#core       { background-color:#e1e1e1; color:#5c5a5a; border:5px solid #898888; }
+#shapes     { background-color:#f0d6d6; color:#c55757; border:5px solid #e66666; }
+#textures   { background-color:#c8eabf; color:#60815a; border:5px solid #75a06d; }
+#text       { background-color:#bef0dd; color:#377764; border:5px solid #52b296; }
+#models     { background-color:#bedce8; color:#417794; border:5px solid #5d9cbd; }
+#shaders    { background-color:#e2c3f5; color:#a864d2; border:5px solid #a864d2; }
+#audio      { background-color:#ebddae; color:#8c7539; border:5px solid #d3b157; }
+#physics    { background-color:#ddffdd; color:#00a820; border:5px solid #00a820; }
+
+.legendButton:hover { border: 5px solid #000 !important; }
+
+.fcore { border: 1px solid #898888; margin-left: 12px; }
+.fshapes { border: 1px solid #e66666; margin-left: 12px; }
+.ftextures { border: 1px solid #75a06d; margin-left: 12px; }
+.ftext { border: 1px solid #52b296; margin-left: 12px; }
+.fmodels { border: 1px solid #5d9cbd; margin-left: 12px; }
+.fshaders { border: 1px solid #a864d2; margin-left: 12px; }
+.faudio { border: 1px solid #d3b157; margin-left: 12px; }
+.fphysics { border: 1px solid #00a820; margin-left: 12px; }
+
+.fcore p { color:#5c5a5a!important; }
+.fshapes p { color:#c55757!important; }
+.ftextures p { color:#60815a!important; }
+.ftext p { color:#377764!important; }
+.fmodels p { color:#417794!important; }
+.fshaders p { color:#a864d2!important; }
+.faudio p { color:#8c7539!important; }
+.fphysics p { color:#00a820!important; }
+
+#container .fcore a img, #container .fcore a { border: none; overflow: hidden; float: left; background-color: #e1e1e1; opacity: 1; }
+#container .fcore a:hover { border: 10px solid #898888; }
+#container .fcore a:hover img { margin: -10px; opacity: 0.4; }
+
+#container .fshapes a img, #container .fshapes a { border: none; overflow: hidden; float: left; background-color: #f0d6d6; opacity: 1; }
+#container .fshapes a:hover { border: 10px solid #e66666; }
+#container .fshapes a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .ftextures a img, #container .ftextures a { border: none; overflow: hidden; float: left; background-color: #c8eabf; opacity: 1; }
+#container .ftextures a:hover { border: 10px solid #75a06d; }
+#container .ftextures a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .ftext a img, #container .ftext a { border: none; overflow: hidden; float: left; background-color: #bef0dd; opacity: 1; }
+#container .ftext a:hover { border: 10px solid #52b296; }
+#container .ftext a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .fmodels a img, #container .fmodels a { border: none; overflow: hidden; float: left; background-color: #bedce8; opacity: 1; }
+#container .fmodels a:hover { border: 10px solid #5d9cbd; }
+#container .fmodels a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .fshaders a img, #container .fshaders a { border: none; overflow: hidden; float: left; background-color: #e0c6f1; opacity: 1; }
+#container .fshaders a:hover { border: 10px solid #a864d2; }
+#container .fshaders a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .faudio a img, #container .faudio a { border: none; overflow: hidden; float: left; background-color: #ebddae; opacity: 1; }
+#container .faudio a:hover { border: 10px solid #d3b157; }
+#container .faudio a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .fphysics a img, #container .fphysics a { border: none; overflow: hidden; float: left; background-color: #ebddae; opacity: 1; }
+#container .fphysics a:hover { border: 10px solid #d3b157; }
+#container .fphysics a:hover img { margin: -10px; opacity: 0.3; }
+
+#container .extext { position:absolute; top:140px; width:320px; text-align: center; display: none; }
