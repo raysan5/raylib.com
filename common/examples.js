@@ -181,6 +181,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️☆☆' , 'shaders' , 'write_depth'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'shaders' , 'hybrid_render'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'shaders' , 'deferred_render'),
+        exampleEntry('⭐️⭐️⭐️⭐️' , 'shaders' , 'basic_pbr'),
         exampleEntry('⭐️☆☆☆' , 'audio'   , 'module_playing'),
         exampleEntry('⭐️☆☆☆' , 'audio'   , 'music_stream'),
         exampleEntry('⭐️⭐️⭐️☆' , 'audio'   , 'raw_stream'),
