@@ -5,36 +5,36 @@
     bool WindowShouldClose(void);                               // Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)
     bool IsWindowReady(void);                                   // Check if window has been initialized successfully
     bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
-    bool IsWindowHidden(void);                                  // Check if window is currently hidden (only PLATFORM_DESKTOP)
-    bool IsWindowMinimized(void);                               // Check if window is currently minimized (only PLATFORM_DESKTOP)
-    bool IsWindowMaximized(void);                               // Check if window is currently maximized (only PLATFORM_DESKTOP)
-    bool IsWindowFocused(void);                                 // Check if window is currently focused (only PLATFORM_DESKTOP)
+    bool IsWindowHidden(void);                                  // Check if window is currently hidden
+    bool IsWindowMinimized(void);                               // Check if window is currently minimized
+    bool IsWindowMaximized(void);                               // Check if window is currently maximized
+    bool IsWindowFocused(void);                                 // Check if window is currently focused
     bool IsWindowResized(void);                                 // Check if window has been resized last frame
     bool IsWindowState(unsigned int flag);                      // Check if one specific window flag is enabled
-    void SetWindowState(unsigned int flags);                    // Set window configuration state using flags (only PLATFORM_DESKTOP)
+    void SetWindowState(unsigned int flags);                    // Set window configuration state using flags
     void ClearWindowState(unsigned int flags);                  // Clear window configuration state flags
-    void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed (only PLATFORM_DESKTOP)
-    void ToggleBorderlessWindowed(void);                        // Toggle window state: borderless windowed (only PLATFORM_DESKTOP)
-    void MaximizeWindow(void);                                  // Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
-    void MinimizeWindow(void);                                  // Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
-    void RestoreWindow(void);                                   // Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
-    void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
-    void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
-    void SetWindowTitle(const char *title);                     // Set title for window (only PLATFORM_DESKTOP and PLATFORM_WEB)
-    void SetWindowPosition(int x, int y);                       // Set window position on screen (only PLATFORM_DESKTOP)
+    void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed, resizes monitor to match window resolution
+    void ToggleBorderlessWindowed(void);                        // Toggle window state: borderless windowed, resizes window to match monitor resolution
+    void MaximizeWindow(void);                                  // Set window state: maximized, if resizable
+    void MinimizeWindow(void);                                  // Set window state: minimized, if resizable
+    void RestoreWindow(void);                                   // Set window state: not minimized/maximized
+    void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit)
+    void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit)
+    void SetWindowTitle(const char *title);                     // Set title for window
+    void SetWindowPosition(int x, int y);                       // Set window position on screen
     void SetWindowMonitor(int monitor);                         // Set monitor for the current window
     void SetWindowMinSize(int width, int height);               // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
     void SetWindowMaxSize(int width, int height);               // Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE)
     void SetWindowSize(int width, int height);                  // Set window dimensions
-    void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
-    void SetWindowFocused(void);                                // Set window focused (only PLATFORM_DESKTOP)
+    void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f]
+    void SetWindowFocused(void);                                // Set window focused
     void *GetWindowHandle(void);                                // Get native window handle
     int GetScreenWidth(void);                                   // Get current screen width
     int GetScreenHeight(void);                                  // Get current screen height
     int GetRenderWidth(void);                                   // Get current render width (it considers HiDPI)
     int GetRenderHeight(void);                                  // Get current render height (it considers HiDPI)
     int GetMonitorCount(void);                                  // Get number of connected monitors
-    int GetCurrentMonitor(void);                                // Get current connected monitor
+    int GetCurrentMonitor(void);                                // Get current monitor where window is placed
     Vector2 GetMonitorPosition(int monitor);                    // Get specified monitor position
     int GetMonitorWidth(int monitor);                           // Get specified monitor width (current video mode used by monitor)
     int GetMonitorHeight(int monitor);                          // Get specified monitor height (current video mode used by monitor)
@@ -46,6 +46,7 @@
     const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the specified monitor
     void SetClipboardText(const char *text);                    // Set clipboard text content
     const char *GetClipboardText(void);                         // Get clipboard text content
+    Image GetClipboardImage(void);                              // Get clipboard image
     void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
     void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
 
@@ -84,7 +85,7 @@
     // NOTE: Shader functionality is not available on OpenGL 1.1
     Shader LoadShader(const char *vsFileName, const char *fsFileName);   // Load shader from files and bind default locations
     Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode); // Load shader from code strings and bind default locations
-    bool IsShaderReady(Shader shader);                                   // Check if a shader is ready
+    bool IsShaderValid(Shader shader);                                   // Check if a shader is valid (loaded on GPU)
     int GetShaderLocation(Shader shader, const char *uniformName);       // Get shader uniform location
     int GetShaderLocationAttrib(Shader shader, const char *attribName);  // Get shader attribute location
     void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType);               // Set shader uniform value
@@ -94,13 +95,15 @@
     void UnloadShader(Shader shader);                                    // Unload shader from GPU memory (VRAM)
 
     // Screen-space-related functions
-    Ray GetMouseRay(Vector2 mousePosition, Camera camera);      // Get a ray trace from mouse position
-    Matrix GetCameraMatrix(Camera camera);                      // Get camera transform matrix (view matrix)
-    Matrix GetCameraMatrix2D(Camera2D camera);                  // Get camera 2d transform matrix
-    Vector2 GetWorldToScreen(Vector3 position, Camera camera);  // Get the screen space position for a 3d world space position
-    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera); // Get the world space position for a 2d camera screen space position
+    #define GetMouseRay GetScreenToWorldRay     // Compatibility hack for previous raylib versions
+    Ray GetScreenToWorldRay(Vector2 position, Camera camera);         // Get a ray trace from screen position (i.e mouse)
+    Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height); // Get a ray trace from screen position (i.e mouse) in a viewport
+    Vector2 GetWorldToScreen(Vector3 position, Camera camera);        // Get the screen space position for a 3d world space position
     Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // Get size position for a 3d world space position
-    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera); // Get the screen space position for a 2d camera world space position
+    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);    // Get the screen space position for a 2d camera world space position
+    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);    // Get the world space position for a 2d camera screen space position
+    Matrix GetCameraMatrix(Camera camera);                            // Get camera transform matrix (view matrix)
+    Matrix GetCameraMatrix2D(Camera2D camera);                        // Get camera 2d transform matrix
 
     // Timing-related functions
     void SetTargetFPS(int fps);                                 // Set target FPS (maximum)
@@ -109,7 +112,7 @@
     int GetFPS(void);                                           // Get current FPS
 
     // Custom frame control functions
-    // NOTE: Those functions are intended for advance users that want full control over the frame processing
+    // NOTE: Those functions are intended for advanced users that want full control over the frame processing
     // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
     // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
     void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
@@ -136,7 +139,7 @@
     void MemFree(void *ptr);                                    // Internal memory free
 
     // Set custom callbacks
-    // WARNING: Callbacks setup is intended for advance users
+    // WARNING: Callbacks setup is intended for advanced users
     void SetTraceLogCallback(TraceLogCallback callback);         // Set custom trace log
     void SetLoadFileDataCallback(LoadFileDataCallback callback); // Set custom file binary data loader
     void SetSaveFileDataCallback(SaveFileDataCallback callback); // Set custom file binary data saver
@@ -165,10 +168,12 @@
     const char *GetPrevDirectoryPath(const char *dirPath);      // Get previous directory path for a given path (uses static string)
     const char *GetWorkingDirectory(void);                      // Get current working directory (uses static string)
     const char *GetApplicationDirectory(void);                  // Get the directory of the running application (uses static string)
+    int MakeDirectory(const char *dirPath);                     // Create directories (including full path requested), returns 0 on success
     bool ChangeDirectory(const char *dir);                      // Change working directory, return true on success
     bool IsPathFile(const char *path);                          // Check if a given path is a file or a directory
+    bool IsFileNameValid(const char *fileName);                 // Check if fileName is valid for the platform/OS
     FilePathList LoadDirectoryFiles(const char *dirPath);       // Load directory filepaths
-    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // Load directory filepaths with extension filtering and recursive directory scan
+    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // Load directory filepaths with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
     void UnloadDirectoryFiles(FilePathList files);              // Unload filepaths
     bool IsFileDropped(void);                                   // Check if a file has been dropped into window
     FilePathList LoadDroppedFiles(void);                        // Load dropped filepaths
@@ -180,10 +185,14 @@
     unsigned char *DecompressData(const unsigned char *compData, int compDataSize, int *dataSize);  // Decompress data (DEFLATE algorithm), memory must be MemFree()
     char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string, memory must be MemFree()
     unsigned char *DecodeDataBase64(const unsigned char *data, int *outputSize);                    // Decode Base64 string data, memory must be MemFree()
+    unsigned int ComputeCRC32(unsigned char *data, int dataSize);     // Compute CRC32 hash code
+    unsigned int *ComputeMD5(unsigned char *data, int dataSize);      // Compute MD5 hash code, returns static int[4] (16 bytes)
+    unsigned int *ComputeSHA1(unsigned char *data, int dataSize);      // Compute SHA1 hash code, returns static int[5] (20 bytes)
+
 
     // Automation events functionality
     AutomationEventList LoadAutomationEventList(const char *fileName);                // Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
-    void UnloadAutomationEventList(AutomationEventList *list);                        // Unload automation events list from file
+    void UnloadAutomationEventList(AutomationEventList list);                         // Unload automation events list from file
     bool ExportAutomationEventList(AutomationEventList list, const char *fileName);   // Export automation events list as text file
     void SetAutomationEventList(AutomationEventList *list);                           // Set automation event list to record to
     void SetAutomationEventBaseFrame(int frame);                                      // Set automation event internal base frame to start recording
@@ -197,7 +206,7 @@
 
     // Input-related functions: keyboard
     bool IsKeyPressed(int key);                             // Check if a key has been pressed once
-    bool IsKeyPressedRepeat(int key);                       // Check if a key has been pressed again (Only PLATFORM_DESKTOP)
+    bool IsKeyPressedRepeat(int key);                       // Check if a key has been pressed again
     bool IsKeyDown(int key);                                // Check if a key is being pressed
     bool IsKeyReleased(int key);                            // Check if a key has been released once
     bool IsKeyUp(int key);                                  // Check if a key is NOT being pressed
@@ -206,16 +215,17 @@
     void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
 
     // Input-related functions: gamepads
-    bool IsGamepadAvailable(int gamepad);                   // Check if a gamepad is available
-    const char *GetGamepadName(int gamepad);                // Get gamepad internal name id
-    bool IsGamepadButtonPressed(int gamepad, int button);   // Check if a gamepad button has been pressed once
-    bool IsGamepadButtonDown(int gamepad, int button);      // Check if a gamepad button is being pressed
-    bool IsGamepadButtonReleased(int gamepad, int button);  // Check if a gamepad button has been released once
-    bool IsGamepadButtonUp(int gamepad, int button);        // Check if a gamepad button is NOT being pressed
-    int GetGamepadButtonPressed(void);                      // Get the last gamepad button pressed
-    int GetGamepadAxisCount(int gamepad);                   // Get gamepad axis count for a gamepad
-    float GetGamepadAxisMovement(int gamepad, int axis);    // Get axis movement value for a gamepad axis
-    int SetGamepadMappings(const char *mappings);           // Set internal gamepad mappings (SDL_GameControllerDB)
+    bool IsGamepadAvailable(int gamepad);                                        // Check if a gamepad is available
+    const char *GetGamepadName(int gamepad);                                     // Get gamepad internal name id
+    bool IsGamepadButtonPressed(int gamepad, int button);                        // Check if a gamepad button has been pressed once
+    bool IsGamepadButtonDown(int gamepad, int button);                           // Check if a gamepad button is being pressed
+    bool IsGamepadButtonReleased(int gamepad, int button);                       // Check if a gamepad button has been released once
+    bool IsGamepadButtonUp(int gamepad, int button);                             // Check if a gamepad button is NOT being pressed
+    int GetGamepadButtonPressed(void);                                           // Get the last gamepad button pressed
+    int GetGamepadAxisCount(int gamepad);                                        // Get gamepad axis count for a gamepad
+    float GetGamepadAxisMovement(int gamepad, int axis);                         // Get axis movement value for a gamepad axis
+    int SetGamepadMappings(const char *mappings);                                // Set internal gamepad mappings (SDL_GameControllerDB)
+    void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration); // Set gamepad vibration for both motors (duration in seconds)
 
     // Input-related functions: mouse
     bool IsMouseButtonPressed(int button);                  // Check if a mouse button has been pressed once
@@ -246,7 +256,7 @@
     void SetGesturesEnabled(unsigned int flags);      // Enable a set of gestures using flags
     bool IsGestureDetected(unsigned int gesture);     // Check if a gesture have been detected
     int GetGestureDetected(void);                     // Get latest detected gesture
-    float GetGestureHoldDuration(void);               // Get gesture hold time in milliseconds
+    float GetGestureHoldDuration(void);               // Get gesture hold time in seconds
     Vector2 GetGestureDragVector(void);               // Get gesture drag vector
     float GetGestureDragAngle(void);                  // Get gesture drag angle
     Vector2 GetGesturePinchVector(void);              // Get gesture pinch delta

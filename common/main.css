@@ -346,6 +346,7 @@ li {
 #github     { background-image: url(img/icon_github.png);       }
 #kofi       { background-image: url(img/icon_kofi.png);         }
 #discord    { background-image: url(img/icon_discord.png);      }
+#bluesky    { background-image: url(img/icon_bluesky.png);      }
 
 #licensebox {
     width: 808px;
