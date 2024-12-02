@@ -110,7 +110,6 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'sprite_anim'),
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'sprite_button'),
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'sprite_explosion'),
-        exampleEntry('⭐️⭐️☆☆' , 'textures', 'svg_loading'),
         exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'bunnymark'),
         exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'mouse_painting'),
         exampleEntry('⭐️☆☆☆' , 'textures', 'blend_modes'),
