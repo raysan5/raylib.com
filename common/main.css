@@ -88,7 +88,8 @@ h2::before {
 }
 
 .page {
-    width: min(var(--content-width), 100vw);
+    /* width: min(var(--content-width), 100vw); */
+    max-width: var(--content-width);
     min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
@@ -101,30 +102,25 @@ h2::before {
 }
 
 .header-container {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-
-    width: max(100%, var(--content-width));
     display: flex;
+    position: fixed;
+
+    /* width: max(100%, var(--content-width)); original code */
+    width: 100dvw;
     flex-direction: row;
     justify-content: center;
-
     background-color: white;
-
     border-bottom: 2px solid #8c8c8c;
-
     z-index: 100;
 }
 
 .header {
+    display: flex;
     position: relative;
     width: var(--content-width);
     height: 128px;
     font-size: 10pt;
-
     background-color: #fff;
-
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -311,13 +307,12 @@ li {
 }
 
 #social {
+    display: flex;
+    position: absolute;
+    right: 0px;
     width: fit-content;
     height: fit-content;
-    float: right;
-    margin-right: 0px;
     margin-top: 8px;
-    display: flex;
-    flex-direction: row;
 }
 
 #social a {
@@ -604,13 +599,19 @@ a#game-template:hover {
 #platforms>a>img:hover {
     border: 6px solid #111111;
 }
-
-#bindings>a>img {
+a:has(img) {
+    display: flex;
+    height: max-content;
+}
+.box-icons-container{
+    display: flex;
+}
+.box-icons-container>a>img {
     border: 6px solid #888888;
     transition: all .2s ease;
 }
 
-#bindings>a>img:hover {
+.box-icons-container>a>img:hover {
     border: 6px solid #111111;
 }
 
@@ -639,7 +640,10 @@ a#game-template:hover {
   width: 100%;
   height: 100%;
 }
-
+.nav-container{
+    display: flex;
+    
+}
 @media only screen and (max-width: 600px) {
 
     /* general layout changes for mobile */
@@ -647,7 +651,7 @@ a#game-template:hover {
         padding-left: 8px;
     }
 
-    #platforms, #bindings, #extralibs, #raylibtech {
+    #platforms, .box-icons-container, #extralibs, #raylibtech {
         text-align: center;
     }
     .content {
@@ -664,28 +668,47 @@ a#game-template:hover {
 
     /* fixes menu + scrolling for mobile */
     .header {
-        display: flex;
-        width: 100vw;
-        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        /* display: flex; */
+        /* width: 100vw; */
+        /* align-items: center; */
+        /*-ms-overflow-style: none;   Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
     .header::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
     }
     
-    .header-container {
+    /* .header-container {
         width: 100vw;
-    }
+    } */
 
+     /*
     .menu {
-        width: 712px; /* this width is currently based on the websites normal menu */
+        width: 712px; 
         right: unset;
     }
+     i've disabled this to fix layout issues / gilbert 12/1/2024
+    this width is currently based on the websites normal menu */
 
     #logo {
         flex-direction: column; 
         flex-shrink: 0;
     }
+}
 
-
+@media only screen and (width <= 850px) {
+    .nav-container{
+        align-items: center;
+        margin-right: 20px;
+        
+        .menu{
+            display: none;
+        }
+        #social{
+            display: none;
+        }
+    }
+    .header{
+        justify-content: space-between;
+    }
 }

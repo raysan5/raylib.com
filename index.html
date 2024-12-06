@@ -59,11 +59,12 @@
                         <a href="cheatsheet/cheatsheet.html">cheatsheet</a>
                         <a id="wiki" href="https://github.com/raysan5/raylib/wiki">wiki</a>
                     </div>
+                    <hamburger-menu-button></hamburger-menu-button>
                 </div>
             </div>
         </div>
         
-        <div class="page">
+        <div class="page"> 
             <!--[if lt IE 7]>
                 <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> or <a href="https://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
             <![endif]-->
@@ -87,7 +88,7 @@
                 <p>If you enjoy raylib and want to help, consider supporting the project with a donation! Thank you very much! ❤️</p>
                 <br>
                 <div style="display: flex;">
-                    <div id="bindings" style="margin: 0 auto;">
+                    <div class="box-icons-container" style="margin: 0 auto;">
                         <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JB5CMEX9HXFKY&currency_code=EUR&source=url" target="_blank"><img class="icon" src="images/contribute/paypal.png" title="PayPal" alt="PayPal donation" width="84" height="84"/></a>
                         <a href="https://github.com/sponsors/raysan5" target="_blank"><img class="icon" src="images/contribute/github.png" title="GitHub" alt="raylib GitHub Sponsors" width="84" height="84"/></a>
                         <a href="https://www.patreon.com/raylib" target="_blank"><img class="icon" src="images/contribute/patreon.png" title="Patreon" alt="Patreon contributor" width="84" height="84"/></a>
@@ -102,7 +103,7 @@
                 <p>raylib does not provide the typical API documentation or a big set of tutorials. The library is designed to be minimalistic and be learned just from a cheatsheet with all required functionality and a big collection of examples to see how to use that functionality. <strong>Best way to learn to code is reading code.</strong></p>
                 <br>
                 <div style="display: flex;">
-                    <div id="platforms" style="margin: 0 auto;">
+                    <div id="platforms" class="box-icons-container" style="margin: 0 auto;">
                         <a href="https://www.raylib.com/cheatsheet/cheatsheet.html" target="_blank"><img class="icon" src="images/learning/cheatsheet.png" title="raylib cheatsheet" alt="raylib cheatsheet" width="112" height="112"/></a>
                         <a href="https://github.com/raysan5/raylib/blob/master/src/raylib.h" target="_blank"><img class="icon" src="images/learning/header.png" title="raylib header" alt="raylib header" width="112" height="112"/></a>
                         <a href="https://github.com/raysan5/raylib/blob/master/FAQ.md" target="_blank"><img class="icon" src="images/learning/faq.png" title="raylib FAQ" alt="raylib FAQ" width="112" height="112"/></a>
@@ -148,12 +149,12 @@
                     </div>
                 </div>
                 <br>
-                <h2 id="bindings"><a class="anchor-link" href="#bindings"></a>raylib language bindings</h2>
+                <h2 ><a class="anchor-link" href="#language-bindings"></a>raylib language bindings</h2>
                 <br>
                 <p>You can use raylib with multiple programming languages, there are <a class="simplelink" href="https://github.com/raysan5/raylib/blob/master/BINDINGS.md" target="_blank">+60 bindings</a>! Here is a list with some of them:</p>
                 <br>
                 <div style="display: flex;">
-                    <div id="bindings" style="margin: 0 auto;">
+                    <div id="#language-bindings" class="bindings box-icons-container" style="margin: 0 auto;">
                         <!--<a href="#"><img src="images/bindings/bind_cpp.png" title="windows" style="margin-right:8px;" alt="cpp raylib binding" width="84" height="84"/></a>-->
                         <a href="https://github.com/ChrisDill/Raylib-cs" target="_blank"><img class="icon" src="images/bindings/bind_csharp.png" title="raylib-cs" alt="c-sharp raylib binding" width="84" height="84"/></a>
                         <a href="https://github.com/gen2brain/raylib-go" target="_blank"><img class="icon" src="images/bindings/bind_go.png" title="raylib-go" alt="go raylib binding" width="84" height="84"/></a>
@@ -209,7 +210,7 @@
                 <p>Do you need help with raylib? Do you want to keep updated with latest news? Do you want to show your raylib creations? Join our amazing community of raylib developers! Choose the network you prefer! You are welcome!</p>
                 <br>
                 <div style="display: flex;">
-                    <div id="bindings" style="margin: 0 auto;">
+                    <div class="box-icons-container" style="margin: 0 auto;">
                         <a href="https://discord.gg/raylib" target="_blank"><img class="icon" src="images/networks/discord.png" title="raylib Discord" alt="raylib discord server" width="84" height="84"/></a>
                         <a href="https://www.twitch.tv/raysan5" target="_blank"><img class="icon" src="images/networks/twitch.png" title="raylib Twitch" alt="raylib twitch channel" width="84" height="84"/></a>
                         <a href="https://www.twitter.com/raysan5" target="_blank"><img class="icon" src="images/networks/twitter.png" title="raysan5 Twitter" alt="raylib creator twitter" width="84" height="84"/></a>
@@ -256,6 +257,7 @@
 
         </div>
         <go-to-top-button></go-to-top-button>
+        <mobile-menu></mobile-menu>
     </body>
     <script src="ui_manager.js"></script>
 </html>
