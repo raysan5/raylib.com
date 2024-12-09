@@ -264,7 +264,7 @@ li {
     line-height: 36px;
     float: left;
     position: relative;
-    cursor:default;
+    cursor: default;
     border: 2px solid #c8c8c8;
     border-bottom: none;
 }
