@@ -18,11 +18,12 @@
 
 #container .fclassic a img, #container .fclassic a { border: none; overflow: hidden; float: left; background-color: #e1e1e1; opacity: 1; }
 #container .fclassic a:hover { outline: 10px solid #898888; }
-#container .fclassic a:hover img { opacity: 0.4; }
-
+#container .fclassic a:hover img { opacity: 0.3; }
 #container .fgame a img, #container .fgame a { border: none; overflow: hidden; float: left; background-color: #f0d6d6; opacity: 1; }
 #container .fgame a:hover { outline: 10px solid #e66666; }
 #container .fgame a:hover img { opacity: 0.3; }
-#container .extext { position:absolute; top:140px; width:320px;   text-align: center; display: none; p{ font-size: 1.4rem; font-weight: 600;}}
+#container .extext { position:absolute; top:140px; width:320px;   text-align: center; display: none; p{ font-size: 1.3rem; font-weight: 600; transform: translateY(-20px);}}
 
+#container img{ transition: opacity 0.3s ease; }
 .mix > a{ height: 100%; }/*This makes all a tags with shorter images fill the their parent container to prevent different heights*/
+.mix:hover{img{filter:blur(5px)}}

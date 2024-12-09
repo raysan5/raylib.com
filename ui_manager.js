@@ -4,6 +4,10 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" view
             fill="black" />
         </svg>
         `;
+const svgCloseButton = `
+<svg width="100%" height="100%" viewBox="0 0 168 168" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><rect id="mobile-menu-1" serif:id="mobile menu 1" x="-3078.56" y="-212.563" width="3508.33" height="6633.33" style="fill:none;"/><clip-path id="_clip1"><rect x="-3078.56" y="-212.563" width="3508.33" height="6633.33"/></clip-path><g clip-path="url(#_clip1)"><g id="mobile-nav" serif:id="mobile nav"><g class="hamburger-piece"><path d="M171.441,-21.568c0,11.527 -9.358,20.885 -20.884,20.885l-199.898,0c-11.526,0 -20.884,-9.358 -20.884,-20.885c-0,-11.526 9.358,-20.884 20.884,-20.884l199.898,-0c11.526,-0 20.884,9.358 20.884,20.884Z" style="fill:#727272;"/><path d="M171.441,35.354c0,11.526 -9.358,20.884 -20.884,20.884l-199.898,0c-11.526,0 -20.884,-9.358 -20.884,-20.884c-0,-11.527 9.358,-20.885 20.884,-20.885l199.898,-0c11.526,-0 20.884,9.358 20.884,20.885Z" style="fill:#727272;"/><path d="M171.441,92.275c0,11.526 -9.358,20.884 -20.884,20.884l-199.898,0c-11.526,0 -20.884,-9.358 -20.884,-20.884c-0,-11.527 9.358,-20.885 20.884,-20.885l199.898,-0c11.526,-0 20.884,9.358 20.884,20.885Z" style="fill:#727272;"/></g></g><g id="mobile-menu" serif:id="mobile menu"><rect x="-3095.22" y="-212.563" width="3529.17" height="6633.33" style="fill:#fff;"/><g id="x"><path d="M162.278,5.605c7.473,7.472 7.473,19.606 0,27.079l-129.594,129.594c-7.473,7.473 -19.607,7.473 -27.079,0c-7.473,-7.473 -7.473,-19.606 -0,-27.079l129.594,-129.594c7.473,-7.473 19.606,-7.473 27.079,-0Z" style="fill:#727272;"/><path d="M162.278,162.278c-7.473,7.473 -19.606,7.473 -27.079,0l-129.594,-129.594c-7.473,-7.473 -7.473,-19.607 -0,-27.079c7.472,-7.473 19.606,-7.473 27.079,-0l129.594,129.594c7.473,7.473 7.473,19.606 0,27.079Z" style="fill:#727272;"/></g></g></g></svg>
+`;
+const body = document.body;
 class GoToTopButton extends HTMLElement {
   constructor() {
     super();
@@ -24,7 +28,7 @@ class GoToTopButton extends HTMLElement {
                 position: fixed;
                 bottom: 100px;
                 right:5dvw;
-                z-index: 1000;
+                z-index: 100;
                 // padding: 50px;
                 width: var(--button-size);
                 height: var(--button-size);
@@ -105,26 +109,26 @@ class HamburgerMenuButton extends HTMLElement {
     this.addEventListener("click", () => {
       console.log(navMobileMenu);
       navMobileMenu.setAttribute("data-open", "true");
+      setPageScrolling(false);
     });
   }
 }
 
 const mobileMenuHTML = `
-<div class="nav-mobile-container" >
         <div id="mobile-title-bar">
                 <div id="mobile-logo">
                         <img src="common/img/raylib_logo.png" alt="">
                 </div>
-                <button id="mobile-close-button">X</button>
+                <button id="mobile-close-button">${svgCloseButton}</button>
         </div>
-        <nav class="mobile-menu">
+        <nav class="mobile-menu-links-container">
                 <a id="mobile-about" href="index.html" >about</a>
                 <a id="mobile-examples" href="examples.html" >examples</a>
                 <a id="mobile-games" href="games.html" >games</a>
                 <a id= "mobile-cheatsheet" href="cheatsheet/cheatsheet.html" >cheatsheet</a>
                 <a id="mobile-wiki" href="https://github.com/raysan5/raylib/wiki" target="_blank">wiki</a>
         </nav>
-        <div id="mobile-social">
+        <div id="mobile-socials">
           <a id="mobile-twitter" href="https://www.twitter.com/raysan5" target="_blank" aria-label="raysan5's Twitter"><img src="common/img/icon_twitter.png" /></a>
           <a id="mobile-discord" href="https://discord.gg/raylib" target="_blank" aria-label="raylib discord"><img src="common/img/icon_discord.png" ></a>
           <a id="mobile-twitch" href="https://www.twitch.tv/raysan5" target="_blank" aria-label="raysan5 twitch channel"><img src="common/img/icon_twitch.png" /></a>
@@ -138,7 +142,6 @@ const mobileMenuHTML = `
           <a id="mobile-github" href="https://github.com/raysan5/raylib" target="_blank" aria-label="raylib's github"><img src="common/img/icon_github.png" /></a>
           <a id="mobile-bluesky" href="https://bsky.app/profile/raysan5.bsky.social" target="_blank" aria-label="raylib's bluesky profile"><img src="common/img/icon_bluesky.png" /></a>
         </div>
-</div>
 `;
 class MobileMenu extends HTMLElement {
   constructor() {
@@ -163,11 +166,7 @@ class MobileMenu extends HTMLElement {
   :host([data-open="false"]){
     display:none; 
   }
-  @media only screen and (max-width: 850px) {
-      // :host([data-open="true"]){
-      //     --mobile-menu-is-open: "true";
-      // }
-      // .nav-mobile-container {
+  @media only screen and (max-width: 850px) {      
       :host{
         position: fixed;   
         top: 0;
@@ -192,16 +191,18 @@ class MobileMenu extends HTMLElement {
         height: var(--button-size);
         border: none;
         background-color: transparent;
+        textalign: center;
         margin-right: 2%;
         padding: 5px;
         &:hover{cursor:pointer}
       }
-      #mobile-social{
+      #mobile-socials{
         display: flex;
         position: relative;
         flex-wrap: wrap;
         margin-inline-start: 25px;
-        margin-top: 60px;
+        margin-top: 40px;
+        margin-bottom: 20px;
         width: 60%;
         height: fit-content;
         --icons-size: 36px;
@@ -221,12 +222,13 @@ class MobileMenu extends HTMLElement {
             }         
         }       
       }
-      .mobile-menu{
+      .mobile-menu-links-container{
         display: flex;
         flex-direction: column;
-        > a{
+        a{
             padding-inline-start: 20px;
             padding-block: 20px;
+            text-decoration: none;
             &:not(.mobile-active){color:#5c5a5a;}
             &:hover{
                 color: black;
@@ -239,10 +241,9 @@ class MobileMenu extends HTMLElement {
           color: rgb(0, 0, 0);
           border-block: 2px solid #5c5a5a;
           background-color: #cecece;    
-      }
-  
+          pointer-events: none;
+      }  
   }
-
     `;
     this.setAttribute("data-open", "false");
     const menuTemplate = document.createElement("template");
@@ -250,14 +251,39 @@ class MobileMenu extends HTMLElement {
     shadow.appendChild(menuTemplate.content.cloneNode(true));
     shadow.appendChild(style);
     this.closeButton = shadow.querySelector("#mobile-close-button");
+    this.nodes = shadow.querySelectorAll(".mobile-menu-links-container a")
     this.closeButton.addEventListener("click", () => {
       this.setAttribute("data-open", "false");
+      setPageScrolling(true);
     });
-    this.menu = shadow.querySelector(".mobile-menu");
-    this.menu.addEventListener("click", (e) => {      
-        this.setAttribute("data-open", "false");      
-    });
-    
+  }
+  connectedCallback() {
+    switch(this.getAttribute("data-current-page")){
+      case "home": this.nodes[0].href=""; this.nodes[0].classList.add("mobile-active"); break;
+      case "examples": this.nodes[1].href=""; this.nodes[1].classList.add("mobile-active"); break;
+      case "games": this.nodes[2].href=""; this.nodes[2].classList.add("mobile-active"); break;
+      default: this.nodes[0].href=""; this.nodes[0].classList.add("mobile-active"); break;
+    }
+  }
+
+}
+const mobileMenuElem = document.querySelector("mobile-menu")
+// This makes sure the mobile menu gets disabled if the window is resized while it's open, so if window scrolling is disabled, it can be auto enabled right away.
+window.addEventListener('resize', ()=>{
+  if(window.innerWidth > 850 && mobileMenuElem.getAttribute("data-open") == "true"){
+    mobileMenuElem.setAttribute("data-open", "false");
+    setPageScrolling(true);
+  }else if(window.innerWidth < 850 && mobileMenuElem.getAttribute("data-open") == "true") setPageScrolling(false);
+
+});
+
+function setPageScrolling(scrollingEnabled){  
+  if(scrollingEnabled){
+    body.style.height = "initial";
+    body.style.overflowY = "initial";
+  }else{
+    body.style.height = "100%";
+    body.style.overflowY = "hidden";
   }
 }
 customElements.define("go-to-top-button", GoToTopButton);

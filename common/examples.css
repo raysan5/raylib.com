@@ -73,5 +73,6 @@
 #container .fphysics a:hover { outline: var(--examples-outline-width) solid #d3b157; }
 #container .fphysics a:hover img {  opacity: 0.3; }
 
-#container .extext { position:absolute; top:140px; width:320px; text-align: center; display: none; }
-
+#container img{ transition: opacity 0.3s ease; }
+#container .extext { position:absolute; top:140px; width:320px; text-align: center; display: none; p{ font-size: 1.3rem; font-weight: 600; transform: translateY(-20px);}}
+.mix:hover{img{filter:blur(5px)}}

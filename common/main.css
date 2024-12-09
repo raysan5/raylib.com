@@ -673,7 +673,7 @@ a:has(img) {
         /* display: flex; */
         /* width: 100vw; */
         /* align-items: center; */
-        /*-ms-overflow-style: none;   Internet Explorer 10+ */
+        -ms-overflow-style: none;   /*Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
     .header::-webkit-scrollbar { 
@@ -706,4 +706,3 @@ a:has(img) {
     }
     .header{justify-content: space-between;}
 }
-
