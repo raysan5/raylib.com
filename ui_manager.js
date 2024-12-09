@@ -62,6 +62,7 @@ const hamburgerMenuElem = `<button id="hamburger-button">
 <svg  width="100%" height="100%" viewBox="0 0 242 181" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="hamburger"><path d="M241.667,20.885c-0,11.526 -9.358,20.885 -20.885,20.885l-199.897,-0c-11.527,-0 -20.885,-9.359 -20.885,-20.885c0,-11.527 9.358,-20.885 20.885,-20.885l199.897,0c11.527,0 20.885,9.358 20.885,20.885Z" style="fill:currentColor;"/><path d="M241.667,90.306c-0,11.527 -9.358,20.885 -20.885,20.885l-199.897,-0c-11.527,-0 -20.885,-9.358 -20.885,-20.885c0,-11.527 9.358,-20.885 20.885,-20.885l199.897,0c11.527,0 20.885,9.358 20.885,20.885Z" style="fill:currentColor;"/><path d="M241.667,159.727c-0,11.527 -9.358,20.885 -20.885,20.885l-199.897,-0c-11.527,-0 -20.885,-9.358 -20.885,-20.885c0,-11.527 9.358,-20.885 20.885,-20.885l199.897,0c11.527,0 20.885,9.358 20.885,20.885Z" style="fill:currentColor;"/></g></svg>
 </button>`;
 
+const navMobileMenu = document.querySelector("mobile-menu");
 class HamburgerMenuButton extends HTMLElement {
   constructor() {
     super();
@@ -98,29 +99,29 @@ class HamburgerMenuButton extends HTMLElement {
             --mobile-menu-is-open: "false";                   
           }
       }`;
-    this.mobileMenu = document.querySelector("hamburger-menu-button")
+    this.mobileMenu = document.querySelector("hamburger-menu-button");
     shadow.appendChild(hamBurgerButtonTemplate.content.cloneNode(true));
     shadow.appendChild(style);
     this.addEventListener("click", () => {
-      alert(this.mobileMenu)
-      this.mobileMenu.style.display = "flex";
-    })
+      console.log(navMobileMenu);
+      navMobileMenu.setAttribute("data-open", "true");
+    });
   }
 }
 
 const mobileMenuHTML = `
-<div class="nav-mobile-container" data-open="false">
+<div class="nav-mobile-container" >
         <div id="mobile-title-bar">
                 <div id="mobile-logo">
                         <img src="common/img/raylib_logo.png" alt="">
                 </div>
-                <button id="mobile-close-button"></button>
+                <button id="mobile-close-button">X</button>
         </div>
         <nav class="mobile-menu">
-                <a id="mobile-about" href="" target="_blank">about</a>
-                <a id="mobile-examples" href="" target="_blank">examples</a>
-                <a id="mobile-games" href="" target="_blank">games</a>
-                <a id= "mobile-cheatsheet" href="cheatsheet/cheatsheet.html" target="_blank">cheatsheet</a>
+                <a id="mobile-about" href="index.html" >about</a>
+                <a id="mobile-examples" href="examples.html" >examples</a>
+                <a id="mobile-games" href="games.html" >games</a>
+                <a id= "mobile-cheatsheet" href="cheatsheet/cheatsheet.html" >cheatsheet</a>
                 <a id="mobile-wiki" href="https://github.com/raysan5/raylib/wiki" target="_blank">wiki</a>
         </nav>
         <div id="mobile-social">
@@ -138,19 +139,127 @@ const mobileMenuHTML = `
           <a id="mobile-bluesky" href="https://bsky.app/profile/raysan5.bsky.social" target="_blank" aria-label="raylib's bluesky profile"><img src="common/img/icon_bluesky.png" /></a>
         </div>
 </div>
-`
+`;
 class MobileMenu extends HTMLElement {
   constructor() {
     super();
     const shadow = this.attachShadow({ mode: "open" });
     const style = document.createElement("style");
-    style.textContent = ``;
+    style.textContent = `
+  @keyframes slide-in-nav-mobile{
+    from{
+        translate: -20px 0;
+        opacity: 0;
+    }
+    to{
+        translate: 0 0;
+        opacity: 1;
+    }    
+  }
+  :host{      
+      animation-name: slide-in-nav-mobile;
+      animation-duration: 0.3s;
+  }
+  :host([data-open="false"]){
+    display:none; 
+  }
+  @media only screen and (max-width: 850px) {
+      // :host([data-open="true"]){
+      //     --mobile-menu-is-open: "true";
+      // }
+      // .nav-mobile-container {
+      :host{
+        position: fixed;   
+        top: 0;
+        left: 0;
+        flex-direction: column;
+        width: 100dvw;  
+        height: 100dvh;
+        z-index: 200;
+        overflow-y: scroll;
+        background-color: white;        
+      }
+      #mobile-title-bar{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-inline: 20px;
+      }
+      #mobile-close-button{
+        --button-size: 40px;
+        display: flex;
+        width: var(--button-size);
+        height: var(--button-size);
+        border: none;
+        background-color: transparent;
+        margin-right: 2%;
+        padding: 5px;
+        &:hover{cursor:pointer}
+      }
+      #mobile-social{
+        display: flex;
+        position: relative;
+        flex-wrap: wrap;
+        margin-inline-start: 25px;
+        margin-top: 60px;
+        width: 60%;
+        height: fit-content;
+        --icons-size: 36px;
+        gap: 10px;
+        a{
+            display: flex;
+            width: var(--icons-size);
+            height: var(--icons-size);
+            img{
+                position: absolute;
+                clip: rect(0px, var(--icons-size), var(--icons-size), 0px);
+            }   
+            &:hover{
+                outline: black 2px solid;
+                scale: 1.1;
+                transition: scale 0.3s ease;
+            }         
+        }       
+      }
+      .mobile-menu{
+        display: flex;
+        flex-direction: column;
+        > a{
+            padding-inline-start: 20px;
+            padding-block: 20px;
+            &:not(.mobile-active){color:#5c5a5a;}
+            &:hover{
+                color: black;
+                background-color:#cecece;
+            }
+            transition: all 0.2s ease;
+        }        
+      }
+      .mobile-active{
+          color: rgb(0, 0, 0);
+          border-block: 2px solid #5c5a5a;
+          background-color: #cecece;    
+      }
+  
+  }
+
+    `;
+    this.setAttribute("data-open", "false");
     const menuTemplate = document.createElement("template");
-    menuTemplate.innerHTML = mobileMenu;
+    menuTemplate.innerHTML = mobileMenuHTML;
     shadow.appendChild(menuTemplate.content.cloneNode(true));
     shadow.appendChild(style);
+    this.closeButton = shadow.querySelector("#mobile-close-button");
+    this.closeButton.addEventListener("click", () => {
+      this.setAttribute("data-open", "false");
+    });
+    this.menu = shadow.querySelector(".mobile-menu");
+    this.menu.addEventListener("click", (e) => {      
+        this.setAttribute("data-open", "false");      
+    });
     
   }
 }
 customElements.define("go-to-top-button", GoToTopButton);
 customElements.define("hamburger-menu-button", HamburgerMenuButton);
+customElements.define("mobile-menu", MobileMenu);

@@ -298,6 +298,7 @@ li {
 }
 
 .architecture-image-container img {
+    max-width: calc(100vw - 20px);
     border: 2px solid #c8c8c8;
     transition: 0.125s;
 }
@@ -605,15 +606,24 @@ a:has(img) {
 }
 .box-icons-container{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    &:not(&:is(#language-bindings, #extralibs, #raylibtech)){
+        > a >img{
+            border: 6px solid #888888;
+            transition: all .2s ease;
+            &:hover {
+                border: 6px solid #111111;
+            }
+        }        
+    }    
 }
-.box-icons-container>a>img {
-    border: 6px solid #888888;
-    transition: all .2s ease;
+.awards-container{
+    gap: 5px;
 }
 
-.box-icons-container>a>img:hover {
-    border: 6px solid #111111;
-}
+
 
 #extralibs>a>img {
     transition: all .2s ease;
@@ -622,7 +632,9 @@ a:has(img) {
 #extralibs>a>img:hover {
     filter: contrast(200%);
 }
-
+#raylibtech{
+    max-width: calc(var(--content-width) - 120px);
+}
 #raylibtech>a>img {
     transition: all .2s ease;
 }
@@ -658,9 +670,9 @@ a:has(img) {
         padding: 30px 10px 0;
     }
 
-    .architecture-image-container img {
-        width: 100%;
-    }
+    /* .architecture-image-container img {
+        max-width: calc(100vw - 20px);
+    } */
 
     #itchioframe iframe {
         max-width: calc(100vw - 20px);
@@ -712,3 +724,4 @@ a:has(img) {
         justify-content: space-between;
     }
 }
+
