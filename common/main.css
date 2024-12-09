@@ -88,25 +88,20 @@ h2::before {
 }
 
 .page {
-    /* width: min(var(--content-width), 100vw); */
+    display: flex;
+    flex-direction: column;
     max-width: var(--content-width);
     min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
-
     background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-
     border-top: none;
 }
 
 .header-container {
     display: flex;
     position: fixed;
-
-    /* width: max(100%, var(--content-width)); original code */
-    width: 100dvw;
+    width: 100%;
     flex-direction: row;
     justify-content: center;
     background-color: white;
@@ -592,12 +587,12 @@ a#game-template:hover {
     background-color: white;
 }
 
-#platforms>a>img {
+.platforms>a>img {
     border: 6px solid #888888;
     transition: all .2s ease;
 }
 
-#platforms>a>img:hover {
+.platforms>a>img:hover {
     border: 6px solid #111111;
 }
 a:has(img) {
@@ -663,17 +658,12 @@ a:has(img) {
         padding-left: 8px;
     }
 
-    #platforms, .box-icons-container, #extralibs, #raylibtech {
+    .platforms, .box-icons-container, #extralibs, #raylibtech {
         text-align: center;
     }
     .content {
         padding: 30px 10px 0;
     }
-
-    /* .architecture-image-container img {
-        max-width: calc(100vw - 20px);
-    } */
-
     #itchioframe iframe {
         max-width: calc(100vw - 20px);
     }
@@ -701,7 +691,6 @@ a:has(img) {
     }
      i've disabled this to fix layout issues / gilbert 12/1/2024
     this width is currently based on the websites normal menu */
-
     #logo {
         flex-direction: column; 
         flex-shrink: 0;
@@ -711,17 +700,10 @@ a:has(img) {
 @media only screen and (width <= 850px) {
     .nav-container{
         align-items: center;
-        margin-right: 20px;
-        
-        .menu{
-            display: none;
-        }
-        #social{
-            display: none;
-        }
+        margin-right: 20px;        
+        .menu{display: none;}
+        #social{display: none;}
     }
-    .header{
-        justify-content: space-between;
-    }
+    .header{justify-content: space-between;}
 }
 
