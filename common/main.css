@@ -617,9 +617,6 @@ a:has(img) {
 .awards-container{
     gap: 5px;
 }
-
-
-
 #extralibs>a>img {
     transition: all .2s ease;
 }
@@ -670,9 +667,6 @@ a:has(img) {
 
     /* fixes menu + scrolling for mobile */
     .header {
-        /* display: flex; */
-        /* width: 100vw; */
-        /* align-items: center; */
         -ms-overflow-style: none;   /*Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
