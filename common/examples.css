@@ -5,7 +5,7 @@
 #filter_menu{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 #filter_function_label {text-align: center; margin-top: 2rem; }
 #filter_function { display: flex; flex-direction: column; height: max-content;  margin-bottom: 2rem; justify-content: center; }
-#filter_function input {align-self: center; max-width: 300px; padding-left: 10px; padding-block: 4px; }
+#filter_function input {align-self: center; max-width: 300px; padding-left: 10px; padding-block: 4px; font-size: 0.68rem; }
 #matches_counter { align-self: center;}
 
 .legendButton {  width:84px; height:78px; text-align:right; line-height:130px; cursor: pointer; transition: 0.125s; }
