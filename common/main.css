@@ -221,6 +221,8 @@ li {
     width: calc(100% - 128px);
     height: 48px;
 
+    cursor: pointer;
+
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -262,7 +264,7 @@ li {
     line-height: 36px;
     float: left;
     position: relative;
-
+    cursor: default;
     border: 2px solid #c8c8c8;
     border-bottom: none;
 }
