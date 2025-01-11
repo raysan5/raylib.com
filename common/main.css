@@ -88,43 +88,34 @@ h2::before {
 }
 
 .page {
-    width: min(var(--content-width), 100vw);
+    display: flex;
+    flex-direction: column;
+    max-width: var(--content-width);
     min-height: fit-content;
     margin: 0 auto;
     padding-top: 128px;
-
     background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-
     border-top: none;
 }
 
 .header-container {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-
-    width: max(100%, var(--content-width));
     display: flex;
+    position: fixed;
+    width: 100%;
     flex-direction: row;
     justify-content: center;
-
     background-color: white;
-
     border-bottom: 2px solid #8c8c8c;
-
     z-index: 100;
 }
 
 .header {
+    display: flex;
     position: relative;
     width: var(--content-width);
     height: 128px;
     font-size: 10pt;
-
     background-color: #fff;
-
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -304,6 +295,7 @@ li {
 }
 
 .architecture-image-container img {
+    max-width: calc(100vw - 20px);
     border: 2px solid #c8c8c8;
     transition: 0.125s;
 }
@@ -313,13 +305,12 @@ li {
 }
 
 #social {
+    display: flex;
+    position: absolute;
+    right: 0px;
     width: fit-content;
     height: fit-content;
-    float: right;
-    margin-right: 0px;
     margin-top: 8px;
-    display: flex;
-    flex-direction: row;
 }
 
 #social a {
@@ -598,24 +589,36 @@ a#game-template:hover {
     background-color: white;
 }
 
-#platforms>a>img {
+.platforms>a>img {
     border: 6px solid #888888;
     transition: all .2s ease;
 }
 
-#platforms>a>img:hover {
+.platforms>a>img:hover {
     border: 6px solid #111111;
 }
-
-#bindings>a>img {
-    border: 6px solid #888888;
-    transition: all .2s ease;
+a:has(img) {
+    display: flex;
+    height: max-content;
 }
-
-#bindings>a>img:hover {
-    border: 6px solid #111111;
+.box-icons-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    &:not(&:is(#language-bindings, #extralibs, #raylibtech)){
+        > a >img{
+            border: 6px solid #888888;
+            transition: all .2s ease;
+            &:hover {
+                border: 6px solid #111111;
+            }
+        }        
+    }    
 }
-
+.awards-container{
+    gap: 5px;
+}
 #extralibs>a>img {
     transition: all .2s ease;
 }
@@ -623,7 +626,9 @@ a#game-template:hover {
 #extralibs>a>img:hover {
     filter: contrast(200%);
 }
-
+#raylibtech{
+    max-width: calc(var(--content-width) - 120px);
+}
 #raylibtech>a>img {
     transition: all .2s ease;
 }
@@ -641,7 +646,10 @@ a#game-template:hover {
   width: 100%;
   height: 100%;
 }
-
+.nav-container{
+    display: flex;
+    
+}
 @media only screen and (max-width: 600px) {
 
     /* general layout changes for mobile */
@@ -649,45 +657,48 @@ a#game-template:hover {
         padding-left: 8px;
     }
 
-    #platforms, #bindings, #extralibs, #raylibtech {
+    .platforms, .box-icons-container, #extralibs, #raylibtech {
         text-align: center;
     }
     .content {
         padding: 30px 10px 0;
     }
-
-    .architecture-image-container img {
-        width: 100%;
-    }
-
     #itchioframe iframe {
         max-width: calc(100vw - 20px);
     }
 
     /* fixes menu + scrolling for mobile */
     .header {
-        display: flex;
-        width: 100vw;
-        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        -ms-overflow-style: none;   /*Internet Explorer 10+ */
         scrollbar-width: none;  /* Firefox */
     }
     .header::-webkit-scrollbar { 
         display: none;  /* Safari and Chrome */
     }
     
-    .header-container {
+    /* .header-container {
         width: 100vw;
-    }
+    } */
 
+     /*
     .menu {
-        width: 712px; /* this width is currently based on the websites normal menu */
+        width: 712px; 
         right: unset;
     }
-
+     i've disabled this to fix layout issues / gilbert 12/1/2024
+    this width is currently based on the websites normal menu */
     #logo {
         flex-direction: column; 
         flex-shrink: 0;
     }
+}
 
-
+@media only screen and (width <= 850px) {
+    .nav-container{
+        align-items: center;
+        margin-right: 20px;        
+        .menu{display: none;}
+        #social{display: none;}
+    }
+    .header{justify-content: space-between;}
 }

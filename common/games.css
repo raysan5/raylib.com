@@ -1,8 +1,6 @@
 #container .mix{ position: relative;  display: none; }
 #container .extext { top: 160px!important; width: 400px!important; }
-
-#filter_menu { width: 820px; height: 80px; margin-left: 2px; }
-
+#filter_menu{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
 .legendButton { padding:5px 15px; float:left; margin-left:10px; margin-right:10px; margin-bottom:20px; width:150px; text-align:center; }
 #classic { cursor:pointer; background-color:#e1e1e1; color:#5c5a5a; border:3px solid #898888; }
 #game { cursor:pointer; background-color:#f0d6d6; color:#c55757; border:3px solid #e66666; }
@@ -15,13 +13,17 @@
 
 .fclassic p { color:#5c5a5a!important; }
 .fgame p { color:#c55757!important; }
+.content > p:first-child{max-width: max-content; margin-inline: auto; text-align: center;}
+#container{--examples-outline-width:10px;display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-bottom:10px;>div{margin:0;max-width:90%;a{width:100%;img{height:auto;}}}}
 
 #container .fclassic a img, #container .fclassic a { border: none; overflow: hidden; float: left; background-color: #e1e1e1; opacity: 1; }
-#container .fclassic a:hover { border: 10px solid #898888; }
-#container .fclassic a:hover img { margin: -10px; opacity: 0.4; }
-
+#container .fclassic a:hover { outline: 10px solid #898888; }
+#container .fclassic a:hover img { opacity: 0.3; }
 #container .fgame a img, #container .fgame a { border: none; overflow: hidden; float: left; background-color: #f0d6d6; opacity: 1; }
-#container .fgame a:hover { border: 10px solid #e66666; }
-#container .fgame a:hover img { margin: -10px; opacity: 0.3; }
+#container .fgame a:hover { outline: 10px solid #e66666; }
+#container .fgame a:hover img { opacity: 0.3; }
+#container .extext { position:absolute; top:140px; width:320px;   text-align: center; display: none; p{ font-size: 1.3rem; font-weight: 600; transform: translateY(-20px);}}
 
-#container .extext { position:absolute; top:140px; width:320px; text-align: center; display: none; }
+#container img{ transition: opacity 0.3s ease; }
+.mix > a{ height: 100%; }/*This makes all a tags with shorter images fill the their parent container to prevent different heights*/
+.mix:hover{img{filter:blur(5px)}}
