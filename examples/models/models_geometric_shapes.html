@@ -1,1 +1,334 @@
-<!doctypehtml><html lang=EN-us><head><meta charset=utf-8><meta content="text/html; charset=utf-8"http-equiv=Content-Type><title>models geometric shapes</title><meta content="models geometric shapes"name=title><meta content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)"name=description><meta content="raylib, programming, examples, html5, C, C++, library, learn, games, videogames"name=keywords><meta content="width=device-width"name=viewport><meta content=website property=og:type><meta content="models geometric shapes"property=og:title><meta content=image/png property=og:image:type><meta content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)"property=og:image:alt><meta content=https://raw.githubusercontent.com/raysan5/raylib/master/examples/models/models_geometric_shapes.png property=og:image><meta content="raylib - models_geometric_shapes"property=og:site_name><meta content=https://www.raylib.com/examples/models/models_geometric_shapes.html property=og:url><meta content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)"property=og:description><meta content=summary_large_image name=twitter:card><meta content=@raysan5 name=twitter:site><meta content="models geometric shapes"name=twitter:title><meta content=https://raw.githubusercontent.com/raysan5/raylib/master/examples/models/models_geometric_shapes.png name=twitter:image><meta content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)"name=twitter:image:alt><meta content=https://www.raylib.com/examples/models/models_geometric_shapes.html name=twitter:url><meta content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)"name=twitter:description><link href=https://www.raylib.com/favicon.ico rel="shortcut icon"><style>body{font-family:arial;margin:0;padding:none}#header{width:100%;height:80px;background-color:#888}#logo{width:64px;height:64px;float:left;position:relative;margin:10px;background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAA7JJREFUaEPtk0FyWzEMQ+37X7fZhxX4YY3AD1OKF1nkzTRlSBCCLeVBnvl/AUdaELOunPno1kts1kixdtEZKVs+xIxebBkZsVknn/L5nFGDLR8T4zVC9fX19S/+tTFijrYK4jUjbPUtqBHpnEE6PkZD7jQZV8n5Recw1XQKciZuPaEtR6UjNs5ENVGMsBVqpPtER0ZMOhpyp8m4YL4OjD9yxsyZxnQycfMJETNSzsRE1+dihK3YMiJmpHTW3xpmXPC6BXlCHfqnBlsjY5hxf/6EVEOM2BTEi0fYCX4ONSI6Kq3Blg/prIOMq2CsRur4KQ0x64SdjOufEDEdHZGOhmz5RDHCVqhRuQ86YsVskbc+GXchLiHnFyYH+UigQDVGnImbT8hwFkgLg2qiM8JO6Ylx1FNLa3DmYwqCTsZd4BPqGJG7MwKzpeiWKTKxXkLMVE3MSOmsdwxLH6Rd/wCCLSNDx6djeKfJuArGeoYamRHpaEjnCBYZVy8hZqo2GI36qPjsiOiMsBXGcev4Mx9TLGTchbgEjN/uz6jGrBvDjg+LTNx8Qp2CbG2xMKgmOiPslJ4Yxx+eSnSkzlosZNwFPiHl7FRTkLNRJm4+IeVM0ymIH42wE/wcKalQI4MRl4EW3p6VcRWMua8F6WjIlqZDxvVPiHQ6CjVbYkV9ohhhp/Rk1wiYgpyJ78i4CsZbjkb8Qx+ihvzu3RPaKogZkY6GlEeMsKdPSOFIC8VoOusg44L5c+T8ouOoGhWbdWJ8tMi4egkxo4hoh2yNTGf3iIyr5Lyic4bRENXo+lvDjAt4C1Hk/OKtUaAj0+n4dMSZ2D+hrYJsaYh2SClG2jV9kJKKzhlGQ1SsW299Mq6C8dYZHTExo8fzieI5ivipYnYy7nwJqGKmOYyRwfiUBXITfh5qSHRGWEkfqJqURgvsdHyWYv7Ko8DnYYegk3EB00cxprdrJRzFd7YQzawu8L1GMTYS/KpPaAFTkIn1EmJmspJSs5xBzSyGhlkBmlxfNFiP5mw4wlbMh4F5Ddxp5jNINBdCEz9zPOC1zD7Q0HBdmXndwv0TMtydEdzlWJT4VZ8Qt9Qn4/onxMIwa5ZYGJU5yufBiCjwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaBBfOTCGHM2aEbZi1+gO1XTWVXMnzrhAn5DSOZVsiQlHnSITKzGj6DeTcZWc/3oy7h9//PF4PL4BlvsWrb6RE+oAAAAASUVORK5CYII=')}.emscripten{padding-right:0;margin-left:auto;margin-right:auto;display:block}div.emscripten{text-align:center}div.emscripten_border{border:1px solid #000}canvas.emscripten{border:0 none;background:#000;width:100%}.spinner{height:30px;width:30px;margin:0;margin-top:20px;margin-left:20px;display:inline-block;vertical-align:top;-webkit-animation:rotation .8s linear infinite;-moz-animation:rotation .8s linear infinite;-o-animation:rotation .8s linear infinite;animation:rotation .8s linear infinite;border-left:5px solid #000;border-right:5px solid #000;border-bottom:5px solid #000;border-top:5px solid red;border-radius:100%;background-color:#f5f5f5}@-webkit-keyframes rotation{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(360deg)}}@-moz-keyframes rotation{from{-moz-transform:rotate(0)}to{-moz-transform:rotate(360deg)}}@-o-keyframes rotation{from{-o-transform:rotate(0)}to{-o-transform:rotate(360deg)}}@keyframes rotation{from{transform:rotate(0)}to{transform:rotate(360deg)}}#status{display:inline-block;vertical-align:top;margin-top:30px;margin-left:20px;font-weight:700;color:#282828}#progress{height:0;width:0}#controls{display:inline-block;float:right;vertical-align:top;margin-top:15px;margin-right:20px}#output{width:100%;height:140px;margin:0 auto;margin-top:10px;display:block;background-color:#000;color:#25ae26;font-family:'Lucida Console',Monaco,monospace;outline:0}input[type=button]{background-color:#d3d3d3;border:4px solid #a9a9a9;color:#000;text-decoration:none;cursor:pointer;width:140px;height:50px;margin-left:10px}input[type=button]:hover{background-color:#f5f5f5ff;border-color:#000}</style></head><body><div id=header><a href=https://www.raylib.com id=logo></a><div class=spinner id=spinner></div><div class=emscripten id=status>Downloading...</div><span id=controls><span><input onclick='location.href="https://github.com/raysan5/raylib/blob/master/examples/models/models_geometric_shapes.c"'type=button value="📜 SOURCE CODE"></span><span><input onclick=Module.requestFullscreen(!1,!1) type=button value="🖵 FULLSCREEN"></span><span><input onclick=toggleAudio() type=button value="🔇 MUTE"id=btn-audio></span></span><div class=emscripten><progress hidden id=progress max=100 value=0></progress></div></div><div class=emscripten_border><canvas class=emscripten id=canvas oncontextmenu=event.preventDefault() tabindex=-1></canvas></div><textarea id=output rows=8></textarea><script src=https://cdn.jsdelivr.net/gh/eligrey/FileSaver.js/dist/FileSaver.min.js></script><script>function saveFileFromMEMFSToDisk(e,a){var i,o=FS.readFile(e);i=new Blob([o.buffer],{type:"application/octet-binary"}),saveAs(i,a)}</script><script>var statusElement=document.querySelector("#status"),progressElement=document.querySelector("#progress"),spinnerElement=document.querySelector("#spinner"),Module={preRun:[],postRun:[],print:function(){var e=document.querySelector("#output");return e&&(e.value=""),function(t){arguments.length>1&&(t=Array.prototype.slice.call(arguments).join(" ")),console.log(t),e&&(e.value+=t+"\n",e.scrollTop=e.scrollHeight)}}(),printErr:function(e){arguments.length>1&&(e=Array.prototype.slice.call(arguments).join(" ")),console.error(e)},canvas:function(){var e=document.querySelector("#canvas");return e.addEventListener("webglcontextlost",(function(e){alert("WebGL context lost. You will need to reload the page."),e.preventDefault()}),!1),e}(),setStatus:function(e){if(Module.setStatus.last||(Module.setStatus.last={time:Date.now(),text:""}),e!==Module.setStatus.last.text){var t=e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/),n=Date.now();t&&n-Module.setStatus.last.time<30||(Module.setStatus.last.time=n,Module.setStatus.last.text=e,t?(e=t[1],progressElement.value=100*parseInt(t[2]),progressElement.max=100*parseInt(t[4]),progressElement.hidden=!0,spinnerElement.hidden=!1):(progressElement.value=null,progressElement.max=null,progressElement.hidden=!0,e||(spinnerElement.style.display="none")),statusElement.innerHTML=e)}},totalDependencies:0,monitorRunDependencies:function(e){this.totalDependencies=Math.max(this.totalDependencies,e),Module.setStatus(e?"Preparing... ("+(this.totalDependencies-e)+"/"+this.totalDependencies+")":"All downloads complete.")}};Module.setStatus("Downloading..."),window.onerror=function(){Module.setStatus("Exception thrown, see JavaScript console"),spinnerElement.style.display="none",Module.setStatus=function(e){e&&Module.printErr("[post-exception status] "+e)}}</script><script>var audioBtn=document.querySelector("#btn-audio");const audioContexList=[];function toggleAudio(){var t=!1;audioContexList.forEach((e=>{"suspended"==e.state?(e.resume(),t=!0):"running"==e.state&&e.suspend()})),audioBtn.value=t?"🔇 MUTE":"🔈 RESUME"}self.AudioContext=new Proxy(self.AudioContext,{construct(t,e){const n=new t(...e);return audioContexList.push(n),"suspended"==n.state&&(audioBtn.value="🔈 RESUME"),n}})</script><script src=models_geometric_shapes.js async></script></body></html>
+<!doctype html>
+<html lang="EN-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>models geometric shapes</title>
+
+    <meta name="title" content="models geometric shapes">
+    <meta name="description" content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)">
+    <meta name="keywords" content="raylib, programming, examples, html5, C, C++, library, learn, games, videogames">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Open Graph metatags for sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="models geometric shapes">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image" content="https://raw.githubusercontent.com/raysan5/raylib/master/examples/models/models_geometric_shapes.png">
+    <meta property="og:image:alt" content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)" />
+    <meta property="og:site_name" content="raylib - models_geometric_shapes">
+    <meta property="og:url" content="https://www.raylib.com/examples/models/models_geometric_shapes.html">
+    <meta property="og:description" content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)">
+
+    <!-- Twitter metatags for sharing -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@raysan5">
+    <meta name="twitter:title" content="models geometric shapes">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/raysan5/raylib/master/examples/models/models_geometric_shapes.png">
+    <meta name="twitter:image:alt" content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)">
+    <meta name="twitter:url" content="https://www.raylib.com/examples/models/models_geometric_shapes.html">
+    <meta name="twitter:description" content="raylib [models] example - Draw some basic geometric shapes (cube, sphere, cylinder...)">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="https://www.raylib.com/favicon.ico">
+
+    <style>
+      body { font-family: arial; margin: 0; padding: none; }
+
+      #header {
+        width: 100%;
+        height: 80px;
+        background-color: #888888;
+      }
+
+      /* NOTE: raylib logo is embedded in the page as base64 png image */
+      #logo {
+        width:64px;
+        height:64px;
+        float:left;
+        position:relative;
+        margin:10px;
+        background-image:url('data:image/png;base64,\
+iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADs\
+MAAA7DAcdvqGQAAAAadEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjExR/NCNwAAA7JJREFUaEPtk0FyWzEMQ+37X7fZhxX4\
+YY3AD1OKF1nkzTRlSBCCLeVBnvl/AUdaELOunPno1kts1kixdtEZKVs+xIxebBkZsVknn/L5nFGDLR8T4zVC9fX19S/+tTFijr\
+YK4jUjbPUtqBHpnEE6PkZD7jQZV8n5Recw1XQKciZuPaEtR6UjNs5ENVGMsBVqpPtER0ZMOhpyp8m4YL4OjD9yxsyZxnQycfMJ\
+ETNSzsRE1+dihK3YMiJmpHTW3xpmXPC6BXlCHfqnBlsjY5hxf/6EVEOM2BTEi0fYCX4ONSI6Kq3Blg/prIOMq2CsRur4KQ0x64\
+SdjOufEDEdHZGOhmz5RDHCVqhRuQ86YsVskbc+GXchLiHnFyYH+UigQDVGnImbT8hwFkgLg2qiM8JO6Ylx1FNLa3DmYwqCTsZd\
+4BPqGJG7MwKzpeiWKTKxXkLMVE3MSOmsdwxLH6Rd/wCCLSNDx6djeKfJuArGeoYamRHpaEjnCBYZVy8hZqo2GI36qPjsiOiMsB\
+XGcev4Mx9TLGTchbgEjN/uz6jGrBvDjg+LTNx8Qp2CbG2xMKgmOiPslJ4Yxx+eSnSkzlosZNwFPiHl7FRTkLNRJm4+IeVM0ymI\
+H42wE/wcKalQI4MRl4EW3p6VcRWMua8F6WjIlqZDxvVPiHQ6CjVbYkV9ohhhp/Rk1wiYgpyJ78i4CsZbjkb8Qx+ihvzu3RPaKo\
+gZkY6GlEeMsKdPSOFIC8VoOusg44L5c+T8ouOoGhWbdWJ8tMi4egkxo4hoh2yNTGf3iIyr5Lyic4bRENXo+lvDjAt4C1Hk/OKt\
+UaAj0+n4dMSZ2D+hrYJsaYh2SClG2jV9kJKKzhlGQ1SsW299Mq6C8dYZHTExo8fzieI5ivipYnYy7nwJqGKmOYyRwfiUBXITfh\
+5qSHRGWEkfqJqURgvsdHyWYv7Ko8DnYYegk3EB00cxprdrJRzFd7YQzawu8L1GMTYS/KpPaAFTkIn1EmJmspJSs5xBzSyGhlkB\
+mlxfNFiP5mw4wlbMh4F5Ddxp5jNINBdCEz9zPOC1zD7Q0HBdmXndwv0TMtydEdzlWJT4VZ8Qt9Qn4/onxMIwa5ZYGJU5yufBiC\
+jwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaBBfOTCGHM2aEbZi1+gO\
+1XTWVXMnzrhAn5DSOZVsiQlHnSITKzGj6DeTcZWc/3oy7h9//PF4PL4BlvsWrb6RE+oAAAAASUVORK5CYII=');
+      }
+
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+
+      /* NOTE: Canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten {
+        border: 0px none;
+        background: black;
+        width: 100%;
+      }
+
+      .spinner {
+        height: 30px;
+        width: 30px;
+        margin: 0;
+        margin-top: 20px;
+        margin-left: 20px;
+        display: inline-block;
+        vertical-align: top;
+        -webkit-animation: rotation .8s linear infinite;
+        -moz-animation: rotation .8s linear infinite;
+        -o-animation: rotation .8s linear infinite;
+        animation: rotation 0.8s linear infinite;
+        border-left: 5px solid black;
+        border-right: 5px solid black;
+        border-bottom: 5px solid black;
+        border-top: 5px solid red;
+        border-radius: 100%;
+        background-color: rgb(245, 245, 245);
+      }
+      @-webkit-keyframes rotation {
+        from {-webkit-transform: rotate(0deg);}
+        to {-webkit-transform: rotate(360deg);}
+      }
+      @-moz-keyframes rotation {
+        from {-moz-transform: rotate(0deg);}
+        to {-moz-transform: rotate(360deg);}
+      }
+      @-o-keyframes rotation {
+        from {-o-transform: rotate(0deg);}
+        to {-o-transform: rotate(360deg);}
+      }
+      @keyframes rotation {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+      }
+
+      #status {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 30px;
+        margin-left: 20px;
+        font-weight: bold;
+        color: rgb(40, 40, 40);
+      }
+
+      #progress {
+        height: 0px;
+        width: 0px;
+      }
+
+      #controls {
+        display: inline-block;
+        float: right;
+        vertical-align: top;
+        margin-top: 15px;
+        margin-right: 20px;
+      }
+
+      #output {
+        border-left: 0px none;
+        border-right: 0px none;
+        border-bottom: 0px none;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        height: 140px;
+        margin: 0 auto;
+        margin-top: 10px;
+        display: block;
+        background-color: black;
+        color: rgb(37, 174, 38);
+        font-family: 'Lucida Console', Monaco, monospace;
+        outline: none;
+      }
+
+      input[type=button] {
+        background-color: lightgray;
+        border: 4px solid darkgray;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+        width: 140px;
+        height: 50px;
+        margin-left: 10px;
+      }
+
+      input[type=button]:hover {
+        background-color: #f5f5f5ff;
+        border-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+        <a id="logo" href="https://www.raylib.com"></a>
+
+        <div class="spinner" id='spinner'></div>
+        <div class="emscripten" id="status">Downloading...</div>
+
+        <span id='controls'>
+          <span><input type="button" value="📜 SOURCE CODE" onclick="location.href='https://github.com/raysan5/raylib/blob/master/examples/models/models_geometric_shapes.c';"/></span>
+          <span><input type="button" value="🖵 FULLSCREEN" onclick="Module.requestFullscreen(false, false)"></span>
+          <span><input type="button" id="btn-audio" value="🔇 MUTE" onclick="toggleAudio()"></span>
+        </span>
+
+        <div class="emscripten">
+          <progress value="0" max="100" id="progress" hidden=1></progress>
+        </div>
+    </div>
+
+    <div class="emscripten_border">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    </div>
+
+    <textarea id="output" rows="8"></textarea>
+
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/gh/eligrey/FileSaver.js/dist/FileSaver.min.js"> </script>
+    <script type='text/javascript'>
+        function saveFileFromMEMFSToDisk(memoryFSname, localFSname)     // This can be called by C/C++ code
+        {
+            var isSafari = false; // Not supported, navigator.userAgent access is being restricted
+            //var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            var data = FS.readFile(memoryFSname);
+            var blob;
+
+            if (isSafari) blob = new Blob([data.buffer], { type: "application/octet-stream" });
+            else blob = new Blob([data.buffer], { type: "application/octet-binary" });
+
+            // NOTE: SaveAsDialog is a browser setting. For example, in Google Chrome,
+            // in Settings/Advanced/Downloads section you have a setting:
+            // 'Ask where to save each file before downloading' - which you can set true/false.
+            // If you enable this setting it would always ask you and bring the SaveAsDialog
+            saveAs(blob, localFSname);
+        }
+    </script>
+    <script type='text/javascript'>
+        var statusElement = document.querySelector('#status');
+        var progressElement = document.querySelector('#progress');
+        var spinnerElement = document.querySelector('#spinner');
+        var Module = {
+            preRun: [],
+            postRun: [],
+            print: (function() {
+                var element = document.querySelector('#output');
+
+                if (element) element.value = '';    // Clear browser cache
+
+                return function(text) {
+                    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                    // These replacements are necessary if you render to raw HTML
+                    //text = text.replace(/&/g, "&amp;");
+                    //text = text.replace(/</g, "&lt;");
+                    //text = text.replace(/>/g, "&gt;");
+                    //text = text.replace('\n', '<br>', 'g');
+                    console.log(text);
+
+                    if (element) {
+                        element.value += text + "\n";
+                        element.scrollTop = element.scrollHeight; // focus on bottom
+                    }
+                };
+            })(),
+            printErr: function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+
+                console.error(text);
+            },
+            canvas: (function() {
+                var canvas = document.querySelector('#canvas');
+
+                // As a default initial behavior, pop up an alert when webgl context is lost.
+                // To make your application robust, you may want to override this behavior before shipping!
+                // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+                canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+                return canvas;
+            })(),
+            setStatus: function(text) {
+                if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+                if (text === Module.setStatus.last.text) return;
+
+                var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+                var now = Date.now();
+
+                if (m && now - Module.setStatus.last.time < 30) return; // If this is a progress update, skip it if too soon
+
+                Module.setStatus.last.time = now;
+                Module.setStatus.last.text = text;
+
+                if (m) {
+                    text = m[1];
+                    progressElement.value = parseInt(m[2])*100;
+                    progressElement.max = parseInt(m[4])*100;
+                    progressElement.hidden = true;
+                    spinnerElement.hidden = false;
+                } else {
+                    progressElement.value = null;
+                    progressElement.max = null;
+                    progressElement.hidden = true;
+                    if (!text) spinnerElement.style.display = 'none';
+                }
+
+                statusElement.innerHTML = text;
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+                Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+            },
+            //noInitialRun: true
+        };
+
+        Module.setStatus('Downloading...');
+
+        window.onerror = function() {
+            Module.setStatus('Exception thrown, see JavaScript console');
+            spinnerElement.style.display = 'none';
+            Module.setStatus = function(text) { if (text) Module.printErr('[post-exception status] ' + text); };
+        };
+    </script>
+
+    <!-- REF: https://developers.google.com/web/updates/2018/11/web-audio-autoplay -->
+    <script type='text/javascript'>
+        var audioBtn = document.querySelector('#btn-audio');
+
+        // An array of all contexts to resume on the page
+        const audioContexList = [];
+        (function() {
+            // A proxy object to intercept AudioContexts and
+            // add them to the array for tracking and resuming later
+            self.AudioContext = new Proxy(self.AudioContext, {
+                construct(target, args) {
+                    const result = new target(...args);
+                    audioContexList.push(result);
+                    if (result.state == "suspended") audioBtn.value = "🔈 RESUME";
+                    return result;
+                }
+            });
+        })();
+
+        function toggleAudio() {
+            var resumed = false;
+            audioContexList.forEach(ctx => {
+                if (ctx.state == "suspended") { ctx.resume(); resumed = true; }
+                else if (ctx.state == "running") ctx.suspend();
+            });
+
+            if (resumed) audioBtn.value = "🔇 MUTE";
+            else audioBtn.value = "🔈 RESUME";
+        }
+    </script>
+    <script async type="text/javascript" src="models_geometric_shapes.js"></script>
+  </body>
+</html>
