@@ -71,7 +71,6 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️⭐️☆' , 'core'    , 'custom_logging'),
         exampleEntry('⭐️⭐️☆☆' , 'core'    , 'drop_files'),
         exampleEntry('⭐️☆☆☆' , 'core'    , 'input_gamepad'),
-        exampleEntry('⭐️☆☆☆' , 'core'    , 'input_gamepad_info'),
         exampleEntry('⭐️⭐️☆☆' , 'core'    , 'input_gestures'),
         exampleEntry('⭐️☆☆☆' , 'core'    , 'input_keys'),
         exampleEntry('⭐️☆☆☆' , 'core'    , 'input_mouse'),
