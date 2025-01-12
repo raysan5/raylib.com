@@ -105,7 +105,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️⭐️⭐️' , 'shapes'  , 'top_down_lights'),
         exampleEntry('⭐️☆☆☆' , 'textures', 'logo_raylib'),
         exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'srcrec_dstrec'),
-        exampleEntry('⭐️⭐️☆☆' , 'textures', 'image_channels'),
+        exampleEntry('⭐️⭐️☆☆' , 'textures', 'image_channel'),
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'image_drawing'),
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'image_generation'),
         exampleEntry('⭐️☆☆☆' , 'textures', 'image_loading'),
