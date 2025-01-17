@@ -13,13 +13,13 @@ Ready to learn? Jump to [code examples!](https://www.raylib.com/examples.html)
 social networks
 ----------------
 
-   * Webpage: [https://www.raylib.com](https://www.raylib.com)
-   * Discord: [raylib](https://discord.gg/raylib)
-   * Reddit: [raylib](https://www.reddit.com/r/raylib)
-   * X: [raysan5](https://www.twitter.com/raysan5)
-   * BlueSky: [raysan5](https://bsky.app/profile/raysan5.bsky.social)
-   * Patreon: [raysan5](https://www.patreon.com/raysan5)
-   * Twitch: [raysan5](https://www.twitch.tv/raysan5)
+  - Webpage: [https://www.raylib.com](https://www.raylib.com)
+  - Discord: [raylib](https://discord.gg/raylib)
+  - Reddit: [raylib](https://www.reddit.com/r/raylib)
+  - Twitter/X: [raysan5](https://www.twitter.com/raysan5)
+  - BlueSky: [raysan5](https://bsky.app/profile/raysan5.bsky.social)
+  - Patreon: [raysan5](https://www.patreon.com/raysan5)
+  - Twitch: [raysan5](https://www.twitch.tv/raysan5)
 
 license
 -------
