@@ -359,6 +359,24 @@ li {
     margin-left: 25px !important;
 }
 
+.donateButton {
+    text-align: center;
+    padding-bottom:15px;
+}
+
+.donateButton a {
+    padding: 10px;
+    border: solid 5px #d0d0d0;
+    margin-bottom:15px;
+    font-size: 15pt;
+    font-weight: bold;
+    transition: all .2s ease;
+}
+.donateButton a:hover {
+    border: solid 5px #000;
+    color: #000;
+}
+
 .downloadText {
     width: 420px;
     height: 40px;
