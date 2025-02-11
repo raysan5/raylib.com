@@ -706,7 +706,7 @@ a:has(img) {
 .btn-donate {
     background-color: #f36464;
     color: white;
-    border-width: 4px;
+    border-width: 5px;
     border-color: #ffb5b5;
     padding: 10px 20px;
     font-size: 16px;
