@@ -702,3 +702,25 @@ a:has(img) {
     }
     .header{justify-content: space-between;}
 }
+
+.btn-donate {
+    background-color: #f36464;
+    color: white;
+    border-width: 4px;
+    border-color: #ffb5b5;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 0px;
+    border-style: solid;
+}
+
+.btn-donate:hover {
+    background-color: #c52525;
+    border-width: 5px;
+    border-color: #ff1010;
+}
+
+#btndonate {
+    text-align:center;
+}
