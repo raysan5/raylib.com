@@ -304,19 +304,23 @@ li {
     border: 2px solid #828282;
 }
 
+.donate-nav {
+    display: flex;
+    margin-top: 9px;
+    margin-left: auto;
+    font-size: 20px;
+    height: 34px;
+    align-items: center;
+}
+
 #social {
     display: flex;
-    position: absolute;
-    right: 0px;
-    width: fit-content;
-    height: fit-content;
     margin-top: 8px;
 }
 
 #social a {
     width: 36px;
     height: 36px;
-    background-color: #f5f5f5;
     background-repeat: none;
     background-position: 0px 0px;
     cursor: pointer;
@@ -326,20 +330,8 @@ li {
     background-position: 0px -36px;
 }
 
-#youtube    { background-image: url(img/icon_youtube.png);      }
-#handmade   { background-image: url(img/icon_handmade.png);     }
-#twitch     { background-image: url(img/icon_twitch.png);       }
-#redbubble  { background-image: url(img/icon_redbubble.png);    }
-#patreon    { background-image: url(img/icon_patreon.png);      }
-#itchio     { background-image: url(img/icon_itchio.png);       }
-#reddit     { background-image: url(img/icon_reddit.png);       }
-#freenode   { background-image: url(img/icon_freenode_irc.png); }
-#gitter     { background-image: url(img/icon_gitter.png);       }
-#twitter    { background-image: url(img/icon_twitter.png);      }
 #github     { background-image: url(img/icon_github.png);       }
-#kofi       { background-image: url(img/icon_kofi.png);         }
 #discord    { background-image: url(img/icon_discord.png);      }
-#bluesky    { background-image: url(img/icon_bluesky.png);      }
 
 #licensebox {
     width: 808px;
@@ -648,7 +640,7 @@ a:has(img) {
 }
 .nav-container{
     display: flex;
-    
+    flex-grow: 1;
 }
 @media only screen and (max-width: 600px) {
 
@@ -696,7 +688,8 @@ a:has(img) {
 @media only screen and (width <= 850px) {
     .nav-container{
         align-items: center;
-        margin-right: 20px;        
+        margin-right: 20px;
+        .donate-nav{display: none;}
         .menu{display: none;}
         #social{display: none;}
     }
@@ -720,4 +713,26 @@ a:has(img) {
 
 #btndonate {
     text-align:center;
+}
+
+#btndonate {
+    text-align:center;
+}
+
+.btn-donate-top {
+    display: flex;
+    background-color: #f36464;
+    color: white;
+    border-width: 2px;
+    border-color: #ffb5b5;
+    padding: 2px 5px;
+    cursor: pointer;
+    border-radius: 0px;
+    border-style: solid;
+}
+
+.btn-donate-top:hover {
+    background-color: #c52525;
+    border-width: 2px;
+    border-color: #ff1010;
 }

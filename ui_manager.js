@@ -76,10 +76,12 @@ class HamburgerMenuButton extends HTMLElement {
     hamBurgerButtonTemplate.innerHTML = hamburgerMenuElem;
     style.textContent = `
 
-      // :host{
-      //   display: flex;
-      //   margin-left: auto;
-      // }
+      :host {
+        margin-left: auto !important;
+          @media only screen and (width > 850px){                  
+            display: none;
+          }
+      }
       #hamburger-button{    
         --max-button-size: 60px;
         display: flex;
@@ -125,22 +127,13 @@ const mobileMenuHTML = `
                 <a id="mobile-about" href="index.html" >about</a>
                 <a id="mobile-examples" href="examples.html" >examples</a>
                 <a id="mobile-games" href="games.html" >games</a>
-                <a id= "mobile-cheatsheet" href="cheatsheet/cheatsheet.html" >cheatsheet</a>
+                <a id="mobile-cheatsheet" href="cheatsheet/cheatsheet.html" >cheatsheet</a>
                 <a id="mobile-wiki" href="https://github.com/raysan5/raylib/wiki" target="_blank">wiki</a>
         </nav>
         <div id="mobile-socials">
-          <a id="mobile-twitter" href="https://www.twitter.com/raysan5" target="_blank" aria-label="raysan5's Twitter"><img src="common/img/icon_twitter.png" /></a>
+          <a alt="donate" title="donate" class="mobile-donate-nav" href="https://github.com/sponsors/raysan5" target="_blank"><button class="mobile-btn-donate-top">Donate ❤️</button></a>
           <a id="mobile-discord" href="https://discord.gg/raylib" target="_blank" aria-label="raylib discord"><img src="common/img/icon_discord.png" ></a>
-          <a id="mobile-twitch" href="https://www.twitch.tv/raysan5" target="_blank" aria-label="raysan5 twitch channel"><img src="common/img/icon_twitch.png" /></a>
-          <a id="mobile-kofi" href="https://ko-fi.com/raysan5" target="_blank" aria-label="raylib coffee page for support"><img src="common/img/icon_kofi.png" /></a>
-          <a id="mobile-itchio" href="https://raysan5.itch.io" target="_blank" aria-label="raylib itch.io page"><img src="common/img/icon_itchio.png" ></a>
-          <a id="mobile-handmade" href="https://raylib.handmade.network/" target="_blank" aria-label="raylib handmadenetwork"><img src="common/img/icon_handmade.png" /></a>
-          <a id="mobile-reddit" href="https://www.reddit.com/r/raylib/" target="_blank" aria-label="raylib reddit"><img src ="common/img/icon_reddit.png"/></a>
-          <a id="mobile-youtube" href="https://www.youtube.com/c/raylib" target="_blank" aria-label="raylib youtube channel"><img src="common/img/icon_youtube.png" /></a>
-          <a id="mobile-patreon" href="https://www.patreon.com/raylib" target="_blank" aria-label="ray's patreon page"><img src="common/img/icon_patreon.png" /></a>
-          <a id="mobile-redbubble" href="https://www.redbubble.com/shop/ap/78130012" target="_blank" aria-label="red bubble"><img src="common/img/icon_redbubble.png" /></a>
           <a id="mobile-github" href="https://github.com/raysan5/raylib" target="_blank" aria-label="raylib's github"><img src="common/img/icon_github.png" /></a>
-          <a id="mobile-bluesky" href="https://bsky.app/profile/raysan5.bsky.social" target="_blank" aria-label="raylib's bluesky profile"><img src="common/img/icon_bluesky.png" /></a>
         </div>
 `;
 class MobileMenu extends HTMLElement {
@@ -242,7 +235,35 @@ class MobileMenu extends HTMLElement {
           border-block: 2px solid #5c5a5a;
           background-color: #cecece;    
           pointer-events: none;
-      }  
+      }
+  
+      #mobile-socials .mobile-donate-nav {
+        width: 100px;
+        text-decoration: none;
+        align-items: center;
+        height: 30px
+        margin-top: 3px;
+        padding: 0 2px;
+      }
+      #mobile-socials .mobile-btn-donate-top {
+          display: flex;
+          background-color: #f36464;
+          color: white;
+          border-width: 2px;
+          border-color: #ffb5b5;
+          padding: 2px 5px;
+          cursor: pointer;
+          border-radius: 0px;
+          border-style: solid;
+          width: 100px;
+          font-size: 18px;
+          align-items: center;
+      }
+      #mobile-socials .mobile-btn-donate-top:hover {
+          background-color: #c52525;
+          border-width: 2px;
+          border-color: #ff1010;
+      }
   }
     `;
     this.setAttribute("data-open", "false");
