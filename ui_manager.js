@@ -258,6 +258,7 @@ class MobileMenu extends HTMLElement {
           width: 100px;
           font-size: 18px;
           align-items: center;
+          text-shadow: -1px -1px 0 #1e873e, 1px -1px 0 #1e873e, -1px 1px 0 #1e873e, 1px 1px 0 #1e873e;
       }
       #mobile-socials .mobile-btn-donate-top:hover {
           background-color: #49b752;
