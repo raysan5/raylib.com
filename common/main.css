@@ -705,7 +705,8 @@ a:has(img) {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    text-shadow: -1px -1px 0 #1e873e, 1px -1px 0 #1e873e, -1px 1px 0 #1e873e, 1px 1px 0 #1e873e;
+    text-shadow: 2px 2px 0px #49b752;
+    font-weight: 1000;
 }
 
 .btn-donate:hover {
@@ -731,7 +732,8 @@ a:has(img) {
     border-style: solid;
     padding: 2px 5px;
     cursor: pointer;
-    text-shadow: -1px -1px 0 #1e873e, 1px -1px 0 #1e873e, -1px 1px 0 #1e873e, 1px 1px 0 #1e873e;
+    text-shadow: 2px 2px 0px #49b752;
+    font-weight: 1000;
 }
 
 .btn-donate-top:hover {
