@@ -698,18 +698,18 @@ a:has(img) {
 }
 
 .btn-donate {
-    background-color: #f36464;
+    background-color: #72e75d;
+    outline: 4px solid #21bf52;
     color: white;
     border: 0;
-    outline: 4px solid #ffb5b5;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
 }
 
 .btn-donate:hover {
-    background-color: #c52525;
-    outline: 5px solid #ff1010;
+    background-color: #49b752;
+    outline: 5px solid #34fd73;
 }
 
 #btndonate {
@@ -722,18 +722,18 @@ a:has(img) {
 
 .btn-donate-top {
     display: flex;
-    background-color: #f36464;
     color: white;
+    background-color: #72e75d;
+    border-color: #21bf52;
     border-width: 2px;
-    border-color: #ffb5b5;
-    padding: 2px 5px;
-    cursor: pointer;
     border-radius: 0px;
     border-style: solid;
+    padding: 2px 5px;
+    cursor: pointer;
 }
 
 .btn-donate-top:hover {
-    background-color: #c52525;
+    background-color: #49b752;
+    border-color: #34fd73;
     border-width: 2px;
-    border-color: #ff1010;
 }

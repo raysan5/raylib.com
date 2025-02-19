@@ -247,10 +247,10 @@ class MobileMenu extends HTMLElement {
       }
       #mobile-socials .mobile-btn-donate-top {
           display: flex;
-          background-color: #f36464;
+          background-color: #72e75d;
           color: white;
           border-width: 2px;
-          border-color: #ffb5b5;
+          border-color: #21bf52;
           padding: 2px 5px;
           cursor: pointer;
           border-radius: 0px;
@@ -260,9 +260,9 @@ class MobileMenu extends HTMLElement {
           align-items: center;
       }
       #mobile-socials .mobile-btn-donate-top:hover {
-          background-color: #c52525;
+          background-color: #49b752;
+          border-color: #34fd73;
           border-width: 2px;
-          border-color: #ff1010;
       }
   }
     `;
