@@ -193,7 +193,7 @@ class MobileMenu extends HTMLElement {
         display: flex;
         position: relative;
         flex-wrap: wrap;
-        margin-inline-start: 25px;
+        margin-inline-start: 18px;
         margin-top: 40px;
         margin-bottom: 20px;
         width: 60%;
@@ -238,7 +238,7 @@ class MobileMenu extends HTMLElement {
       }
   
       #mobile-socials .mobile-donate-nav {
-        width: 100px;
+        width: 120px;
         text-decoration: none;
         align-items: center;
         height: 30px
@@ -255,7 +255,7 @@ class MobileMenu extends HTMLElement {
           cursor: pointer;
           border-radius: 0px;
           border-style: solid;
-          width: 100px;
+          width: 140px;
           font-size: 18px;
           align-items: center;
           text-shadow: 2px 2px 0px #49b752;
