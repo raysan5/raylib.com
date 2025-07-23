@@ -103,6 +103,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'draw_rectangle_rounded'),
         exampleEntry('⭐️⭐️⭐️☆' , 'shapes'  , 'splines_drawing'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'shapes'  , 'top_down_lights'),
+        exampleEntry('⭐️⭐️☆☆' , 'shapes'  , 'double_pendulum'),
         exampleEntry('⭐️☆☆☆' , 'textures', 'logo_raylib'),
         exampleEntry('⭐️⭐️⭐️☆' , 'textures', 'srcrec_dstrec'),
         exampleEntry('⭐️⭐️☆☆' , 'textures', 'image_channel'),
