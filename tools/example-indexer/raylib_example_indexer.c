@@ -1,3 +1,28 @@
+/*******************************************************************************************
+*
+*   raylib functions usage parser
+*
+*   LICENSE: zlib/libpng
+*
+*   Copyright (c) 2024-2025 ...
+*
+*   This software is provided "as-is", without any express or implied warranty. In no event
+*   will the authors be held liable for any damages arising from the use of this software.
+*
+*   Permission is granted to anyone to use this software for any purpose, including commercial
+*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
+*
+*     1. The origin of this software must not be misrepresented; you must not claim that you
+*     wrote the original software. If you use this software in a product, an acknowledgment
+*     in the product documentation would be appreciated but is not required.
+*
+*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
+*     as being the original software.
+*
+*     3. This notice may not be removed or altered from any source distribution.
+*
+**********************************************************************************************/
+
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
@@ -10,8 +35,8 @@
 #include "stb_c_lexer.h"
 #include "raylib_parser.c"
 
-#define MAX_FUNCS_TO_PARSE    1024 // Maximum number of functions to parse
-#define MAX_FUNCS_PER_EXAMPLE 1024 // Maximum number of usages per function per file
+#define MAX_FUNCS_TO_PARSE      1024 // Maximum number of functions to parse
+#define MAX_FUNCS_PER_EXAMPLE   1024 // Maximum number of usages per function per file
 
 typedef struct {
     char filename[256];
@@ -34,8 +59,10 @@ static bool EndsSith(char *text, int textSize, char *suffix, int suffixSize)
 
 static bool GetNextLine(LineRange *line, char *text, int textSize, int from)
 {
-    for (int i = from; i < textSize; i++) {
-        if (text[i] == '\n') {
+    for (int i = from; i < textSize; i++) 
+    {
+        if (text[i] == '\n') 
+        {
             line->from = from;
             line->to = i;
             return true;
@@ -48,12 +75,11 @@ static int GetFunctionFromIdentifier(char *id, FunctionInfo *functions, int func
 {
     int idSize = strlen(id);
 
-    for (int i = 0; i < functionCount; i++) {
+    for (int i = 0; i < functionCount; i++)
+    {
         FunctionInfo *function = &functions[i];
         if (idSize > sizeof(function->name)) continue;
-        if (!strcmp(id, function->name)) {
-            return i;
-        }
+        if (!strcmp(id, function->name)) return i;
     }
     return -1;
 }
@@ -65,19 +91,19 @@ static bool ParseFunctionUsagesFromFile(char *directory, char *filePath, Functio
 
     int fileSize = 0;
     char *exampleCode = LoadFileText(fullPath, &fileSize);
-    if (exampleCode == NULL) {
-        return false;
-    }
+    if (exampleCode == NULL) return false;
 
     stb_lexer lexer;
     char stringStore[512];
     stb_c_lexer_init(&lexer, exampleCode, exampleCode+fileSize, stringStore, sizeof(stringStore));
 
-    while (stb_c_lexer_get_token(&lexer)) {
+    while (stb_c_lexer_get_token(&lexer)) 
+    {
         if (lexer.token != CLEX_id) continue;
 
         int functionIndex = GetFunctionFromIdentifier(lexer.string, functions, functionCount);
-        if (functionIndex != -1) {
+        if (functionIndex != -1) 
+        {
             int *usageCount = &usageCounts[functionIndex];
             assert(*usageCount < MAX_FUNCS_PER_EXAMPLE);
             FunctionUsage *usage = &usages[functionIndex][*usageCount];
@@ -96,17 +122,20 @@ static void ParseFunctionsUsagesFromFolder(char *cwd, char *dir, FunctionUsage *
     char dirPath[PATH_MAX];
     snprintf(dirPath, sizeof(dirPath), "%s/%s", cwd, dir);
     DIR *dirp = opendir(dirPath);
-    if (dirp == NULL) {
+    if (dirp == NULL) 
+    {
         fprintf(stderr, "Failed to open directory '%s'\n", dirPath);
         return;
     }
 
     struct dirent *entry;
-    while ((entry = readdir(dirp)) != NULL) {
+    while ((entry = readdir(dirp)) != NULL) 
+    {
         if (entry->d_type != DT_REG) continue;
 
         char *extension = strrchr(entry->d_name, '.');
-        if (!strcmp(extension, ".c")) {
+        if (!strcmp(extension, ".c"))
+        {
             char filePath[PATH_MAX];
             snprintf(filePath, sizeof(filePath), "%s/%s", dir, entry->d_name);
             ParseFunctionUsagesFromFile(cwd, filePath, usages, usageCounts, functions, functionCount);
@@ -117,29 +146,32 @@ static void ParseFunctionsUsagesFromFolder(char *cwd, char *dir, FunctionUsage *
 }
 
 // Checks if the line is in the format "#if defined(*_IMPLEMENTATION)"
-static bool IsLineImplementationIfdef(char *line, int line_size) {
+static bool IsLineImplementationIfdef(char *line, int line_size)
+{
     char *prefix = "#if defined(";
     char *suffix = "_IMPLEMENTATION)";
+    
     return StartsWith(line, line_size, prefix, strlen(prefix)) &&
-            EndsSith(line, line_size, suffix, strlen(suffix));
+        EndsSith(line, line_size, suffix, strlen(suffix));
 }
 
 static int ParseFunctionsDefinitionsFromHeader(char *path, FunctionInfo *functions, int maxFunctions)
 {
     int fileSize;
     char *contents = LoadFileText(path, &fileSize);
-
     int count = 0;
-
     int nextLineFrom = 0;
     LineRange curr = { 0 };
-    while (GetNextLine(&curr, contents, fileSize, nextLineFrom)) {
+    
+    while (GetNextLine(&curr, contents, fileSize, nextLineFrom))
+    {
         int lineSize = curr.to - curr.from;
         char line[512] = { 0 };
         strncpy(line, &contents[curr.from], lineSize); // `raylib_parser.c` expects lines to be null-terminated
         if (IsLineImplementationIfdef(line, lineSize)) break;
 
-        if (IsLineAPIFunction(line, lineSize)) {
+        if (IsLineAPIFunction(line, lineSize))
+        {
             ParseAPIFunctionInfo(line, lineSize, &functions[count]);
             count++;
             if (count == maxFunctions) break;
@@ -156,14 +188,16 @@ static int ParseFunctionsDefinitionsFromHeader(char *path, FunctionInfo *functio
 static int ParseFunctionsDefinitionsFromFolder(char *dir, FunctionInfo *functions, int maxFunctions)
 {
     DIR *dirp = opendir(dir);
-    if (dirp == NULL) {
+    if (dirp == NULL)
+    {
         fprintf(stderr, "Failed to open directory '%s'\n", dir);
         return -1;
     }
 
     int count = 0;
     struct dirent *entry;
-    while ((entry = readdir(dirp)) != NULL) {
+    while ((entry = readdir(dirp)) != NULL)
+    {
         if (entry->d_type != DT_REG) continue;
 
         char *fileExtension = strrchr(entry->d_name, '.');
@@ -174,6 +208,7 @@ static int ParseFunctionsDefinitionsFromFolder(char *dir, FunctionInfo *function
         snprintf(path, sizeof(path), "%s/%s", dir, entry->d_name);
         count += ParseFunctionsDefinitionsFromHeader(path, functions + count, maxFunctions - count);
     }
+    
     closedir(dirp);
 
     return count;
@@ -183,18 +218,22 @@ static int GetUniqueFilenames(FunctionUsage *usages, int usageCount, char *uniqu
 {
     int count = 0;
 
-    for (int i = 0; i < usageCount; i++) {
+    for (int i = 0; i < usageCount; i++)
+    {
         FunctionUsage *usage = &usages[i];
 
         bool found = false;
-        for (int j = 0; j < count; j++) {
-            if (!strcmp(uniqueFilenames[j], usage->filename)) {
+        for (int j = 0; j < count; j++)
+        {
+            if (!strcmp(uniqueFilenames[j], usage->filename)) 
+            {
                 found = true;
                 break;
             }
         }
 
-        if (!found) {
+        if (!found) 
+        {
             uniqueFilenames[count] = strdup(usage->filename);
             count++;
         }
@@ -206,13 +245,15 @@ static int GetUniqueFilenames(FunctionUsage *usages, int usageCount, char *uniqu
 static int OutputFunctionUsagesJSON(char *output, FunctionInfo *functions, int functionCount, FunctionUsage **usages, int *usageCounts)
 {
     FILE *outputFile = fopen(output, "w");
-    if (outputFile == NULL) {
+    if (outputFile == NULL)
+    {
         fprintf(stderr, "Failed to open file '%s\n'", output);
         return -1;
     }
 
     fwrite("{", sizeof(char), 1, outputFile);
-    for (int functionIndex = 0; functionIndex < functionCount; functionIndex++) {
+    for (int functionIndex = 0; functionIndex < functionCount; functionIndex++)
+    {
         FunctionInfo *info = &functions[functionIndex];
 
         fwrite("\"", sizeof(char), 1, outputFile);
@@ -220,11 +261,13 @@ static int OutputFunctionUsagesJSON(char *output, FunctionInfo *functions, int f
         fwrite("\":[", sizeof(char), 3, outputFile);
 
         int usageCount = usageCounts[functionIndex];
-        if (usageCount > 0) {
-            char *uniqueFilenames[usageCount];
+        if (usageCount > 0)
+        {
+            char *uniqueFilenames[usageCount] = { 0 };
             int uniqueCount = GetUniqueFilenames(usages[functionIndex], usageCount, uniqueFilenames);
 
-            for (int i = 0; i < uniqueCount; i++) {
+            for (int i = 0; i < uniqueCount; i++)
+            {
                 char *filename = uniqueFilenames[i];
                 char *example_name = strchr(filename, '/')+1;
                 int example_name_size = strchr(filename, '.') - example_name;
@@ -232,20 +275,14 @@ static int OutputFunctionUsagesJSON(char *output, FunctionInfo *functions, int f
                 fwrite("\"", sizeof(char), 1, outputFile);
                 fwrite(example_name, sizeof(char), example_name_size, outputFile);
                 fwrite("\"", sizeof(char), 1, outputFile);
-                if (i < uniqueCount-1) {
-                    fwrite(",", sizeof(char), 1, outputFile);
-                }
+                if (i < uniqueCount - 1) fwrite(",", sizeof(char), 1, outputFile);
             }
 
-            for (int i = 0; i < uniqueCount; i++) {
-                free(uniqueFilenames[i]);
-            }
+            for (int i = 0; i < uniqueCount; i++) free(uniqueFilenames[i]);
         }
 
         fwrite("]", sizeof(char), 1, outputFile);
-        if (functionIndex < functionCount-1) {
-            fwrite(",", sizeof(char), 1, outputFile);
-        }
+        if (functionIndex < functionCount - 1) fwrite(",", sizeof(char), 1, outputFile);
     }
 
     fwrite("}", sizeof(char), 1, outputFile);
@@ -256,7 +293,8 @@ static int OutputFunctionUsagesJSON(char *output, FunctionInfo *functions, int f
 
 int main(int argc, char **argv)
 {
-    if (argc != 4) {
+    if (argc != 4)
+    {
         printf("Usage: %s <raylib-src-dir> <examples-dir> <output-file>\n", argv[0]);
         return -1;
     }
@@ -267,38 +305,37 @@ int main(int argc, char **argv)
 
     FunctionInfo functions[MAX_FUNCS_TO_PARSE];
     int functionCount = ParseFunctionsDefinitionsFromFolder(raylibSrc, functions, MAX_FUNCS_TO_PARSE);
-    if (functionCount < 0) {
-        return -1;
-    }
+    if (functionCount < 0) return -1;
 
     FunctionUsage *usages[MAX_FUNCS_TO_PARSE] = { 0 };
-    for (int i = 0; i < functionCount; i++) {
-        usages[i] = malloc(MAX_FUNCS_PER_EXAMPLE * sizeof(FunctionUsage));
-    }
+    for (int i = 0; i < functionCount; i++) usages[i] = malloc(MAX_FUNCS_PER_EXAMPLE*sizeof(FunctionUsage));
+
     int usageCounts[MAX_FUNCS_TO_PARSE] = { 0 };
 
     { // Collect function usages from examples
         DIR *dirp = opendir(raylibExamplesPath);
-        if (dirp == NULL) {
+        if (dirp == NULL)
+        {
             fprintf(stderr, "Failed to open directory '%s'\n", raylibExamplesPath);
             return -1;
         }
-        struct dirent *entry;
-        while ((entry = readdir(dirp)) != NULL) {
+        
+        struct dirent *entry = NULL;
+        while ((entry = readdir(dirp)) != NULL)
+        {
             if (entry->d_type != DT_DIR) continue;
             if (entry->d_name[0] == '.') continue;
 
             ParseFunctionsUsagesFromFolder(raylibExamplesPath, entry->d_name, usages, usageCounts, functions, functionCount);
         }
+        
         closedir(dirp);
     }
 
     // Output function usages
     OutputFunctionUsagesJSON(outputPath, functions, functionCount, usages, usageCounts);
 
-    for (int i = 0; i < functionCount; i++) {
-        free(usages[i]);
-    }
+    for (int i = 0; i < functionCount; i++) free(usages[i]);
 
     return 0;
 }
