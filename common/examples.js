@@ -28,7 +28,7 @@ $(document).ready(function() {
 		}
 		$('#matches_counter').show();
 
-		// using a set to avoid duplicates
+		// Using a set to avoid duplicates
 		const filteredExampleIndexes = new Set();
 
 		for (var functionName in functionUsages) {
@@ -40,7 +40,7 @@ $(document).ready(function() {
 			}
 		}
 
-		// check all functions and all tags for any match
+		// Check all functions and all tags for any match
 		for (var functionName in examplesTags) {
 			const matchingTags = examplesTags[functionName].filter(tagItem => tagItem.includes(filterText));
 			if (matchingTags.length > 0) {
@@ -54,6 +54,7 @@ $(document).ready(function() {
 		$('#matches_counter').text(`Found ${filteredExampleIndexes.size} examples`);
 	}
 
+    //EXAMPLE_DATA_LIST_START
     var exampleData = [
         exampleEntry('⭐️☆☆☆' , 'core'    , 'basic_window'),
         exampleEntry('⭐️☆☆☆' , 'core'    , 'basic_screen_manager'),
@@ -194,6 +195,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️☆☆' , 'audio'   , 'sound_multi'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'audio'   , 'stream_effects'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'audio'   , 'mixed_processor')];
+    //EXAMPLE_DATA_LIST_END
 
 	var exampleDivs = []
     for (var i = 0; i < exampleData.length; i++) {
@@ -229,7 +231,7 @@ $(document).ready(function() {
             }
         }
 
-        // do not handle input processing as we will pigyback (add to) the filterFunctionInput
+        // Do not handle input processing as we will pigyback (add to) the filterFunctionInput
     })
     .fail(function(jqXHR, textStatus, error) {
         const err = textStatus + ". " + error;
@@ -265,10 +267,4 @@ $(document).ready(function() {
     $('#container a').hover(
         function(){ $(this).find('.extext').show(); },
         function(){ $(this).find('.extext').hide(); });
-/*
-    $("#container a img").hover(
-        function() { $(this).stop().animate({ opacity:0.6 }, 200, "easeOutQuad" ); },
-        function() { $(this).stop().animate({ opacity:0 }, 200, "easeOutQuad" ); }
-    )
-*/
 });
