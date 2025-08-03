@@ -54,7 +54,7 @@ $(document).ready(function() {
 		$('#matches_counter').text(`Found ${filteredExampleIndexes.size} examples`);
 	}
 
-    //EXAMPLE_DATA_LIST_START
+//EXAMPLE_DATA_LIST_START
     var exampleData = [
         exampleEntry('⭐️☆☆☆' , 'core'    , 'basic_window'),
         exampleEntry('⭐️☆☆☆' , 'core'    , 'basic_screen_manager'),
@@ -195,7 +195,7 @@ $(document).ready(function() {
         exampleEntry('⭐️⭐️☆☆' , 'audio'   , 'sound_multi'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'audio'   , 'stream_effects'),
         exampleEntry('⭐️⭐️⭐️⭐️' , 'audio'   , 'mixed_processor')];
-    //EXAMPLE_DATA_LIST_END
+//EXAMPLE_DATA_LIST_END
 
 	var exampleDivs = []
     for (var i = 0; i < exampleData.length; i++) {
