@@ -3,9 +3,9 @@ BUILD_DIR := build
 .DEFAULT_GOAL := all
 .PHONY := raylib_example_indexer all clean
 
-example_indexer: main.c
+example_indexer: raylib_example_indexer.c
 	mkdir -p $(BUILD_DIR)
-	gcc main.c -o $(BUILD_DIR)/example_indexer -DSTB_C_LEXER_IMPLEMENTATION
+	gcc raylib_example_indexer.c -o $(BUILD_DIR)/example_indexer -DSTB_C_LEXER_IMPLEMENTATION
 
 $(BUILD_DIR)/raylib:
 	mkdir -p $(BUILD_DIR)
