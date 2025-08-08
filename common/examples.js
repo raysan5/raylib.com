@@ -210,7 +210,6 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'audio', 'stream_effects'),
         exampleEntry('⭐⭐☆☆', 'audio', 'sound_multi'),
         exampleEntry('⭐⭐☆☆', 'audio', 'sound_positioning')];
-//EXAMPLE_DATA_LIST_END
 
 	var exampleDivs = []
     for (var i = 0; i < exampleData.length; i++) {
