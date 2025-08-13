@@ -72,6 +72,7 @@ $(document).ready(function() {
         exampleEntry('⭐☆☆☆', 'core', '3d_camera_free'),
         exampleEntry('⭐⭐☆☆', 'core', '3d_camera_first_person'),
         exampleEntry('⭐⭐⭐☆', 'core', '3d_camera_split_screen'),
+        exampleEntry('⭐⭐⭐☆', 'core', '3d_fps_controller'),
         exampleEntry('⭐⭐☆☆', 'core', '3d_picking'),
         exampleEntry('⭐⭐☆☆', 'core', 'world_screen'),
         exampleEntry('⭐⭐⭐☆', 'core', 'custom_logging'),
