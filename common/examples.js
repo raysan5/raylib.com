@@ -191,7 +191,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'shaders', 'hot_reloading'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'mesh_instancing'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'multi_sample2d'),
-        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'normalmap'),
+        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'normal_map'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'spotlight'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'deferred_render'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'hybrid_render'),
