@@ -151,6 +151,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'draw_3d'),
         exampleEntry('⭐⭐⭐☆', 'text', 'codepoints_loading'),
+        exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_ranges'),
         exampleEntry('⭐⭐☆☆', 'models', 'animation'),
         exampleEntry('⭐⭐⭐☆', 'models', 'billboard'),
         exampleEntry('⭐☆☆☆', 'models', 'box_collisions'),
