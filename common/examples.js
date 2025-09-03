@@ -139,7 +139,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'textures', 'image_channel'),
         exampleEntry('⭐⭐☆☆', 'textures', 'image_rotate'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'textured_curve'),
-        exampleEntry('⭐☆☆☆', 'text', 'raylib_fonts'),
+        exampleEntry('⭐☆☆☆', 'text', 'sprite_fonts'),
         exampleEntry('⭐☆☆☆', 'text', 'font_spritefont'),
         exampleEntry('⭐⭐☆☆', 'text', 'font_filters'),
         exampleEntry('⭐☆☆☆', 'text', 'font_loading'),
