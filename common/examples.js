@@ -148,7 +148,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'text', 'input_box'),
         exampleEntry('⭐⭐☆☆', 'text', 'writing_anim'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'rectangle_bounds'),
-        exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode'),
+        exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_emojis'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_ranges'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'draw_3d'),
         exampleEntry('⭐⭐⭐☆', 'text', 'codepoints_loading'),
