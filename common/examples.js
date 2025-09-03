@@ -132,7 +132,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'textures', 'mouse_painting'),
         exampleEntry('⭐☆☆☆', 'textures', 'blend_modes'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'draw_tiled'),
-        exampleEntry('⭐☆☆☆', 'textures', 'polygon'),
+        exampleEntry('⭐☆☆☆', 'textures', 'polygon_drawing'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'fog_of_war'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'gif_player'),
         exampleEntry('⭐⭐⭐⭐️', 'textures', 'image_kernel'),
