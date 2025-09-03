@@ -150,7 +150,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'text', 'rectangle_bounds'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_emojis'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_ranges'),
-        exampleEntry('⭐⭐⭐⭐️', 'text', 'draw_3d'),
+        exampleEntry('⭐⭐⭐⭐️', 'text', '3d_drawing'),
         exampleEntry('⭐⭐⭐☆', 'text', 'codepoints_loading'),
         exampleEntry('⭐⭐⭐⭐️', 'text', 'unicode_ranges'),
         exampleEntry('⭐⭐☆☆', 'models', 'animation'),
