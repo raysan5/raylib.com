@@ -181,7 +181,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'shaders', 'postprocessing'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'palette_switch'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'raymarching'),
-        exampleEntry('⭐⭐☆☆', 'shaders', 'texture_drawing'),
+        exampleEntry('⭐⭐☆☆', 'shaders', 'texture_rendering'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'texture_outline'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'texture_waves'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'julia_set'),
