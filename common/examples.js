@@ -186,7 +186,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'shaders', 'texture_waves'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'julia_set'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'eratosthenes'),
-        exampleEntry('⭐⭐⭐☆', 'shaders', 'fog'),
+        exampleEntry('⭐⭐⭐☆', 'shaders', 'fog_rendering'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'simple_mask'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'hot_reloading'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'mesh_instancing'),
