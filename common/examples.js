@@ -88,7 +88,6 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'core', 'custom_frame_control'),
         exampleEntry('⭐⭐⭐☆', 'core', 'smooth_pixelperfect'),
         exampleEntry('⭐☆☆☆', 'core', 'random_sequence'),
-        exampleEntry('⭐☆☆☆', 'core', 'basic_window_web'),
         exampleEntry('⭐⭐☆☆', 'core', 'input_gestures_web'),
         exampleEntry('⭐⭐⭐☆', 'core', 'automation_events'),
         exampleEntry('⭐☆☆☆', 'core', 'high_dpi'),
