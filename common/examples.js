@@ -90,7 +90,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'core', 'smooth_pixelperfect'),
         exampleEntry('⭐☆☆☆', 'core', 'random_sequence'),
         exampleEntry('⭐⭐⭐☆', 'core', 'automation_events'),
-        exampleEntry('⭐☆☆☆', 'core', 'high_dpi'),
+        exampleEntry('⭐⭐☆☆', 'core', 'high_dpi'),
         exampleEntry('⭐☆☆☆', 'shapes', 'basic_shapes'),
         exampleEntry('⭐☆☆☆', 'shapes', 'bouncing_ball'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'colors_palette'),
