@@ -123,7 +123,7 @@ $(document).ready(function() {
         exampleEntry('⭐☆☆☆', 'textures', 'particles_blending'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'npatch_drawing'),
         exampleEntry('⭐☆☆☆', 'textures', 'background_scrolling'),
-        exampleEntry('⭐⭐☆☆', 'textures', 'sprite_anim'),
+        exampleEntry('⭐⭐☆☆', 'textures', 'sprite_animation'),
         exampleEntry('⭐⭐☆☆', 'textures', 'sprite_button'),
         exampleEntry('⭐⭐☆☆', 'textures', 'sprite_explosion'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'bunnymark'),
