@@ -153,7 +153,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'models', 'animation'),
         exampleEntry('⭐⭐⭐☆', 'models', 'billboard_rendering'),
         exampleEntry('⭐☆☆☆', 'models', 'box_collisions'),
-        exampleEntry('⭐⭐☆☆', 'models', 'cubicmap'),
+        exampleEntry('⭐⭐☆☆', 'models', 'cubicmap_rendering'),
         exampleEntry('⭐⭐☆☆', 'models', 'first_person_maze'),
         exampleEntry('⭐☆☆☆', 'models', 'geometric_shapes'),
         exampleEntry('⭐⭐☆☆', 'models', 'mesh_generation'),
