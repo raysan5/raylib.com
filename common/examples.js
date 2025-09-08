@@ -169,7 +169,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'models', 'waving_cubes'),
         exampleEntry('⭐☆☆☆', 'models', 'heightmap_rendering'),
         exampleEntry('⭐⭐☆☆', 'models', 'skybox_rendering'),
-        exampleEntry('⭐⭐☆☆', 'models', 'draw_cube_texture'),
+        exampleEntry('⭐⭐☆☆', 'models', 'textured_cube'),
         exampleEntry('⭐⭐⭐☆', 'models', 'gpu_skinning'),
         exampleEntry('⭐⭐⭐⭐️', 'models', 'bone_socket'),
         exampleEntry('⭐⭐☆☆', 'models', 'tesseract_view'),
