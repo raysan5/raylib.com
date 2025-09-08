@@ -102,7 +102,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'shapes', 'following_eyes'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'easings_ball'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'easings_box'),
-        exampleEntry('⭐⭐⭐☆', 'shapes', 'easings_rectangle_array'),
+        exampleEntry('⭐⭐⭐☆', 'shapes', 'easings_rectangles'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'ring_drawing'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'circle_sector_drawing'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'rounded_rectangle_drawing'),
