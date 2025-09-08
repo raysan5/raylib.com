@@ -179,7 +179,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'shaders', 'custom_uniform'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'postprocessing'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'palette_switch'),
-        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'raymarching'),
+        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'raymarching_rendering'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'texture_rendering'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'texture_outline'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'texture_waves'),
