@@ -193,7 +193,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'normal_map'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'spotlight'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'deferred_rendering'),
-        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'hybrid_render'),
+        exampleEntry('⭐⭐⭐⭐️', 'shaders', 'hybrid_rendering'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'texture_tiling'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'shadowmap'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'vertex_displacement'),
