@@ -199,7 +199,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'shaders', 'vertex_displacement'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'write_depth'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'basic_pbr'),
-        exampleEntry('⭐⭐⭐☆', 'shaders', 'lightmap'),
+        exampleEntry('⭐⭐⭐☆', 'shaders', 'lightmap_rendering'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'rounded_rectangle'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'view_depth'),
         exampleEntry('⭐☆☆☆', 'audio', 'module_playing'),
