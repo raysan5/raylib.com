@@ -101,7 +101,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'shapes', 'collision_area'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'following_eyes'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'easings_ball'),
-        exampleEntry('⭐⭐☆☆', 'shapes', 'easings_box_anim'),
+        exampleEntry('⭐⭐☆☆', 'shapes', 'easings_box'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'easings_rectangle_array'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'ring_drawing'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'circle_sector_drawing'),
