@@ -173,7 +173,7 @@ $(document).ready(function() {
         exampleEntry('⭐☆☆☆', 'models', 'heightmap_rendering'),
         exampleEntry('⭐⭐☆☆', 'models', 'skybox_rendering'),
         exampleEntry('⭐⭐☆☆', 'models', 'textured_cube'),
-        exampleEntry('⭐⭐⭐☆', 'models', 'gpu_skinning'),
+        exampleEntry('⭐⭐⭐☆', 'models', 'animation_gpu_skinning'),
         exampleEntry('⭐⭐⭐⭐️', 'models', 'bone_socket'),
         exampleEntry('⭐⭐☆☆', 'models', 'tesseract_view'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'basic_lighting'),
