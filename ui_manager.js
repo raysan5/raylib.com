@@ -133,6 +133,8 @@ const mobileMenuHTML = `
         <div id="mobile-socials">
           <a alt="donate" title="donate" class="mobile-donate-nav" href="https://github.com/sponsors/raysan5" target="_blank"><button class="mobile-btn-donate-top">Donate ❤️</button></a>
           <a id="mobile-discord" href="https://discord.gg/raylib" target="_blank" aria-label="raylib discord"><img src="common/img/icon_discord.png" ></a>
+          <a id="mobile-reddit" href="https://www.reddit.com/r/raylib/" target="_blank" aria-label="raylib discord"><img src="common/img/icon_reddit.png" ></a>
+          <a id="mobile-x" href="https://www.twitter.com/raysan5" target="_blank" aria-label="raylib discord"><img src="common/img/icon_twitter.png" ></a>
           <a id="mobile-github" href="https://github.com/raysan5/raylib" target="_blank" aria-label="raylib's github"><img src="common/img/icon_github.png" /></a>
         </div>
 `;
