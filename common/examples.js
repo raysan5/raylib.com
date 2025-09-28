@@ -93,6 +93,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'core', 'high_dpi'),
         exampleEntry('⭐☆☆☆', 'core', 'render_texture'),
         exampleEntry('⭐⭐⭐☆', 'core', 'undo_redo'),
+        exampleEntry('⭐⭐☆☆', 'core', 'input_actions'),
         exampleEntry('⭐☆☆☆', 'shapes', 'basic_shapes'),
         exampleEntry('⭐☆☆☆', 'shapes', 'bouncing_ball'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'colors_palette'),
