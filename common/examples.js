@@ -237,7 +237,7 @@ $(document).ready(function() {
         const exampleDiv = $(
             `<div class="mix f${module}">` +
                 `<a class="fancybox fancybox.iframe" href="${exampleLoaderURL}" title="${description}">` +
-                `<img width="400" height="225" src="${previewImageURL}"><div class="extext"><p>${description}</p></div></a>` +
+                `<img width="400" height="225" loading="lazy" src="${previewImageURL}"><div class="extext"><p>${description}</p></div></a>` +
                 `<div id="difficulty_level">${difficulty}</div>` +
             '</div>')[0];
 
