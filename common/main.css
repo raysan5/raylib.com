@@ -331,8 +331,10 @@ li {
     background-position: 0px -36px;
 }
 
-#github     { background-image: url(img/icon_github.png);       }
-#discord    { background-image: url(img/icon_discord.png);      }
+#github     { background-image: url(img/icon_github.png); }
+#discord    { background-image: url(img/icon_discord.png); }
+#twitter    { background-image: url(img/icon_twitter.png); }
+#reddit    { background-image: url(img/icon_reddit.png); }
 
 #licensebox {
     width: 808px;
