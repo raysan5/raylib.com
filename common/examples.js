@@ -19,6 +19,22 @@ $(document).ready(function() {
 		return examples.findIndex(example => example.name == targetName)
 	}
 
+    // with the debounce it will wait 300ms before doing a search.
+    // if the text changes in this time, the first search will be cancelled
+    // and only the latest text will be searched
+    function debounce(func, delay) {
+      let timeoutId = undefined;
+      return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    }
+    var debouncedFilter = debounce(function(value) {
+      applyByFunctionFilter(value);
+    }, 300);
+
 	function applyByFunctionFilter(searchString) {
 		var filterText = searchString.toLowerCase()
 		if (filterText === "") {
@@ -280,7 +296,7 @@ $(document).ready(function() {
 
 		// From now listen for input update events
 		filterFunctionInput.on("input", function(event) {
-			applyByFunctionFilter(event.target.value)
+			debouncedFilter(event.target.value);
 		});
 	})
     .fail(function(jqXHR, textStatus, error) {
