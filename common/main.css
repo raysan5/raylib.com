@@ -72,7 +72,7 @@ h1 {
     line-height: 24px;
 }
 
-h2 {
+h2, h3 {
     font-family: Courier New, Verdana, Arial;
     font-weight: bold;
     font-size: 18px;
