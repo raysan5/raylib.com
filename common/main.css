@@ -151,6 +151,18 @@ h2::before {
     color: #828282;
 }
 
+.footer {
+    display: flex;
+    align-items: center;     /* vertical centering */
+    justify-content: flex-end; /* align everything to the right */
+    text-align: right;
+    flex-wrap: wrap;         /* optional, helps on small screens */
+}
+
+.footer img {
+    vertical-align: middle;
+}
+
 .simplelink {
     font-weight: bold;
     color: #ff6060;
