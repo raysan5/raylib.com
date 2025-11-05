@@ -117,6 +117,7 @@ $(document).ready(function() {
         exampleEntry('⭐☆☆☆', 'core', 'screen_recording'),
         exampleEntry('⭐☆☆☆', 'core', 'clipboard_text'),
         exampleEntry('⭐☆☆☆', 'core', 'text_file_loading'),
+        exampleEntry('⭐⭐☆☆', 'core', 'compute_hash'),
         exampleEntry('⭐☆☆☆', 'shapes', 'basic_shapes'),
         exampleEntry('⭐☆☆☆', 'shapes', 'bouncing_ball'),
         exampleEntry('⭐☆☆☆', 'shapes', 'bullet_hell'),
