@@ -111,6 +111,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'core', 'high_dpi'),
         exampleEntry('⭐☆☆☆', 'core', 'render_texture'),
         exampleEntry('⭐⭐⭐☆', 'core', 'undo_redo'),
+        exampleEntry('⭐⭐☆☆', 'core', 'viewport_scaling'),
         exampleEntry('⭐⭐☆☆', 'core', 'input_actions'),
         exampleEntry('⭐☆☆☆', 'core', 'directory_files'),
         exampleEntry('⭐☆☆☆', 'core', 'highdpi_testbed'),
