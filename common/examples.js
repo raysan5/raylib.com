@@ -115,7 +115,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'core', 'input_actions'),
         exampleEntry('⭐☆☆☆', 'core', 'directory_files'),
         exampleEntry('⭐☆☆☆', 'core', 'highdpi_testbed'),
-        exampleEntry('⭐☆☆☆', 'core', 'screen_recording'),
+        exampleEntry('⭐⭐☆☆', 'core', 'screen_recording'),
         exampleEntry('⭐☆☆☆', 'core', 'clipboard_text'),
         exampleEntry('⭐☆☆☆', 'core', 'text_file_loading'),
         exampleEntry('⭐⭐☆☆', 'core', 'compute_hash'),
