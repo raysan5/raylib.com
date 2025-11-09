@@ -31,7 +31,7 @@
 	"core_storage_values": ["storage", "file"],
 	"core_vr_simulator": ["vr", "simulator"],
 	"core_scissor_test": ["scissor"],
-	"core_basic_screen_manager": ["screen", "screens"],
+	"core_basic_screen_manager": ["screen", "screens", "scene"],
 	"core_custom_frame_control": ["frame"],
 	"core_smooth_pixelperfect": ["smooth", "pixel-art", "pixel", "art", "pixelart", "perfect" "pixel-perfect" "pixelperfect"],
 	"core_random_seqeunce": ["random", "rng", "sequence"],
