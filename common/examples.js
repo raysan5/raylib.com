@@ -155,6 +155,7 @@ $(document).ready(function() {
         exampleEntry('⭐☆☆☆', 'shapes', 'math_angle_rotation'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'rlgl_color_wheel'),
         exampleEntry('⭐⭐☆☆', 'shapes', 'rlgl_triangle'),
+        exampleEntry('⭐⭐☆☆', 'shapes', 'ball_physics'),
         exampleEntry('⭐☆☆☆', 'textures', 'logo_raylib'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'srcrec_dstrec'),
         exampleEntry('⭐⭐☆☆', 'textures', 'image_drawing'),
