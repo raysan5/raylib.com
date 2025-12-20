@@ -108,7 +108,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'core', 'smooth_pixelperfect'),
         exampleEntry('⭐☆☆☆', 'core', 'random_sequence'),
         exampleEntry('⭐⭐⭐☆', 'core', 'automation_events'),
-        exampleEntry('⭐⭐☆☆', 'core', 'high_dpi'),
+        exampleEntry('⭐⭐☆☆', 'core', 'highdpi_demo'),
         exampleEntry('⭐☆☆☆', 'core', 'render_texture'),
         exampleEntry('⭐⭐⭐☆', 'core', 'undo_redo'),
         exampleEntry('⭐⭐☆☆', 'core', 'viewport_scaling'),
