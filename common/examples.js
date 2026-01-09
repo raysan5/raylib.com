@@ -188,6 +188,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'textures', 'textured_curve'),
         exampleEntry('⭐⭐☆☆', 'textures', 'sprite_stacking'),
         exampleEntry('⭐⭐☆☆', 'textures', 'cellular_automata'),
+        exampleEntry('⭐⭐☆☆', 'textures', 'framebuffer_rendering'),
         exampleEntry('⭐☆☆☆', 'text', 'sprite_fonts'),
         exampleEntry('⭐☆☆☆', 'text', 'font_spritefont'),
         exampleEntry('⭐⭐☆☆', 'text', 'font_filters'),
