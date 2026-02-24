@@ -235,7 +235,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'models', 'decals'),
         exampleEntry('⭐⭐☆☆', 'models', 'directional_billboard'),
         exampleEntry('⭐⭐⭐⭐️', 'models', 'animation_blend_custom'),
-        exampleEntry('☆☆☆☆', 'models', 'animation_blending'),
+        exampleEntry('⭐⭐⭐⭐️', 'models', 'animation_blending'),
         exampleEntry('⭐⭐☆☆', 'models', 'animation_timing'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'ascii_rendering'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'basic_lighting'),
