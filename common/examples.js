@@ -161,6 +161,8 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'shapes', 'penrose_tile'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'hilbert_curve'),
         exampleEntry('⭐⭐⭐☆', 'shapes', 'easings_testbed'),
+        exampleEntry('⭐☆☆☆', 'textures', 'clipboard_image'),
+        exampleEntry('⭐⭐⭐☆', 'textures', 'magnifying_glass'),
         exampleEntry('⭐☆☆☆', 'textures', 'logo_raylib'),
         exampleEntry('⭐⭐⭐☆', 'textures', 'srcrec_dstrec'),
         exampleEntry('⭐⭐☆☆', 'textures', 'image_drawing'),
@@ -236,7 +238,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐☆☆', 'models', 'directional_billboard'),
         exampleEntry('⭐⭐⭐⭐️', 'models', 'animation_blend_custom'),
         exampleEntry('⭐⭐⭐⭐️', 'models', 'animation_blending'),
-        exampleEntry('⭐⭐☆☆', 'models', 'animation_timing'),
+        exampleEntry('⭐⭐⭐☆', 'models', 'animation_timing'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'ascii_rendering'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'basic_lighting'),
         exampleEntry('⭐⭐☆☆', 'shaders', 'model_shader'),
@@ -271,6 +273,7 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐☆', 'shaders', 'depth_rendering'),
         exampleEntry('⭐⭐⭐☆', 'shaders', 'game_of_life'),
         exampleEntry('⭐⭐⭐⭐️', 'shaders', 'rlgl_compute'),
+        exampleEntry('⭐⭐⭐☆', 'shaders', 'cel_shading'),
         exampleEntry('⭐☆☆☆', 'audio', 'module_playing'),
         exampleEntry('⭐☆☆☆', 'audio', 'music_stream'),
         exampleEntry('⭐⭐⭐☆', 'audio', 'raw_stream'),
@@ -279,7 +282,8 @@ $(document).ready(function() {
         exampleEntry('⭐⭐⭐⭐️', 'audio', 'stream_effects'),
         exampleEntry('⭐⭐☆☆', 'audio', 'sound_multi'),
         exampleEntry('⭐⭐☆☆', 'audio', 'sound_positioning'),
-        exampleEntry('⭐⭐⭐☆', 'audio', 'spectrum_visualizer')];
+        exampleEntry('⭐⭐⭐☆', 'audio', 'spectrum_visualizer'),
+        exampleEntry('⭐⭐⭐☆', 'audio', 'stream_callback')];
 //EXAMPLE_DATA_LIST_END
 
 	var exampleDivs = []
