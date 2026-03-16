@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="https://www.raylib.com/favicon.ico">
 
     <style>
-      body { font-family: arial; margin: 0; padding: none; }
+      body { font-family: arial; margin: 0; padding: unset; }
 
       #header {
         width: 100%;
@@ -179,7 +179,7 @@ jwE50AGjLCVuS8Yt4H7OgZLKK5EKOsLviEWJSL/+0uMi7gLUSBseYwqEbXvSHCec1CJvZPyHCmYQffaB
 
         <span id='controls'>
           <span><input type="button" value="📜 SOURCE CODE" onclick="location.href='https://github.com/raysan5/raylib/blob/master/examples/models/models_skybox_rendering.c';"/></span>
-          <span><input type="button" value="🖵 FULLSCREEN" onclick="Module.requestFullscreen(false, false)"></span>
+          <span><input type="button" value="🖵 FULLSCREEN" onclick="Module.canvas.requestFullscreen()"></span>
           <span><input type="button" id="btn-audio" value="🔇 MUTE" onclick="toggleAudio()"></span>
         </span>
 
