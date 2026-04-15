@@ -82,18 +82,18 @@
     Vector3 Vector3Refract(Vector3 v, Vector3 n, float r)                       // Compute the direction of a refracted ray v: normalized direction of the incoming ray n: normalized normal vector of the interface of two optical media r: ratio of the refractive index of the medium from where the ray comes to the refractive index of the medium on the other side of the surface
 
     // Vector4 math
-    Vector4 Vector4Zero(void)                                                    
-    Vector4 Vector4One(void)                                                     
-    Vector4 Vector4Add(Vector4 v1, Vector4 v2)                                   
-    Vector4 Vector4AddValue(Vector4 v, float add)                                
-    Vector4 Vector4Subtract(Vector4 v1, Vector4 v2)                              
-    Vector4 Vector4SubtractValue(Vector4 v, float add)                           
-    float Vector4Length(Vector4 v)                                               
-    float Vector4LengthSqr(Vector4 v)                                            
-    float Vector4DotProduct(Vector4 v1, Vector4 v2)                              
+    Vector4 Vector4Zero(void)                                                   // Get  vector zero
+    Vector4 Vector4One(void)                                                    // Get vector one
+    Vector4 Vector4Add(Vector4 v1, Vector4 v2)                                  // Add two vectors
+    Vector4 Vector4AddValue(Vector4 v, float add)                               // Add value to vector components
+    Vector4 Vector4Subtract(Vector4 v1, Vector4 v2)                             // Substract vectors
+    Vector4 Vector4SubtractValue(Vector4 v, float add)                          // Substract value from vector components
+    float Vector4Length(Vector4 v)                                              // Vector length
+    float Vector4LengthSqr(Vector4 v)                                           // Vector square length
+    float Vector4DotProduct(Vector4 v1, Vector4 v2)                             // Vectors dot product
     float Vector4Distance(Vector4 v1, Vector4 v2)                               // Calculate distance between two vectors
     float Vector4DistanceSqr(Vector4 v1, Vector4 v2)                            // Calculate square distance between two vectors
-    Vector4 Vector4Scale(Vector4 v, float scale)                                 
+    Vector4 Vector4Scale(Vector4 v, float scale)                                // Scale vector components by value (multiply)
     Vector4 Vector4Multiply(Vector4 v1, Vector4 v2)                             // Multiply vector by vector
     Vector4 Vector4Negate(Vector4 v)                                            // Negate vector
     Vector4 Vector4Divide(Vector4 v1, Vector4 v2)                               // Divide vector by vector
@@ -114,7 +114,7 @@
     Matrix MatrixAdd(Matrix left, Matrix right)                                 // Add two matrices
     Matrix MatrixSubtract(Matrix left, Matrix right)                            // Subtract two matrices (left - right)
     Matrix MatrixMultiply(Matrix left, Matrix right)                            // Get two matrix multiplication NOTE: When multiplying matrices... the order matters!
-    Matrix MatrixMultiplyValue(Matrix left, float value)                         
+    Matrix MatrixMultiplyValue(Matrix left, float value)                        // Multiply matrix components by value
     Matrix MatrixTranslate(float x, float y, float z)                           // Get translation matrix
     Matrix MatrixRotate(Vector3 axis, float angle)                              // Create rotation matrix from axis and angle NOTE: Angle should be provided in radians
     Matrix MatrixRotateX(float angle)                                           // Get x-rotation matrix NOTE: Angle must be provided in radians
