@@ -21,8 +21,9 @@
     struct Material;               // Material, includes shader and maps
     struct Transform;              // Transform, vertex transformation data
     struct BoneInfo;               // Bone, skeletal animation bone
+    struct ModelSkeleton;          // Skeleton, animation bones hierarchy
     struct Model;                  // Model, meshes, materials and animation data
-    struct ModelAnimation;         // ModelAnimation
+    struct ModelAnimation;         // ModelAnimation, contains a full animation sequence
     struct Ray;                    // Ray, ray for raycasting
     struct RayCollision;           // RayCollision, ray hit information
     struct BoundingBox;            // BoundingBox
