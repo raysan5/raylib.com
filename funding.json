@@ -55,7 +55,17 @@
                 "name": "Main project developer compensation",
                 "description": "This will cover the cost of main maintainer working full-time/part-time on the projects.",
                 "amount": 0,
-                "currency": ["EUR", "USD"],
+                "currency": "EUR",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            },
+            {
+                "guid": "maintainer-time-usd",
+                "status": "active",
+                "name": "Main project developer compensation",
+                "description": "This will cover the cost of main maintainer working full-time/part-time on the projects.",
+                "amount": 0,
+                "currency": "USD",
                 "frequency": "monthly",
                 "channels": ["github-sponsors", "my-bank", "my-paypal"]
             },
@@ -65,7 +75,17 @@
                 "name": "Goodwill plan",
                 "description": "Pay anything you wish to show your goodwill for the project.",
                 "amount": 0,
-                "currency": ["EUR", "USD"],
+                "currency": "EUR",
+                "frequency": "one-time",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            },
+            {
+                "guid": "angel-plan-usd",
+                "status": "active",
+                "name": "Goodwill plan",
+                "description": "Pay anything you wish to show your goodwill for the project.",
+                "amount": 0,
+                "currency": "USD",
                 "frequency": "one-time",
                 "channels": ["github-sponsors", "my-bank", "my-paypal"]
             }
