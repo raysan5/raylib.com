@@ -48,6 +48,70 @@ def parseStructs(inp, outp, modules):
         print(f"    {struct:30} {comments}", file=outp)
 
 
+def parseStructsMembers(inp, outp, modules):
+    struct_section_starters = ["Image", "Camera", "Wave", "VrDeviceInfo", "FilePathList"]
+    start_section = "// Structures Definition\n"
+    end_section = "// Enumerators Definition\n"
+    data = []
+    comment = []
+    in_struct = False
+    current_decl = None
+    current_comment = None
+    current_members = []
+
+    for line in inp.readlines():
+        if line == start_section:
+            data = []
+            comment = []
+            in_struct = False
+        elif line == end_section:
+            break
+        elif in_struct:
+            stripped = line.strip()
+            if stripped.startswith("}"):
+                data.append((current_decl, current_comment, current_members))
+                in_struct = False
+                current_decl = None
+                current_comment = None
+                current_members = []
+            elif stripped:
+                current_members.append(stripped)
+        elif line.startswith("//--"):
+            pass
+        elif line.startswith("//"):
+            comment.append(line.strip())
+        elif line.strip().startswith("typedef struct"):
+            if line[len("typedef struct") + 1].isupper():
+                current_decl = line.strip(" {\n")
+                current_comment = comment
+                current_members = []
+                in_struct = True
+            comment = []
+        elif line.strip().startswith("typedef"):
+            comment = []
+
+    for d in data:
+        struct_decl, struct_comment, members = d
+        struct_name = struct_decl.replace("CLITERAL", "").replace("typedef ", "")
+        for s in struct_section_starters:
+            if s in struct_name:
+                print(file=outp)
+        comments = ("\n" + (35 * " ")).join(struct_comment)
+        if members:
+            if struct_comment:
+                print(f"    {comments}", file=outp)
+            print(f"    {struct_name} {{", file=outp)
+            for member in members:
+                if '//' in member:
+                    decl, _, mem_comment = member.partition('//')
+                    print(f"        {decl.rstrip():<26} // {mem_comment.strip()}", file=outp)
+                else:
+                    print(f"        {member}", file=outp)
+            print(f"    }};", file=outp)
+        else:
+            print(f"    {struct_name + ';':<30} {comments}", file=outp)
+
+
 def parseMathFile(inp, outp, modules):
     tag = "RMAPI"
     data = []
@@ -119,6 +183,8 @@ def performModule(module, mathin, libin, outp):
             fn = parseMathFile
         if module == ["structs"]:
             fn = parseStructs
+        if module == ["structs_members"]:
+            fn = parseStructsMembers
         if module == ["colors"]:
             fn = parseColors
         fn(sin, sout, module)
@@ -135,6 +201,7 @@ def main():
         "audio": ["audio"],
         "math": ["math"],
         "structs": ["structs"],
+        "structs_members": ["structs_members"],
         "colors": ["colors"],
     }
     parser = argparse.ArgumentParser(description="Generator for cheatsheet c files for raylib.com",
