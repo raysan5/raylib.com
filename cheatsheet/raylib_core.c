@@ -17,7 +17,7 @@
     void ToggleBorderlessWindowed(void);                        // Toggle window state: borderless windowed, resizes window to match monitor resolution
     void MaximizeWindow(void);                                  // Set window state: maximized, if resizable
     void MinimizeWindow(void);                                  // Set window state: minimized, if resizable
-    void RestoreWindow(void);                                   // Set window state: not minimized/maximized
+    void RestoreWindow(void);                                   // Restore window from being minimized/maximized
     void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit)
     void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit)
     void SetWindowTitle(const char *title);                     // Set title for window
@@ -46,7 +46,7 @@
     const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the specified monitor
     void SetClipboardText(const char *text);                    // Set clipboard text content
     const char *GetClipboardText(void);                         // Get clipboard text content
-    Image GetClipboardImage(void);                              // Get clipboard image
+    Image GetClipboardImage(void);                              // Get clipboard image content
     void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
     void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
 
@@ -88,14 +88,13 @@
     bool IsShaderValid(Shader shader);                                   // Check if a shader is valid (loaded on GPU)
     int GetShaderLocation(Shader shader, const char *uniformName);       // Get shader uniform location
     int GetShaderLocationAttrib(Shader shader, const char *attribName);  // Get shader attribute location
-    void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType);               // Set shader uniform value
-    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count);   // Set shader uniform value vector
-    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);         // Set shader uniform value (matrix 4x4)
-    void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // Set shader uniform value for texture (sampler2d)
+    void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType); // Set shader uniform value
+    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count); // Set shader uniform value vector
+    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);  // Set shader uniform value (matrix 4x4)
+    void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // Set shader uniform value and bind the texture (sampler2d)
     void UnloadShader(Shader shader);                                    // Unload shader from GPU memory (VRAM)
 
     // Screen-space-related functions
-    #define GetMouseRay GetScreenToWorldRay     // Compatibility hack for previous raylib versions
     Ray GetScreenToWorldRay(Vector2 position, Camera camera);         // Get a ray trace from screen position (i.e mouse)
     Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height); // Get a ray trace from screen position (i.e mouse) in a viewport
     Vector2 GetWorldToScreen(Vector3 position, Camera camera);        // Get the screen space position for a 3d world space position
@@ -106,99 +105,106 @@
     Matrix GetCameraMatrix2D(Camera2D camera);                        // Get camera 2d transform matrix
 
     // Timing-related functions
-    void SetTargetFPS(int fps);                                 // Set target FPS (maximum)
-    float GetFrameTime(void);                                   // Get time in seconds for last frame drawn (delta time)
-    double GetTime(void);                                       // Get elapsed time in seconds since InitWindow()
-    int GetFPS(void);                                           // Get current FPS
+    void SetTargetFPS(int fps);                       // Set target FPS (maximum)
+    float GetFrameTime(void);                         // Get time in seconds for last frame drawn (delta time)
+    double GetTime(void);                             // Get elapsed time in seconds since InitWindow()
+    int GetFPS(void);                                 // Get current FPS
 
     // Custom frame control functions
     // NOTE: Those functions are intended for advanced users that want full control over the frame processing
     // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
     // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
-    void SwapScreenBuffer(void);                                // Swap back buffer with front buffer (screen drawing)
-    void PollInputEvents(void);                                 // Register all input events
-    void WaitTime(double seconds);                              // Wait for some time (halt program execution)
+    void SwapScreenBuffer(void);                      // Swap back buffer with front buffer (screen drawing)
+    void PollInputEvents(void);                       // Register all input events
+    void WaitTime(double seconds);                    // Wait for some time (halt program execution)
 
     // Random values generation functions
-    void SetRandomSeed(unsigned int seed);                      // Set the seed for the random number generator
-    int GetRandomValue(int min, int max);                       // Get a random value between min and max (both included)
+    void SetRandomSeed(unsigned int seed);            // Set the seed for the random number generator
+    int GetRandomValue(int min, int max);             // Get a random value between min and max (both included)
     int *LoadRandomSequence(unsigned int count, int min, int max); // Load random values sequence, no values repeated
-    void UnloadRandomSequence(int *sequence);                   // Unload random values sequence
+    void UnloadRandomSequence(int *sequence);         // Unload random values sequence
 
     // Misc. functions
-    void TakeScreenshot(const char *fileName);                  // Takes a screenshot of current screen (filename extension defines format)
-    void SetConfigFlags(unsigned int flags);                    // Setup init configuration flags (view FLAGS)
-    void OpenURL(const char *url);                              // Open URL with default system browser (if available)
+    void TakeScreenshot(const char *fileName);                // Takes a screenshot of current screen (filename extension defines format)
+    void SetConfigFlags(unsigned int flags);                  // Setup init configuration flags (view FLAGS)
+    void OpenURL(const char *url);                            // Open URL with default system browser (if available)
 
-    // NOTE: Following functions implemented in module [utils]
-    //------------------------------------------------------------------
-    void TraceLog(int logLevel, const char *text, ...);         // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
-    void SetTraceLogLevel(int logLevel);                        // Set the current threshold (minimum) log level
-    void *MemAlloc(unsigned int size);                          // Internal memory allocator
-    void *MemRealloc(void *ptr, unsigned int size);             // Internal memory reallocator
-    void MemFree(void *ptr);                                    // Internal memory free
+    // Logging system
+    void SetTraceLogLevel(int logLevel);                      // Set the current threshold (minimum) log level
+    void TraceLog(int logLevel, const char *text, ...);       // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
+    void SetTraceLogCallback(TraceLogCallback callback);      // Set custom trace log
 
-    // Set custom callbacks
-    // WARNING: Callbacks setup is intended for advanced users
-    void SetTraceLogCallback(TraceLogCallback callback);         // Set custom trace log
-    void SetLoadFileDataCallback(LoadFileDataCallback callback); // Set custom file binary data loader
-    void SetSaveFileDataCallback(SaveFileDataCallback callback); // Set custom file binary data saver
-    void SetLoadFileTextCallback(LoadFileTextCallback callback); // Set custom file text data loader
-    void SetSaveFileTextCallback(SaveFileTextCallback callback); // Set custom file text data saver
+    // Memory management, using internal allocators
+    void *MemAlloc(unsigned int size);                        // Internal memory allocator
+    void *MemRealloc(void *ptr, unsigned int size);           // Internal memory reallocator
+    void MemFree(void *ptr);                                  // Internal memory free
 
-    // Files management functions
+    // File system management functions
     unsigned char *LoadFileData(const char *fileName, int *dataSize); // Load file data as byte array (read)
-    void UnloadFileData(unsigned char *data);                   // Unload file data allocated by LoadFileData()
+    void UnloadFileData(unsigned char *data);                     // Unload file data allocated by LoadFileData()
     bool SaveFileData(const char *fileName, void *data, int dataSize); // Save data to file from byte array (write), returns true on success
     bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); // Export data to code (.h), returns true on success
-    char *LoadFileText(const char *fileName);                   // Load text data from file (read), returns a '\0' terminated string
-    void UnloadFileText(char *text);                            // Unload file text data allocated by LoadFileText()
-    bool SaveFileText(const char *fileName, char *text);        // Save text data to file (write), string must be '\0' terminated, returns true on success
-    //------------------------------------------------------------------
+    char *LoadFileText(const char *fileName);                     // Load text data from file (read), returns a '\0' terminated string
+    void UnloadFileText(char *text);                              // Unload file text data allocated by LoadFileText()
+    bool SaveFileText(const char *fileName, const char *text);    // Save text data to file (write), string must be '\0' terminated, returns true on success
 
-    // File system functions
-    bool FileExists(const char *fileName);                      // Check if file exists
-    bool DirectoryExists(const char *dirPath);                  // Check if a directory path exists
-    bool IsFileExtension(const char *fileName, const char *ext); // Check file extension (including point: .png, .wav)
-    int GetFileLength(const char *fileName);                    // Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
-    const char *GetFileExtension(const char *fileName);         // Get pointer to extension for a filename string (includes dot: '.png')
-    const char *GetFileName(const char *filePath);              // Get pointer to filename for a path string
-    const char *GetFileNameWithoutExt(const char *filePath);    // Get filename string without extension (uses static string)
-    const char *GetDirectoryPath(const char *filePath);         // Get full path for a given fileName with path (uses static string)
-    const char *GetPrevDirectoryPath(const char *dirPath);      // Get previous directory path for a given path (uses static string)
-    const char *GetWorkingDirectory(void);                      // Get current working directory (uses static string)
-    const char *GetApplicationDirectory(void);                  // Get the directory of the running application (uses static string)
-    int MakeDirectory(const char *dirPath);                     // Create directories (including full path requested), returns 0 on success
-    bool ChangeDirectory(const char *dir);                      // Change working directory, return true on success
-    bool IsPathFile(const char *path);                          // Check if a given path is a file or a directory
-    bool IsFileNameValid(const char *fileName);                 // Check if fileName is valid for the platform/OS
-    FilePathList LoadDirectoryFiles(const char *dirPath);       // Load directory filepaths
-    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // Load directory filepaths with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
-    void UnloadDirectoryFiles(FilePathList files);              // Unload filepaths
-    bool IsFileDropped(void);                                   // Check if a file has been dropped into window
-    FilePathList LoadDroppedFiles(void);                        // Load dropped filepaths
-    void UnloadDroppedFiles(FilePathList files);                // Unload dropped filepaths
-    long GetFileModTime(const char *fileName);                  // Get file modification time (last write time)
+    // File access custom callbacks
+    // WARNING: Callbacks setup is intended for advanced users
+    void SetLoadFileDataCallback(LoadFileDataCallback callback);  // Set custom file binary data loader
+    void SetSaveFileDataCallback(SaveFileDataCallback callback);  // Set custom file binary data saver
+    void SetLoadFileTextCallback(LoadFileTextCallback callback);  // Set custom file text data loader
+    void SetSaveFileTextCallback(SaveFileTextCallback callback);  // Set custom file text data saver
+
+    int FileRename(const char *fileName, const char *fileRename); // Rename file (if exists)
+    int FileRemove(const char *fileName);                         // Remove file (if exists)
+    int FileCopy(const char *srcPath, const char *dstPath);       // Copy file from one path to another, dstPath created if it doesn't exist
+    int FileMove(const char *srcPath, const char *dstPath);       // Move file from one directory to another, dstPath created if it doesn't exist
+    int FileTextReplace(const char *fileName, const char *search, const char *replacement); // Replace text in an existing file
+    int FileTextFindIndex(const char *fileName, const char *search); // Find text in existing file
+    bool FileExists(const char *fileName);                        // Check if file exists
+    bool DirectoryExists(const char *dirPath);                    // Check if a directory path exists
+    bool IsFileExtension(const char *fileName, const char *ext);  // Check file extension (recommended include point: .png, .wav)
+    int GetFileLength(const char *fileName);                      // Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
+    long GetFileModTime(const char *fileName);                    // Get file modification time (last write time)
+    const char *GetFileExtension(const char *fileName);           // Get pointer to extension for a filename string (includes dot: '.png')
+    const char *GetFileName(const char *filePath);                // Get pointer to filename for a path string
+    const char *GetFileNameWithoutExt(const char *filePath);      // Get filename string without extension (uses static string)
+    const char *GetDirectoryPath(const char *filePath);           // Get full path for a given fileName with path (uses static string)
+    const char *GetPrevDirectoryPath(const char *dirPath);        // Get previous directory path for a given path (uses static string)
+    const char *GetWorkingDirectory(void);                        // Get current working directory (uses static string)
+    const char *GetApplicationDirectory(void);                    // Get the directory of the running application (uses static string)
+    int MakeDirectory(const char *dirPath);                       // Create directories (including full path requested), returns 0 on success
+    bool ChangeDirectory(const char *dirPath);                    // Change working directory, return true on success
+    bool IsPathFile(const char *path);                            // Check if a given path is a file or a directory
+    bool IsFileNameValid(const char *fileName);                   // Check if fileName is valid for the platform/OS
+    FilePathList LoadDirectoryFiles(const char *dirPath);         // Load directory filepaths, files and directories, no subdirs scan
+    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // Load directory filepaths with extension filtering and subdir scan; some filters available: "*.*", "FILES*", "DIRS*"
+    void UnloadDirectoryFiles(FilePathList files);                // Unload filepaths
+    bool IsFileDropped(void);                                     // Check if a file has been dropped into window
+    FilePathList LoadDroppedFiles(void);                          // Load dropped filepaths
+    void UnloadDroppedFiles(FilePathList files);                  // Unload dropped filepaths
+    unsigned int GetDirectoryFileCount(const char *dirPath);      // Get the file count in a directory
+    unsigned int GetDirectoryFileCountEx(const char *basePath, const char *filter, bool scanSubdirs); // Get the file count in a directory with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
 
     // Compression/Encoding functionality
     unsigned char *CompressData(const unsigned char *data, int dataSize, int *compDataSize);        // Compress data (DEFLATE algorithm), memory must be MemFree()
     unsigned char *DecompressData(const unsigned char *compData, int compDataSize, int *dataSize);  // Decompress data (DEFLATE algorithm), memory must be MemFree()
-    char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string, memory must be MemFree()
-    unsigned char *DecodeDataBase64(const unsigned char *data, int *outputSize);                    // Decode Base64 string data, memory must be MemFree()
-    unsigned int ComputeCRC32(unsigned char *data, int dataSize);     // Compute CRC32 hash code
-    unsigned int *ComputeMD5(unsigned char *data, int dataSize);      // Compute MD5 hash code, returns static int[4] (16 bytes)
-    unsigned int *ComputeSHA1(unsigned char *data, int dataSize);      // Compute SHA1 hash code, returns static int[5] (20 bytes)
-
+    char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string (includes NULL terminator), memory must be MemFree()
+    unsigned char *DecodeDataBase64(const char *text, int *outputSize);                             // Decode Base64 string (expected NULL terminated), memory must be MemFree()
+    unsigned int ComputeCRC32(unsigned char *data, int dataSize); // Compute CRC32 hash code
+    unsigned int *ComputeMD5(unsigned char *data, int dataSize);  // Compute MD5 hash code, returns static int[4] (16 bytes)
+    unsigned int *ComputeSHA1(unsigned char *data, int dataSize); // Compute SHA1 hash code, returns static int[5] (20 bytes)
+    unsigned int *ComputeSHA256(unsigned char *data, int dataSize); // Compute SHA256 hash code, returns static int[8] (32 bytes)
 
     // Automation events functionality
-    AutomationEventList LoadAutomationEventList(const char *fileName);                // Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
-    void UnloadAutomationEventList(AutomationEventList list);                         // Unload automation events list from file
-    bool ExportAutomationEventList(AutomationEventList list, const char *fileName);   // Export automation events list as text file
-    void SetAutomationEventList(AutomationEventList *list);                           // Set automation event list to record to
-    void SetAutomationEventBaseFrame(int frame);                                      // Set automation event internal base frame to start recording
-    void StartAutomationEventRecording(void);                                         // Start recording automation events (AutomationEventList must be set)
-    void StopAutomationEventRecording(void);                                          // Stop recording automation events
-    void PlayAutomationEvent(AutomationEvent event);                                  // Play a recorded automation event
+    AutomationEventList LoadAutomationEventList(const char *fileName); // Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
+    void UnloadAutomationEventList(AutomationEventList list);   // Unload automation events list from file
+    bool ExportAutomationEventList(AutomationEventList list, const char *fileName); // Export automation events list as text file
+    void SetAutomationEventList(AutomationEventList *list);     // Set automation event list to record to
+    void SetAutomationEventBaseFrame(int frame);                // Set automation event internal base frame to start recording
+    void StartAutomationEventRecording(void);                   // Start recording automation events (AutomationEventList must be set)
+    void StopAutomationEventRecording(void);                    // Stop recording automation events
+    void PlayAutomationEvent(AutomationEvent event);            // Play a recorded automation event
 
     //------------------------------------------------------------------------------------
     // Input Handling Functions (Module: core)
@@ -212,19 +218,20 @@
     bool IsKeyUp(int key);                                  // Check if a key is NOT being pressed
     int GetKeyPressed(void);                                // Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
     int GetCharPressed(void);                               // Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
+    const char *GetKeyName(int key);                        // Get name of a QWERTY key on the current keyboard layout (eg returns string 'q' for KEY_A on an AZERTY keyboard)
     void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
 
     // Input-related functions: gamepads
-    bool IsGamepadAvailable(int gamepad);                                        // Check if a gamepad is available
-    const char *GetGamepadName(int gamepad);                                     // Get gamepad internal name id
-    bool IsGamepadButtonPressed(int gamepad, int button);                        // Check if a gamepad button has been pressed once
-    bool IsGamepadButtonDown(int gamepad, int button);                           // Check if a gamepad button is being pressed
-    bool IsGamepadButtonReleased(int gamepad, int button);                       // Check if a gamepad button has been released once
-    bool IsGamepadButtonUp(int gamepad, int button);                             // Check if a gamepad button is NOT being pressed
-    int GetGamepadButtonPressed(void);                                           // Get the last gamepad button pressed
-    int GetGamepadAxisCount(int gamepad);                                        // Get gamepad axis count for a gamepad
-    float GetGamepadAxisMovement(int gamepad, int axis);                         // Get axis movement value for a gamepad axis
-    int SetGamepadMappings(const char *mappings);                                // Set internal gamepad mappings (SDL_GameControllerDB)
+    bool IsGamepadAvailable(int gamepad);                   // Check if a gamepad is available
+    const char *GetGamepadName(int gamepad);                // Get gamepad internal name id
+    bool IsGamepadButtonPressed(int gamepad, int button);   // Check if a gamepad button has been pressed once
+    bool IsGamepadButtonDown(int gamepad, int button);      // Check if a gamepad button is being pressed
+    bool IsGamepadButtonReleased(int gamepad, int button);  // Check if a gamepad button has been released once
+    bool IsGamepadButtonUp(int gamepad, int button);        // Check if a gamepad button is NOT being pressed
+    int GetGamepadButtonPressed(void);                      // Get the last gamepad button pressed
+    int GetGamepadAxisCount(int gamepad);                   // Get axis count for a gamepad
+    float GetGamepadAxisMovement(int gamepad, int axis);    // Get movement value for a gamepad axis
+    int SetGamepadMappings(const char *mappings);           // Set internal gamepad mappings (SDL_GameControllerDB)
     void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration); // Set gamepad vibration for both motors (duration in seconds)
 
     // Input-related functions: mouse
@@ -253,18 +260,18 @@
     //------------------------------------------------------------------------------------
     // Gestures and Touch Handling Functions (Module: rgestures)
     //------------------------------------------------------------------------------------
-    void SetGesturesEnabled(unsigned int flags);      // Enable a set of gestures using flags
-    bool IsGestureDetected(unsigned int gesture);     // Check if a gesture have been detected
-    int GetGestureDetected(void);                     // Get latest detected gesture
-    float GetGestureHoldDuration(void);               // Get gesture hold time in seconds
-    Vector2 GetGestureDragVector(void);               // Get gesture drag vector
-    float GetGestureDragAngle(void);                  // Get gesture drag angle
-    Vector2 GetGesturePinchVector(void);              // Get gesture pinch delta
-    float GetGesturePinchAngle(void);                 // Get gesture pinch angle
+    void SetGesturesEnabled(unsigned int flags);            // Enable a set of gestures using flags
+    bool IsGestureDetected(unsigned int gesture);           // Check if a gesture have been detected
+    int GetGestureDetected(void);                           // Get latest detected gesture
+    float GetGestureHoldDuration(void);                     // Get gesture hold time in seconds
+    Vector2 GetGestureDragVector(void);                     // Get gesture drag vector
+    float GetGestureDragAngle(void);                        // Get gesture drag angle
+    Vector2 GetGesturePinchVector(void);                    // Get gesture pinch delta
+    float GetGesturePinchAngle(void);                       // Get gesture pinch angle
 
     //------------------------------------------------------------------------------------
     // Camera System Functions (Module: rcamera)
     //------------------------------------------------------------------------------------
-    void UpdateCamera(Camera *camera, int mode);      // Update camera position for selected mode
+    void UpdateCamera(Camera *camera, int mode);            // Update camera position for selected mode
     void UpdateCameraPro(Camera *camera, Vector3 movement, Vector3 rotation, float zoom); // Update camera movement/rotation
 

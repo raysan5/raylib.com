@@ -1,0 +1,99 @@
+{
+    "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+    "version": "v1.0.0",
+    "entity": {
+        "type": "individual",
+        "role": "maintainer",
+        "name": "Ramon Santamaria",
+        "email": "ray@raylib.com",
+        "phone": "",
+        "description": "I'm Ray, Electronic Engineer, videogames developer, entrepreneur and the creator and solo maintainer of raylib, a simple and easy-to-use library to enjoy videogames programming.",
+        "webpageUrl": {
+            "url": "https://www.linkedin.com/in/raysan/",
+            "wellKnown": ""
+        }
+    },
+    "projects": [{
+        "guid": "raylib",
+        "name": "raylib",
+        "description": "raylib is a simple and easy-to-use library to enjoy videogames programming. raylib is a lightweight, open-source C library designed to make graphics development simple, accessible and enjoyable for everyone.",
+        "webpageUrl": {
+            "url": "https://raylib.com"
+        },
+        "repositoryUrl": {
+            "url": "https://github.com/raysan5/raylib",
+            "wellKnown": ""
+        },
+        "licenses": ["spdx:Zlib"],
+        "tags": ["graphics", "programming", "2d", "3d", "low-level", "high-performance", "multiplatform", "videogames", "embedded"]
+    }],
+    "funding": {
+        "channels": [
+            {
+                "guid": "github-sponsors",
+                "type": "payment-provider",
+                "address": "https://github.com/sponsors/raysan5",
+                "description": "GitHub Sponsors"
+            },
+            {
+                "guid": "my-bank",
+                "type": "bank",
+                "address": "",
+                "description": "Will accept direct bank transfers. Please e-mail me for details."
+            },
+            {
+                "guid": "my-paypal",
+                "type": "payment-provider",
+                "address": "",
+                "description": "Will accept PayPal transfers. Check raylib.com for details."
+            }
+        ],
+        "plans": [
+            {
+                "guid": "maintainer-time",
+                "status": "active",
+                "name": "Main project developer compensation",
+                "description": "This will cover the cost of main maintainer working full-time/part-time on the projects.",
+                "amount": 0,
+                "currency": "EUR",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            },
+            {
+                "guid": "maintainer-time-usd",
+                "status": "active",
+                "name": "Main project developer compensation",
+                "description": "This will cover the cost of main maintainer working full-time/part-time on the projects.",
+                "amount": 0,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            },
+            {
+                "guid": "angel-plan",
+                "status": "active",
+                "name": "Goodwill plan",
+                "description": "Pay anything you wish to show your goodwill for the project.",
+                "amount": 0,
+                "currency": "EUR",
+                "frequency": "one-time",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            },
+            {
+                "guid": "angel-plan-usd",
+                "status": "active",
+                "name": "Goodwill plan",
+                "description": "Pay anything you wish to show your goodwill for the project.",
+                "amount": 0,
+                "currency": "USD",
+                "frequency": "one-time",
+                "channels": ["github-sponsors", "my-bank", "my-paypal"]
+            }
+        ],
+        "history": [
+            {"year": 2019, "income": 0, "expenses": 0, "taxes": 0, "currency": "USD", "description": "Google Open Source Peer Bonus Award"},
+            {"year": 2020, "income": 0, "expenses": 0, "taxes": 0, "currency": "USD", "description": "Epic MegaGrant"},
+            {"year": 2025, "income": 0, "expenses": 0, "taxes": 0, "currency": "EUR", "description": "NGI Zero Common Funds"}
+        ]
+    }
+}
