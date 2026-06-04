@@ -634,9 +634,7 @@ a:has(img) {
 #extralibs>a>img:hover {
     filter: contrast(200%);
 }
-#raylibtech{
-    max-width: calc(var(--content-width) - 120px);
-}
+
 #raylibtech>a>img {
     transition: all .2s ease;
 }
