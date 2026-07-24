@@ -156,8 +156,8 @@
     FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdir); //使用扩展筛选和递归目录扫描加载目录文件路径
     void UnloadDirectoryFiles(FilePathList files);             //卸载文件路径
     bool IsFileDropped(void);                               //检查文件是否已放入窗口
-    FilePathList LoadDroppedFiles(void);                    //加载删除的文件路径
-    void UnloadDroppedFiles(FilePathList files);            //卸载删除的文件路径
+    FilePathList LoadDroppedFiles(void);                    //加载已放入窗口的文件路径列表
+    void UnloadDroppedFiles(FilePathList files);            //卸载已放入窗口的文件路径列表
     long GetFileModTime(const char *fileName);              //获取文件修改时间(上次写入时间)
     
     //压缩/编码功能
