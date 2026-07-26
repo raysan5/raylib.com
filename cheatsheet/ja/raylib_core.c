@@ -1,54 +1,54 @@
 
-    // Window-related functions
-    void InitWindow(int width, int height, const char *title);  // Initialize window and OpenGL context
-    void CloseWindow(void);                                     // Close window and unload OpenGL context
-    bool WindowShouldClose(void);                               // Check if application should close (KEY_ESCAPE pressed or windows close icon clicked)
-    bool IsWindowReady(void);                                   // Check if window has been initialized successfully
-    bool IsWindowFullscreen(void);                              // Check if window is currently fullscreen
-    bool IsWindowHidden(void);                                  // Check if window is currently hidden
-    bool IsWindowMinimized(void);                               // Check if window is currently minimized
-    bool IsWindowMaximized(void);                               // Check if window is currently maximized
-    bool IsWindowFocused(void);                                 // Check if window is currently focused
-    bool IsWindowResized(void);                                 // Check if window has been resized last frame
-    bool IsWindowState(unsigned int flag);                      // Check if one specific window flag is enabled
-    void SetWindowState(unsigned int flags);                    // Set window configuration state using flags
-    void ClearWindowState(unsigned int flags);                  // Clear window configuration state flags
-    void ToggleFullscreen(void);                                // Toggle window state: fullscreen/windowed, resizes monitor to match window resolution
-    void ToggleBorderlessWindowed(void);                        // Toggle window state: borderless windowed, resizes window to match monitor resolution
-    void MaximizeWindow(void);                                  // Set window state: maximized, if resizable
-    void MinimizeWindow(void);                                  // Set window state: minimized, if resizable
-    void RestoreWindow(void);                                   // Restore window from being minimized/maximized
-    void SetWindowIcon(Image image);                            // Set icon for window (single image, RGBA 32bit)
-    void SetWindowIcons(Image *images, int count);              // Set icon for window (multiple images, RGBA 32bit)
-    void SetWindowTitle(const char *title);                     // Set title for window
-    void SetWindowPosition(int x, int y);                       // Set window position on screen
-    void SetWindowMonitor(int monitor);                         // Set monitor for the current window
-    void SetWindowMinSize(int width, int height);               // Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
-    void SetWindowMaxSize(int width, int height);               // Set window maximum dimensions (for FLAG_WINDOW_RESIZABLE)
-    void SetWindowSize(int width, int height);                  // Set window dimensions
-    void SetWindowOpacity(float opacity);                       // Set window opacity [0.0f..1.0f]
-    void SetWindowFocused(void);                                // Set window focused
-    void *GetWindowHandle(void);                                // Get native window handle
-    int GetScreenWidth(void);                                   // Get current screen width
-    int GetScreenHeight(void);                                  // Get current screen height
-    int GetRenderWidth(void);                                   // Get current render width (it considers HiDPI)
-    int GetRenderHeight(void);                                  // Get current render height (it considers HiDPI)
-    int GetMonitorCount(void);                                  // Get number of connected monitors
-    int GetCurrentMonitor(void);                                // Get current monitor where window is placed
-    Vector2 GetMonitorPosition(int monitor);                    // Get specified monitor position
-    int GetMonitorWidth(int monitor);                           // Get specified monitor width (current video mode used by monitor)
-    int GetMonitorHeight(int monitor);                          // Get specified monitor height (current video mode used by monitor)
-    int GetMonitorPhysicalWidth(int monitor);                   // Get specified monitor physical width in millimetres
-    int GetMonitorPhysicalHeight(int monitor);                  // Get specified monitor physical height in millimetres
-    int GetMonitorRefreshRate(int monitor);                     // Get specified monitor refresh rate
-    Vector2 GetWindowPosition(void);                            // Get window position XY on monitor
-    Vector2 GetWindowScaleDPI(void);                            // Get window scale DPI factor
-    const char *GetMonitorName(int monitor);                    // Get the human-readable, UTF-8 encoded name of the specified monitor
-    void SetClipboardText(const char *text);                    // Set clipboard text content
-    const char *GetClipboardText(void);                         // Get clipboard text content
-    Image GetClipboardImage(void);                              // Get clipboard image content
-    void EnableEventWaiting(void);                              // Enable waiting for events on EndDrawing(), no automatic event polling
-    void DisableEventWaiting(void);                             // Disable waiting for events on EndDrawing(), automatic events polling
+    // ウィンドウ関連の関数
+    void InitWindow(int width, int height, const char *title);  // ウィンドウとOpenGLコンテキストを初期化する
+    void CloseWindow(void);                                     // ウィンドウを閉じてOpenGLコンテキストをアンロードする
+    bool WindowShouldClose(void);                               // アプリケーションを終了すべきか確認する（KEY_ESCAPEが押された、またはウィンドウの閉じるアイコンがクリックされた場合）
+    bool IsWindowReady(void);                                   // ウィンドウが正常に初期化されたか確認する
+    bool IsWindowFullscreen(void);                              // ウィンドウが現在フルスクリーンか確認する
+    bool IsWindowHidden(void);                                  // ウィンドウが現在非表示か確認する
+    bool IsWindowMinimized(void);                               // ウィンドウが現在最小化されているか確認する
+    bool IsWindowMaximized(void);                               // ウィンドウが現在最大化されているか確認する
+    bool IsWindowFocused(void);                                 // ウィンドウが現在フォーカスされているか確認する
+    bool IsWindowResized(void);                                 // 直前のフレームでウィンドウのサイズが変更されたか確認する
+    bool IsWindowState(unsigned int flag);                      // 指定したウィンドウフラグが有効か確認する
+    void SetWindowState(unsigned int flags);                    // フラグを使用してウィンドウの設定状態を指定する
+    void ClearWindowState(unsigned int flags);                  // ウィンドウの設定状態フラグを解除する
+    void ToggleFullscreen(void);                                // ウィンドウの状態をフルスクリーン／ウィンドウ表示に切り替え、モニターをウィンドウの解像度に合わせてサイズ変更する
+    void ToggleBorderlessWindowed(void);                        // ウィンドウの状態をボーダーレスウィンドウ表示に切り替え、ウィンドウをモニターの解像度に合わせてサイズ変更する
+    void MaximizeWindow(void);                                  // サイズ変更可能な場合、ウィンドウを最大化する
+    void MinimizeWindow(void);                                  // サイズ変更可能な場合、ウィンドウを最小化する
+    void RestoreWindow(void);                                   // 最小化または最大化されたウィンドウを元に戻す
+    void SetWindowIcon(Image image);                            // ウィンドウのアイコンを設定する（単一画像、32ビットRGBA）
+    void SetWindowIcons(Image *images, int count);              // ウィンドウのアイコンを設定する（複数画像、32ビットRGBA）
+    void SetWindowTitle(const char *title);                     // ウィンドウのタイトルを設定する
+    void SetWindowPosition(int x, int y);                       // 画面上のウィンドウ位置を設定する
+    void SetWindowMonitor(int monitor);                         // 現在のウィンドウを表示するモニターを設定する
+    void SetWindowMinSize(int width, int height);               // ウィンドウの最小サイズを設定する（FLAG_WINDOW_RESIZABLE用）
+    void SetWindowMaxSize(int width, int height);               // ウィンドウの最大サイズを設定する（FLAG_WINDOW_RESIZABLE用）
+    void SetWindowSize(int width, int height);                  // ウィンドウのサイズを設定する
+    void SetWindowOpacity(float opacity);                       // ウィンドウの不透明度を設定する [0.0f..1.0f]
+    void SetWindowFocused(void);                                // ウィンドウにフォーカスを設定する
+    void *GetWindowHandle(void);                                // ネイティブウィンドウハンドルを取得する
+    int GetScreenWidth(void);                                   // 現在の画面幅を取得する
+    int GetScreenHeight(void);                                  // 現在の画面高さを取得する
+    int GetRenderWidth(void);                                   // 現在の描画幅を取得する（HiDPIを考慮）
+    int GetRenderHeight(void);                                  // 現在の描画高さを取得する（HiDPIを考慮）
+    int GetMonitorCount(void);                                  // 接続されているモニター数を取得する
+    int GetCurrentMonitor(void);                                // ウィンドウが配置されている現在のモニターを取得する
+    Vector2 GetMonitorPosition(int monitor);                    // 指定したモニターの位置を取得する
+    int GetMonitorWidth(int monitor);                           // 指定したモニターの幅を取得する（モニターで使用中のビデオモード）
+    int GetMonitorHeight(int monitor);                          // 指定したモニターの高さを取得する（モニターで使用中のビデオモード）
+    int GetMonitorPhysicalWidth(int monitor);                   // 指定したモニターの物理的な幅をミリメートル単位で取得する
+    int GetMonitorPhysicalHeight(int monitor);                  // 指定したモニターの物理的な高さをミリメートル単位で取得する
+    int GetMonitorRefreshRate(int monitor);                     // 指定したモニターのリフレッシュレートを取得する
+    Vector2 GetWindowPosition(void);                            // モニター上のウィンドウのXY位置を取得する
+    Vector2 GetWindowScaleDPI(void);                            // ウィンドウのDPIスケール係数を取得する
+    const char *GetMonitorName(int monitor);                    // 指定したモニターの人が読めるUTF-8エンコード名を取得する
+    void SetClipboardText(const char *text);                    // クリップボードのテキスト内容を設定する
+    const char *GetClipboardText(void);                         // クリップボードのテキスト内容を取得する
+    Image GetClipboardImage(void);                              // クリップボードの画像内容を取得する
+    void EnableEventWaiting(void);                              // EndDrawing()でイベント待機を有効にし、自動イベントポーリングを無効にする
+    void DisableEventWaiting(void);                             // EndDrawing()でイベント待機を無効にし、自動イベントポーリングを有効にする
 
     // カーソル関連の関数
     void ShowCursor(void);                                      // カーソルを表示する
@@ -58,220 +58,220 @@
     void DisableCursor(void);                                   // カーソルを無効化する（ロックする）
     bool IsCursorOnScreen(void);                                // カーソルが画面内にあるか確認する
 
-    // Drawing-related functions
-    void ClearBackground(Color color);                          // Set background color (framebuffer clear color)
-    void BeginDrawing(void);                                    // Setup canvas (framebuffer) to start drawing
-    void EndDrawing(void);                                      // End canvas drawing and swap buffers (double buffering)
-    void BeginMode2D(Camera2D camera);                          // Begin 2D mode with custom camera (2D)
-    void EndMode2D(void);                                       // Ends 2D mode with custom camera
-    void BeginMode3D(Camera3D camera);                          // Begin 3D mode with custom camera (3D)
-    void EndMode3D(void);                                       // Ends 3D mode and returns to default 2D orthographic mode
-    void BeginTextureMode(RenderTexture2D target);              // Begin drawing to render texture
-    void EndTextureMode(void);                                  // Ends drawing to render texture
-    void BeginShaderMode(Shader shader);                        // Begin custom shader drawing
-    void EndShaderMode(void);                                   // End custom shader drawing (use default shader)
-    void BeginBlendMode(int mode);                              // Begin blending mode (alpha, additive, multiplied, subtract, custom)
-    void EndBlendMode(void);                                    // End blending mode (reset to default: alpha blending)
-    void BeginScissorMode(int x, int y, int width, int height); // Begin scissor mode (define screen area for following drawing)
-    void EndScissorMode(void);                                  // End scissor mode
-    void BeginVrStereoMode(VrStereoConfig config);              // Begin stereo rendering (requires VR simulator)
-    void EndVrStereoMode(void);                                 // End stereo rendering (requires VR simulator)
+    // 描画関連の関数
+    void ClearBackground(Color color);                          // 背景色（フレームバッファのクリア色）を設定する
+    void BeginDrawing(void);                                    // 描画を開始するためにキャンバス（フレームバッファ）を準備する
+    void EndDrawing(void);                                      // キャンバスへの描画を終了し、バッファを入れ替える（ダブルバッファリング）
+    void BeginMode2D(Camera2D camera);                          // カスタムカメラで2Dモードを開始する
+    void EndMode2D(void);                                       // カスタムカメラによる2Dモードを終了する
+    void BeginMode3D(Camera3D camera);                          // カスタムカメラで3Dモードを開始する
+    void EndMode3D(void);                                       // 3Dモードを終了し、デフォルトの2D正投影モードに戻す
+    void BeginTextureMode(RenderTexture2D target);              // レンダーテクスチャへの描画を開始する
+    void EndTextureMode(void);                                  // レンダーテクスチャへの描画を終了する
+    void BeginShaderMode(Shader shader);                        // カスタムシェーダーによる描画を開始する
+    void EndShaderMode(void);                                   // カスタムシェーダーによる描画を終了する（デフォルトシェーダーを使用）
+    void BeginBlendMode(int mode);                              // ブレンドモードを開始する（アルファ、加算、乗算、減算、カスタム）
+    void EndBlendMode(void);                                    // ブレンドモードを終了する（デフォルトのアルファブレンドに戻す）
+    void BeginScissorMode(int x, int y, int width, int height); // シザーモードを開始する（以降の描画領域を画面上に定義）
+    void EndScissorMode(void);                                  // シザーモードを終了する
+    void BeginVrStereoMode(VrStereoConfig config);              // ステレオレンダリングを開始する（VRシミュレーターが必要）
+    void EndVrStereoMode(void);                                 // ステレオレンダリングを終了する（VRシミュレーターが必要）
 
-    // VR stereo config functions for VR simulator
-    VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device);     // Load VR stereo config for VR simulator device parameters
-    void UnloadVrStereoConfig(VrStereoConfig config);           // Unload VR stereo config
+    // VRシミュレーター用のVRステレオ設定関数
+    VrStereoConfig LoadVrStereoConfig(VrDeviceInfo device);     // VRシミュレーターデバイスのパラメーターからVRステレオ設定を読み込む
+    void UnloadVrStereoConfig(VrStereoConfig config);           // VRステレオ設定をアンロードする
 
-    // Shader management functions
-    // NOTE: Shader functionality is not available on OpenGL 1.1
-    Shader LoadShader(const char *vsFileName, const char *fsFileName);   // Load shader from files and bind default locations
-    Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode); // Load shader from code strings and bind default locations
-    bool IsShaderValid(Shader shader);                                   // Check if a shader is valid (loaded on GPU)
-    int GetShaderLocation(Shader shader, const char *uniformName);       // Get shader uniform location
-    int GetShaderLocationAttrib(Shader shader, const char *attribName);  // Get shader attribute location
-    void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType); // Set shader uniform value
-    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count); // Set shader uniform value vector
-    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);  // Set shader uniform value (matrix 4x4)
-    void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // Set shader uniform value and bind the texture (sampler2d)
-    void UnloadShader(Shader shader);                                    // Unload shader from GPU memory (VRAM)
+    // シェーダー管理関数
+    // 注意: OpenGL 1.1ではシェーダー機能を使用できない
+    Shader LoadShader(const char *vsFileName, const char *fsFileName);   // ファイルからシェーダーを読み込み、デフォルトロケーションを関連付ける
+    Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode); // コード文字列からシェーダーを読み込み、デフォルトロケーションを関連付ける
+    bool IsShaderValid(Shader shader);                                   // シェーダーが有効か確認する（GPUに読み込み済み）
+    int GetShaderLocation(Shader shader, const char *uniformName);       // シェーダーのuniformロケーションを取得する
+    int GetShaderLocationAttrib(Shader shader, const char *attribName);  // シェーダーの頂点属性ロケーションを取得する
+    void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType); // シェーダーのuniform値を設定する
+    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count); // シェーダーのuniform値ベクトルを設定する
+    void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);  // シェーダーのuniform値を設定する（4x4行列）
+    void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // シェーダーのuniform値を設定し、テクスチャを関連付ける（sampler2D）
+    void UnloadShader(Shader shader);                                    // シェーダーをGPUメモリ（VRAM）からアンロードする
 
-    // Screen-space-related functions
-    Ray GetScreenToWorldRay(Vector2 position, Camera camera);         // Get a ray trace from screen position (i.e mouse)
-    Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height); // Get a ray trace from screen position (i.e mouse) in a viewport
-    Vector2 GetWorldToScreen(Vector3 position, Camera camera);        // Get the screen space position for a 3d world space position
-    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // Get size position for a 3d world space position
-    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);    // Get the screen space position for a 2d camera world space position
-    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);    // Get the world space position for a 2d camera screen space position
-    Matrix GetCameraMatrix(Camera camera);                            // Get camera transform matrix (view matrix)
-    Matrix GetCameraMatrix2D(Camera2D camera);                        // Get camera 2d transform matrix
+    // スクリーン空間関連の関数
+    Ray GetScreenToWorldRay(Vector2 position, Camera camera);         // 画面位置（マウスなど）からワールド空間へのレイを取得する
+    Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height); // ビューポート内の画面位置（マウスなど）からワールド空間へのレイを取得する
+    Vector2 GetWorldToScreen(Vector3 position, Camera camera);        // 3Dワールド空間の位置に対応するスクリーン空間の位置を取得する
+    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // 3Dワールド空間の位置に対応するスクリーン空間の位置を取得する
+    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);    // 2Dカメラのワールド空間位置に対応するスクリーン空間の位置を取得する
+    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);    // 2Dカメラのスクリーン空間位置に対応するワールド空間の位置を取得する
+    Matrix GetCameraMatrix(Camera camera);                            // カメラ変換行列（ビュー行列）を取得する
+    Matrix GetCameraMatrix2D(Camera2D camera);                        // 2Dカメラの変換行列を取得する
 
-    // Timing-related functions
-    void SetTargetFPS(int fps);                       // Set target FPS (maximum)
-    float GetFrameTime(void);                         // Get time in seconds for last frame drawn (delta time)
-    double GetTime(void);                             // Get elapsed time in seconds since InitWindow()
-    int GetFPS(void);                                 // Get current FPS
+    // 時間関連の関数
+    void SetTargetFPS(int fps);                       // 目標FPS（最大値）を設定する
+    float GetFrameTime(void);                         // 直前に描画したフレームの所要時間（デルタタイム）を秒単位で取得する
+    double GetTime(void);                             // InitWindow()からの経過時間を秒単位で取得する
+    int GetFPS(void);                                 // 現在のFPSを取得する
 
-    // Custom frame control functions
-    // NOTE: Those functions are intended for advanced users that want full control over the frame processing
-    // By default EndDrawing() does this job: draws everything + SwapScreenBuffer() + manage frame timing + PollInputEvents()
-    // To avoid that behaviour and control frame processes manually, enable in config.h: SUPPORT_CUSTOM_FRAME_CONTROL
-    void SwapScreenBuffer(void);                      // Swap back buffer with front buffer (screen drawing)
-    void PollInputEvents(void);                       // Register all input events
-    void WaitTime(double seconds);                    // Wait for some time (halt program execution)
+    // カスタムフレーム制御関数
+    // 注意: これらの関数はフレーム処理を完全に制御したい上級者向け
+    // デフォルトではEndDrawing()が、すべてを描画 + SwapScreenBuffer() + フレームタイミングを管理 + PollInputEvents()を実行する
+    // この動作を避けてフレーム処理を手動で制御するには、config.hでSUPPORT_CUSTOM_FRAME_CONTROLを有効にする
+    void SwapScreenBuffer(void);                      // バックバッファとフロントバッファを入れ替える（画面描画）
+    void PollInputEvents(void);                       // すべての入力イベントを登録する
+    void WaitTime(double seconds);                    // 指定時間待機する（プログラムの実行を停止）
 
-    // Random values generation functions
-    void SetRandomSeed(unsigned int seed);            // Set the seed for the random number generator
-    int GetRandomValue(int min, int max);             // Get a random value between min and max (both included)
-    int *LoadRandomSequence(unsigned int count, int min, int max); // Load random values sequence, no values repeated
-    void UnloadRandomSequence(int *sequence);         // Unload random values sequence
+    // 乱数生成関数
+    void SetRandomSeed(unsigned int seed);            // 乱数生成器のシードを設定する
+    int GetRandomValue(int min, int max);             // minからmaxまでの乱数値を取得する（両端を含む）
+    int *LoadRandomSequence(unsigned int count, int min, int max); // 重複のない乱数列を読み込む
+    void UnloadRandomSequence(int *sequence);         // 乱数列をアンロードする
 
-    // Misc. functions
-    void TakeScreenshot(const char *fileName);                // Takes a screenshot of current screen (filename extension defines format)
-    void SetConfigFlags(unsigned int flags);                  // Setup init configuration flags (view FLAGS)
-    void OpenURL(const char *url);                            // Open URL with default system browser (if available)
+    // その他の関数
+    void TakeScreenshot(const char *fileName);                // 現在の画面のスクリーンショットを撮る（ファイル名の拡張子で形式を指定）
+    void SetConfigFlags(unsigned int flags);                  // 初期化時の設定フラグを指定する（FLAGSを参照）
+    void OpenURL(const char *url);                            // デフォルトのシステムブラウザーでURLを開く（利用可能な場合）
 
-    // Logging system
-    void SetTraceLogLevel(int logLevel);                      // Set the current threshold (minimum) log level
-    void TraceLog(int logLevel, const char *text, ...);       // Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
-    void SetTraceLogCallback(TraceLogCallback callback);      // Set custom trace log
+    // ログシステム
+    void SetTraceLogLevel(int logLevel);                      // 現在のしきい値となる最小ログレベルを設定する
+    void TraceLog(int logLevel, const char *text, ...);       // トレースログメッセージを表示する（LOG_DEBUG、LOG_INFO、LOG_WARNING、LOG_ERRORなど）
+    void SetTraceLogCallback(TraceLogCallback callback);      // カスタムトレースログを設定する
 
-    // Memory management, using internal allocators
-    void *MemAlloc(unsigned int size);                        // Internal memory allocator
-    void *MemRealloc(void *ptr, unsigned int size);           // Internal memory reallocator
-    void MemFree(void *ptr);                                  // Internal memory free
+    // 内部アロケーターを使用したメモリ管理
+    void *MemAlloc(unsigned int size);                        // 内部メモリアロケーター
+    void *MemRealloc(void *ptr, unsigned int size);           // 内部メモリ再割り当て
+    void MemFree(void *ptr);                                  // 内部メモリ解放
 
-    // File system management functions
-    unsigned char *LoadFileData(const char *fileName, int *dataSize); // Load file data as byte array (read)
-    void UnloadFileData(unsigned char *data);                     // Unload file data allocated by LoadFileData()
-    bool SaveFileData(const char *fileName, void *data, int dataSize); // Save data to file from byte array (write), returns true on success
-    bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); // Export data to code (.h), returns true on success
-    char *LoadFileText(const char *fileName);                     // Load text data from file (read), returns a '\0' terminated string
-    void UnloadFileText(char *text);                              // Unload file text data allocated by LoadFileText()
-    bool SaveFileText(const char *fileName, const char *text);    // Save text data to file (write), string must be '\0' terminated, returns true on success
+    // ファイルシステム管理関数
+    unsigned char *LoadFileData(const char *fileName, int *dataSize); // ファイルデータをバイト配列として読み込む
+    void UnloadFileData(unsigned char *data);                     // LoadFileData()で割り当てたファイルデータをアンロードする
+    bool SaveFileData(const char *fileName, void *data, int dataSize); // バイト配列をファイルに保存し、成功した場合はtrueを返す
+    bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); // データをコード（.h）としてエクスポートし、成功した場合はtrueを返す
+    char *LoadFileText(const char *fileName);                     // テキストデータをファイルから読み込み、'\0'終端文字列を返す
+    void UnloadFileText(char *text);                              // LoadFileText()で割り当てたテキストデータをアンロードする
+    bool SaveFileText(const char *fileName, const char *text);    // '\0'終端文字列をファイルに保存し、成功した場合はtrueを返す
 
-    // File access custom callbacks
-    // WARNING: Callbacks setup is intended for advanced users
-    void SetLoadFileDataCallback(LoadFileDataCallback callback);  // Set custom file binary data loader
-    void SetSaveFileDataCallback(SaveFileDataCallback callback);  // Set custom file binary data saver
-    void SetLoadFileTextCallback(LoadFileTextCallback callback);  // Set custom file text data loader
-    void SetSaveFileTextCallback(SaveFileTextCallback callback);  // Set custom file text data saver
+    // ファイルアクセス用カスタムコールバック
+    // 警告: コールバックの設定は上級者向け
+    void SetLoadFileDataCallback(LoadFileDataCallback callback);  // カスタムのバイナリファイルデータローダーを設定する
+    void SetSaveFileDataCallback(SaveFileDataCallback callback);  // カスタムのバイナリファイルデータセーバーを設定する
+    void SetLoadFileTextCallback(LoadFileTextCallback callback);  // カスタムのテキストファイルデータローダーを設定する
+    void SetSaveFileTextCallback(SaveFileTextCallback callback);  // カスタムのテキストファイルデータセーバーを設定する
 
-    int FileRename(const char *fileName, const char *fileRename); // Rename file (if exists)
-    int FileRemove(const char *fileName);                         // Remove file (if exists)
-    int FileCopy(const char *srcPath, const char *dstPath);       // Copy file from one path to another, dstPath created if it doesn't exist
-    int FileMove(const char *srcPath, const char *dstPath);       // Move file from one directory to another, dstPath created if it doesn't exist
-    int FileTextReplace(const char *fileName, const char *search, const char *replacement); // Replace text in an existing file
-    int FileTextFindIndex(const char *fileName, const char *search); // Find text in existing file
-    bool FileExists(const char *fileName);                        // Check if file exists
-    bool DirectoryExists(const char *dirPath);                    // Check if a directory path exists
-    bool IsFileExtension(const char *fileName, const char *ext);  // Check file extension (recommended include point: .png, .wav)
-    int GetFileLength(const char *fileName);                      // Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
-    long GetFileModTime(const char *fileName);                    // Get file modification time (last write time)
-    const char *GetFileExtension(const char *fileName);           // Get pointer to extension for a filename string (includes dot: '.png')
-    const char *GetFileName(const char *filePath);                // Get pointer to filename for a path string
-    const char *GetFileNameWithoutExt(const char *filePath);      // Get filename string without extension (uses static string)
-    const char *GetDirectoryPath(const char *filePath);           // Get full path for a given fileName with path (uses static string)
-    const char *GetPrevDirectoryPath(const char *dirPath);        // Get previous directory path for a given path (uses static string)
-    const char *GetWorkingDirectory(void);                        // Get current working directory (uses static string)
-    const char *GetApplicationDirectory(void);                    // Get the directory of the running application (uses static string)
-    int MakeDirectory(const char *dirPath);                       // Create directories (including full path requested), returns 0 on success
-    bool ChangeDirectory(const char *dirPath);                    // Change working directory, return true on success
-    bool IsPathFile(const char *path);                            // Check if a given path is a file or a directory
-    bool IsFileNameValid(const char *fileName);                   // Check if fileName is valid for the platform/OS
-    FilePathList LoadDirectoryFiles(const char *dirPath);         // Load directory filepaths, files and directories, no subdirs scan
-    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // Load directory filepaths with extension filtering and subdir scan; some filters available: "*.*", "FILES*", "DIRS*"
-    void UnloadDirectoryFiles(FilePathList files);                // Unload filepaths
-    bool IsFileDropped(void);                                     // Check if a file has been dropped into window
-    FilePathList LoadDroppedFiles(void);                          // Load dropped filepaths
-    void UnloadDroppedFiles(FilePathList files);                  // Unload dropped filepaths
-    unsigned int GetDirectoryFileCount(const char *dirPath);      // Get the file count in a directory
-    unsigned int GetDirectoryFileCountEx(const char *basePath, const char *filter, bool scanSubdirs); // Get the file count in a directory with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
+    int FileRename(const char *fileName, const char *fileRename); // ファイルが存在する場合、名前を変更する
+    int FileRemove(const char *fileName);                         // ファイルが存在する場合、削除する
+    int FileCopy(const char *srcPath, const char *dstPath);       // ファイルを別のパスへコピーし、存在しない場合はdstPathを作成する
+    int FileMove(const char *srcPath, const char *dstPath);       // ファイルを別のディレクトリへ移動し、存在しない場合はdstPathを作成する
+    int FileTextReplace(const char *fileName, const char *search, const char *replacement); // 既存ファイル内のテキストを置換する
+    int FileTextFindIndex(const char *fileName, const char *search); // 既存ファイル内のテキストを検索する
+    bool FileExists(const char *fileName);                        // ファイルが存在するか確認する
+    bool DirectoryExists(const char *dirPath);                    // ディレクトリパスが存在するか確認する
+    bool IsFileExtension(const char *fileName, const char *ext);  // ファイルの拡張子を確認する（.png、.wavのようにドットを含めることを推奨）
+    int GetFileLength(const char *fileName);                      // ファイルサイズをバイト単位で取得する（注意: GetFileSize()はwindows.hと競合する）
+    long GetFileModTime(const char *fileName);                    // ファイルの更新時刻（最終書き込み時刻）を取得する
+    const char *GetFileExtension(const char *fileName);           // ファイル名文字列の拡張子を指すポインターを取得する（'.png'のようにドットを含む）
+    const char *GetFileName(const char *filePath);                // パス文字列内のファイル名を指すポインターを取得する
+    const char *GetFileNameWithoutExt(const char *filePath);      // 拡張子を除いたファイル名文字列を取得する（静的文字列を使用）
+    const char *GetDirectoryPath(const char *filePath);           // パスを含むfileNameから完全なディレクトリパスを取得する（静的文字列を使用）
+    const char *GetPrevDirectoryPath(const char *dirPath);        // 指定したパスの1つ上のディレクトリパスを取得する（静的文字列を使用）
+    const char *GetWorkingDirectory(void);                        // 現在の作業ディレクトリを取得する（静的文字列を使用）
+    const char *GetApplicationDirectory(void);                    // 実行中のアプリケーションのディレクトリを取得する（静的文字列を使用）
+    int MakeDirectory(const char *dirPath);                       // 指定された完全なパスを含むディレクトリを作成し、成功した場合は0を返す
+    bool ChangeDirectory(const char *dirPath);                    // 作業ディレクトリを変更し、成功した場合はtrueを返す
+    bool IsPathFile(const char *path);                            // 指定したパスがファイルかディレクトリか確認する
+    bool IsFileNameValid(const char *fileName);                   // fileNameが対象プラットフォーム／OSで有効か確認する
+    FilePathList LoadDirectoryFiles(const char *dirPath);         // ディレクトリ内のファイルとディレクトリのパスを読み込む（サブディレクトリは走査しない）
+    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // 拡張子フィルターとサブディレクトリ走査を指定してディレクトリ内のパスを読み込む（使用可能なフィルター例: "*.*"、"FILES*"、"DIRS*"）
+    void UnloadDirectoryFiles(FilePathList files);                // ファイルパス一覧をアンロードする
+    bool IsFileDropped(void);                                     // ウィンドウにファイルがドロップされたか確認する
+    FilePathList LoadDroppedFiles(void);                          // ドロップされたファイルのパス一覧を読み込む
+    void UnloadDroppedFiles(FilePathList files);                  // ドロップされたファイルのパス一覧をアンロードする
+    unsigned int GetDirectoryFileCount(const char *dirPath);      // ディレクトリ内のファイル数を取得する
+    unsigned int GetDirectoryFileCountEx(const char *basePath, const char *filter, bool scanSubdirs); // 拡張子フィルターと再帰的ディレクトリ走査を指定してディレクトリ内のファイル数を取得する（結果にディレクトリを含めるにはフィルター文字列で'DIR'を使用）
 
-    // Compression/Encoding functionality
-    unsigned char *CompressData(const unsigned char *data, int dataSize, int *compDataSize);        // Compress data (DEFLATE algorithm), memory must be MemFree()
-    unsigned char *DecompressData(const unsigned char *compData, int compDataSize, int *dataSize);  // Decompress data (DEFLATE algorithm), memory must be MemFree()
-    char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // Encode data to Base64 string (includes NULL terminator), memory must be MemFree()
-    unsigned char *DecodeDataBase64(const char *text, int *outputSize);                             // Decode Base64 string (expected NULL terminated), memory must be MemFree()
-    unsigned int ComputeCRC32(unsigned char *data, int dataSize); // Compute CRC32 hash code
-    unsigned int *ComputeMD5(unsigned char *data, int dataSize);  // Compute MD5 hash code, returns static int[4] (16 bytes)
-    unsigned int *ComputeSHA1(unsigned char *data, int dataSize); // Compute SHA1 hash code, returns static int[5] (20 bytes)
-    unsigned int *ComputeSHA256(unsigned char *data, int dataSize); // Compute SHA256 hash code, returns static int[8] (32 bytes)
+    // 圧縮／エンコード機能
+    unsigned char *CompressData(const unsigned char *data, int dataSize, int *compDataSize);        // データを圧縮する（DEFLATEアルゴリズム）。メモリはMemFree()で解放する必要がある
+    unsigned char *DecompressData(const unsigned char *compData, int compDataSize, int *dataSize);  // データを展開する（DEFLATEアルゴリズム）。メモリはMemFree()で解放する必要がある
+    char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // データをBase64文字列にエンコードする（NULL終端文字を含む）。メモリはMemFree()で解放する必要がある
+    unsigned char *DecodeDataBase64(const char *text, int *outputSize);                             // NULL終端を想定したBase64文字列をデコードする。メモリはMemFree()で解放する必要がある
+    unsigned int ComputeCRC32(unsigned char *data, int dataSize); // CRC32ハッシュコードを計算する
+    unsigned int *ComputeMD5(unsigned char *data, int dataSize);  // MD5ハッシュコードを計算し、静的なint[4]（16バイト）を返す
+    unsigned int *ComputeSHA1(unsigned char *data, int dataSize); // SHA1ハッシュコードを計算し、静的なint[5]（20バイト）を返す
+    unsigned int *ComputeSHA256(unsigned char *data, int dataSize); // SHA256ハッシュコードを計算し、静的なint[8]（32バイト）を返す
 
-    // Automation events functionality
-    AutomationEventList LoadAutomationEventList(const char *fileName); // Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
-    void UnloadAutomationEventList(AutomationEventList list);   // Unload automation events list from file
-    bool ExportAutomationEventList(AutomationEventList list, const char *fileName); // Export automation events list as text file
-    void SetAutomationEventList(AutomationEventList *list);     // Set automation event list to record to
-    void SetAutomationEventBaseFrame(int frame);                // Set automation event internal base frame to start recording
-    void StartAutomationEventRecording(void);                   // Start recording automation events (AutomationEventList must be set)
-    void StopAutomationEventRecording(void);                    // Stop recording automation events
-    void PlayAutomationEvent(AutomationEvent event);            // Play a recorded automation event
-
-    //------------------------------------------------------------------------------------
-    // Input Handling Functions (Module: core)
-    //------------------------------------------------------------------------------------
-
-    // Input-related functions: keyboard
-    bool IsKeyPressed(int key);                             // Check if a key has been pressed once
-    bool IsKeyPressedRepeat(int key);                       // Check if a key has been pressed again
-    bool IsKeyDown(int key);                                // Check if a key is being pressed
-    bool IsKeyReleased(int key);                            // Check if a key has been released once
-    bool IsKeyUp(int key);                                  // Check if a key is NOT being pressed
-    int GetKeyPressed(void);                                // Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
-    int GetCharPressed(void);                               // Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
-    const char *GetKeyName(int key);                        // Get name of a QWERTY key on the current keyboard layout (eg returns string 'q' for KEY_A on an AZERTY keyboard)
-    void SetExitKey(int key);                               // Set a custom key to exit program (default is ESC)
-
-    // Input-related functions: gamepads
-    bool IsGamepadAvailable(int gamepad);                   // Check if a gamepad is available
-    const char *GetGamepadName(int gamepad);                // Get gamepad internal name id
-    bool IsGamepadButtonPressed(int gamepad, int button);   // Check if a gamepad button has been pressed once
-    bool IsGamepadButtonDown(int gamepad, int button);      // Check if a gamepad button is being pressed
-    bool IsGamepadButtonReleased(int gamepad, int button);  // Check if a gamepad button has been released once
-    bool IsGamepadButtonUp(int gamepad, int button);        // Check if a gamepad button is NOT being pressed
-    int GetGamepadButtonPressed(void);                      // Get the last gamepad button pressed
-    int GetGamepadAxisCount(int gamepad);                   // Get axis count for a gamepad
-    float GetGamepadAxisMovement(int gamepad, int axis);    // Get movement value for a gamepad axis
-    int SetGamepadMappings(const char *mappings);           // Set internal gamepad mappings (SDL_GameControllerDB)
-    void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration); // Set gamepad vibration for both motors (duration in seconds)
-
-    // Input-related functions: mouse
-    bool IsMouseButtonPressed(int button);                  // Check if a mouse button has been pressed once
-    bool IsMouseButtonDown(int button);                     // Check if a mouse button is being pressed
-    bool IsMouseButtonReleased(int button);                 // Check if a mouse button has been released once
-    bool IsMouseButtonUp(int button);                       // Check if a mouse button is NOT being pressed
-    int GetMouseX(void);                                    // Get mouse position X
-    int GetMouseY(void);                                    // Get mouse position Y
-    Vector2 GetMousePosition(void);                         // Get mouse position XY
-    Vector2 GetMouseDelta(void);                            // Get mouse delta between frames
-    void SetMousePosition(int x, int y);                    // Set mouse position XY
-    void SetMouseOffset(int offsetX, int offsetY);          // Set mouse offset
-    void SetMouseScale(float scaleX, float scaleY);         // Set mouse scaling
-    float GetMouseWheelMove(void);                          // Get mouse wheel movement for X or Y, whichever is larger
-    Vector2 GetMouseWheelMoveV(void);                       // Get mouse wheel movement for both X and Y
-    void SetMouseCursor(int cursor);                        // Set mouse cursor
-
-    // Input-related functions: touch
-    int GetTouchX(void);                                    // Get touch position X for touch point 0 (relative to screen size)
-    int GetTouchY(void);                                    // Get touch position Y for touch point 0 (relative to screen size)
-    Vector2 GetTouchPosition(int index);                    // Get touch position XY for a touch point index (relative to screen size)
-    int GetTouchPointId(int index);                         // Get touch point identifier for given index
-    int GetTouchPointCount(void);                           // Get number of touch points
+    // オートメーションイベント機能
+    AutomationEventList LoadAutomationEventList(const char *fileName); // ファイルからオートメーションイベント一覧を読み込む（NULLなら空の一覧、容量はMAX_AUTOMATION_EVENTS）
+    void UnloadAutomationEventList(AutomationEventList list);   // ファイルから読み込んだオートメーションイベント一覧をアンロードする
+    bool ExportAutomationEventList(AutomationEventList list, const char *fileName); // オートメーションイベント一覧をテキストファイルとしてエクスポートする
+    void SetAutomationEventList(AutomationEventList *list);     // 記録先のオートメーションイベント一覧を設定する
+    void SetAutomationEventBaseFrame(int frame);                // 記録開始時のオートメーションイベント内部基準フレームを設定する
+    void StartAutomationEventRecording(void);                   // オートメーションイベントの記録を開始する（AutomationEventListの設定が必要）
+    void StopAutomationEventRecording(void);                    // オートメーションイベントの記録を停止する
+    void PlayAutomationEvent(AutomationEvent event);            // 記録済みのオートメーションイベントを再生する
 
     //------------------------------------------------------------------------------------
-    // Gestures and Touch Handling Functions (Module: rgestures)
+    // 入力処理関数（モジュール: core）
     //------------------------------------------------------------------------------------
-    void SetGesturesEnabled(unsigned int flags);            // Enable a set of gestures using flags
-    bool IsGestureDetected(unsigned int gesture);           // Check if a gesture have been detected
-    int GetGestureDetected(void);                           // Get latest detected gesture
-    float GetGestureHoldDuration(void);                     // Get gesture hold time in seconds
-    Vector2 GetGestureDragVector(void);                     // Get gesture drag vector
-    float GetGestureDragAngle(void);                        // Get gesture drag angle
-    Vector2 GetGesturePinchVector(void);                    // Get gesture pinch delta
-    float GetGesturePinchAngle(void);                       // Get gesture pinch angle
+
+    // 入力関連の関数: キーボード
+    bool IsKeyPressed(int key);                             // キーが1回押されたか確認する
+    bool IsKeyPressedRepeat(int key);                       // キーリピートによりキーが再度押されたか確認する
+    bool IsKeyDown(int key);                                // キーが押されているか確認する
+    bool IsKeyReleased(int key);                            // キーが1回離されたか確認する
+    bool IsKeyUp(int key);                                  // キーが押されていないか確認する
+    int GetKeyPressed(void);                                // 押されたキーのキーコードを取得する。キュー内のキーは複数回呼び出して取得し、キューが空の場合は0を返す
+    int GetCharPressed(void);                               // 入力された文字のUnicode値を取得する。キュー内の文字は複数回呼び出して取得し、キューが空の場合は0を返す
+    const char *GetKeyName(int key);                        // 現在のキーボード配列におけるQWERTYキーの名前を取得する（例: AZERTYキーボードでKEY_Aを指定すると文字列'q'を返す）
+    void SetExitKey(int key);                               // プログラムを終了するカスタムキーを設定する（デフォルトはESC）
+
+    // 入力関連の関数: ゲームパッド
+    bool IsGamepadAvailable(int gamepad);                   // ゲームパッドが利用可能か確認する
+    const char *GetGamepadName(int gamepad);                // ゲームパッドの内部名IDを取得する
+    bool IsGamepadButtonPressed(int gamepad, int button);   // ゲームパッドのボタンが1回押されたか確認する
+    bool IsGamepadButtonDown(int gamepad, int button);      // ゲームパッドのボタンが押されているか確認する
+    bool IsGamepadButtonReleased(int gamepad, int button);  // ゲームパッドのボタンが1回離されたか確認する
+    bool IsGamepadButtonUp(int gamepad, int button);        // ゲームパッドのボタンが押されていないか確認する
+    int GetGamepadButtonPressed(void);                      // 最後に押されたゲームパッドのボタンを取得する
+    int GetGamepadAxisCount(int gamepad);                   // ゲームパッドの軸数を取得する
+    float GetGamepadAxisMovement(int gamepad, int axis);    // ゲームパッドの軸の移動量を取得する
+    int SetGamepadMappings(const char *mappings);           // 内部ゲームパッドマッピングを設定する（SDL_GameControllerDB）
+    void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration); // ゲームパッドの両モーターの振動を設定する（持続時間は秒単位）
+
+    // 入力関連の関数: マウス
+    bool IsMouseButtonPressed(int button);                  // マウスボタンが1回押されたか確認する
+    bool IsMouseButtonDown(int button);                     // マウスボタンが押されているか確認する
+    bool IsMouseButtonReleased(int button);                 // マウスボタンが1回離されたか確認する
+    bool IsMouseButtonUp(int button);                       // マウスボタンが押されていないか確認する
+    int GetMouseX(void);                                    // マウスのX座標を取得する
+    int GetMouseY(void);                                    // マウスのY座標を取得する
+    Vector2 GetMousePosition(void);                         // マウスのXY座標を取得する
+    Vector2 GetMouseDelta(void);                            // フレーム間のマウス移動量を取得する
+    void SetMousePosition(int x, int y);                    // マウスのXY座標を設定する
+    void SetMouseOffset(int offsetX, int offsetY);          // マウスのオフセットを設定する
+    void SetMouseScale(float scaleX, float scaleY);         // マウスのスケールを設定する
+    float GetMouseWheelMove(void);                          // マウスホイールのXまたはYのうち、移動量が大きい方を取得する
+    Vector2 GetMouseWheelMoveV(void);                       // マウスホイールのXとY両方の移動量を取得する
+    void SetMouseCursor(int cursor);                        // マウスカーソルを設定する
+
+    // 入力関連の関数: タッチ
+    int GetTouchX(void);                                    // タッチポイント0のX座標を取得する（画面サイズに対する相対座標）
+    int GetTouchY(void);                                    // タッチポイント0のY座標を取得する（画面サイズに対する相対座標）
+    Vector2 GetTouchPosition(int index);                    // 指定したインデックスのタッチポイントのXY座標を取得する（画面サイズに対する相対座標）
+    int GetTouchPointId(int index);                         // 指定したインデックスのタッチポイント識別子を取得する
+    int GetTouchPointCount(void);                           // タッチポイント数を取得する
 
     //------------------------------------------------------------------------------------
-    // Camera System Functions (Module: rcamera)
+    // ジェスチャーとタッチの処理関数（モジュール: rgestures）
     //------------------------------------------------------------------------------------
-    void UpdateCamera(Camera *camera, int mode);            // Update camera position for selected mode
-    void UpdateCameraPro(Camera *camera, Vector3 movement, Vector3 rotation, float zoom); // Update camera movement/rotation
+    void SetGesturesEnabled(unsigned int flags);            // フラグを使用して一連のジェスチャーを有効にする
+    bool IsGestureDetected(unsigned int gesture);           // ジェスチャーが検出されたか確認する
+    int GetGestureDetected(void);                           // 最後に検出されたジェスチャーを取得する
+    float GetGestureHoldDuration(void);                     // ジェスチャーの長押し時間を秒単位で取得する
+    Vector2 GetGestureDragVector(void);                     // ジェスチャーのドラッグベクトルを取得する
+    float GetGestureDragAngle(void);                        // ジェスチャーのドラッグ角度を取得する
+    Vector2 GetGesturePinchVector(void);                    // ジェスチャーのピンチ移動量を取得する
+    float GetGesturePinchAngle(void);                       // ジェスチャーのピンチ角度を取得する
+
+    //------------------------------------------------------------------------------------
+    // カメラシステム関数（モジュール: rcamera）
+    //------------------------------------------------------------------------------------
+    void UpdateCamera(Camera *camera, int mode);            // 選択したモードに合わせてカメラ位置を更新する
+    void UpdateCameraPro(Camera *camera, Vector3 movement, Vector3 rotation, float zoom); // カメラの移動／回転を更新する
 
