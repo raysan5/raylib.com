@@ -43,7 +43,7 @@
     int GetMonitorRefreshRate(int monitor);                     // 指定したモニターのリフレッシュレートを取得する
     Vector2 GetWindowPosition(void);                            // モニター上のウィンドウのXY位置を取得する
     Vector2 GetWindowScaleDPI(void);                            // ウィンドウのDPIスケール係数を取得する
-    const char *GetMonitorName(int monitor);                    // 指定したモニターの人が読めるUTF-8エンコード名を取得する
+    const char *GetMonitorName(int monitor);                    // 指定したモニターの人が読める形式のUTF-8エンコードされた名前を取得する
     void SetClipboardText(const char *text);                    // クリップボードのテキスト内容を設定する
     const char *GetClipboardText(void);                         // クリップボードのテキスト内容を取得する
     Image GetClipboardImage(void);                              // クリップボードの画像内容を取得する
@@ -82,14 +82,14 @@
     void UnloadVrStereoConfig(VrStereoConfig config);           // VRステレオ設定をアンロードする
 
     // シェーダー管理関数
-    // 注意: OpenGL 1.1ではシェーダー機能を使用できない
+    // 注意: OpenGL 1.1ではシェーダー機能を使用できません
     Shader LoadShader(const char *vsFileName, const char *fsFileName);   // ファイルからシェーダーを読み込み、デフォルトロケーションを関連付ける
     Shader LoadShaderFromMemory(const char *vsCode, const char *fsCode); // コード文字列からシェーダーを読み込み、デフォルトロケーションを関連付ける
     bool IsShaderValid(Shader shader);                                   // シェーダーが有効か確認する（GPUに読み込み済み）
     int GetShaderLocation(Shader shader, const char *uniformName);       // シェーダーのuniformロケーションを取得する
     int GetShaderLocationAttrib(Shader shader, const char *attribName);  // シェーダーの頂点属性ロケーションを取得する
     void SetShaderValue(Shader shader, int locIndex, const void *value, int uniformType); // シェーダーのuniform値を設定する
-    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count); // シェーダーのuniform値ベクトルを設定する
+    void SetShaderValueV(Shader shader, int locIndex, const void *value, int uniformType, int count); // シェーダーのuniform値の配列を設定する
     void SetShaderValueMatrix(Shader shader, int locIndex, Matrix mat);  // シェーダーのuniform値を設定する（4x4行列）
     void SetShaderValueTexture(Shader shader, int locIndex, Texture2D texture); // シェーダーのuniform値を設定し、テクスチャを関連付ける（sampler2D）
     void UnloadShader(Shader shader);                                    // シェーダーをGPUメモリ（VRAM）からアンロードする
@@ -121,7 +121,7 @@
     // 乱数生成関数
     void SetRandomSeed(unsigned int seed);            // 乱数生成器のシードを設定する
     int GetRandomValue(int min, int max);             // minからmaxまでの乱数値を取得する（両端を含む）
-    int *LoadRandomSequence(unsigned int count, int min, int max); // 重複のない乱数列を読み込む
+    int *LoadRandomSequence(unsigned int count, int min, int max); // 重複のない乱数列を生成して値を取得する
     void UnloadRandomSequence(int *sequence);         // 乱数列をアンロードする
 
     // その他の関数
@@ -132,7 +132,7 @@
     // ログシステム
     void SetTraceLogLevel(int logLevel);                      // 現在のしきい値となる最小ログレベルを設定する
     void TraceLog(int logLevel, const char *text, ...);       // トレースログメッセージを表示する（LOG_DEBUG、LOG_INFO、LOG_WARNING、LOG_ERRORなど）
-    void SetTraceLogCallback(TraceLogCallback callback);      // カスタムトレースログを設定する
+    void SetTraceLogCallback(TraceLogCallback callback);      // カスタムのトレースログコールバックを設定する
 
     // 内部アロケーターを使用したメモリ管理
     void *MemAlloc(unsigned int size);                        // 内部メモリアロケーター
@@ -157,8 +157,8 @@
 
     int FileRename(const char *fileName, const char *fileRename); // ファイルが存在する場合、名前を変更する
     int FileRemove(const char *fileName);                         // ファイルが存在する場合、削除する
-    int FileCopy(const char *srcPath, const char *dstPath);       // ファイルを別のパスへコピーし、存在しない場合はdstPathを作成する
-    int FileMove(const char *srcPath, const char *dstPath);       // ファイルを別のディレクトリへ移動し、存在しない場合はdstPathを作成する
+    int FileCopy(const char *srcPath, const char *dstPath);       // ファイルを別のパスへコピーし、必要であればdstPathの親ディレクトリも作成する
+    int FileMove(const char *srcPath, const char *dstPath);       // ファイルを別のディレクトリへ移動し、必要であればdstPathの親ディレクトリも作成する
     int FileTextReplace(const char *fileName, const char *search, const char *replacement); // 既存ファイル内のテキストを置換する
     int FileTextFindIndex(const char *fileName, const char *search); // 既存ファイル内のテキストを検索する
     bool FileExists(const char *fileName);                        // ファイルが存在するか確認する
@@ -175,7 +175,7 @@
     const char *GetApplicationDirectory(void);                    // 実行中のアプリケーションのディレクトリを取得する（静的文字列を使用）
     int MakeDirectory(const char *dirPath);                       // 指定された完全なパスを含むディレクトリを作成し、成功した場合は0を返す
     bool ChangeDirectory(const char *dirPath);                    // 作業ディレクトリを変更し、成功した場合はtrueを返す
-    bool IsPathFile(const char *path);                            // 指定したパスがファイルかディレクトリか確認する
+    bool IsPathFile(const char *path);                            // 指定したパスがファイルかどうかを確認する
     bool IsFileNameValid(const char *fileName);                   // fileNameが対象プラットフォーム／OSで有効か確認する
     FilePathList LoadDirectoryFiles(const char *dirPath);         // ディレクトリ内のファイルとディレクトリのパスを読み込む（サブディレクトリは走査しない）
     FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // 拡張子フィルターとサブディレクトリ走査を指定してディレクトリ内のパスを読み込む（使用可能なフィルター例: "*.*"、"FILES*"、"DIRS*"）
@@ -251,9 +251,9 @@
     void SetMouseCursor(int cursor);                        // マウスカーソルを設定する
 
     // 入力関連の関数: タッチ
-    int GetTouchX(void);                                    // タッチポイント0のX座標を取得する（画面サイズに対する相対座標）
-    int GetTouchY(void);                                    // タッチポイント0のY座標を取得する（画面サイズに対する相対座標）
-    Vector2 GetTouchPosition(int index);                    // 指定したインデックスのタッチポイントのXY座標を取得する（画面サイズに対する相対座標）
+    int GetTouchX(void);                                    // タッチポイント0のX座標を取得する（現在の画面サイズ基準の画面座標）
+    int GetTouchY(void);                                    // タッチポイント0のY座標を取得する（現在の画面サイズ基準の画面座標）
+    Vector2 GetTouchPosition(int index);                    // 指定したインデックスのタッチポイントのXY座標を取得する（現在の画面サイズ基準の画面座標）
     int GetTouchPointId(int index);                         // 指定したインデックスのタッチポイント識別子を取得する
     int GetTouchPointCount(void);                           // タッチポイント数を取得する
 
