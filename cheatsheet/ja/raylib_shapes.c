@@ -75,5 +75,5 @@
     bool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3);               // 点が三角形の内側にあるか確認する
     bool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);                // 点が2点[p1]、[p2]で作られた線分上にあるか、ピクセル単位の許容幅[threshold]を指定して確認する
     bool CheckCollisionPointPoly(Vector2 point, const Vector2 *points, int pointCount);                // 点が頂点配列で定義された多角形の内側にあるか確認する
-    bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2 *collisionPoint); // それぞれ2点で定義された2本の線分の衝突を確認し、衝突点を参照で返し、確認する
+    bool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2 *collisionPoint); // それぞれ2点で定義された2本の線分の衝突を確認し、衝突点を参照で返す
     Rectangle GetCollisionRec(Rectangle rec1, Rectangle rec2);                                         // 2つの矩形が衝突している領域の矩形を取得する
