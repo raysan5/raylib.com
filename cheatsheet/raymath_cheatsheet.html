@@ -74,7 +74,7 @@
 
         <script type="text/javascript">
          $(document).ready(function() {
-             $.get('raylib_raymath.c', function(data) {
+             $.get('en/raylib_raymath.c', function(data) {
                  $('#math pre code').text(data);
                  $('#math pre code').each(function(i, e) {hljs.highlightBlock(e)});
              }, 'text');
