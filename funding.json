@@ -9,8 +9,7 @@
         "phone": "",
         "description": "I'm Ray, Electronic Engineer, videogames developer, entrepreneur and the creator and solo maintainer of raylib, a simple and easy-to-use library to enjoy videogames programming.",
         "webpageUrl": {
-            "url": "https://www.linkedin.com/in/raysan/",
-            "wellKnown": ""
+            "url": "https://www.linkedin.com/in/raysan/"
         }
     },
     "projects": [{
@@ -21,8 +20,7 @@
             "url": "https://raylib.com"
         },
         "repositoryUrl": {
-            "url": "https://github.com/raysan5/raylib",
-            "wellKnown": ""
+            "url": "https://github.com/raysan5/raylib"
         },
         "licenses": ["spdx:Zlib"],
         "tags": ["graphics", "programming", "2d", "3d", "low-level", "high-performance", "multiplatform", "videogames", "embedded"]
