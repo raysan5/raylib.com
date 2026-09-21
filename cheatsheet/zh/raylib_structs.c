@@ -17,27 +17,30 @@
     struct GlyphInfo;       //字体字符字形信息
     struct Font;            //字体类型，包括Texture和字符数据
     
-    struct Camera;          //相机类型，定义三维相机位置/方向
+    struct Camera3D;        //相机类型，定义三维相机位置/方向
     struct Camera2D;        //Camera2D类型，定义 2d相机
     struct Mesh;            //定义 Mesh的顶点数据
     struct Shader;          //着色器类型（常规着色器）
     struct MaterialMap;     //材质Texture贴图
     struct Material;        //材料类型
-    struct Model;           //基本三维Model类型
+
     struct Transform;       //变换（用于骨骼）
     struct BoneInfo;        //骨骼信息
+    struct ModelSkeleton;   // Skeleton, animation bones hierarchy
+    struct Model;           //基本三维Model类型
     struct ModelAnimation;  //Model动画数据（骨骼和帧）
     struct Ray;             //光线类型（用于光线投射）
     struct RayCollision;    //光线投射命中信息
     struct BoundingBox;     //三维Mesh的边界框类型
     
     struct Wave;            //Wave类型，定义音频Wave数据
+    struct AudioStream;     //原始音频流类型
     struct Sound;           //基本声源和缓冲区
     struct Music;           //音乐类型（来自内存的文件流）
-    struct AudioStream;     //原始音频流类型
-    
+
     struct VrDeviceInfo;    //VR设备参数
     struct VrStereoConfig;  //模拟器的VR立体渲染配置
     
     struct FilePathList;    //文件路径列表
-    
+    struct AutomationEvent;        // Automation event
+    struct AutomationEventList;    // Automation event list

@@ -1,7 +1,6 @@
-   
     //颜色宏定义
     //自定义 raylib调色板, 打造令人惊叹的视觉效果
-    #define LIGHTGRAY   (Color){ 200, 200, 255 }            //浅灰色
+    #define LIGHTGRAY   (Color){ 200, 200, 200, 255 }       //浅灰色
     #define GRAY        (Color){ 130, 130, 130, 255 }       //灰色
     #define DARKGRAY    (Color){ 80, 80, 80, 255 }          //深灰色
     #define YELLOW      (Color){ 253, 249, 0, 255 }         //黄色
@@ -23,9 +22,9 @@
     #define BROWN       (Color){ 127, 106, 79, 255 }        //棕色
     #define DARKBROWN   (Color){ 76, 63, 47, 255 }          //深棕色
     
-    #define WHITE       (Color){ 255, 255, 255 }            //白色
-    #define BLACK       (Color){ 0, 0, 0255 }               //黑色
-    #define BLANK       (Color){ 0, 0, 0 }                  //透明
+    #define WHITE       (Color){ 255, 255, 255, 255 }       //白色
+    #define BLACK       (Color){ 0, 0, 0, 255 }             //黑色
+    #define BLANK       (Color){ 0, 0, 0, 0 }               //透明
     #define MAGENTA     (Color){ 255, 0, 255, 255 }         //洋红色
     #define RAYWHITE    (Color){ 245, 245, 245, 255 }       //射线白, 作者送的颜色
     
