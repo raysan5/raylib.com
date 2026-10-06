@@ -1,0 +1,4 @@
+# Emscripten .data packages must be stored byte-for-byte. A package that holds only
+# text files (e.g. shaders) is otherwise detected as text, and its CRLFs get converted
+# on commit, which breaks the file offsets recorded in the matching .js loader.
+*.data binary
