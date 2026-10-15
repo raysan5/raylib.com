@@ -6,7 +6,7 @@
     Image LoadImageAnimFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int *frames); // Load image sequence from memory buffer
     Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);      // Load image from memory buffer, fileType refers to extension: i.e. '.png'
     Image LoadImageFromTexture(Texture2D texture);                                                     // Load image from GPU texture data
-    Image LoadImageFromScreen(void);                                                                   // Load image from screen buffer and (screenshot)
+    Image LoadImageFromScreen(void);                                                                   // Load image from screen buffer (screenshot)
     bool IsImageValid(Image image);                                                                    // Check if an image is valid (data and parameters)
     void UnloadImage(Image image);                                                                     // Unload image from CPU memory (RAM)
     bool ExportImage(Image image, const char *fileName);                                               // Export image data to file, returns true on success
@@ -52,7 +52,7 @@
     void ImageColorTint(Image *image, Color color);                                                    // Modify image color: tint
     void ImageColorInvert(Image *image);                                                               // Modify image color: invert
     void ImageColorGrayscale(Image *image);                                                            // Modify image color: grayscale
-    void ImageColorContrast(Image *image, float contrast);                                             // Modify image color: contrast (-100 to 100)
+    void ImageColorContrast(Image *image, int contrast);                                               // Modify image color: contrast (-100 to 100)
     void ImageColorBrightness(Image *image, int brightness);                                           // Modify image color: brightness (-255 to 255)
     void ImageColorReplace(Image *image, Color color, Color replace);                                  // Modify image color: replace color
     Color *LoadImageColors(Image image);                                                               // Load color data from image as a Color array (RGBA - 32bit)
@@ -64,28 +64,38 @@
 
     // Image drawing functions
     // NOTE: Image software-rendering functions (CPU)
-    void ImageClearBackground(Image *dst, Color color);                                                // Clear image background with given color
+    void ImageClearBackground(Image *dst, Color color);                                                // Clear image background with provided color
     void ImageDrawPixel(Image *dst, int posX, int posY, Color color);                                  // Draw pixel within an image
     void ImageDrawPixelV(Image *dst, Vector2 position, Color color);                                   // Draw pixel within an image (Vector version)
     void ImageDrawLine(Image *dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color); // Draw line within an image
     void ImageDrawLineV(Image *dst, Vector2 start, Vector2 end, Color color);                          // Draw line within an image (Vector version)
     void ImageDrawLineEx(Image *dst, Vector2 start, Vector2 end, int thick, Color color);              // Draw a line defining thickness within an image
+    void ImageDrawLineStrip(Image *dst, const Vector2 *points, int pointCount, Color color);           // Draw a lines sequence within an image
+    void ImageDrawTriangle(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);               // Draw triangle within an image
+    void ImageDrawTriangleGradient(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3); // Draw triangle with interpolated colors within an image
+    void ImageDrawTriangleLines(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);          // Draw triangle outline within an image
+    void ImageDrawTriangleFan(Image *dst, const Vector2 *points, int pointCount, Color color);         // Draw a triangle fan defined by points within an image (first vertex is the center)
+    void ImageDrawTriangleStrip(Image *dst, const Vector2 *points, int pointCount, Color color);       // Draw a triangle strip defined by points within an image
+    void ImageDrawRectangle(Image *dst, int posX, int posY, int width, int height, Color color);       // Draw rectangle within an image
+    void ImageDrawRectangleV(Image *dst, Vector2 position, Vector2 size, Color color);                 // Draw rectangle within an image (Vector version)
+    void ImageDrawRectangleRec(Image *dst, Rectangle rec, Color color);                                // Draw rectangle within an image
+    void ImageDrawRectanglePro(Image *dst, Rectangle rec, Vector2 origin, float rotation, Color color); // Draw a color-filled rectangle with pro parameters within and image
+    void ImageDrawRectangleLines(Image *dst, int posX, int posY, int width, int height, Color color);  // Draw rectangle lines within an image
+    void ImageDrawRectangleLinesEx(Image *dst, Rectangle rec, int thick, Color color);                 // Draw rectangle lines within an image with line thickness
+    void ImageDrawRectangleGradientEx(Image *dst, Rectangle rec, Color col1, Color col2, Color col3, Color col4); // Draw rectangle with gradient colors within an image, counter-clockwise color order
     void ImageDrawCircle(Image *dst, int centerX, int centerY, int radius, Color color);               // Draw a filled circle within an image
     void ImageDrawCircleV(Image *dst, Vector2 center, int radius, Color color);                        // Draw a filled circle within an image (Vector version)
     void ImageDrawCircleLines(Image *dst, int centerX, int centerY, int radius, Color color);          // Draw circle outline within an image
     void ImageDrawCircleLinesV(Image *dst, Vector2 center, int radius, Color color);                   // Draw circle outline within an image (Vector version)
-    void ImageDrawRectangle(Image *dst, int posX, int posY, int width, int height, Color color);       // Draw rectangle within an image
-    void ImageDrawRectangleV(Image *dst, Vector2 position, Vector2 size, Color color);                 // Draw rectangle within an image (Vector version)
-    void ImageDrawRectangleRec(Image *dst, Rectangle rec, Color color);                                // Draw rectangle within an image
-    void ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);                   // Draw rectangle lines within an image
-    void ImageDrawTriangle(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);               // Draw triangle within an image
-    void ImageDrawTriangleEx(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3); // Draw triangle with interpolated colors within an image
-    void ImageDrawTriangleLines(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);          // Draw triangle outline within an image
-    void ImageDrawTriangleFan(Image *dst, const Vector2 *points, int pointCount, Color color);         // Draw a triangle fan defined by points within an image (first vertex is the center)
-    void ImageDrawTriangleStrip(Image *dst, const Vector2 *points, int pointCount, Color color);       // Draw a triangle strip defined by points within an image
-    void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);             // Draw a source image within a destination image (tint applied to source)
+    void ImageDrawCircleGradient(Image *dst, Vector2 center, float radius, Color inner, Color outer);  // Draw a gradient-filled circle within an image
+
+    void ImageDrawImage(Image *dst, Image src, int posX, int posY, Color tint);                      // Draw an image within an image
+    void ImageDrawImageEx(Image *dst, Image src, Vector2 position, float rotation, float scale, Color tint); // Draw an image with scaling and rotation within an image
+    void ImageDrawImageRec(Image *dst, Image src, Rectangle srcRec, Vector2 position, Color tint);     // Draw a part of an image defined by a rectangle within an image
+    void ImageDrawImagePro(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Vector2 origin, float rotation, Color tint); // Draw a part of an image defined by a rectangle into destination rectangle, with scaling and rotation, within an image
     void ImageDrawText(Image *dst, const char *text, int posX, int posY, int fontSize, Color color);   // Draw text (using default font) within an image (destination)
     void ImageDrawTextEx(Image *dst, Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // Draw text (custom sprite font) within an image (destination)
+    void ImageDrawTextPro(Image *dst, Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
 
     // Texture loading functions
     // NOTE: These functions require GPU access
@@ -93,9 +103,10 @@
     Texture2D LoadTextureFromImage(Image image);                                                       // Load texture from image data
     TextureCubemap LoadTextureCubemap(Image image, int layout);                                        // Load cubemap from image, multiple image cubemap layouts supported
     RenderTexture2D LoadRenderTexture(int width, int height);                                          // Load texture for rendering (framebuffer)
-    bool IsTextureValid(Texture2D texture);                                                            // Check if a texture is valid (loaded in GPU)
+    RenderTexture2D LoadRenderTextureEx(int width, int height, int format);                            // Load texture for rendering (framebuffer), with specific format
+    bool IsTextureValid(Texture2D texture);                                                            // Check if texture is valid (loaded in GPU)
     void UnloadTexture(Texture2D texture);                                                             // Unload texture from GPU memory (VRAM)
-    bool IsRenderTextureValid(RenderTexture2D target);                                                 // Check if a render texture is valid (loaded in GPU)
+    bool IsRenderTextureValid(RenderTexture2D target);                                                 // Check if render texture is valid (loaded in GPU)
     void UnloadRenderTexture(RenderTexture2D target);                                                  // Unload render texture from GPU memory (VRAM)
     void UpdateTexture(Texture2D texture, const void *pixels);                                         // Update GPU texture with new data (pixels should be able to fill texture)
     void UpdateTextureRec(Texture2D texture, Rectangle rec, const void *pixels);                       // Update GPU texture rectangle with new data (pixels and rec should fit in texture)
@@ -108,10 +119,10 @@
     // Texture drawing functions
     void DrawTexture(Texture2D texture, int posX, int posY, Color tint);                               // Draw a Texture2D
     void DrawTextureV(Texture2D texture, Vector2 position, Color tint);                                // Draw a Texture2D with position defined as Vector2
-    void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);  // Draw a Texture2D with extended parameters
-    void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);            // Draw a part of a texture defined by a rectangle
-    void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint); // Draw a part of a texture defined by a rectangle with 'pro' parameters
-    void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, float rotation, Color tint); // Draws a texture (or part of it) that stretches or shrinks nicely
+    void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);  // Draw a Texture2D with rotation and scale
+    void DrawTextureRec(Texture2D texture, Rectangle rec, Vector2 position, Color tint);               // Draw a part of a texture defined by a rectangle
+    void DrawTexturePro(Texture2D texture, Rectangle srcrec, Rectangle dstrec, Vector2 origin, float rotation, Color tint); // Draw a part of a texture defined by a source rectangle to destination rectangle, with scaling and rotation
+    void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dstrec, Vector2 origin, float rotation, Color tint); // Draw a texture (or part of it) that stretches or shrinks nicely
 
     // Color/pixel related functions
     bool ColorIsEqual(Color col1, Color col2);                            // Check if two colors are equal
@@ -128,7 +139,7 @@
     Color ColorAlphaBlend(Color dst, Color src, Color tint);              // Get src alpha-blended into dst color with tint
     Color ColorLerp(Color color1, Color color2, float factor);            // Get color lerp interpolation between two colors, factor [0.0f..1.0f]
     Color GetColor(unsigned int hexValue);                                // Get Color structure from hexadecimal value
-    Color GetPixelColor(void *srcPtr, int format);                        // Get Color from a source pixel pointer of certain format
+    Color GetPixelColor(const void *srcPtr, int format);                  // Get Color from a source pixel pointer of certain format
     void SetPixelColor(void *dstPtr, Color color, int format);            // Set color formatted into destination pixel pointer
     int GetPixelDataSize(int width, int height, int format);              // Get pixel data size in bytes for certain format
 

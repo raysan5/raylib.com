@@ -1,10 +1,10 @@
     // Font loading/unloading functions
     Font GetFontDefault(void);                                                            // Get the default Font
     Font LoadFont(const char *fileName);                                                  // Load font from file into GPU memory (VRAM)
-    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height
+    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // Load font from file with defined codepoints and generation size, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height
     Font LoadFontFromImage(Image image, Color key, int firstChar);                        // Load font from Image (XNA style)
     Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, const int *codepoints, int codepointCount); // Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
-    bool IsFontValid(Font font);                                                          // Check if a font is valid (font data loaded, WARNING: GPU texture not checked)
+    bool IsFontValid(Font font);                                                          // Check if font is valid (font data loaded, WARNING: GPU texture not checked)
     GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSize, const int *codepoints, int codepointCount, int type, int *glyphCount); // Load font data for further use
     Image GenImageFontAtlas(const GlyphInfo *glyphs, Rectangle **glyphRecs, int glyphCount, int fontSize, int padding, int packMethod); // Generate image font atlas using chars info
     void UnloadFontData(GlyphInfo *glyphs, int glyphCount);                               // Unload font chars info data (RAM)
@@ -17,7 +17,7 @@
     void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // Draw text using font and additional parameters
     void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Draw text using Font and pro parameters (rotation)
     void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint); // Draw one character (codepoint)
-    void DrawTextCodepoints(Font font, const int *codepoints, int codepointCount, Vector2 position, float fontSize, float spacing, Color tint); // Draw multiple character (codepoint)
+    void DrawTextCodepoints(Font font, const int *codepoints, int codepointCount, Vector2 position, float fontSize, float spacing, Color tint); // Draw multiple characters (codepoint)
 
     // Text font info functions
     void SetTextLineSpacing(int spacing);                                                 // Set vertical line spacing when drawing with line-breaks
@@ -45,7 +45,7 @@
     char **LoadTextLines(const char *text, int *count);                                   // Load text as separate lines ('\n')
     void UnloadTextLines(char **text, int lineCount);                                     // Unload text lines
     int TextCopy(char *dst, const char *src);                                             // Copy one string to another, returns bytes copied
-    bool TextIsEqual(const char *text1, const char *text2);                               // Check if two text string are equal
+    bool TextIsEqual(const char *text1, const char *text2);                               // Check if two text strings are equal
     unsigned int TextLength(const char *text);                                            // Get text length, checks for '\0' ending
     const char *TextFormat(const char *text, ...);                                        // Text formatting with variables (sprintf() style)
     const char *TextSubtext(const char *text, int position, int length);                  // Get a piece of a text string

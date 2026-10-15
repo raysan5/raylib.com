@@ -1,6 +1,6 @@
 
     // Utils math
-    float Clamp(float value, float min, float max)                              // Clamp float value
+    float Clamp(float value, float min, float max)                              // Function specifiers definition Defines and Macros Get float vector for Matrix Get float vector for Vector3 Types and Structures Definition Vector2 type Vector3 type Vector4 type Quaternion type Matrix type (OpenGL style 4x4 - right handed, column major) NOTE: Helper types to be used instead of array return types for *ToFloat functions Clamp float value
     float Lerp(float start, float end, float amount)                            // Calculate linear interpolation between two floats
     float Normalize(float value, float start, float end)                        // Normalize input value within input range
     float Remap(float value, float inputStart, float inputEnd, float outputStart, float outputEnd) // Remap input value within input range to output range
@@ -154,5 +154,5 @@
     Vector3 QuaternionToEuler(Quaternion q)                                     // Get the Euler angles equivalent to quaternion (roll, pitch, yaw) NOTE: Angles are returned in a Vector3 struct in radians
     Quaternion QuaternionTransform(Quaternion q, Matrix mat)                    // Transform a quaternion given a transformation matrix
     int QuaternionEquals(Quaternion p, Quaternion q)                            // Check whether two given quaternions are almost equal
-    Matrix MatrixCompose(Vector3 translation, Quaternion rotation, Vector3 scale) // Compose a transformation matrix from rotational, translational and scaling components TODO: This function is not following raymath conventions defined in header: NOT self-contained
-    void MatrixDecompose(Matrix mat, Vector3 *translation, Quaternion *rotation, Vector3 *scale) // Decompose a transformation matrix into its rotational, translational and scaling components and remove shear TODO: This function is not following raymath conventions defined in header: NOT self-contained
+    Matrix MatrixCompose(Vector3 translation, Quaternion rotation, Vector3 scale) // Compose a transformation matrix from rotational, translational and scaling components
+    void MatrixDecompose(Matrix mat, Vector3 *translation, Quaternion *rotation, Vector3 *scale) // Decompose a transformation matrix into its rotational, translational and scaling components and remove shear TODO: WARNING: Following raymath convention and make the function self-contained
