@@ -1,9 +1,11 @@
     // フォントの読み込み／アンロード関数
     Font GetFontDefault(void);                                                            // デフォルトフォントを取得する
     Font LoadFont(const char *fileName);                                                  // ファイルからGPUメモリ（VRAM）へフォントを読み込む
-    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // 拡張パラメーターを指定してファイルからフォントを読み込む。デフォルト文字セットを読み込むにはcodepointsにNULL、codepointCountに0を指定し、フォントサイズはピクセル単位の高さで指定する
+    // 6.2で説明文を変更
+    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // コードポイントと生成サイズを指定してファイルからフォントを読み込む。デフォルト文字セットを読み込むにはcodepointsにNULL、codepointCountに0を指定する。フォントサイズはピクセル単位の高さで指定する
     Font LoadFontFromImage(Image image, Color key, int firstChar);                        // Imageからフォントを読み込む（XNA形式）
     Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, const int *codepoints, int codepointCount); // メモリバッファからフォントを読み込む。fileTypeには'.ttf'などの拡張子を指定する
+    // 6.2で説明文を変更
     bool IsFontValid(Font font);                                                          // フォントが有効か確認する（フォントデータは読み込み済み。警告: GPUテクスチャは確認しない）
     GlyphInfo *LoadFontData(const unsigned char *fileData, int dataSize, int fontSize, const int *codepoints, int codepointCount, int type, int *glyphCount); // 後で使用するためにフォントデータを読み込む
     Image GenImageFontAtlas(const GlyphInfo *glyphs, Rectangle **glyphRecs, int glyphCount, int fontSize, int padding, int packMethod); // 文字情報を使用してフォントアトラス画像を生成する
@@ -17,6 +19,7 @@
     void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // フォントと追加パラメーターを指定してテキストを描画する
     void DrawTextPro(Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // フォントと高度なパラメーター（回転）を指定してテキストを描画する
     void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint); // 1文字（コードポイント）を描画する
+    // 6.2で説明文を変更
     void DrawTextCodepoints(Font font, const int *codepoints, int codepointCount, Vector2 position, float fontSize, float spacing, Color tint); // 複数の文字（コードポイント）を描画する
 
     // テキストのフォント情報関数
@@ -45,6 +48,7 @@
     char **LoadTextLines(const char *text, int *count);                                   // テキストを個別の行（'\n'）として読み込む
     void UnloadTextLines(char **text, int lineCount);                                     // テキスト行をアンロードする
     int TextCopy(char *dst, const char *src);                                             // 文字列を別の文字列へコピーし、コピーしたバイト数を返す
+    // 6.2で説明文を変更
     bool TextIsEqual(const char *text1, const char *text2);                               // 2つのテキスト文字列が等しいか確認する
     unsigned int TextLength(const char *text);                                            // '\0'終端を確認してテキストの長さを取得する
     const char *TextFormat(const char *text, ...);                                        // 変数を使用してテキストを整形する（sprintf()形式）
