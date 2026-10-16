@@ -8,20 +8,14 @@
     // Wave／Soundの読み込み／アンロード関数
     Wave LoadWave(const char *fileName);                            // ファイルからWaveデータを読み込む
     Wave LoadWaveFromMemory(const char *fileType, const unsigned char *fileData, int dataSize); // メモリバッファからWaveを読み込む。fileTypeには'.wav'などの拡張子を指定する
-    // NOTE : 6.2で説明文を変更
     bool IsWaveValid(Wave wave);                                    // Waveデータが有効か確認する（データの読み込み状態とパラメーター）
     Sound LoadSound(const char *fileName);                          // ファイルからSoundを読み込む
     Sound LoadSoundFromWave(Wave wave);                             // WaveデータからSoundを読み込む
-    // NOTE : 6.2で説明文を変更
     Sound LoadSoundAlias(Sound source);                             // 元のSoundとサンプルデータを共有する新しいSoundのエイリアスを読み込む。エイリアスはサウンドデータを所有しない
-    // NOTE : 6.2で説明文を変更
     bool IsSoundValid(Sound sound);                                 // Soundが有効か確認する（データが読み込み済みで、バッファが初期化済み）
-    // NOTE : 6.2で変更
-    // 変更前（6.0）: void UpdateSound(Sound sound, const void *data, int sampleCount);
     void UpdateSound(Sound sound, const void *data, int frameCount); // 新しいデータでSoundのバッファを更新する（デフォルトのデータ形式: 32ビットfloat、ステレオ）
     void UnloadWave(Wave wave);                                     // Waveデータをアンロードする
     void UnloadSound(Sound sound);                                  // 音をアンロードする
-    // NOTE : 6.2で説明文を変更
     void UnloadSoundAlias(Sound alias);                             // Soundのエイリアスをアンロードする（サンプルデータは解放しない）
     bool ExportWave(Wave wave, const char *fileName);               // Waveデータをファイルへエクスポートし、成功した場合はtrueを返す
     bool ExportWaveAsCode(Wave wave, const char *fileName);         // Waveのサンプルデータをコード（.h）へエクスポートし、成功した場合はtrueを返す
@@ -31,7 +25,6 @@
     void StopSound(Sound sound);                                    // サウンドの再生を停止する
     void PauseSound(Sound sound);                                   // サウンドを一時停止する
     void ResumeSound(Sound sound);                                  // 一時停止した音の再生を再開する
-    // NOTE : 6.2で説明文を変更
     bool IsSoundPlaying(Sound sound);                               // Soundが現在再生中か確認する
     void SetSoundVolume(Sound sound, float volume);                 // サウンドの音量を設定する（1.0が最大）
     void SetSoundPitch(Sound sound, float pitch);                   // サウンドのピッチを設定する（1.0が基準）
@@ -45,28 +38,23 @@
     // Musicの管理関数
     Music LoadMusicStream(const char *fileName);                    // ファイルからMusicストリームを読み込む
     Music LoadMusicStreamFromMemory(const char *fileType, const unsigned char *data, int dataSize); // データからMusicストリームを読み込む
-    // NOTE : 6.2で説明文を変更
     bool IsMusicValid(Music music);                                 // Musicストリームが有効か確認する（コンテキストとバッファが初期化済み）
     void UnloadMusicStream(Music music);                            // Musicストリームをアンロードする
     void PlayMusicStream(Music music);                              // Musicの再生を開始する
     bool IsMusicStreamPlaying(Music music);                         // Musicが再生中か確認する
-    // NOTE : 6.2で説明文を変更
     void UpdateMusicStream(Music music);                            // Musicストリーミング用のバッファを更新する
     void StopMusicStream(Music music);                              // Musicの再生を停止する
     void PauseMusicStream(Music music);                             // Musicの再生を一時停止する
     void ResumeMusicStream(Music music);                            // 一時停止したMusicの再生を再開する
     void SeekMusicStream(Music music, float position);              // Musicを指定位置へシークする（秒単位）
     void SetMusicVolume(Music music, float volume);                 // Musicの音量を設定する（1.0が最大）
-    // NOTE : 6.2で説明文を変更
     void SetMusicPitch(Music music, float pitch);                   // Musicのピッチを設定する（1.0が基準）
-    // NOTE : 6.2で説明文を変更
     void SetMusicPan(Music music, float pan);                       // Musicのパンを設定する（-1.0が左、0.0が中央、1.0が右）
     float GetMusicTimeLength(Music music);                          // Musicの長さを秒単位で取得する
     float GetMusicTimePlayed(Music music);                          // Musicの現在の再生時間を秒単位で取得する
 
     // AudioStreamの管理関数
     AudioStream LoadAudioStream(unsigned int sampleRate, unsigned int sampleSize, unsigned int channels); // 生のオーディオPCMデータをストリーミングするためにAudioStreamを読み込む
-    // NOTE : 6.2で説明文を変更
     bool IsAudioStreamValid(AudioStream stream);                    // AudioStreamが有効か確認する（バッファが初期化済み）
     void UnloadAudioStream(AudioStream stream);                     // AudioStreamをアンロードしてメモリを解放する
     void UpdateAudioStream(AudioStream stream, const void *data, int frameCount); // データでAudioStreamのバッファーを更新する
@@ -78,7 +66,6 @@
     void StopAudioStream(AudioStream stream);                       // AudioStreamを停止する
     void SetAudioStreamVolume(AudioStream stream, float volume);    // AudioStreamの音量を設定する（1.0が最大）
     void SetAudioStreamPitch(AudioStream stream, float pitch);      // AudioStreamのピッチを設定する（1.0が基準）
-    // NOTE : 6.2で説明文を変更
     void SetAudioStreamPan(AudioStream stream, float pan);          // AudioStreamのパンを設定する（-1.0が左、0.0が中央、1.0が右）
     void SetAudioStreamBufferSizeDefault(int size);                 // 新しいAudioStreamのデフォルトバッファーサイズを設定する
     void SetAudioStreamCallback(AudioStream stream, AudioCallback callback); // 新しいデータを要求するオーディオスレッドのコールバックを設定する

@@ -6,7 +6,6 @@
     Image LoadImageAnimFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int *frames); // メモリバッファから画像シーケンス(アニメーション)を読み込む
     Image LoadImageFromMemory(const char *fileType, const unsigned char *fileData, int dataSize);      // メモリバッファから画像を読み込む。fileTypeには'.png'などの拡張子を指定する
     Image LoadImageFromTexture(Texture2D texture);                                                     // GPUのテクスチャデータから画像を読み込む
-    // 6.2で説明文を変更
     Image LoadImageFromScreen(void);                                                                   // 画面バッファから画像を読み込む（スクリーンショット）
     bool IsImageValid(Image image);                                                                    // 画像が有効か確認する（データとパラメーター）
     void UnloadImage(Image image);                                                                     // CPUメモリ（RAM）から画像をアンロード(解放処理)する
@@ -53,8 +52,6 @@
     void ImageColorTint(Image *image, Color color);                                                    // 画像の色を変更する: 色合い
     void ImageColorInvert(Image *image);                                                               // 画像の色を変更する: 反転
     void ImageColorGrayscale(Image *image);                                                            // 画像の色を変更する: グレースケール
-    // 6.2で変更
-    // 変更前（6.0）: void ImageColorContrast(Image *image, float contrast);
     void ImageColorContrast(Image *image, int contrast);                                               // 画像のコントラストを変更する（-100～100）
     void ImageColorBrightness(Image *image, int brightness);                                           // 画像の色を変更する: 明るさ（-255～255）
     void ImageColorReplace(Image *image, Color color, Color replace);                                  // 画像の色を変更する: 色の置換
@@ -67,18 +64,14 @@
 
     // 画像への描画関数
     // 注意: CPUによる画像のソフトウェアレンダリング関数
-    // 6.2で説明文を変更
     void ImageClearBackground(Image *dst, Color color);                                                // 指定した色で画像の背景をクリアする
     void ImageDrawPixel(Image *dst, int posX, int posY, Color color);                                  // 画像内にピクセルを描画する
     void ImageDrawPixelV(Image *dst, Vector2 position, Color color);                                   // 画像内にピクセルを描画する（Vector版）
     void ImageDrawLine(Image *dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color); // 画像内に線を描画する
     void ImageDrawLineV(Image *dst, Vector2 start, Vector2 end, Color color);                          // 画像内に線を描画する（Vector版）
     void ImageDrawLineEx(Image *dst, Vector2 start, Vector2 end, int thick, Color color);              // 太さを指定して画像内に線を描画する
-    // 6.2で追加
     void ImageDrawLineStrip(Image *dst, const Vector2 *points, int pointCount, Color color);           // 画像内に連続した線を描画する
     void ImageDrawTriangle(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);               // 画像内に三角形を描画する
-    // 6.2で改名: ImageDrawTriangleEx -> ImageDrawTriangleGradient
-    // 削除済みの6.0の宣言: void ImageDrawTriangleEx(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
     void ImageDrawTriangleGradient(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3); // 画像内に頂点の色を補間した三角形を描画する
     void ImageDrawTriangleLines(Image *dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);          // 画像内に三角形の輪郭を描画する
     void ImageDrawTriangleFan(Image *dst, const Vector2 *points, int pointCount, Color color);         // 画像内に点で定義された三角形ファンを描画する（最初の頂点が中心）
@@ -86,33 +79,22 @@
     void ImageDrawRectangle(Image *dst, int posX, int posY, int width, int height, Color color);       // 画像内に矩形を描画する
     void ImageDrawRectangleV(Image *dst, Vector2 position, Vector2 size, Color color);                 // 画像内に矩形を描画する（Vector版）
     void ImageDrawRectangleRec(Image *dst, Rectangle rec, Color color);                                // 画像内に矩形を描画する
-    // 6.2で追加
     void ImageDrawRectanglePro(Image *dst, Rectangle rec, Vector2 origin, float rotation, Color color); // 高度なパラメーターを指定して、画像内に単色で塗りつぶした矩形を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void ImageDrawRectangleLines(Image *dst, Rectangle rec, int thick, Color color);
     void ImageDrawRectangleLines(Image *dst, int posX, int posY, int width, int height, Color color);  // 画像内に矩形の輪郭を描画する
-    // 6.2で追加
     void ImageDrawRectangleLinesEx(Image *dst, Rectangle rec, int thick, Color color);                 // 線の太さを指定して、画像内に矩形の輪郭を描画する
-    // 6.2で追加
     void ImageDrawRectangleGradientEx(Image *dst, Rectangle rec, Color col1, Color col2, Color col3, Color col4); // 画像内にグラデーション付きの矩形を描画する（色は反時計回りの順序）
     void ImageDrawCircle(Image *dst, int centerX, int centerY, int radius, Color color);               // 画像内に塗りつぶした円を描画する
     void ImageDrawCircleV(Image *dst, Vector2 center, int radius, Color color);                        // 画像内に塗りつぶした円を描画する（Vector版）
     void ImageDrawCircleLines(Image *dst, int centerX, int centerY, int radius, Color color);          // 画像内に円の輪郭を描画する
     void ImageDrawCircleLinesV(Image *dst, Vector2 center, int radius, Color color);                   // 画像内に円の輪郭を描画する（Vector版）
-    // 6.2で追加
     void ImageDrawCircleGradient(Image *dst, Vector2 center, float radius, Color inner, Color outer);  // 画像内にグラデーションで塗りつぶした円を描画する
 
-    // 6.2で追加
     void ImageDrawImage(Image *dst, Image src, int posX, int posY, Color tint);                      // 画像内に別の画像を描画する
-    // 6.2で追加
     void ImageDrawImageEx(Image *dst, Image src, Vector2 position, float rotation, float scale, Color tint); // 拡大縮小と回転を指定して、画像内に別の画像を描画する
-    // 6.2で追加
     void ImageDrawImageRec(Image *dst, Image src, Rectangle srcRec, Vector2 position, Color tint);     // 矩形で指定した画像の一部を、別の画像内に描画する
-    // 6.2で追加
     void ImageDrawImagePro(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Vector2 origin, float rotation, Color tint); // 拡大縮小と回転を指定して、元画像の矩形領域を転送先画像内の矩形領域に描画する
     void ImageDrawText(Image *dst, const char *text, int posX, int posY, int fontSize, Color color);   // 転送先画像内にテキストを描画する（デフォルトフォントを使用）
     void ImageDrawTextEx(Image *dst, Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint); // 転送先画像内にテキストを描画する（カスタムスプライトフォント）
-    // 6.2で追加
     void ImageDrawTextPro(Image *dst, Font font, const char *text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint); // Fontと高度なパラメーター（回転）を指定してテキストを描画する
 
     // テクスチャの読み込み関数
@@ -121,12 +103,9 @@
     Texture2D LoadTextureFromImage(Image image);                                                       // 画像データからテクスチャを読み込む
     TextureCubemap LoadTextureCubemap(Image image, int layout);                                        // 画像からキューブマップを読み込む（複数の画像キューブマップレイアウトに対応）
     RenderTexture2D LoadRenderTexture(int width, int height);                                          // 描画用のテクスチャ（フレームバッファ）を読み込む
-    // 6.2で追加
     RenderTexture2D LoadRenderTextureEx(int width, int height, int format);                            // 形式を指定して描画用テクスチャ（フレームバッファ）を読み込む
-    // 6.2で説明文を変更
     bool IsTextureValid(Texture2D texture);                                                            // テクスチャが有効か確認する（GPUに読み込み済み）
     void UnloadTexture(Texture2D texture);                                                             // GPUメモリ（VRAM）からテクスチャをアンロードする
-    // 6.2で説明文を変更
     bool IsRenderTextureValid(RenderTexture2D target);                                                 // レンダーテクスチャが有効か確認する（GPUに読み込み済み）
     void UnloadRenderTexture(RenderTexture2D target);                                                  // GPUメモリ（VRAM）からレンダーテクスチャをアンロードする
     void UpdateTexture(Texture2D texture, const void *pixels);                                         // 新しいデータでGPUテクスチャを更新する（ピクセルデータはテクスチャ全体を埋められる必要がある）
@@ -140,16 +119,9 @@
     // テクスチャの描画関数
     void DrawTexture(Texture2D texture, int posX, int posY, Color tint);                               // Texture2Dを描画する
     void DrawTextureV(Texture2D texture, Vector2 position, Color tint);                                // Vector2で位置を指定してTexture2Dを描画する
-    // 6.2で説明文を変更
     void DrawTextureEx(Texture2D texture, Vector2 position, float rotation, float scale, Color tint);  // 回転と拡大縮小を指定してTexture2Dを描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawTextureRec(Texture2D texture, Rectangle source, Vector2 position, Color tint);
     void DrawTextureRec(Texture2D texture, Rectangle rec, Vector2 position, Color tint);               // 矩形で指定したテクスチャの一部を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawTexturePro(Texture2D texture, Rectangle source, Rectangle dest, Vector2 origin, float rotation, Color tint);
     void DrawTexturePro(Texture2D texture, Rectangle srcrec, Rectangle dstrec, Vector2 origin, float rotation, Color tint); // 拡大縮小と回転を指定して、テクスチャの転送元矩形領域を転送先矩形領域に描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dest, Vector2 origin, float rotation, Color tint);
     void DrawTextureNPatch(Texture2D texture, NPatchInfo nPatchInfo, Rectangle dstrec, Vector2 origin, float rotation, Color tint); // 拡大縮小に適したテクスチャ（またはその一部）を描画する
 
     // 色 / ピクセル関連の関数
@@ -167,13 +139,6 @@
     Color ColorAlphaBlend(Color dst, Color src, Color tint);              // 色合いを適用したsrcをdstへアルファブレンドした色を取得する
     Color ColorLerp(Color color1, Color color2, float factor);            // 2つの色を線形補間した色を取得する。factorの範囲は[0.0f..1.0f]
     Color GetColor(unsigned int hexValue);                                // 16進数値からColor構造体を取得する
-    // 6.2で変更
-    // 変更前（6.0）: Color GetPixelColor(void *srcPtr, int format);
     Color GetPixelColor(const void *srcPtr, int format);                  // 指定した形式のピクセルを指すポインターからColorを取得する
     void SetPixelColor(void *dstPtr, Color color, int format);            // 指定形式に変換した色を転送先ピクセルポインターへ設定する
     int GetPixelDataSize(int width, int height, int format);              // 指定形式のピクセルデータサイズをバイト単位で取得する
-
-
-    // 6.2で削除された旧宣言（参照用）
-    // void ImageDraw(Image *dst, Image src, Rectangle srcRec, Rectangle dstRec, Color tint);
-    // ImageDrawはImageDrawImage系の関数に置き換えられた。移行時には引数の確認が必要

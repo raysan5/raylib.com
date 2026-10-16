@@ -1,7 +1,5 @@
     // 注意: 基本図形と単一のフォントだけを使用する場合に有用
     // フォントの文字として白い矩形を定義すると、すべてを1回のドローコールで描画できます
-    // 6.2で変更
-    // 変更前（6.0）: void SetShapesTexture(Texture2D texture, Rectangle source);
     void SetShapesTexture(Texture2D texture, Rectangle rec); // 図形の描画に使用するテクスチャと矩形を設定する
     Texture2D GetShapesTexture(void);                 // 図形の描画に使用するテクスチャを取得する
     Rectangle GetShapesTextureRectangle(void);        // 図形の描画に使用するテクスチャのソース矩形を取得する
@@ -15,13 +13,9 @@
     void DrawLineStrip(const Vector2 *points, int pointCount, Color color);                            // 連続した線を描画する（GLのラインを使用）
     void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);                   // 3次ベジェのイーズイン・アウト補間による線分を描画する
     void DrawLineDashed(Vector2 startPos, Vector2 endPos, int dashSize, int spaceSize, Color color);   // 破線を描画する
-    // 6.2で説明文を変更
     void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                                // 単色で塗りつぶした三角形を描画する（頂点は反時計回りの順序）
-    // 6.2で追加
     void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);       // 頂点の色を補間した三角形を描画する（頂点と色は反時計回りの順序）
-    // 6.2で説明文を変更
     void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);                           // 三角形の輪郭を描画する（頂点は反時計回りの順序）
-    // 6.2で追加
     void DrawTriangleLinesEx(Vector2 v1, Vector2 v2, Vector2 v3, float thick, Color color);            // 線の太さを指定して三角形の輪郭を描画する（頂点は反時計回りの順序）
     void DrawTriangleFan(const Vector2 *points, int pointCount, Color color);                          // 点で定義された三角形ファンを描画する（最初の頂点が中心）
     void DrawTriangleStrip(const Vector2 *points, int pointCount, Color color);                        // 点で定義された三角形ストリップを描画する
@@ -31,44 +25,31 @@
     void DrawRectanglePro(Rectangle rec, Vector2 origin, float rotation, Color color);                 // 高度なパラメーターを指定して単色で塗りつぶした矩形を描画する
     void DrawRectangleGradientV(int posX, int posY, int width, int height, Color top, Color bottom);   // 垂直グラデーションで塗りつぶした矩形を描画する
     void DrawRectangleGradientH(int posX, int posY, int width, int height, Color left, Color right);   // 水平グラデーションで塗りつぶした矩形を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawRectangleGradientEx(Rectangle rec, Color topLeft, Color bottomLeft, Color bottomRight, Color topRight);
     void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, Color col4);       // 各頂点の色を指定してグラデーションで塗りつぶした矩形を描画する（色は反時計回りの順序）
     void DrawRectangleLines(int posX, int posY, int width, int height, Color color);                   // 矩形の輪郭を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawRectangleLinesEx(Rectangle rec, float lineThick, Color color);
     void DrawRectangleLinesEx(Rectangle rec, float thick, Color color);                                // 線の太さを指定して矩形の輪郭を描画する
     void DrawRectangleRounded(Rectangle rec, float roundness, int segments, Color color);              // 角の丸い矩形を描画する
     void DrawRectangleRoundedLines(Rectangle rec, float roundness, int segments, Color color);         // 角の丸い矩形の線を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawRectangleRoundedLinesEx(Rectangle rec, float roundness, int segments, float lineThick, Color color);
     void DrawRectangleRoundedLinesEx(Rectangle rec, float roundness, int segments, float thick, Color color); // 線の太さを指定して角の丸い矩形の輪郭を描画する
-    // 6.2で説明文を変更
     void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);               // n辺の多角形を描画する
     void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);          // n角形の輪郭を描画する
-    // 6.2で変更
-    // 変更前（6.0）: void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color);
     void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float thick, Color color); // 線の太さを指定してn辺の多角形の輪郭を描画する
     void DrawCircle(int centerX, int centerY, float radius, Color color);                              // 単色で塗りつぶした円を描画する
     void DrawCircleV(Vector2 center, float radius, Color color);                                       // 単色で塗りつぶした円を描画する（Vector版）
     void DrawCircleGradient(Vector2 center, float radius, Color inner, Color outer);                   // グラデーションで塗りつぶした円を描画する
     void DrawCircleSector(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // 扇形を描画する
     void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color); // 扇形の輪郭を描画する
-    // 6.2で追加
     void DrawCircleSectorLinesEx(Vector2 center, float radius, float startAngle, float endAngle, int segments, float thick, Color color); // 線の太さを指定して扇形の輪郭を描画する
     void DrawCircleLines(int centerX, int centerY, float radius, Color color);                         // 円の輪郭を描画する
     void DrawCircleLinesV(Vector2 center, float radius, Color color);                                  // 円の輪郭を描画する（Vector版）
-    // 6.2で追加
     void DrawCircleLinesEx(Vector2 center, float radius, float thick, Color color);                    // 線の太さを指定して円の輪郭を描画する
     void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);             // 楕円を描画する
     void DrawEllipseV(Vector2 center, float radiusH, float radiusV, Color color);                      // 楕円を描画する（Vector版）
     void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, Color color);        // 楕円の輪郭を描画する
     void DrawEllipseLinesV(Vector2 center, float radiusH, float radiusV, Color color);                 // 楕円の輪郭を描画する（Vector版）
-    // 6.2で追加
     void DrawEllipseLinesEx(Vector2 center, float radiusH, float radiusV, float thick, Color color);   // 線の太さを指定して楕円の輪郭を描画する
     void DrawRing(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color); // 環を描画する
     void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color); // 環の輪郭を描画する
-    // 6.2で追加
     void DrawRingLinesEx(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, float thick, Color color); // 線の太さを指定して環の輪郭を描画する
 
     // スプラインの描画関数
@@ -87,8 +68,6 @@
     Vector2 GetSplinePointLinear(Vector2 startPos, Vector2 endPos, float t);                           // 線形スプライン上の点を取得（評価）する
     Vector2 GetSplinePointBasis(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t);              // Bスプライン上の点を取得（評価）する
     Vector2 GetSplinePointCatmullRom(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, float t);         // Catmull-Romスプライン上の点を取得（評価）する
-    // 6.2で改名: GetSplinePointBezierQuad -> GetSplinePointBezierQuadratic
-    // 削除済みの6.0の宣言: Vector2 GetSplinePointBezierQuad(Vector2 p1, Vector2 c2, Vector2 p3, float t);
     Vector2 GetSplinePointBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, float t);                // 2次ベジェスプライン上の点を取得（評価）する
     Vector2 GetSplinePointBezierCubic(Vector2 p1, Vector2 c2, Vector2 c3, Vector2 p4, float t);        // 3次ベジェスプライン上の点を取得（評価）する
 
@@ -96,7 +75,6 @@
     bool CheckCollisionRecs(Rectangle rec1, Rectangle rec2);                                           // 2つの矩形間の衝突を確認する
     bool CheckCollisionCircles(Vector2 center1, float radius1, Vector2 center2, float radius2);        // 2つの円間の衝突を確認する
     bool CheckCollisionCircleRec(Vector2 center, float radius, Rectangle rec);                         // 円と矩形の衝突を確認する
-    // 6.2で説明文を変更
     bool CheckCollisionCircleLine(Vector2 center, float radius, Vector2 p1, Vector2 p2);               // 円と、2点p1、p2の間に作られた線分との衝突を確認する
     bool CheckCollisionPointRec(Vector2 point, Rectangle rec);                                         // 点が矩形の内側にあるか確認する
     bool CheckCollisionPointCircle(Vector2 point, Vector2 center, float radius);                       // 点が円の内側にあるか確認する
