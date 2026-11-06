@@ -9,38 +9,38 @@
     void DrawCubeWires(Vector3 position, float width, float height, float length, Color color);        // 立方体のワイヤーフレームを描画する
     void DrawCubeWiresV(Vector3 position, Vector3 size, Color color);                                  // 立方体のワイヤーフレームを描画する（Vector版）
     void DrawSphere(Vector3 centerPos, float radius, Color color);                                     // 球を描画する
-    void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color);            // 拡張パラメーターを指定して球を描画する
+    void DrawSphereEx(Vector3 centerPos, float radius, int rings, int slices, Color color);            // リング数とスライス数を指定して球を描画する
     void DrawSphereWires(Vector3 centerPos, float radius, int rings, int slices, Color color);         // 球のワイヤーフレームを描画する
-    void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color); // 円柱／円錐を描画する
+    void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int sides, Color color); // 円柱または円錐を描画する
     void DrawCylinderEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color); // startPosを底面、endPosを上面として円柱を描画する
-    void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color); // 円柱／円錐のワイヤーフレームを描画する
+    void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int sides, Color color); // 円柱または円錐のワイヤーフレームを描画する
     void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color); // startPosを底面、endPosを上面として円柱のワイヤーフレームを描画する
-    void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color); // 球状端部の中心をstartPosとendPosに置いたカプセルを描画する
-    void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color); // 球状端部の中心をstartPosとendPosに置いたカプセルのワイヤーフレームを描画する
+    void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int rings, int slices, Color color); // 球状の両端の中心をstartPosとendPosとするカプセルを描画する
+    void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int rings, int slices, Color color); // 球状の両端の中心をstartPosとendPosとするカプセルのワイヤーフレームを描画する
     void DrawPlane(Vector3 centerPos, Vector2 size, Color color);                                      // XZ平面を描画する
     void DrawRay(Ray ray, Color color);                                                                // レイを表す線を描画する
     void DrawGrid(int slices, float spacing);                                                          // 原点(0, 0, 0)を中心としたグリッドを描画する
 
-    //------------------------------------------------------------------------------------
-    // 3Dモデルの読み込み・描画関数（モジュール: models）
-    //------------------------------------------------------------------------------------
+    // モデルの管理関数
+    // 3Dモデルの読み込みと描画関数（モジュール: models）
+    // モデルの管理関数
 
     // モデルの管理関数
     Model LoadModel(const char *fileName);                                                // ファイルからモデルを読み込む（メッシュとマテリアル）
     Model LoadModelFromMesh(Mesh mesh);                                                   // 生成済みメッシュからモデルを読み込む（デフォルトマテリアル）
-    bool IsModelValid(Model model);                                                       // モデルが有効か確認する（GPUに読み込み済みのVAO／VBO）
+    bool IsModelValid(Model model);                                                       // モデルが有効か確認する（GPUに読み込み済み、VAO／VBO）
     void UnloadModel(Model model);                                                        // メッシュを含むモデルをメモリ（RAMおよび／またはVRAM）からアンロードする
     BoundingBox GetModelBoundingBox(Model model);                                         // すべてのメッシュを考慮してモデルのバウンディングボックス境界を計算する
 
     // モデルの描画関数
     void DrawModel(Model model, Vector3 position, float scale, Color tint);               // モデルを描画する（設定されている場合はテクスチャ付き）
-    void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // 拡張パラメーターを指定してモデルを描画する
+    void DrawModelEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // カスタム変換を指定してモデルを描画する
     void DrawModelWires(Model model, Vector3 position, float scale, Color tint);          // モデルのワイヤーフレームを描画する（設定されている場合はテクスチャ付き）
-    void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // 拡張パラメーターを指定してモデルのワイヤーフレームを描画する（設定されている場合はテクスチャ付き）
+    void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint); // カスタム変換を指定してモデルのワイヤーフレームを描画する
     void DrawBoundingBox(BoundingBox box, Color color);                                   // バウンディングボックスのワイヤーフレームを描画する
     void DrawBillboard(Camera camera, Texture2D texture, Vector3 position, float scale, Color tint); // ビルボードテクスチャを描画する
-    void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector2 size, Color tint); // ソース矩形で定義したビルボードテクスチャを描画する
-    void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint); // ソース矩形と回転で定義したビルボードテクスチャを描画する
+    void DrawBillboardRec(Camera camera, Texture2D texture, Rectangle rec, Vector3 position, Vector2 size, Color tint); // 矩形で指定したビルボードテクスチャを描画する
+    void DrawBillboardPro(Camera camera, Texture2D texture, Rectangle rec, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint); // 拡大縮小と回転を指定して、転送元矩形で指定したビルボードテクスチャを描画する
 
     // メッシュの管理関数
     void UploadMesh(Mesh *mesh, bool dynamic);                                            // メッシュの頂点データをGPUへアップロードし、VAO／VBOのIDを設定する
