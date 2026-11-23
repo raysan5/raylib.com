@@ -1,7 +1,7 @@
     // フォントの読み込み／アンロード関数
     Font GetFontDefault(void);                                                            // デフォルトフォントを取得する
     Font LoadFont(const char *fileName);                                                  // ファイルからGPUメモリ（VRAM）へフォントを読み込む
-    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // 拡張パラメーターを指定してファイルからフォントを読み込む。デフォルト文字セットを読み込むにはcodepointsにNULL、codepointCountに0を指定し、フォントサイズはピクセル単位の高さで指定する
+    Font LoadFontEx(const char *fileName, int fontSize, const int *codepoints, int codepointCount); // コードポイントと生成サイズを指定してファイルからフォントを読み込む。デフォルト文字セットを読み込むにはcodepointsにNULL、codepointCountに0を指定する。フォントサイズはピクセル単位の高さで指定する
     Font LoadFontFromImage(Image image, Color key, int firstChar);                        // Imageからフォントを読み込む（XNA形式）
     Font LoadFontFromMemory(const char *fileType, const unsigned char *fileData, int dataSize, int fontSize, const int *codepoints, int codepointCount); // メモリバッファからフォントを読み込む。fileTypeには'.ttf'などの拡張子を指定する
     bool IsFontValid(Font font);                                                          // フォントが有効か確認する（フォントデータは読み込み済み。警告: GPUテクスチャは確認しない）

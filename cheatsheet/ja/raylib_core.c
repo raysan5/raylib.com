@@ -54,18 +54,18 @@
     void ShowCursor(void);                                      // カーソルを表示する
     void HideCursor(void);                                      // カーソルを非表示にする
     bool IsCursorHidden(void);                                  // カーソルが非表示か確認する
-    void EnableCursor(void);                                    // カーソルを有効化する（ロックを解除）
-    void DisableCursor(void);                                   // カーソルを無効化する（ロックする）
+    void EnableCursor(void);                                    // カーソルを有効にする（ロックを解除する）
+    void DisableCursor(void);                                   // カーソルを無効にする（ロックする）
     bool IsCursorOnScreen(void);                                // カーソルが画面内にあるか確認する
 
     // 描画関連の関数
-    void ClearBackground(Color color);                          // 背景色（フレームバッファのクリア色）を設定する
-    void BeginDrawing(void);                                    // 描画を開始するためにキャンバス（フレームバッファ）を準備する
-    void EndDrawing(void);                                      // キャンバスへの描画を終了し、バッファを入れ替える（ダブルバッファリング）
+    void ClearBackground(Color color);                          // 背景（フレームバッファ）を指定した色でクリアする
+    void BeginDrawing(void);                                    // キャンバス（フレームバッファ）への描画を開始する
+    void EndDrawing(void);                                      // キャンバス（フレームバッファ）への描画を終了し、バッファを交換する（ダブルバッファリング）
     void BeginMode2D(Camera2D camera);                          // カスタムカメラで2Dモードを開始する
     void EndMode2D(void);                                       // カスタムカメラによる2Dモードを終了する
     void BeginMode3D(Camera3D camera);                          // カスタムカメラで3Dモードを開始する
-    void EndMode3D(void);                                       // 3Dモードを終了し、デフォルトの2D正投影モードに戻す
+    void EndMode3D(void);                                       // 3Dモードを終了し、デフォルトの2D正投影モードに戻る
     void BeginTextureMode(RenderTexture2D target);              // レンダーテクスチャへの描画を開始する
     void EndTextureMode(void);                                  // レンダーテクスチャへの描画を終了する
     void BeginShaderMode(Shader shader);                        // カスタムシェーダーによる描画を開始する
@@ -98,9 +98,9 @@
     Ray GetScreenToWorldRay(Vector2 position, Camera camera);         // 画面位置（マウスなど）からワールド空間へのレイを取得する
     Ray GetScreenToWorldRayEx(Vector2 position, Camera camera, int width, int height); // ビューポート内の画面位置（マウスなど）からワールド空間へのレイを取得する
     Vector2 GetWorldToScreen(Vector3 position, Camera camera);        // 3Dワールド空間の位置に対応するスクリーン空間の位置を取得する
-    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // 3Dワールド空間の位置に対応するスクリーン空間の位置を取得する
-    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);    // 2Dカメラのワールド空間位置に対応するスクリーン空間の位置を取得する
-    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);    // 2Dカメラのスクリーン空間位置に対応するワールド空間の位置を取得する
+    Vector2 GetWorldToScreenEx(Vector3 position, Camera camera, int width, int height); // 指定した画面サイズで、3Dワールド空間の位置に対応するスクリーン空間の位置を取得する
+    Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);    // 2Dカメラのワールド空間の位置に対応するスクリーン空間の位置を取得する
+    Vector2 GetScreenToWorld2D(Vector2 position, Camera2D camera);    // 2Dカメラのスクリーン空間の位置に対応するワールド空間の位置を取得する
     Matrix GetCameraMatrix(Camera camera);                            // カメラ変換行列（ビュー行列）を取得する
     Matrix GetCameraMatrix2D(Camera2D camera);                        // 2Dカメラの変換行列を取得する
 
@@ -126,7 +126,7 @@
 
     // その他の関数
     void TakeScreenshot(const char *fileName);                // 現在の画面のスクリーンショットを撮る（ファイル名の拡張子で形式を指定）
-    void SetConfigFlags(unsigned int flags);                  // 初期化時の設定フラグを指定する（FLAGSを参照）
+    void SetConfigFlags(unsigned int flags);                  // 初期化設定フラグを設定する（FLAGSを参照）
     void OpenURL(const char *url);                            // デフォルトのシステムブラウザーでURLを開く（利用可能な場合）
 
     // ログシステム
@@ -142,7 +142,7 @@
     // ファイルシステム管理関数
     unsigned char *LoadFileData(const char *fileName, int *dataSize); // ファイルデータをバイト配列として読み込む
     void UnloadFileData(unsigned char *data);                     // LoadFileData()で割り当てたファイルデータをアンロードする
-    bool SaveFileData(const char *fileName, void *data, int dataSize); // バイト配列をファイルに保存し、成功した場合はtrueを返す
+    bool SaveFileData(const char *fileName, const void *data, int dataSize); // バイト配列のデータをファイルへ保存（書き込み）し、成功した場合はtrueを返す
     bool ExportDataAsCode(const unsigned char *data, int dataSize, const char *fileName); // データをコード（.h）としてエクスポートし、成功した場合はtrueを返す
     char *LoadFileText(const char *fileName);                     // テキストデータをファイルから読み込み、'\0'終端文字列を返す
     void UnloadFileText(char *text);                              // LoadFileText()で割り当てたテキストデータをアンロードする
@@ -155,30 +155,33 @@
     void SetLoadFileTextCallback(LoadFileTextCallback callback);  // カスタムのテキストファイルデータローダーを設定する
     void SetSaveFileTextCallback(SaveFileTextCallback callback);  // カスタムのテキストファイルデータセーバーを設定する
 
-    int FileRename(const char *fileName, const char *fileRename); // ファイルが存在する場合、名前を変更する
-    int FileRemove(const char *fileName);                         // ファイルが存在する場合、削除する
-    int FileCopy(const char *srcPath, const char *dstPath);       // ファイルを別のパスへコピーし、必要であればdstPathの親ディレクトリも作成する
-    int FileMove(const char *srcPath, const char *dstPath);       // ファイルを別のディレクトリへ移動し、必要であればdstPathの親ディレクトリも作成する
-    int FileTextReplace(const char *fileName, const char *search, const char *replacement); // 既存ファイル内のテキストを置換する
-    int FileTextFindIndex(const char *fileName, const char *search); // 既存ファイル内のテキストを検索する
+    int FileRename(const char *fileName, const char *fileRename); // ファイルが存在する場合に名前を変更し、成功した場合は0を返す
+    int FileRemove(const char *fileName);                         // ファイルが存在する場合に削除し、成功した場合は0を返す
+    int FileCopy(const char *srcPath, const char *dstPath);       // ファイルを別のパスへコピーする。dstPathが存在しない場合は作成し、成功した場合は0を返す
+    int FileMove(const char *srcPath, const char *dstPath);       // ファイルを別のディレクトリへ移動する。dstPathが存在しない場合は作成し、成功した場合は0を返す
+    int FileTextReplace(const char *fileName, const char *search, const char *replacement); // 既存ファイル内のテキストを置換し、成功した場合は0を返す
+    int FileTextFindIndex(const char *fileName, const char *search); // 既存ファイル内のテキストを検索し、見つかった場合はインデックス、見つからない場合は-1を返す
     bool FileExists(const char *fileName);                        // ファイルが存在するか確認する
-    bool DirectoryExists(const char *dirPath);                    // ディレクトリパスが存在するか確認する
+    bool DirectoryExists(const char *dirPath);                    // ディレクトリのパスが存在するか確認する
     bool IsFileExtension(const char *fileName, const char *ext);  // ファイルの拡張子を確認する（.png、.wavのようにドットを含めることを推奨）
+    bool IsFileHidden(const char *filePath);                      // 指定したパスのファイルまたはディレクトリがOSによって非表示にされているか確認する
     int GetFileLength(const char *fileName);                      // ファイルサイズをバイト単位で取得する（注意: GetFileSize()はwindows.hと競合する）
     long GetFileModTime(const char *fileName);                    // ファイルの更新時刻（最終書き込み時刻）を取得する
     const char *GetFileExtension(const char *fileName);           // ファイル名文字列の拡張子を指すポインターを取得する（'.png'のようにドットを含む）
     const char *GetFileName(const char *filePath);                // パス文字列内のファイル名を指すポインターを取得する
     const char *GetFileNameWithoutExt(const char *filePath);      // 拡張子を除いたファイル名文字列を取得する（静的文字列を使用）
-    const char *GetDirectoryPath(const char *filePath);           // パスを含むfileNameから完全なディレクトリパスを取得する（静的文字列を使用）
-    const char *GetPrevDirectoryPath(const char *dirPath);        // 指定したパスの1つ上のディレクトリパスを取得する（静的文字列を使用）
+    const char *GetDirectoryPath(const char *filePath);           // パス付きのファイル名からディレクトリのフルパスを取得する（静的文字列を使用）
+    const char *GetPrevDirectoryPath(const char *dirPath);        // 指定したパスの親ディレクトリのパスを取得する（静的文字列を使用）
     const char *GetWorkingDirectory(void);                        // 現在の作業ディレクトリを取得する（静的文字列を使用）
     const char *GetApplicationDirectory(void);                    // 実行中のアプリケーションのディレクトリを取得する（静的文字列を使用）
     int MakeDirectory(const char *dirPath);                       // 指定された完全なパスを含むディレクトリを作成し、成功した場合は0を返す
-    bool ChangeDirectory(const char *dirPath);                    // 作業ディレクトリを変更し、成功した場合はtrueを返す
-    bool IsPathFile(const char *path);                            // 指定したパスがファイルかどうかを確認する
+    int ChangeDirectory(const char *dirPath);                     // 作業ディレクトリを変更し、成功した場合は0を返す
+    bool IsPathFile(const char *path);                            // 指定したパスがファイルを指すか確認する
+    bool IsPathDirectory(const char *path);                       // 指定したパスがディレクトリを指すか確認する
+    bool IsPathAbsolute(const char *path);                        // 指定したパスが絶対パスか確認する
     bool IsFileNameValid(const char *fileName);                   // fileNameが対象プラットフォーム／OSで有効か確認する
     FilePathList LoadDirectoryFiles(const char *dirPath);         // ディレクトリ内のファイルとディレクトリのパスを読み込む（サブディレクトリは走査しない）
-    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // 拡張子フィルターとサブディレクトリ走査を指定してディレクトリ内のパスを読み込む（使用可能なフィルター例: "*.*"、"FILES*"、"DIRS*"）
+    FilePathList LoadDirectoryFilesEx(const char *basePath, const char *filter, bool scanSubdirs); // 拡張子による絞り込みとサブディレクトリの走査を指定して、ディレクトリ内のファイルパスを読み込む。使用可能なフィルターの例: '*.*'、'FILES*'、'DIRS*'
     void UnloadDirectoryFiles(FilePathList files);                // ファイルパス一覧をアンロードする
     bool IsFileDropped(void);                                     // ウィンドウにファイルがドロップされたか確認する
     FilePathList LoadDroppedFiles(void);                          // ドロップされたファイルのパス一覧を読み込む
@@ -191,10 +194,10 @@
     unsigned char *DecompressData(const unsigned char *compData, int compDataSize, int *dataSize);  // データを展開する（DEFLATEアルゴリズム）。メモリはMemFree()で解放する必要がある
     char *EncodeDataBase64(const unsigned char *data, int dataSize, int *outputSize);               // データをBase64文字列にエンコードする（NULL終端文字を含む）。メモリはMemFree()で解放する必要がある
     unsigned char *DecodeDataBase64(const char *text, int *outputSize);                             // NULL終端を想定したBase64文字列をデコードする。メモリはMemFree()で解放する必要がある
-    unsigned int ComputeCRC32(unsigned char *data, int dataSize); // CRC32ハッシュコードを計算する
-    unsigned int *ComputeMD5(unsigned char *data, int dataSize);  // MD5ハッシュコードを計算し、静的なint[4]（16バイト）を返す
-    unsigned int *ComputeSHA1(unsigned char *data, int dataSize); // SHA1ハッシュコードを計算し、静的なint[5]（20バイト）を返す
-    unsigned int *ComputeSHA256(unsigned char *data, int dataSize); // SHA256ハッシュコードを計算し、静的なint[8]（32バイト）を返す
+    unsigned int ComputeCRC32(const unsigned char *data, int dataSize); // CRC32ハッシュ値を計算する
+    unsigned int *ComputeMD5(const unsigned char *data, int dataSize);  // MD5ハッシュ値を計算し、静的なint[4]（16バイト）を返す
+    unsigned int *ComputeSHA1(const unsigned char *data, int dataSize); // SHA1ハッシュ値を計算し、静的なint[5]（20バイト）を返す
+    unsigned int *ComputeSHA256(const unsigned char *data, int dataSize); // SHA256ハッシュ値を計算し、静的なint[8]（32バイト）を返す
 
     // オートメーションイベント機能
     AutomationEventList LoadAutomationEventList(const char *fileName); // ファイルからオートメーションイベント一覧を読み込む（NULLなら空の一覧、容量はMAX_AUTOMATION_EVENTS）
@@ -212,7 +215,7 @@
 
     // 入力関連の関数: キーボード
     bool IsKeyPressed(int key);                             // キーが1回押されたか確認する
-    bool IsKeyPressedRepeat(int key);                       // キーリピートによりキーが再度押されたか確認する
+    bool IsKeyPressedRepeat(int key);                       // キーが再度押されたか確認する
     bool IsKeyDown(int key);                                // キーが押されているか確認する
     bool IsKeyReleased(int key);                            // キーが1回離されたか確認する
     bool IsKeyUp(int key);                                  // キーが押されていないか確認する
@@ -222,7 +225,7 @@
     void SetExitKey(int key);                               // プログラムを終了するカスタムキーを設定する（デフォルトはESC）
 
     // 入力関連の関数: ゲームパッド
-    bool IsGamepadAvailable(int gamepad);                   // ゲームパッドが利用可能か確認する
+    bool IsGamepadAvailable(int gamepad);                   // ゲームパッドが使用可能か確認する
     const char *GetGamepadName(int gamepad);                // ゲームパッドの内部名IDを取得する
     bool IsGamepadButtonPressed(int gamepad, int button);   // ゲームパッドのボタンが1回押されたか確認する
     bool IsGamepadButtonDown(int gamepad, int button);      // ゲームパッドのボタンが押されているか確認する
@@ -274,4 +277,3 @@
     //------------------------------------------------------------------------------------
     void UpdateCamera(Camera *camera, int mode);            // 選択したモードに合わせてカメラ位置を更新する
     void UpdateCameraPro(Camera *camera, Vector3 movement, Vector3 rotation, float zoom); // カメラの移動／回転を更新する
-
