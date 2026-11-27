@@ -49,6 +49,16 @@
             .fancybox-wrap fancybox-desktop fancybox-type-iframe fancybox-opened { width: 860px!important;}
             .fancybox-inner { width: 850px!important; }
             .fancybox-iframe { width: 830px!important; }
+            
+            .tab-content > div { display: none; }
+            .tab-content > div.active { display: block; }
+            .tab-content > div pre { margin-top: 0!important; }
+            
+            .nav-tabs { display: block; padding: 0; margin: 10px 0 0 0; list-style: none; font-family: Courier New, Verdana, Arial !important; font-size: small; }
+            .nav-tabs li { position: relative; top: 1px; display: inline-block; margin: 5px 5px 0 5px; padding: 5px; border: 1px solid #b0b0b0; background: white; }
+            .nav-tabs li.active { border-bottom-color: #f0f0f0; background: #f0f0f0; }
+            .nav-tabs li a { text-decoration: none; color: #b0b0b0; }
+            .nav-tabs li.active a { text-decoration: none; color: black; }
         </style>
 
         <script type="text/javascript">
@@ -73,15 +83,56 @@
                 var srcUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.c';
                 var imgUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/' + name + '.png';
                 var linkUrl = 'https://github.com/raysan5/raylib/blob/master/examples/' + type + '/' + name + '.c';
+                var shaderBaseUrl = 'https://raw.githubusercontent.com/raysan5/raylib/master/examples/' + type + '/';
 
                 $('#eximage img').attr('src', imgUrl);
 
                 $.get(srcUrl, function(data)
                 {
-                    $('pre code').text(data);
-                    $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
-
+                    $('pre.main_source code').text(data);
+                    $('pre.main_source code').each(function(i, e) {hljs.highlightBlock(e)});
+                    
                     $('#source_link').attr("href", linkUrl);
+                    
+                    $('.nav-tabs a[href="#main_source"]').text(name + ".c");
+                    
+                    data.matchAll(/TextFormat\("(resources\/(?:[-_a-zA-Z0-9]+\/)*((?:[-_a-zA-Z0-9]+%i|glsl%i\/[-_a-zA-Z0-9]+)\.[fv]s))", GLSL_VERSION\)/g).forEach(function(match, index) {
+                        const shaderUriPattern = match[1];
+                        const shaderName = match[2].replace(/(\/?glsl)?%i/, '').replace(/^\//, ''); // Strip off versions here
+                        const shaderTabId = 'shader_' + (1+index);
+                        
+                        $('.nav-tabs').append(
+                            $('<li><a href="#'+shaderTabId+'">' + shaderName + '</a></li>')
+                        );
+                        
+                        const newCodePanel = $('<code class="glsl"></code>');
+                        $('.tab-content').append(
+                            $('<div id="' + shaderTabId + '"></div>').append(
+                                $('<pre></pre>').append(newCodePanel)
+                            )
+                        );
+                        
+                        // Hardcoding glsl version for now
+                        const glslVersion = "330";
+                        
+                        $.get(shaderBaseUrl + shaderUriPattern.replace('%i', glslVersion), function(code) {
+                            newCodePanel.text(code);
+                            newCodePanel.each(function(i, e) {hljs.highlightBlock(e)});
+                        }, 'text');
+                    });
+                    
+
+                    $(".nav-tabs a").click(function(e){
+                        e.preventDefault();
+                        
+                        const paneToActivate = $(this.hash);
+                        $('.tab-content > div.active').removeClass('active');
+                        $('.nav-tabs > li.active').removeClass('active');
+                        
+                        $(this).parent('li').addClass('active');
+                        paneToActivate.addClass('active');
+                    });
+                    
                 }, 'text');
 
                 // Quick hack for some examples not working on web
@@ -136,9 +187,18 @@
         <div id="eximage"></div>
 
         <!--<textarea id="output" rows="8"></textarea>-->
-
-        <pre><code class="cpp"></code></pre>
-
+        
+        <ul class="nav-tabs">
+            <li class="active"><a href="#main_source">Main Source</a></li>
+        </ul>
+        
+        <div class="tab-content">
+            <div id="main_source" class="tab-pane active">
+                <pre class="main_source"><code class="cpp"></code></pre>
+            </div>
+        </div>
+        
+        
         <p>raylib example <a id="source_link" href="" target="_blank">source code</a></p>
 
         <script type='text/javascript'>
